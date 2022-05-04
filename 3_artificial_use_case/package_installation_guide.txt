@@ -1,0 +1,11 @@
+Custom Package Installation Guide
+
+This is just a quick heads up on how you can install a custom package such as xgboost.
+Please open your terminal and go into your working directory, and type in the following code:
+
+pip install xgboost
+
+For each instance, you only need to install it once.
+
+For more details, please go to:
+https://xgboost.readthedocs.io/en/latest/build.html#installation-guide
