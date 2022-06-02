@@ -1,3 +1,5 @@
-# Introduction to Data Science with Python
+# Contribute to Data Science @ RBI
 
-This is the material used for an introductory course on Python and Data Science
+![](DS_Academy.png)
+
+
