@@ -2,6 +2,7 @@
 import pandas as pd
 
 train = pd.read_csv("../data_titanic/train.csv")
+train.Pclass = train.Pclass.astype(float) # to avoid DataConversionWarning
 
 # COMMAND ----------
 
@@ -14,24 +15,25 @@ train.head()
 
 # COMMAND ----------
 
-#Categorical features
+# Categorical features
 train.describe(include = object)
 
 # COMMAND ----------
 
-#Numerical features
+# Numerical features
 train.describe()
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Let's work only with the following for simplicity
-# MAGIC Categorical:
+# MAGIC Let's work only with the following features for simplicity:   
+# MAGIC 
+# MAGIC **Categorical**   
 # MAGIC - Sex
 # MAGIC - Embarked
 # MAGIC 
-# MAGIC Numerical:
-# MAGIC - Survived: *target* 0 = No, 1 = Yes
+# MAGIC **Numerical**  
+# MAGIC - Survived: *our target feature* (0 = No, 1 = Yes)
 # MAGIC - Pclass: Ticket class (1 = 1st, 2 = 2nd, 3 = 3rd)
 # MAGIC - Age: Age in years
 # MAGIC  
@@ -39,7 +41,7 @@ train.describe()
 
 # COMMAND ----------
 
-#Let's keep only the desired columns
+# Let's keep only the desired columns
 train = train[['Sex','Embarked','Pclass', 'Age','Survived']]
 
 # COMMAND ----------
@@ -48,27 +50,27 @@ train.shape
 
 # COMMAND ----------
 
-#Check for missing values
+# Check for missing values
 train.isna().sum()
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC For simplicity, we drop rows with missing values. If you will later experiment with composite transformers, comment out this cell so that you try to include also missing value imputation.
+# MAGIC For simplicity, we drop any row containing missing values. 
+# MAGIC 
+# MAGIC **Note**   
+# MAGIC If you later want to experiment with composite transformers, comment out this cell and include also missing value imputation.
 
 # COMMAND ----------
 
 train = train.dropna(axis=0)
-
-# COMMAND ----------
-
 train.head()
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ## Feature Engineering
-# MAGIC With our current knowledge, we can try to implement individually various transformers from scikit-learn. Let's not forget to create a holdout set!
+# MAGIC With our current knowledge, we can try to individually implement various transformers from Scikit Learn. Let's not forget to create a holdout set!
 
 # COMMAND ----------
 
@@ -85,9 +87,8 @@ X_train, X_test, y_train, y_test = train_test_split(train[['Pclass', 'Age', 'Sex
 
 # MAGIC %md
 # MAGIC ### Numerical Features
-# MAGIC - Pclass
-# MAGIC - Age  
-# MAGIC Let's just scale these two features using MinMax scaler.
+# MAGIC The only numerical features we have are 'Pclass' and 'Age'.  
+# MAGIC Let's scale these two features using `MinMaxScaler()`.
 
 # COMMAND ----------
 
@@ -103,10 +104,8 @@ print(X_test_transformed_numerical.shape)
 
 # MAGIC %md
 # MAGIC ### Categorical Features
-# MAGIC *   Sex
-# MAGIC *   Embarked
-# MAGIC 
-# MAGIC We can simply one-hot encode these.
+# MAGIC The categorical features we have are 'Sex' and 'Embarked'.   
+# MAGIC We can simply one-hot encode these using `OneHotEncoder()`.
 
 # COMMAND ----------
 
@@ -122,7 +121,8 @@ print(X_test_transformed_categorical.shape)
 
 # MAGIC %md
 # MAGIC ## HANDS-ON 1: Baseline Model & Model Evaluation
-# MAGIC Time for first exercise! At first, let's put together the transformed numerical and categorical features.
+# MAGIC It's time for our first exercise! 
+# MAGIC Before, let's concatenate the transformed numerical and categorical features into a single dataframe.
 
 # COMMAND ----------
 
@@ -134,8 +134,9 @@ print(X_test_transformed.shape)
 
 # COMMAND ----------
 
-# TASK 1: Fit sklearn.DummyClassifier. Then, let the model predict for train (X_train_transformed) and holdout set(X_test_transformed).
-# Store the prediction as y_pred_TRAIN_DUMMY (training set) and as y_pred_HOLDOUT_DUMMY (holdout set)
+# TASK 1: Fit sklearn.DummyClassifier to the transformed training set.  
+# Then, let the model predict for train (X_train_transformed) and holdout set (X_test_transformed).
+# Store the prediction as y_pred_TRAIN_DUMMY (training set) and as y_pred_HOLDOUT_DUMMY (holdout set).
 
 from sklearn.dummy import DummyClassifier
 
@@ -147,18 +148,18 @@ y_pred_HOLDOUT_DUMMY = dummy_clf.predict(X_test_transformed)
 
 # COMMAND ----------
 
-# OPTIONAL TASK 1: Think about a simple heuristic that can be used as baseline. 
+# OPTIONAL TASK 1: Think about a simple heuristic that can be used as a baseline. 
 # One possibility is to use gender and for example predict that every men or every woman has survived.
 # You can store the result as y_pred_TRAIN_HEURISTIC and as y_pred_HOLDOUT_HEURISTIC.
 
-y_pred_TRAIN_HEURISTIC = np.array([1 if idx==0 else 0 for idx in X_train_transformed[:,3]])
-y_pred_HOLDOUT_HEURISTIC =np.array([1 if idx==0 else 0 for idx in X_test_transformed[:,3]])
+y_pred_TRAIN_HEURISTIC =   np.array([1 if idx==0 else 0 for idx in X_train_transformed[:,3]])
+y_pred_HOLDOUT_HEURISTIC = np.array([1 if idx==0 else 0 for idx in X_test_transformed[:,3]])
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Great! We have our first prediction! It is time to evaluate how good our (poor dummy) model is. It is time to use the *sklearn.metrics* module.   
-# MAGIC https://scikit-learn.org/stable/modules/classes.html#sklearn-metrics-metrics
+# MAGIC Great! We have our first prediction! It is time to evaluate how good our model is using the [*sklearn.metrics* module.](   
+# MAGIC https://scikit-learn.org/stable/modules/classes.html#sklearn-metrics-metrics)
 
 # COMMAND ----------
 
@@ -168,16 +169,17 @@ from sklearn import metrics
 print(metrics.accuracy_score(y_train, y_pred_TRAIN_DUMMY))
 print(metrics.accuracy_score(y_train,y_pred_TRAIN_HEURISTIC))  #Optional Task 1
 print()
+
 #TASK 2B: Display ACCURACY on HOLDOUT set.
 print(metrics.accuracy_score(y_test, y_pred_HOLDOUT_DUMMY))
 print(metrics.accuracy_score(y_test, y_pred_HOLDOUT_HEURISTIC))  #Optional Task 1
 
-#OPTIONAL TASK 2C: Can you think of better measure than accuracy based on the domain problem? If yes, use it the same way.
+#OPTIONAL TASK 2C: Can you think of a better measure than accuracy based on the domain problem? If yes, use it the same way.
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Great, now we would also like to see confusion matrix as it is always a good idea to see visually the quality of our predictions.
+# MAGIC Great! Now we would also like to see the confusion matrix as it is always a good idea to visually confirm the quality of our predictions.
 
 # COMMAND ----------
 
@@ -192,22 +194,21 @@ metrics.confusion_matrix(y_test, y_pred_HOLDOUT_HEURISTIC)
 
 # MAGIC %md
 # MAGIC ## HANDS-ON 2: Composite Estimators
-# MAGIC Let's nicely wrap our Feature Engineering and model fitting into a nice composite estimator. We will be very simplistic and only use two  
+# MAGIC Let's nicely wrap our feature engineering and model fitting into a nice composite estimator. We will be very simplistic and only use two steps. 
 # MAGIC They will not nest into each other at once.
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ### Feature Engineering wrapped into ColumnTransformer
-# MAGIC The two feature transformations can be easily wrapped up into a single ColumnTransformer. This will ensure that our Feature Engineering is a **bit more robust and nicely encapsulated**. Refer to the section 6.1.4 of the following link. It will showcase the exact application that we intend to create:
-# MAGIC 
-# MAGIC https://scikit-learn.org/stable/modules/compose.html#columntransformer-for-heterogeneous-data
+# MAGIC The two feature transformations can be easily wrapped up into a single `ColumnTransformer()` object. This will ensure that our Feature Engineering is a bit **more robust and nicely encapsulated**. Section 6.1.4 [here](https://scikit-learn.org/stable/modules/compose.html#columntransformer-for-heterogeneous-data) showcases the exact application that we intend to create.
 
 # COMMAND ----------
 
-#TASK 3: Wrap MinMaxScaler and OneHotEncoder into a single ColumnTransformer. The transformers should be applied to according columns only.
-#Store the resulting composite as feature_engineering
-# Hint: use argument remainder='passthrough'
+# TASK 3: Wrap MinMaxScaler and OneHotEncoder into a single ColumnTransformer. 
+# The transformers should be applied to the respective numerical or categorical columns only.
+# Store the resulting composite as feature_engineering
+# Hint: Use the argument remainder='passthrough'
 
 from sklearn.compose import ColumnTransformer
 
@@ -220,15 +221,17 @@ feature_engineering = ColumnTransformer([('numerical_scaler', preprocessing.MinM
 
 # MAGIC %md
 # MAGIC ### Predictive Model Wrapped into Pipeline
-# MAGIC Let's now wrap together feature engineering with the model into a single Pipeline Composite estimator. Here is a pseudocode:
-# MAGIC - entire_pipeline = feature_engineering -> model  
+# MAGIC Let's now wrap the feature engineering and the model into a single Pipeline Composite estimator. Here is some pseudocode for this:
+# MAGIC ``` 
+# MAGIC entire_pipeline = feature_engineering -> model  
+# MAGIC ``` 
 # MAGIC 
-# MAGIC Both components are already available. From step above, we can directly reuse the object feature_engineering. As model, we just call new DummyClassifier, just as we did before.
+# MAGIC Both components are already available. From the step above we can directly reuse the object `feature_engineering`. As model, we just call a new `DummyClassifier`, just as we did before.
 
 # COMMAND ----------
 
-# TASK 4: Wrap Feature Engineering and Predictive Model (dummy) into a single Pipeline composite estimator. 
-# Store the result as entire_pipeline
+# TASK 4: Wrap the feature engineering and the predictive model (dummy) into a single Pipeline composite estimator. 
+# Store the result as entire_pipeline.
 from sklearn.pipeline import Pipeline
 
 entire_pipeline = Pipeline([('feature_engineering', feature_engineering), ('dummy', DummyClassifier(strategy="most_frequent"))])
@@ -236,46 +239,46 @@ entire_pipeline = Pipeline([('feature_engineering', feature_engineering), ('dumm
 # COMMAND ----------
 
 # TASK: Uncomment the line and try to train the pipeline.
-# It should not return an error. 
-# Notice that we are using untransformed data again (X_train) as the pipeline contains the transformers.
+# Notice that we are using untransformed data again (X_train) as the pipeline contains all necessary transformers.
 
 entire_pipeline.fit(X = X_train, y = y_train)
 
 # COMMAND ----------
 
-#Predict for training data
+# Predict for training data
 y_pred_TRAIN_DUMMY = entire_pipeline.predict(X_train)
 
-#Predict for holdout data
+# Predict for holdout data
 y_pred_HOLDOUT_DUMMY = entire_pipeline.predict(X_test)
 
-#Results should be the same as before
+# Results should be the same as before
 print(metrics.accuracy_score(y_train, y_pred_TRAIN_DUMMY))
 
-#TASK 2B: Display ACCURACY on HOLDOUT set.
+# Display accuracy on holdout set.
 print(metrics.accuracy_score(y_test, y_pred_HOLDOUT_DUMMY))
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC OPTIONAL TASK:   
-# MAGIC A notebook 'nice_pipeline' was made to exemplify some examples of more complex pipelines. Feel free to scroll through it and learn how a process of preparing a complex composite looks like. You can then come back here and try to implement various components. For example, if I would not drop rows with missing values at the beginning of this notebook, constructing a composite would get a bit trickier. 
+# MAGIC **OPTIONAL TASK**   
+# MAGIC The notebook 'nice_pipeline' was made to exemplify some examples of more complex pipelines. Feel free to scroll through it and learn what the process of preparing a complex composite looks like. You can then come back here and try to implement various components. For example, if I would not drop rows with missing values at the beginning of this notebook, constructing a composite would get a bit trickier. 
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ## HANDS-ON 3: Tree-based Models & Hyperparameter Tuning
-# MAGIC Hold your constructed Pipeline firmly! The only thing that we need to do now, is to replace the DummyClassifier with a proper learning model. We can start by a decision tree.
+# MAGIC Hold your constructed pipeline firmly! The only thing that we need to do now is to replace `DummyClassifier` with a proper learning model.   
+# MAGIC We can start with a decision tree.
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ### Fitting Learning Model - Decision Tree
+# MAGIC ### Fitting a Learning Model – Decision Tree
 
 # COMMAND ----------
 
-# TASK 5: Reuse your composite, instead of a dummy, fit a decision tree with default parameters.
-# Store the result as dt_pipeline
+# TASK 5: Reuse your composite and instead of a dummy, fit a decision tree with default parameters.
+# Store the result as dt_pipeline.
 from sklearn.tree import DecisionTreeClassifier
 
 dt_pipeline = Pipeline([('feature_engineering', feature_engineering), ('decision_tree', DecisionTreeClassifier())])
@@ -285,16 +288,18 @@ dt_pipeline.fit(X = X_train, y = y_train)
 
 # COMMAND ----------
 
-# TASK 5B: Let the pipeline predict for TRAINING set. Store the result as y_pred_TRAIN_DT
-# Also, Display accuracy.
+# TASK 5B: Let the pipeline predict for the training set. 
+# Store the result as y_pred_TRAIN_DT.
+# Also, display accuracy.
 
 y_pred_TRAIN_DT = dt_pipeline.predict(X_train)
 print(metrics.accuracy_score(y_train, y_pred_TRAIN_DT))
 
 # COMMAND ----------
 
-# TASK 5C: Let the pipeline predict for HOLDOUT set. Store the result as y_pred_HOLDOUT_DT
-# Also, Display accuracy.
+# TASK 5C: Let the pipeline predict for the holdout set. 
+# Store the result as y_pred_HOLDOUT_DT.
+# Also, display accuracy.
 
 y_pred_HOLDOUT_DT = dt_pipeline.predict(X_test)
 print(metrics.accuracy_score(y_test, y_pred_HOLDOUT_DT))
@@ -328,7 +333,7 @@ print(metrics.accuracy_score(y_test, y_pred_HOLDOUT_RF))
 # MAGIC %md
 # MAGIC ### Tuning Hyperparameters of our Decision Tree
 # MAGIC Time to improve the performance of our learning model by finding its optimal set of hyperparameters.  
-# MAGIC We start by examining **what hyperparameters are available** in our decision tree pipeline.
+# MAGIC We start by examining **which hyperparameters are available** in our decision tree pipeline.
 
 # COMMAND ----------
 
@@ -337,13 +342,14 @@ dt_pipeline.get_params()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC We would like to tune max_depth and min_samples_split.  
-# MAGIC Notice that to access them, we also need to navigate within the composite and call them as *decision_tree__max_depth*.  
+# MAGIC We would like to tune `max_depth` and `min_samples_split`.  
+# MAGIC Notice that to access them, we also need to navigate within the composite and call them as **`decision_tree`**`__max_depth`.  
 
 # COMMAND ----------
 
-# TASK 7: Define a grid through which we should search. Tune parameters: max_depth and min_samples_split.
-# The values which you pick for parameters are up to you. You can think about them intuitively.
+# TASK 7: Define a grid through which we should search. 
+# Tune parameters: max_depth and min_samples_split.
+# The values which you pick as parameters are up to you. You can think about them intuitively.
 
 param_grid = {'decision_tree__max_depth':[3, 4, 5, 6, 7, 8, 9], 
               'decision_tree__min_samples_split':[ 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25] }
@@ -353,24 +359,25 @@ param_grid = {'decision_tree__max_depth':[3, 4, 5, 6, 7, 8, 9],
 from sklearn import tree
 from sklearn.model_selection import GridSearchCV
 
-#Model
+# Model
 dt_pipeline
 
-#Searching strategy, providing grid
+# Searching strategy, providing grid
 tuning = GridSearchCV(dt_pipeline, param_grid)
 
-#Train
+# Train
 tuning.fit(X_train, y_train)
 
 # COMMAND ----------
 
-#Let's get the best parameters
+# Let's get the best parameters
 tuning.best_params_
 
 # COMMAND ----------
 
-# TASK 8: Use the best setting of the two hyperparameters and fit a optimized decision tree. Hint: Reuse the pipeline, just when declaring it, specify the params.
-# Store it as dt_pipeline_tuned
+# TASK 8: Use the best setting of the two hyperparameters and fit a optimized decision tree. 
+# Hint: Reuse the pipeline and when declaring it, specify the params.
+# Store it as dt_pipeline_tuned.
 
 dt_pipeline_tuned = Pipeline([('feature_engineering', feature_engineering), 
                               ('decision_tree', DecisionTreeClassifier(max_depth=6, min_samples_split=5))])
@@ -380,13 +387,13 @@ dt_pipeline_tuned.fit(X_train, y_train)
 
 # COMMAND ----------
 
-# TASK 8B: Display accuracy on TRAINING set of the optimized decision tree.
+# TASK 8B: Display accuracy on the training set of the optimized decision tree.
 
 print(metrics.accuracy_score(y_train, dt_pipeline_tuned.predict(X_train)))
 
 # COMMAND ----------
 
-# TASK 8C: Display accuracy on HOLDOUT set of the optimized decision tree.
+# TASK 8C: Display accuracy on the holdout set of the optimized decision tree.
 print(metrics.accuracy_score(y_test, dt_pipeline_tuned.predict(X_test)))
 
 # COMMAND ----------
@@ -398,7 +405,7 @@ print(metrics.accuracy_score(y_test, dt_pipeline_tuned.predict(X_test)))
 
 # MAGIC %md
 # MAGIC ### Optional Advanced TASK: Tuning Random Forest
-# MAGIC When you are tuning a more complex model, it is a good practice to search available literature on which hyperparameters should be tuned. Below I have predefined some. You can play around with the grid, for example expand or narrow it. Keep in mind that as our feature set is extremely limited, its hard for hyperparameter tuning to arrive to something meaningful.
+# MAGIC When you are tuning a more complex model, it is good practice to search available literature on which hyperparameters should be tuned. Below I have predefined some. You can play around with the grid, for example expand or narrow it. Keep in mind that as our feature set is extremely limited, its hard for hyperparameter tuning to arrive at something meaningful.
 
 # COMMAND ----------
 
@@ -406,7 +413,7 @@ print(metrics.accuracy_score(y_test, dt_pipeline_tuned.predict(X_test)))
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV
 
-#Define a pipeline
+# Define a pipeline
 rf_pipeline = Pipeline([('feature_engineering', feature_engineering), ('random_forest', RandomForestClassifier())])
 
 # Create the parameter grid based on the results of random search 
@@ -427,13 +434,13 @@ grid_search = GridSearchCV(estimator = rf_pipeline,
                            n_jobs = -1, 
                            verbose = 2)
 
-#Searching strategy, providing grid
+# Searching strategy, providing grid
 tuning_rf = GridSearchCV(rf_pipeline, param_grid_rf)
 
-#Train
+# Train
 tuning_rf.fit(X_train, y_train)
 
-#Cross-validated score (more robust than holdout set most likely)
+# Cross-validated score (more robust than holdout set most likely)
 print(tuning_rf.best_score_)
 print(tuning_rf.best_params_)
 
@@ -442,3 +449,7 @@ print(tuning_rf.best_params_)
 # MAGIC %md
 # MAGIC ### Optional Advanced TASK: Check Kaggle competitions and join one of them!  
 # MAGIC https://www.kaggle.com/
+
+# COMMAND ----------
+
+

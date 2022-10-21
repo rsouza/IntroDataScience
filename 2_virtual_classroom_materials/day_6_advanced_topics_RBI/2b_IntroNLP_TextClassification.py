@@ -1,6 +1,11 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC Please check this [article](https://medium.com/analytics-vidhya/an-introduction-to-multi-label-text-classification-b1bcb7c7364c?sk=8a30075009552cfd4a7534663edaed7e) for detailed explanation.
+# MAGIC # Multi-Label Text Classification
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC Please check this [article](https://medium.com/analytics-vidhya/an-introduction-to-multi-label-text-classification-b1bcb7c7364c?sk=8a30075009552cfd4a7534663edaed7e) for a detailed explanation.
 
 # COMMAND ----------
 
@@ -79,7 +84,8 @@ print(null_check)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Lets now check the data types of columns, to assure that each column have the same data type as it should be (sometimes in some datasets there are some columns which has float on integer values but the data type of those columns is object, so for that case we need to change the datatype.
+# MAGIC Lets now check the data types of columns.   
+# MAGIC (Sometimes columns which contain float or integer values are assigned the data type object. In that case we need to change the data type.)
 
 # COMMAND ----------
 
@@ -88,15 +94,14 @@ train_df.dtypes
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC 
-# MAGIC Now lets check each how many abstracts belongs to each category
+# MAGIC Now let's check each how many abstracts belongs to each category.
 
 # COMMAND ----------
 
 categories = ["Computer Science", "Physics", "Mathematics", "Statistics", "Quantitative Biology", "Quantitative Finance"]
 category_count=[]
 for i in categories:
-  category_count.append(train_df[i].sum())
+    category_count.append(train_df[i].sum())
 
 # COMMAND ----------
 
@@ -110,18 +115,18 @@ plt.bar(categories,category_count)
 # COMMAND ----------
 
 # MAGIC %md
+# MAGIC From the above plot its clear that "Quantitative biology" and "Quantitative Finance" have too few values compared to the other categories. This means that the data set is imbalanced.  
+# MAGIC To make it balanced we can apply **resampling techniques**. The data set is small so we can try oversampling for these two classes.  
 # MAGIC 
-# MAGIC From the above plot its clear that "Quantitative biology" and "quantitative Finance" have too much less values, that means the dataset is imbalanced.  
-# MAGIC As the dataset is imbalanced, to make it balanced we can apply resampling techniques, the dataset is small so we can try oversampling of these two classes.  
-# MAGIC We will implement oversampling later, first we will try to build a basic classification model.  
+# MAGIC We will implement oversampling later. First we will try to build a basic classification model.
 
 # COMMAND ----------
 
 total_word_count_in_each_category=[]
 for i in categories:
-  abstracts = train_df.where(train_df[i] == 1)[['ABSTRACT']]
-  count = pd.Series(abstracts.values.flatten()).str.len().sum()
-  total_word_count_in_each_category.append(count)
+    abstracts = train_df.where(train_df[i] == 1)[['ABSTRACT']]
+    count = pd.Series(abstracts.values.flatten()).str.len().sum()
+    total_word_count_in_each_category.append(count)
 
 # COMMAND ----------
 
@@ -131,13 +136,13 @@ plt.bar(categories,total_word_count_in_each_category)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Word count also almost in the same proportion as the number of texts in each category, only difference is statistics has more word than mathematics even the number of articles are more for mathematics.
+# MAGIC The word count is almost in the same proportion as the number of texts in each category. The only difference is statistics which has more words than mathematics even if the number of articles is more for mathematics.
 
 # COMMAND ----------
 
 avg_abstract_len_for_each_category=[]
 for i in range(6):
-  avg_abstract_len_for_each_category.append(total_word_count_in_each_category[i]/category_count[i])
+    avg_abstract_len_for_each_category.append(total_word_count_in_each_category[i]/category_count[i])
 
 # COMMAND ----------
 
@@ -147,12 +152,12 @@ plt.bar(categories,avg_abstract_len_for_each_category)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC From the above plot its clear that articles of quantitaive biology are longest, and mathematics articles are shortest.
+# MAGIC From the above plot its clear that articles of quantitaive biology are the longest, and mathematics articles are the shortest.
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Let's concatenate Title and Abstract, and make it one big text.
+# MAGIC Let's concatenate 'Title' and 'Abstract' and make it one big text.
 
 # COMMAND ----------
 
@@ -161,7 +166,7 @@ train_df["text"] = train_df["TITLE"] + " " + train_df["ABSTRACT"]
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Dropping the TITLE and ABSTRACT columns.
+# MAGIC We drop the 'Title' and 'Abstract' columns as they are not needed anymore. 
 
 # COMMAND ----------
 
@@ -174,7 +179,7 @@ train_df.head()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Let's make a function for train/test split that we will need further.
+# MAGIC Let's make a function for train/test split as we will need this further.
 
 # COMMAND ----------
 
@@ -221,7 +226,7 @@ X_train.shape, X_test.shape, y_train.shape, y_test.shape
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Now our text is cleaned, we will apply Tfidf on text data to change into a matrix of numericals.
+# MAGIC Now that our text is cleaned we will apply Tfidf on the text data to convert it into a matrix of numericals.
 
 # COMMAND ----------
 
@@ -255,7 +260,7 @@ X_train_tfidf.shape
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Target columns has 6 columns , so lets change into one columns which will have all 6 different categories.
+# MAGIC The target column is made up of 6 columns , so lets change it to one columns with all 6 different categories.
 
 # COMMAND ----------
 
@@ -274,7 +279,7 @@ y_train_new.nunique(), y_test_new.nunique()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Apply grid search to optimize the hyperparameters.
+# MAGIC Apply a grid search to optimize the hyperparameters.
 
 # COMMAND ----------
 
@@ -322,7 +327,7 @@ train_preds
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Our dataset is imbalanced and all the classes are equally important, so for this case macro average f1 score would be the best, and the confusion matric would give the overall good picture of every class's prediction.
+# MAGIC Our data set is imbalanced and all the classes are equally important, so for this case a macro average F1 score would be the best. The confusion matrix would then give an overall good picture of every class's prediction.
 
 # COMMAND ----------
 
@@ -382,7 +387,7 @@ ax.set_ylabel("Actual", fontsize=26)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC We got 79.93 accuracy using logistic regression. and the macro average f1 score is 0.4557
+# MAGIC We got 79.93 accuracy using logistic regression and the macro average F1 score is 0.4557.
 
 # COMMAND ----------
 
@@ -392,7 +397,7 @@ ax.set_ylabel("Actual", fontsize=26)
 # MAGIC * https://www.analyticsvidhya.com/blog/2017/08/introduction-to-multi-label-classification/  
 # MAGIC * https://towardsdatascience.com/journey-to-the-center-of-multi-label-classification-384c40229bff  
 # MAGIC * https://www.thepythoncode.com/article/text-classification-using-tensorflow-2-and-keras-in-python   
-# MAGIC * https://www.kaggle.com/datasets/blessondensil294/topic-modeling-for-research-articles/code  
+# MAGIC * https://www.kaggle.com/datasets/blessondensil294/topic-modeling-for-research-articles/code
 
 # COMMAND ----------
 

@@ -2,11 +2,11 @@
 # MAGIC %md
 # MAGIC # Univariate Analysis with Seaborn
 # MAGIC 
-# MAGIC You are presumably wondering: "Yeah, Matplotlib is great, it allows me to customize everything i would want. But is there any other visualization library which is able to conjure up good-looking graph with less code? 
+# MAGIC You are presumably wondering: "Yeah, Matplotlib is great, it allows me to customize everything I want. But is there any other visualization library which is able to conjure up a good-looking graph with less code? 
 # MAGIC 
-# MAGIC In fact, there are many visualization libraries for Python. We will explore **Seaborn**, which is built on top of the `Matplotlib`.
+# MAGIC In fact, there are many visualization libraries for Python. We will explore **Seaborn**, which is built on top of the Matplotlib.
 # MAGIC 
-# MAGIC The strength of Seaborn is the ability to create attractive, aesthetically pleasing plots integrating `Pandas DataFrame`s functionalities. So far, in order to create plots we always needed to 'extract' a Series of the DataFrame and then we were able to apply some plotting function. Seaborn, on the other hand, operates on the whole dataset, intelligently using labels of the `DataFrame` and internally performing the necessary steps. Seaborn makes creating visualizations very easy and intuitive by using high-level functions. 
+# MAGIC The strength of Seaborn is the ability to create attractive, aesthetically pleasing plots integrating **Pandas DataFrame**s functionalities. So far, in order to create plots we always needed to 'extract' a Series of the DataFrame and then we were able to apply some plotting function. Seaborn, on the other hand, operates on the whole dataset, intelligently using labels of the `DataFrame` and internally performing the necessary steps. Seaborn makes creating visualizations very easy and intuitive by using high-level functions. 
 
 # COMMAND ----------
 
@@ -22,10 +22,11 @@
 # MAGIC %md
 # MAGIC # 1. Importing Seaborn library and loading the data
 # MAGIC 
-# MAGIC Firstly, we import Seaborn library and give it conventional alias `sns`. The abbreviation is derived from Samuel Norman "Sam" Seaborn. This is a fictional character portrayed by Rob Lowe on the television serial drama The West Wing. So, it's a joked initialism. 
+# MAGIC Firstly, we import the Seaborn library and give it conventional alias `sns`. The abbreviation is derived from Samuel Norman "Sam" Seaborn, a fictional character portrayed by Rob Lowe in the television serial drama _The West Wing_. 
 
 # COMMAND ----------
 
+# Importing Seaborn library
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -33,24 +34,24 @@ import matplotlib.pyplot as plt
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC There are 18 example datasets provided by Seaborn. After completing this notebook, you can choose few of them that seem interesting to you and and try to apply your gained knowledge about visualization using Seaborn. 
+# MAGIC There are 18 example datasets provided by Seaborn. After completing this notebook, you can choose a few of them that seem interesting to you and and try to apply your gained knowledge about visualization using Seaborn. 
 # MAGIC 
 # MAGIC To get a list of available datasets you can use `get_dataset_names()` function.
 
 # COMMAND ----------
 
 # Print available example datasets
-#This is blocked by security.
-#sns.get_dataset_names()
+# This is blocked by security.
+# sns.get_dataset_names()
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ## 1.1 Setting the theme
 # MAGIC 
-# MAGIC Firstly, we discuss how you can control **aesthetic of a figure** in other words, choose the **theme** based on your needs and preferences. It always depends on whether you are exploring the data for yourself or you want to communicate your insights to an audience. During your exploratory part, your visualizations do not need to be perfect and polished as long as they serve the purpose of revealing necessary and useful insight. 
+# MAGIC Firstly, we discuss how you can control the **aesthetic of a figure** in other words, choose the **theme** based on your needs and preferences. It always depends on whether you are exploring the data for yourself or you want to communicate your insights to an audience. During your exploratory part, your visualizations do not need to be perfect and polished as long as they serve the purpose of revealing necessary and useful insight. 
 # MAGIC 
-# MAGIC But if your visualization will be presented to others, it is appropriate to take care of the plot´s appearance in order to make it appealing and catching the attention. This is true also in the case of a theme. 
+# MAGIC But if your visualization will be presented to others, it is appropriate to take care of the plot's appearance in order to make it appealing and catching the attention. This is true also in the case of a theme. 
 # MAGIC 
 # MAGIC There are 5 predefined themes ('darkgrid' is by default):
 # MAGIC 
@@ -60,7 +61,7 @@ import matplotlib.pyplot as plt
 # MAGIC - white
 # MAGIC - ticks
 # MAGIC 
-# MAGIC To set a specific theme use `set_style('ticks')` with chosen theme as argument. Please, see the documentation [here](https://seaborn.pydata.org/tutorial/aesthetics.html) for more information.
+# MAGIC To set a specific theme use `set_style('ticks')` with the chosen theme as the argument. Take a look at the documentation [here](https://seaborn.pydata.org/tutorial/aesthetics.html) for more information.
 
 # COMMAND ----------
 
@@ -72,7 +73,7 @@ sns.set_style('dark')
 # MAGIC %md
 # MAGIC # 2. Loading dataset
 # MAGIC 
-# MAGIC We can go with 'penguins' dataset that can be loaded using `load_dataset()` function which returns `Pandas` DataFrame.
+# MAGIC We will go with the 'penguins' dataset that can be loaded using `load_dataset()` function which returns a Pandas DataFrame.
 # MAGIC 
 # MAGIC This dataset consists of 7 attributes and 344 observations about penguins from islands in the Palmer Archipelago in Antarctica.
 # MAGIC 
@@ -83,12 +84,12 @@ sns.set_style('dark')
 # MAGIC - bill_depth_mm: the depth of the bill (in mm)
 # MAGIC - flipper_length_mm: the length of the flipper (in mm)
 # MAGIC - body_mass_g: body mass (in grams)
-# MAGIC - sex: the gender of a penguin
+# MAGIC - sex: the sex of a penguin
 
 # COMMAND ----------
 
 # Load the data
-penguins = pd.read_csv('Datasets/penguins.csv')
+penguins = pd.read_csv('Data/penguins.csv')
 
 # COMMAND ----------
 
@@ -125,16 +126,16 @@ penguins.duplicated().sum()
 # MAGIC %md
 # MAGIC ## 3.1 Histogram
 # MAGIC 
-# MAGIC We´ll look at the distribution of our data using `displot()` function where we specify parameters such as `data` and `x` that define a position on x-axis. `displot()` is Figure-level method and the size of the output can be changed using parameters `height` and `aspect`. In case of Axes-level functions, the size can be controlled with `plt.figure(figsize = (Width, height in inches))`. You can find all necessary information in Seaborn´s documentations.
+# MAGIC We'll look at the distribution of our data using the `displot()` function where we specify parameters such as `data` and `x` that define a position on the x-axis. `displot()` is a Figure-level method and the size of the output can be changed using the parameters `height` and `aspect`. In case of Axes-level functions, the size can be controlled with `plt.figure(figsize = (Width, height in inches))`. You can find all necessary information in Seaborn's documentation.
 # MAGIC 
 # MAGIC This function uses the same underlying code as `histplot()` function. Moreover it provides different approaches for visualizing the distribution. The histogram will be drawn by default. But we can choose a particular approach with the `kind` parameter:  
 # MAGIC `kind = 'hist'`   
 # MAGIC `kind = 'kde'`  
 # MAGIC `kind = 'ecdf'`  
 # MAGIC 
-# MAGIC All of these approaches to visualize distribution have a very own function in `distribution module` and belong to distribution plots category. We´ll discuss all approaches later on. 
+# MAGIC All of these approaches to visualize distributions have their very own function in the _distribution module_ and belong to the _distribution plots category_. We'll discuss all approaches later on. 
 # MAGIC 
-# MAGIC Now let´s see how we can display the distribution of the length of penguins´s bills. Seaborn´s function `displot()` returns Matplotlib´s FacetGrid object. You can assing the resulting object to ax variable to be able add things such as title or axes labels.
+# MAGIC Now let's see how we can display the distribution of the length of penguins' bills. Seaborn's function `displot()` returns a Matplotlib's FacetGrid object. Assign the resulting object to the `ax` variable to be able add things such as title or axes labels.
 # MAGIC 
 # MAGIC Another way is to use `plt.title()`, `plt.xlabel()` and `plt.ylabel()`.
 
@@ -152,11 +153,11 @@ ax.set(title = 'The distribution of bill length');
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC As you can see, Seaborn automatically annotate labels according to defined parameters. We can see from plot that the most common bill length is about 45 mm. There are very few penguins that have bill length less than 10 mm. 
+# MAGIC As you can see, Seaborn automatically annotates labels according to defined parameters. We can see from the plot that the most common bill length is about 45 mm. There are very few penguins that have bill length less than 10 mm. 
 # MAGIC 
-# MAGIC As we already learned, it is always appropriate to experiment and try different numbers of bins as well as change the size of bins. By default, `displot()` and `histplot()` plotting functions determine the size of the bins based on the number of observations and the variance. 
+# MAGIC As we have already learned, it is always appropriate to experiment and try different numbers of bins as well as change the size of bins. By default, `displot()` and `histplot()` plotting functions determine the size of the bins based on the number of observations and the variance. 
 # MAGIC 
-# MAGIC If you want to zoom in into the particular area of a histogram, you can do so by limiting axis using Matplotlib´s `xlim` (alteratively `ylim`). The options are:
+# MAGIC If you want to zoom in into the particular area of a histogram, you can do so by limiting the axis using Matplotlib's `xlim` (alteratively `ylim`). The options are:
 # MAGIC 
 # MAGIC - `plt.xlim(left, right)` - setting values for the left and the right limit
 # MAGIC - `plt.xlim(left)` - setting a value only for left limit
@@ -174,7 +175,7 @@ plt.xlim(53,60);
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Changing the size of the bins can be acomplished with `binwidth` parameter. If we set `binwidth` = 2, each bin will coumpound observations in the range of 2 milimeters: 
+# MAGIC Changing the size of the bins can be acomplished with the `binwidth` parameter. If we set `binwidth = 2`, each bin will coumpound observations in the range of 2 millimeters: 
 
 # COMMAND ----------
 
@@ -189,9 +190,9 @@ sns.displot(data = penguins,
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Alternatively, we can control the number of bins. There is no right answer to the question on what number of bins you should set. 
+# MAGIC Alternatively, we can control the number of bins. There is no right answer to the question of what number of bins you should set. 
 # MAGIC 
-# MAGIC It always depends on the data and our aim is to choose the most appropriate one that describes the data the best. If we wouldn´t  try to alter the number of bins during the exploration, we might lose important patterns. 
+# MAGIC It always depends on the data and our aim is to choose the most appropriate one that describes the data the best. If we didn't alter the number of bins during the exploration, we might miss important patterns. 
 # MAGIC 
 # MAGIC You can assign the number of bins to the `bins` parameter.
 
@@ -212,7 +213,7 @@ sns.displot(data = penguins,
 
 # COMMAND ----------
 
-# TASK 1 >>> Create a histogram showing the distribution of penguins´s body mass ('body_mass_g' variable)
+# TASK 1 >>> Create a histogram showing the distribution of penguins's body mass ('body_mass_g' variable)
 #        >>> Just define data and a variable and let Seaborn create the default plot
 #        >>> Set parameters: height = 6.5, aspect = 1.3
 
@@ -226,7 +227,7 @@ sns.displot(data = penguins,
 # MAGIC %md
 # MAGIC ## 3.2 Plotting the distribution using KDE plot
 # MAGIC 
-# MAGIC KDE abbreviation stands for Kernel Density Estimate and using this approach we can create distribution using continuous probability density curve. KDE is calculated using specific formula. Of course you do not need to worry about it. There are however mathematical and statistical reasons why sometimes it might be more appropriate to show a KDE
+# MAGIC KDE abbreviation stands for Kernel Density Estimate and using this approach we can create distribution using continuous probability density curve. KDE is calculated using a specific formula which you do not need to worry about. There are however mathematical and statistical reasons why sometimes it might be more appropriate to show a KDE.
 
 # COMMAND ----------
 
@@ -244,11 +245,11 @@ sns.displot(data = penguins,
 # MAGIC %md
 # MAGIC ## 3.4 Boxplot
 # MAGIC 
-# MAGIC Now we´ll look at the distribution of penguins´s body mass using boxplot. 
+# MAGIC Now we'll look at the distribution of penguins' body mass using boxplot. 
 # MAGIC 
-# MAGIC Seaborn´s `boxplot()` function takes several parameters, please, refer to the documentation [here](https://seaborn.pydata.org/generated/seaborn.boxplot.html) to learn more. 
+# MAGIC Seaborn's `boxplot()` function takes several parameters. Refer to the documentation [here](https://seaborn.pydata.org/generated/seaborn.boxplot.html) to learn more. 
 # MAGIC 
-# MAGIC Below you can see how the default boxplot looks like. We passed our dataset to `data` parameter and 'body_mass_g' variable as input of x parameter. 
+# MAGIC Below you can see what the default boxplot looks like. We passed our dataset to the `data` parameter and the 'body_mass_g' feature as the input of the x parameter. 
 
 # COMMAND ----------
 
@@ -263,11 +264,11 @@ sns.boxplot(data = penguins,
 # MAGIC %md
 # MAGIC ### 3.4.1 Customizing boxplots
 # MAGIC 
-# MAGIC If you want to further customize a boxplot, you can do so with Matplotlib´s help.
+# MAGIC If you want to further customize a boxplot, you can do so with Matplotlib's help.
 # MAGIC 
-# MAGIC Since Seaborn´s boxplot is fancier version of Matplotlib´s boxplot, you can again use the same parameters to control boxplot´s appearance. For example, changing the style of box (`boxprops`), whiskers (`whiskerprops`), emphasizing median value (`medianprops`) or outliers (`flierprops`) if present. 
+# MAGIC Since Seaborn's boxplot is fancier version of Matplotlib's boxplot, you can again use the same parameters to control boxplot's appearance. For example, changing the style of box (`boxprops`), whiskers (`whiskerprops`), emphasizing median value (`medianprops`) or outliers (`flierprops`) if present. 
 # MAGIC 
-# MAGIC You can specify and pass these properties within the dictionary and then insert it into the boxplot plotting function. These `props` dictionaries refer to class [`Line2D`](https://matplotlib.org/stable/api/_as_gen/matplotlib.lines.Line2D.html#matplotlib.lines.Line2D) and you can further customize only those parameters that are present in this class.
+# MAGIC You can specify and pass these properties within a dictionary and then insert it into the boxplot plotting function. These `props` dictionaries refer to the class [`Line2D`](https://matplotlib.org/stable/api/_as_gen/matplotlib.lines.Line2D.html#matplotlib.lines.Line2D) and you can further customize those parameters  present in this class.
 
 # COMMAND ----------
 
@@ -284,7 +285,7 @@ sns.boxplot(data = penguins,
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC In our example we customize color, width of boxplot and width of lines. Changing the color of line presenting median value can be useful in order to emphasize it. 
+# MAGIC In our example we customize the color, the width of the boxplot and the width of the lines. Changing the color of the line presenting the median value can be useful in order to emphasize it. 
 
 # COMMAND ----------
 
@@ -318,8 +319,8 @@ ax = sns.boxplot(data = penguins,
 
 # COMMAND ----------
 
-# TASK 2 >>> Create a boxplot on 'bill_length_mm' variable
-#        >>> Create a Figure and set size: (13,9)
+# TASK 2 >>> Create a boxplot of the 'bill_length_mm' feature
+#        >>> Create a figure and set its size to (13,9)
 #        >>> Set color as hexadecimal code: '#98D8D8',
 #        >>> Set width of a box to 0.3
 #        >>> Set width of a line to 1
@@ -331,9 +332,9 @@ ax = sns.boxplot(data = penguins,
 # MAGIC %md
 # MAGIC ## 3.5 Swarmplot
 # MAGIC 
-# MAGIC `swarmplot()` plotting function can be useful if we want to better see the distribution of values. In this case, each data point will be drawn and adjusted to avoid overlapping of values. You can, of course, create swarmplot on its own, but it´s nice to see drawn values on the top of distribution created with boxplot. 
+# MAGIC The `swarmplot()` plotting function is useful if we want to better see the distribution of the values. In this case, each data point will be drawn and adjusted to avoid overlapping of values. You can, of course, create a swarmplot on its own, but it's nice to see drawn values on the top of distribution created with boxplot. 
 # MAGIC 
-# MAGIC There is one disadvantage of the swarmplot: if you have dataset with large number of observations, let´s say in thousands, there will be huge overlapping of data points. We can however make a random sample of only a few percent of points to be able to utilize swarmplot. In such case, do not forget to mention next to your visual that the swarmplot displays only a subsample of data. In the case of penguins dataset, swarmplot is a good choice of plotting method, we can nicely see drawn observations. 
+# MAGIC There is one disadvantage of the swarmplot: if you have dataset with large number of observations, let's say in thousands, there will be a huge overlap of data points. We can, however, take a random sample of only a few percent of points to be able to utilize the swarmplot. In such case, do not forget to mention next to your visual that the swarmplot displays only a subsample of data. In the case of the penguins dataset, swarmplot is a good choice of plotting method and we can nicely see the drawn observations. 
 
 # COMMAND ----------
 
@@ -353,40 +354,38 @@ sns.swarmplot(data = penguins,
 
 # COMMAND ----------
 
-# TASK 3 >>> Create a swarmplot of 'bill_depth_mm' variable
-#        >>> Create a Figure and set size: (13,9)
-#        >>> Set color of data points to 'coral'
-
+# TASK 3 >>> Create a swarmplot of the 'bill_depth_mm' feature
+#        >>> Create a figure and set its size to (13,9)
+#        >>> Set the color of the data points to 'coral'
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC > Could you exactly say where the majority of data points lies based on drawn data points? Sometimes, judging the distribution´s shape from swarmplot can be tricky. To be sure, it´s better to create swarmplot in conjunction with boxplot. 
+# MAGIC > Could you exactly say where the majority of data points lie based on the drawn data points? Sometimes, judging the distribution's shape from swarmplot can be tricky. To be sure, it's better to create a swarmplot in conjunction with a boxplot. 
 
 # COMMAND ----------
 
-# TASK 4 >>> Create a boxplot of 'bill_depth_mm' variable
-#        >>> Create a Figure and set size: (13,9)
-#        >>> Set width of boxplot to 0.2, width of line to 3 and color to 'white'
-#        >>> Plot a swarmplot right after a boxplot (just copy and paste line of code you created in TASK 3
-
+# TASK 4 >>> Create a boxplot of the 'bill_depth_mm' feature
+#        >>> Create a figure and set its size to (13,9)
+#        >>> Set the width of boxplot to 0.2, the width of the line to 3 and the color to 'white'
+#        >>> Plot a swarmplot right after the boxplot (just copy and paste the line of code you created in TASK 3
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ## 3.6 Stripplot
 # MAGIC 
-# MAGIC Stripplots are very similar to swarmplots since also show all of the data. There is the same disadvantage of the data overlapping, but you can add some random noise (jitter) among values. Sometimes it´s hard to tell what is the distribution of data without additional representation of the underlying distribution (for instance, created with a boxplot). 
+# MAGIC Stripplots are very similar to swarmplots since they also show all of the data. There is the same disadvantage of the data overlapping, but you can add some random noise (jitter) among values. Sometimes it's hard to tell what the distribution of the data is without additional representation of the underlying distribution (for instance, created with a boxplot). 
 # MAGIC 
-# MAGIC You can add amount of jitter using `jitter` parameter, while you have 2 options:
+# MAGIC You can change the amount of jitter using the `jitter` parameter where you have 2 options:
 # MAGIC - set `jitter = True` for a good default amount of jitter
 # MAGIC - specify amount of jitter 
 # MAGIC 
-# MAGIC Stripplots can be also useful for indicating outliers in the data. 
+# MAGIC Stripplots can be useful for indicating outliers in the data, too. 
 
 # COMMAND ----------
 
-# Stripplot of 'body_mass_g' variable
+# Stripplot of the 'body_mass_g' feature
 
 plt.figure(figsize=(13,9))
 sns.stripplot(data = penguins, 
@@ -398,7 +397,7 @@ sns.stripplot(data = penguins,
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Since we do not have so many observations, we can better estimate the distribution of the data because they do not overlap. Here, we can take into the consideration the density of data points which can gives us a good approximation of the shape. You can see, that there are more data points in the range of 3200-3800 grams compared to the rest of data points. After that, data points become more sparse. Based on that, we would say that the distribution seems to be right-skewed. In most cases, it would be not appropriate assuming the distribution only from stripplot because it can be misleading. Therefore, always visualize data using several plotting approaches. 
+# MAGIC Since we do not have so many observations, we can better estimate the distribution of the data because the data poins do not overlap. Here, we can take into consideration the density of the data points which can gives us a good approximation of the shape. There are more data points in the range of 3200-3800 grams compared to the rest of data points. After that, the data points become more sparse. Based on that, we would say that the distribution seems to be right-skewed. In most cases, it would not be appropriate to assume the distribution only from the stripplot because it can be misleading. Therefore, always visualize the data using several plotting approaches. 
 
 # COMMAND ----------
 
@@ -410,7 +409,7 @@ sns.stripplot(data = penguins,
 # MAGIC %md
 # MAGIC ## 4.1 Catplot
 # MAGIC 
-# MAGIC To create a visualization of a categorical variable you can use `catplot()` plotting function. This is a Figure-level interface which allows you to specify certain plot type such as boxplot using `kind` parameter. 
+# MAGIC To create a visualization of a categorical variable you can use the `catplot()` plotting function. This is a Figure-level interface which allows you to specify a certain plot type such as boxplot using the `kind` parameter. 
 # MAGIC 
 # MAGIC For example, if you want to visualize the number of occurences of observations based on the specific category the code would be:
 
@@ -434,11 +433,11 @@ sns.catplot(data = penguins,
 # MAGIC %md
 # MAGIC ## 4.2 Countplot
 # MAGIC 
-# MAGIC Alternatively, we can use Axis-level ploting function `sns.countplot()`.
+# MAGIC Alternatively, we can use the Axis-level ploting function `sns.countplot()`.
 
 # COMMAND ----------
 
-# Create a countplot of 'island' variable
+# Create a countplot of the 'island' feature
 
 plt.figure(figsize = (13,9))
 ax = sns.countplot(data = penguins, 
@@ -452,29 +451,30 @@ ax.set(title = 'Count of penguins based on the island',
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Here we order the categories based on their values in descending order. Another way to changing the order based on your preference is to define categories in the list:
-# MAGIC ```order = ['Biscoe','Dream','Torgersen']```
+# MAGIC Here we order the categories based on their values in descending order. Another way to change the order based on your preference is to define categories in the list:
+# MAGIC ```
+# MAGIC order = ['Biscoe','Dream','Torgersen']
+# MAGIC ```
 # MAGIC 
-# MAGIC All of customizations we did are aplicable also with `catplot()`.
+# MAGIC All of customizations we did are applicable also with `catplot()`.
 
 # COMMAND ----------
 
-# TASK 5 >>> Display count of penguins with respect to species
-#        >>> Use catplot() plotting function
+# TASK 5 >>> Display the count of penguins with respect to the species
+#        >>> Use the catplot() plotting function
 #        >>> Order the species in the following way: Chinstrap, Adelie, Gentoo
 #        >>> Set the saturation of colors to 0.3
-#        >>> Change the size of a Figure:
+#        >>> Change the size of the figure:
 #            parameter: height = 6.5
 #            parameter: aspect = 1.3
-#        >>> Set title: 'Count of penguins based on species'
-
+#        >>> Set the title to 'Count of penguins based on species'
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC # 5. Tasks
 # MAGIC 
-# MAGIC Now it´s your turn to create some visualization of the Bank Marketing dataset. The data is related to a marketing campaign of a Portuguese banking institution that was performed via phone communication with clients of the bank. Let´s look at attributes and do some preprocessing. 
+# MAGIC Now it's your turn to create some visualization of the Bank Marketing dataset. The data is related to a marketing campaign of a Portuguese banking institution that was performed via phone communication with clients of the bank. Let's look at attributes and do some preprocessing. 
 # MAGIC 
 # MAGIC **Attributes explanation:**
 # MAGIC 
@@ -508,7 +508,7 @@ ax.set(title = 'Count of penguins based on the island',
 # MAGIC - nr.employed: number of employees - quarterly indicator
 # MAGIC 
 # MAGIC Target variable:
-# MAGIC - y - has the client subscribed a term deposit?
+# MAGIC - y - has the client subscribed to a term deposit?
 
 # COMMAND ----------
 
@@ -518,12 +518,12 @@ ax.set(title = 'Count of penguins based on the island',
 # COMMAND ----------
 
 # Load the data 
-data = pd.read_csv('Datasets/bank_data.csv',sep = ';')
-data
+data = pd.read_csv('Data/bank_data.csv',sep = ';')
+data.head()
 
 # COMMAND ----------
 
-# Let´s rename some of variables
+# Let's rename some of variables
 data.rename(columns = {'marital':'marital_status','default':'default_credit','housing':'house_loan',
                       'contact':'contact_type','duration':'contact_duration','campaign':'number_of_contacts',
                       'pdays':'days_passed','previous':'number_previous_contact','poutcome':'previous_campaign_outcome',
@@ -550,59 +550,66 @@ duplicated_rows
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC There are 12 duplicated rows in the dataset, that will be removed. 
+# MAGIC There are 12 duplicated rows in the dataset that need to be removed. 
 
 # COMMAND ----------
 
 # Remove duplicated rows
+
 data.drop_duplicates(inplace = True)
 
 # COMMAND ----------
 
 # Examine data types of variables
+
 data.dtypes
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC It seems that data type of numerical variables has been correctly recognized by Python. All non-numerical variables have object data type, so let´s them convert to categories.
+# MAGIC It seems that the data type of the numerical features has been correctly recognized by Python. All non-numerical features have the _object_ data type, so let's  convert them to categories.
 
 # COMMAND ----------
 
 # Select all variables that need to be converted
+
 to_category = ['job','marital_status','education','default_credit','house_loan', 
                'loan','contact_type','month','day_of_week', 'previous_campaign_outcome']
 
 # COMMAND ----------
 
-# Convert them to category data type
+# Convert them to the category data type
+
 for col in to_category:
-  data[col] = data[col].astype('category')
+    data[col] = data[col].astype('category')
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Days and months are recorded as their abbreviations. Let´s do mapping with new values of their full name.
+# MAGIC Days and months are recorded as their abbreviations. Let's map them to their full name.
 
 # COMMAND ----------
 
 # Create a dictionary with original values and corresponding new values for days
+
 mapping_days = {'mon':'Monday','tue':'Tuesday','wed':'Wednesday','thu':'Thursday','fri':'Friday'}
 
 # COMMAND ----------
 
-# Map new values to column 'day_of_week'
+# Map the new values to the column 'day_of_week'
+
 data.day_of_week = data.day_of_week.map(mapping_days)
 
 # COMMAND ----------
 
-# Create a dictionary with original values and corresponding new values for months
+# Create a dictionary with the original values and the corresponding new values for the months
+
 mapping_months = {'mar':'March', 'apr':'April','may':'May','jun':'Jun','jul':'Jul','aug':'August',
                   'sep':'September','oct':'October','nov':'November','dec':'December'}
 
 # COMMAND ----------
 
-# Map new values to column 'month'
+# Map the new values to the column 'month'
 data.month = data.month.map(mapping_months)
 
 # COMMAND ----------
@@ -610,7 +617,7 @@ data.month = data.month.map(mapping_months)
 # MAGIC %md
 # MAGIC ## 5.2 Numerical variables
 # MAGIC 
-# MAGIC Let´s start with numerical variables and explore the distribution of data points. 
+# MAGIC Let's start with the numerical features and explore the distribution of the data points. 
 
 # COMMAND ----------
 
@@ -621,15 +628,15 @@ data.month = data.month.map(mapping_months)
 
 # COMMAND ----------
 
-# TASK 7 >>> Create a boxplot of 'age' variable
-#        >>> Set a Figure size: (13,9)
-#        >>> Assign variable 'age' to y parameter
-#        >>> Set the width of a boxplot to 0.3
+# TASK 7 >>> Create a boxplot of the 'age' feature
+#        >>> Set a the figure size to (13,9)
+#        >>> Assign variable 'age' to the y parameter
+#        >>> Set the width of the boxplot to 0.3
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The values of the variable 'contact_duration' are recorded in seconds. Run the below line to convert them to minutes.
+# MAGIC The values of the feature 'contact_duration' are recorded in seconds. Run the line below to convert them to minutes.
 
 # COMMAND ----------
 
@@ -639,12 +646,13 @@ data.contact_duration = data.contact_duration.apply(lambda x: x / 60)
 # COMMAND ----------
 
 # TASK 8 >>> Create a histogram of 'contact_duration'
-#        >>> Set the widht of bins to 0.5, so every bin compound call duration of 50 seconds
+#        >>> Set the width of the bins to 0.5, so every bin contains a call duration of 50 seconds
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC There are some records where the call was not performed, so corresponding values are of value 0. Let´s look how many rows have not recorded the duration and drop them since they will not provide us any useful information.
+# MAGIC There are some records where no call was performed, so the corresponding values are of value 0. 
+# MAGIC Let's take a look at the rows with no recorded duration. We will drop them since they do not provide us with any useful information. 
 
 # COMMAND ----------
 
@@ -658,7 +666,7 @@ index_rows_to_drop = data[data['contact_duration'] == 0].index
 
 # COMMAND ----------
 
-# Drop those rows from the dataframe
+# Drop these rows from the dataframe
 data.drop(index_rows_to_drop, inplace = True)
 
 # COMMAND ----------
@@ -671,11 +679,11 @@ data.drop(index_rows_to_drop, inplace = True)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC We already saw that the distribution of data points can be visualize using a stripplot. When we plotted some variable of panguins dataset, we could have nicely observed each data point plotted in a Figure and there was minimal overlapping of values. Now create a stripplot of 'contact_duration' variable from Bank marketing dataset to see how a stripplot looks like when you have thousands of records available. 
+# MAGIC We already saw that the distribution of data points can be visualized using a stripplot. When we plotted some feature of the penguins dataset, we could nicely observe each data point in the figure and there was minimal overlap of values. Now we create a stripplot of the 'contact_duration' feature from the Bank marketing dataset to see how a stripplot looks like when you have thousands of records available. 
 
 # COMMAND ----------
 
-# TASK 10 >>> Create a stripplot of 'contact_duration' variable
+# TASK 10 >>> Create a stripplot of the 'contact_duration' feature
 #         >>> Set a Figure size: (13,9)
 
 # COMMAND ----------
@@ -685,16 +693,16 @@ data.drop(index_rows_to_drop, inplace = True)
 
 # COMMAND ----------
 
-# TASK 11 >>> Create a countplot of 'job' variable to see client´s job and corresponding counts
-#         >>> Set a Figure size: (13,9)
-#         >>> Order counts from the most common job
-#         >>> Set the rotation of x-axis tick labels to 45 degrees using Matplotlib´s xticks()
-#         >>> Set a color palette to 'Set3'
+# TASK 11 >>> Create a countplot of the 'job' feature to see the client's job and corresponding counts
+#         >>> Set a the figure size to (13,9)
+#         >>> Order the counts by the most common job
+#         >>> Set the rotation of x-axis tick labels to 45 degrees using Matplotlib's xticks()
+#         >>> Set the color palette to 'Set3'
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Now we´ll look at how many call have been performed during respective months. We are missing January in the dataset for some reason, but don´t worry about it. To correctly visualize the months of the year we need to specify their order.
+# MAGIC Now we'll look at how many calls have been performed during the respective months. We are missing January in the dataset for some reason, but don't worry about it. To correctly visualize the months of the year we need to specify their order.
 
 # COMMAND ----------
 
@@ -713,10 +721,10 @@ data.month = data.month.astype(order_cat)
 
 # COMMAND ----------
 
-# TASK 12 >>> Create a countplot of 'month' variable to see how many call have been performed trhough months
-#         >>> Set a Figure size: (13,9)
-#         >>> Set a color palette to 'Pastel1'
-#         >>> Set the rotation of x-axis tick labels to 45 degrees using Matplotlib´s xticks()
+# TASK 12 >>> Create a countplot of 'month' variable to see how many calls have been performed through the months
+#         >>> Set the figure size to (13,9)
+#         >>> Set the color palette to 'Pastel1'
+#         >>> Set the rotation of x-axis tick labels to 45 degrees using Matplotlib's xticks()
 
 # COMMAND ----------
 
@@ -725,4 +733,4 @@ data.month = data.month.astype(order_cat)
 # MAGIC 
 # MAGIC [Moro et al., 2014] S. Moro, P. Cortez and P. Rita. A Data-Driven Approach to Predict the Success of Bank Telemarketing. Decision Support Systems, Elsevier, 62:22-31, June 2014
 # MAGIC 
-# MAGIC Some material adapted for RBI internal purposes with full permissions from original authors. [Source](https://github.com/zatkopatrik/authentic-data-science) 
+# MAGIC Material adapted for RBI internal purposes with full permissions from original authors. [Source](https://github.com/zatkopatrik/authentic-data-science) 

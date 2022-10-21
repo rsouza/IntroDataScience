@@ -34,7 +34,7 @@ begin = time.time()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Many people would say the breakthrough of deep learning in Natural Language Processing started with the introduction of word embeddings. Rather than using the words themselves as features, neural network methods typically take as input dense, relatively low-dimensional vectors that model the meaning and usage of a word. Word embeddings were first popularized through the [Word2Vec](https://arxiv.org/abs/1301.3781) model, developed by Thomas Mikolov and colleagues at Google. Since then, scores of alternative approaches have been developed, such as [GloVe](https://nlp.stanford.edu/projects/glove/) and [FastText](https://fasttext.cc/) embeddings. In this notebook, we'll explore word embeddings with the original Word2Vec approach, as implemented in the [Gensim](https://radimrehurek.com/gensim/) library. 
+# MAGIC Many people would say the breakthrough of deep learning in natural language processing started with the introduction of word embeddings. Rather than using the words themselves as features, neural network methods typically take as input dense, relatively low-dimensional vectors that model the meaning and usage of a word. Word embeddings were first popularized through the [Word2Vec](https://arxiv.org/abs/1301.3781) model, developed by Thomas Mikolov and colleagues at Google. Since then, scores of alternative approaches have been developed, such as [GloVe](https://nlp.stanford.edu/projects/glove/) and [FastText](https://fasttext.cc/) embeddings. In this notebook, we'll explore word embeddings with the original Word2Vec approach, as implemented in the [Gensim](https://radimrehurek.com/gensim/) library.
 
 # COMMAND ----------
 
@@ -44,7 +44,7 @@ begin = time.time()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Training word embeddings with Gensim couldn't be easier. The only thing we need is a corpus of sentences in the language under investigation. For our experiments, we're going to use the abstracts of all ArXiv papers in the category cs.CL (computation and language) that were published before mid-April 2021 — a total of around 25,000 documents. We tokenize these abstracts with spaCy. 
+# MAGIC Training word embeddings with Gensim couldn't be easier. The only thing we need is a corpus of sentences in the language of interest. For our experiments we're going to use the abstracts of all ArXiv papers in the category cs.CL (computation and language) that were published before mid-April 2021 — a total of around 25,000 documents. We tokenize these abstracts with _spaCy_.
 
 # COMMAND ----------
 
@@ -67,12 +67,12 @@ documents = Corpus(os.path.join(os.getcwd(), "data/arxiv/arxiv.csv"))
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC When we train our word embeddings, gensim allows us to set a number of parameters. The most important of these are `min_count`, `window`, `vector_size` and `sg`:
+# MAGIC When we train our word embeddings, Gensim allows us to set a number of parameters. The most important of these are `min_count`, `window`, `vector_size` and `sg`:
 # MAGIC 
-# MAGIC - `min_count` is the minimum frequency of the words in our corpus. For infrequent words, we just don't have enough information to train reliable word embeddings. It therefore makes sense to set this minimum frequency to at least 10. In these experiments, we'll set it to 100 to limit the size of our model even more.
+# MAGIC - `min_count` is the minimum frequency of the words in our corpus. For infrequent words we just don't have enough information to train reliable word embeddings. It therefore makes sense to set this minimum frequency to at least 10. In these experiments, we'll set it to 100 to limit the size of our model even more.
 # MAGIC - `window` is the number of words to the left and to the right that make up the context that word2vec will take into account.
 # MAGIC - `vector_size` is the dimensionality of the word vectors. This is generally between 100 and 1000. This dimensionality often forces us to make a trade-off: embeddings with a higher dimensionality are able to model more information, but also need more data to train.
-# MAGIC - `sg`: there are two algorithms to train word2vec: skip-gram and CBOW. Skip-gram tries to predict the context on the basis of the target word; CBOW tries to find the target on the basis of the context. By default, Gensim uses CBOW (`sg=0`).
+# MAGIC - `sg`: there are two algorithms to train `Word2Vec`: skip-gram and CBOW. Skip-gram tries to predict the context on the basis of the target word; CBOW tries to find the target on the basis of the context. By default, Gensim uses CBOW (`sg=0`).
 # MAGIC 
 # MAGIC We'll investigate the impact of some of these parameters later.
 
@@ -90,7 +90,7 @@ model = gensim.models.Word2Vec(documents, min_count=100, window=5, vector_size=1
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Let's take a look at the trained model. The word embeddings are on its `wv` attribute, and we can access them by the using the token as key. For example, here is the embedding for *nlp*, with the requested 100 dimensions.
+# MAGIC Let's take a look at the trained model. The word embeddings are on its `wv` attribute and we can access them by  using the token as key. For example, here is the embedding for *nlp*, with the requested 100 dimensions.
 
 # COMMAND ----------
 
@@ -118,7 +118,7 @@ model.wv.similar_by_word("bert", topn=10)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Interestingly, we can look for words that are similar to a set of words and dissimilar to another set of words at the same time. This allows us to look for analogies of the type *BERT is to a transformer like an LSTM is to ...*. Our embedding model correctly predicts that LSTMs are a type of RNN, just like BERT is a particular type of transformer.
+# MAGIC Interestingly, we can look for words that are similar to a set of words and dissimilar to another set of words at the same time. This allows us to look for analogies of the type *"BERT is to a transformer like an LSTM is to ..."*. Our embedding model correctly predicts that LSTMs are a type of RNN, just like BERT is a particular type of transformer.
 
 # COMMAND ----------
 
@@ -127,7 +127,7 @@ model.wv.most_similar(positive=["transformer", "lstm"], negative=["bert"], topn=
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Similarly, we can also zoom in on one of the meanings of ambiguous words. For example, in NLP *tree* has a very specific meaning, which is obvious from its nearest neighbours *constituency*, *parse*, *dependency* and *syntax*. 
+# MAGIC Similarly, we can also zoom in on one of the meanings of ambiguous words. For example, in NLP *tree* has a very specific meaning, which is obvious from its nearest neighbours *constituency*, *parse*, *dependency* and *syntax*.
 
 # COMMAND ----------
 
@@ -145,7 +145,7 @@ model.wv.most_similar(positive=["tree"], negative=["syntax"], topn=10)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Finally, we can present the word2vec model with a list of words and ask it to identify the odd one out. It then uses the word embeddings to identify the word that is least similar to the other ones. For example, in the list *lstm cnn gru svm transformer*, it correctly identifies *svm* as the only non-neural model. In the list *bert word2vec gpt-2 roberta xlnet*, it correctly singles out *word2vec* as the only non-transormer model. In *word2vec bert glove fasttext elmo*, *bert* is singled out as the only transformer.
+# MAGIC Finally, we can present the `WordVec` model with a list of words and ask it to identify the odd one out. It then uses the word embeddings to identify the word that is least similar to the other ones. For example, in the list *lstm cnn gru svm transformer*, it correctly identifies *svm* as the only non-neural model. In the list *bert word2vec gpt-2 roberta xlnet*, it correctly singles out *word2vec* as the only non-transormer model. In *word2vec bert glove fasttext elmo*, *bert* is singled out as the only transformer.
 
 # COMMAND ----------
 
@@ -161,11 +161,11 @@ print(model.wv.doesnt_match("word2vec bert glove fasttext elmo".split()))
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Let's now visualize some of our embeddings. To plot embeddings with a dimensionality of 100 or more, we first need to map them to a dimensionality of 2. We do this with the popular [t-SNE](https://lvdmaaten.github.io/tsne/) method. T-SNE, short for t-distributed Stochastic Neighbor Embedding, helps us visualize high-dimensional data by mapping similar data to nearby points and dissimilar data to distance points in the low-dimensional space.
+# MAGIC Let's now visualize some of our embeddings. To plot embeddings with a dimensionality of 100 or more, we first need to map them to a dimensionality of 2. We do this with the popular [t-SNE](https://lvdmaaten.github.io/tsne/) method. T-SNE, short for **t-distributed Stochastic Neighbor Embedding**, helps us visualize high-dimensional data by mapping similar data to nearby points and dissimilar data to distant points in the low-dimensional space.
 # MAGIC 
 # MAGIC T-SNE is present in [Scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.manifold.TSNE.html). To run it, we just have to specify the number of dimensions we'd like to map the data to (`n_components`), and the similarity metric that t-SNE should use to compute the similarity between two data points (`metric`). We're going to map to 2 dimensions and use the cosine as our similarity metric. Additionally, we use PCA as an initialization method to remove some noise and speed up computation. The [Scikit-learn user guide](https://scikit-learn.org/stable/modules/manifold.html#t-sne) contains some additional tips for optimizing performance. 
 # MAGIC 
-# MAGIC Plotting all the embeddings in our vector space would result in a very crowded figure where the labels are hardly legible. Therefore we'll focus on a subset of embeddings by selecting the 200 most similar words to a target word. 
+# MAGIC Plotting all the embeddings in our vector space would result in a very crowded figure where the labels are hardly legible. Therefore we'll focus on a subset of embeddings by selecting the 200 most similar words to a target word.
 
 # COMMAND ----------
 
@@ -178,7 +178,7 @@ mapped_embeddings = TSNE(n_components=2, metric='cosine', init='pca', square_dis
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC If we take *bert* as our target word, the figure shows some interesting patterns. In the immediate vicinity of *bert*, we find the similar transformer models that we already identified as its nearest neighbours earlier: *xlm*, *mbert*, *gpt-2*, and so on. Other parts of the picture have equally informative clusters of NLP tasks and benchmarks (*squad* and *glue*), languages (*german* and *english*), neural-network architectures (*lstm*, *gru*, etc.), embedding types (*word2vec*, *glove*, *fasttext*, *elmo*), etc. 
+# MAGIC If we take *bert* as our target word, the figure shows some interesting patterns. In the immediate vicinity of *bert*, we find the similar transformer models that we already identified as its nearest neighbours earlier: *xlm*, *mbert*, *gpt-2*, and so on. Other parts of the picture have equally informative clusters of NLP tasks and benchmarks (*squad* and *glue*), languages (*german* and *english*), neural-network architectures (*lstm*, *gru*, etc.), embedding types (*word2vec*, *glove*, *fasttext*, *elmo*), etc.
 
 # COMMAND ----------
 
@@ -198,7 +198,7 @@ for i, txt in enumerate(selected_words):
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Word embeddings are one of the most exciting trends on Natural Language Processing since the 2000s. They allow us to model the meaning and usage of a word, and discover words that behave similarly. This is crucial for the generalization capacity of many machine learning models. Moving from raw strings to embeddings allows them to generalize across words that have a similar meaning, and discover patterns that had previously escaped them.
+# MAGIC Word embeddings are one of the most exciting trends on Natural Language Processing since the 2000s. They allow us to model the meaning and usage of a word, and discover words that behave similarly. This is crucial for the generalization capacity of many machine learning models. Moving from raw strings to embeddings allows them to generalize across words that have a similar meaning, and to discover patterns that had previously escaped them.
 
 # COMMAND ----------
 

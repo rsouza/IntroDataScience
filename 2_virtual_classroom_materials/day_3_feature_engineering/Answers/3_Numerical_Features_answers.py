@@ -1,4 +1,10 @@
 # Databricks notebook source
+# MAGIC %md
+# MAGIC # 0. Loading libraries and data
+
+# COMMAND ----------
+
+# Import pandas library 
 import pandas as pd
 
 import warnings
@@ -14,14 +20,14 @@ from sklearn.preprocessing import MinMaxScaler
 
 # COMMAND ----------
 
-# Load avocado dataset and store it to variable dataframe
+# Load avocado dataset and store it in the variable dataframe
 dataframe = pd.read_csv('../Data/avocado.csv')
 # Get the first 5 rows
 dataframe.head()
 
 # COMMAND ----------
 
-# Print a summary of dataframe
+# Print a summary of the dataframe
 dataframe.info()
 
 # COMMAND ----------
@@ -42,7 +48,7 @@ data.describe()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC As we can see, our variables have different magnitudes/scales. The minimum and maximum values of the variables are different. For example, the minimum value and maximum value of average price for avocado are 0.44 and 3.25, respectively. For small bags of avocados sold, the minimum and maximum values are 0 and 5.719097e+06, respectively.
+# MAGIC As we can see, our variables have different magnitudes/scales. The minimum and maximum values of the variables are different. For example, the minimum and maximum value for the average price of avocados are 0.44 and 3.25, respectively. For small bags of avocados sold, the minimum and maximum values are 0 and 1.338459e+07, respectively.
 
 # COMMAND ----------
 
@@ -54,13 +60,13 @@ for col in['AveragePrice', 'Total Volume', 'Small Hass Avocado','Large Hass Avoc
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The ranges of our variables are different. 
+# MAGIC The ranges of our variables are all different! 
 # MAGIC 
 # MAGIC # 2. Feature Scaling
 # MAGIC 
-# MAGIC Models such as logistic regression, linear regression, or other models that involve a matrix are very sensitive to different scales of input variables. If we use such data for model fitting, the result might end up creating a bias. Therefore feature scaling techniques are used before model fitting.
+# MAGIC Models such as logistic regression, linear regression – or other models that involve a matrix – are very sensitive to different scales of input variables. If we use such data for model fitting, the result might end up creating a bias. Therefore feature scaling techniques are used before model fitting.
 # MAGIC 
-# MAGIC As you can guess, feature scaling techniques change the scale of the variables. There are several ways how you can scale your features. In this notebook, we'll demonstrate **MinMaxScaling** technique that scales variables to their minimum and maximum values. `scikit learn` offers `MinMaxScaler` class for this purpose. You can find the documentation [here](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html).
+# MAGIC As you can guess, feature scaling techniques change the scale of the variables. There are several ways how you can scale your features. In this notebook we'll demonstrate the **MinMaxScaling** technique that scales variables to their minimum and maximum values. scikit learn offers the `MinMaxScaler` class for this purpose. You can find the documentation [here](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html).
 # MAGIC 
 # MAGIC The formula for min-max scaling is: 
 # MAGIC 
@@ -85,17 +91,17 @@ X_train.shape, X_test.shape
 
 # COMMAND ----------
 
-# Create MinMaxScaler object
+# Create a MinMaxScaler object
 scaler = MinMaxScaler()
 
 # COMMAND ----------
 
-# Fit X_train data with scaler: this computes and saves the minimum and maximum values 
+# Fit X_train with scaler: this computes and saves the minimum and maximum values 
 scaler.fit(X_train)
 
 # COMMAND ----------
 
-# We can access the maximum values using .data_max attribute
+# We can access the maximum values using the .data_max attribute
 scaler.data_max_
 
 # COMMAND ----------
@@ -105,13 +111,13 @@ scaler.data_min_
 
 # COMMAND ----------
 
-# Transform X_train and X_test with scaler and store it in variables X_train_scaled and X_test_scaled
+# Transform X_train and X_test with scaler and store it in the variables X_train_scaled and X_test_scaled
 X_train_scaled = scaler.transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
 # COMMAND ----------
 
-# let's have a look at the scaled training dataset
+# Let's have a look at the scaled training dataset
 print('Mean: ', X_train_scaled.mean(axis=0))
 print('Standard Deviation: ', X_train_scaled.std(axis=0))
 print('Minimum value: ', X_train_scaled.min(axis=0))
@@ -119,7 +125,12 @@ print('Maximum value: ', X_train_scaled.max(axis=0))
 
 # COMMAND ----------
 
-# let's have a look at the scaled testing dataset
+# MAGIC %md
+# MAGIC After this rescaling, all of the features have a range from 0 to 1.
+
+# COMMAND ----------
+
+# Let's have a look at the scaled testing dataset
 print('Mean: ', X_test_scaled.mean(axis=0))
 print('Standard Deviation: ', X_test_scaled.std(axis=0))
 print('Minimum value: ', X_test_scaled.min(axis=0))
@@ -128,21 +139,21 @@ print('Maximum value: ', X_test_scaled.max(axis=0))
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC After this rescaling, all of the features have the range between 0 and 1.
+# MAGIC Note that the range of the features in the test set is not exactly 0 to 1. This is because `MinMaxScaler` has only been trained on the training data `X_train`, not on `X_test`, to prevent data leakage!
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ### TASK
 # MAGIC 
-# MAGIC Imagine you've normalized the data using MinMaxScaler and delivered your work to the Senior Data scientist. He/she proposed you to scale the data using different scaling technique. The technique should transform data such that its distribution will have a mean value 0 and standard deviation of 1. Find the right method [here](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.preprocessing).
+# MAGIC Imagine you've normalized the data using `MinMaxScaler` and delivered your work to the Senior Data scientist. He/she proposed you to scale the data using different scaling technique. The technique should transform the data such that its distribution will have a mean value of 0 and a standard deviation of 1. Find the right method [here](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.preprocessing).
 
 # COMMAND ----------
 
-# TASK >>>> Import selected Scaling class
+# TASK >>>> Import the selected Scaling class
 from sklearn.preprocessing import StandardScaler
 
-# TASK >>>> Create scaler object
+# TASK >>>> Create a scaler object
 scaler_technique = StandardScaler()
 
 # COMMAND ----------
@@ -159,6 +170,7 @@ scaler_technique.mean_
 
 # Transform X_train using scaler_technique and store it in variable X_training_scaled
 X_training_scaled = scaler_technique.transform(X_train)
+
 # Print X_training_scaled
 X_training_scaled
 
@@ -166,6 +178,7 @@ X_training_scaled
 
 # Repeat the scaling also for X_test and store it in variable X_testing_scaled
 X_testing_scaled = scaler_technique.transform(X_test)
+
 # Print X_testing_scaled
 X_testing_scaled
 
@@ -186,4 +199,4 @@ print('Standard Deviation: ', X_training_scaled.std(axis=0))
 # MAGIC 
 # MAGIC Data license: Database: Open Database
 # MAGIC 
-# MAGIC Some material adapted for RBI internal purposes with full permissions from original authors. [Source](https://github.com/zatkopatrik/authentic-data-science) 
+# MAGIC Material adapted for RBI internal purposes with full permissions from original authors. [Source](https://github.com/zatkopatrik/authentic-data-science)

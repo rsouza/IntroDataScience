@@ -16,9 +16,9 @@ import pandas as pd
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The scikit-learn library has an implementation of the k-means algorithm. Let’s apply it to a set of randomly generated blobs, whose labels we throw away. 
+# MAGIC The scikit-learn library has an implementation of the _k-means algorithm_. Let’s apply it to a set of randomly generated blobs whose labels we throw away. 
 # MAGIC 
-# MAGIC make_blobs() function generates a data set for clustering. Investigate the shape of the X https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_blobs.html
+# MAGIC The `make_blobs()` function generates a data set for clustering. You can read more about how this works in the [documention](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_blobs.html).
 # MAGIC 
 # MAGIC __TO DO__: Find out how many instances with how many features were generated.
 
@@ -27,6 +27,7 @@ import pandas as pd
 # Task
 from sklearn.datasets import make_blobs
 X,y = make_blobs(random_state=42) 
+# Your code starts here
 print(X.shape)
 
 # COMMAND ----------
@@ -41,9 +42,10 @@ plt.scatter(X[:,0],X[:,1]);
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC In this toy example you can guess the number of clusters. Let’s see if the k-means algorithm can recover these clusters. 
+# MAGIC In this toy example you can guess the number of clusters by eye. Let's see if the k-means algorithm can recover these clusters as well. 
 # MAGIC 
-# MAGIC __TO DO__: Import KMeans and create the instance of the k-means model by giving it the number of clusters 3 as a hyperparameter. Fit the model to your dataset X. Notice that we do not feed labels y into the model. 
+# MAGIC __TO DO__: Import `KMeans` and create an instance of the k-means model by giving it 3 as a hyperparameter for the number of clusters. Fit the model to your dataset X.    
+# MAGIC Notice that we do not feed the labels y into the model! 
 # MAGIC 
 # MAGIC https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html
 
@@ -57,9 +59,9 @@ model.fit(X)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC __TO DO__: assign centroids to the variable centroids and print it. Use KMeans model's attribute cluster_centers_. 
+# MAGIC __TO DO__: Assign the centroids to the variable `centroids` and print it. For this use the KMeans model's attribute `cluster_centers_`. 
 # MAGIC 
-# MAGIC - The centroids are important because they are what enables KMeans to assign new, previously unseen points to the existing clusters
+# MAGIC - The centroids are important because they are what enables KMeans to assign new, previously unseen points to the existing clusters!
 
 # COMMAND ----------
 
@@ -70,7 +72,7 @@ print(centroids)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC __TO DO__: assign predicted class labels to the variable labels and print it. Use KMeans model's attribute labels_
+# MAGIC __TO DO__: Assign the predicted class labels to the variable `labels` and print it. For this use the KMeans model's attribute `labels_`.
 
 # COMMAND ----------
 
@@ -91,9 +93,9 @@ plt.scatter(centroids[:,0], centroids[:,1], s=100, color="red"); # Show the cent
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC __TO DO__: return KMeans' performance measure inertia  with an attribute inertia_
+# MAGIC __TO DO__: Return KMeans' performance measure _inertia_  using the attribute `inertia_`.
 # MAGIC 
-# MAGIC - inertia = Sum of squared distances of samples to their closest cluster center. The lower the inertia the better. 
+# MAGIC - inertia = Sum of squared distances of samples to their closest cluster center. The lower the inertia the better.
 
 # COMMAND ----------
 
@@ -103,7 +105,7 @@ model.inertia_
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Select the number of clusters where inertia does not decrease significantly anymore = Elbow rule.
+# MAGIC Next, we select the number of clusters where inertia stops decreasing significatly. (This is only a rule of thumb.)
 
 # COMMAND ----------
 
@@ -120,7 +122,8 @@ plt.ylabel('$J(C_k)$');
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC __TO DO__: Use the .predict() method of model to predict the cluster labels of new_points. Assign them to variable named new_labels. Notice that KMeans can assign previously unseen points to the clusters it has already found!
+# MAGIC __TO DO__: Use the `.predict()` method of the model to predict the cluster labels of `new_points`. Assign them to a new variable named `new_labels`.    
+# MAGIC Notice that KMeans can assign previously unseen points to the clusters it has already found!
 
 # COMMAND ----------
 
@@ -135,9 +138,9 @@ plt.scatter(new_points[:,0], new_points[:,1], c=new_labels, marker = 'X', s = 30
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ### Scaling, numerical variables
+# MAGIC ### Scaling numerical variables
 # MAGIC 
-# MAGIC Read the data set below. 
+# MAGIC Read the data set below.
 
 # COMMAND ----------
 
@@ -152,11 +155,9 @@ print(customers.shape)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Annual income has a very different scale than other two numerical features. 
+# MAGIC THe 'Annual Income (k$)' has a very different scale compared to the other two numerical features. 
 # MAGIC 
-# MAGIC For distance based methods scaling helps if the features have very different scales. We will scale here all numerical features with StandardScaler(). It standardizes features by removing the mean and scales to unit variance
-# MAGIC 
-# MAGIC https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html
+# MAGIC For distance based methods scaling is important if the original features have very different scales. In this example we will scale all numerical features with [`StandardScaler()`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html). It standardizes features by shifting the mean to zero and scaling everything to a unit variance.
 
 # COMMAND ----------
 
@@ -174,7 +175,8 @@ customers.info()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC __TO DO__: fit the KMeans() model to the customers dataset. **You will get an error**. Don't worry, this one is on purpose. Proceed with the next cell after the error.
+# MAGIC __TO DO__: Fit the KMeans model to the customers dataset.    
+# MAGIC **Note:** You will get an **error**. Don't worry, this one is on purpose. Proceed with the next cell after the error.
 
 # COMMAND ----------
 
@@ -195,7 +197,7 @@ customers = pd.get_dummies(customers, drop_first=True)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC __TO DO__: Fit the KMeans model again to the customers data
+# MAGIC __TO DO__: Again, try to fit the KMeans model to the customers data. Now there should not be an error.
 
 # COMMAND ----------
 
@@ -206,9 +208,9 @@ KMeans().fit(customers).labels_
 
 # MAGIC %md
 # MAGIC ## DBSCAN  
-# MAGIC #### This part is voluntary. Do it if you have managed to finish the first part before the time limit  
+# MAGIC #### This part is voluntary. Do it if you have managed to finish the first part before the time limit.  
 # MAGIC 
-# MAGIC Density-Based Spatial Clustering of Applications with Noise. The algorithm finds core samples of high density and expands clusters from them. It is good for data which contain clusters of similar density.
+# MAGIC DBSCAN: Density-Based Spatial Clustering of Applications with Noise. This algorithm finds core samples of high density and expands clusters from them. It is good for data which contains clusters of similar density.
 
 # COMMAND ----------
 
@@ -222,7 +224,7 @@ import pandas as pd
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Import dataset and plot it. Clearly there should be two clusters
+# MAGIC Import the dataset and plot it. Clearly there should be two clusters:
 
 # COMMAND ----------
 
@@ -232,7 +234,7 @@ plt.scatter(x_moons[:, 0], x_moons[:, 1], c=y_moons);
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC KMeans fails to find appropriate clusters as it searches for convex shapes. See below.
+# MAGIC KMeans fails to find appropriate clusters in this example as it searches for **convex shapes**. Take a look at the plot below.
 
 # COMMAND ----------
 
@@ -242,7 +244,7 @@ plt.scatter(x_moons[:, 0], x_moons[:, 1], c=kmeans_labels);
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC __TO DO__: Initiate DBSCAN, assign to dbscan variable and fit the model with eps=0.05 and min_samples=5.  
+# MAGIC __TO DO__: Initiate DBSCAN  with `eps=0.05` and` min_samples=5` and assign it to the variable `dbscan`. Then fit the model to `x_moons`.
 
 # COMMAND ----------
 
@@ -253,7 +255,7 @@ dbscan.fit(x_moons)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC __TO DO__: Return labels of dbscan with an attribute labels_ and assign the labels to dbscan_labels variable
+# MAGIC __TO DO__: Return the labels of `dbscan` with the attribute `labels_`. Assign the labels to the variable `dbscan_labels`.
 
 # COMMAND ----------
 
@@ -264,7 +266,7 @@ dbscan_labels
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Notice that there are labels = -1. These denote outliers
+# MAGIC Notice that there are labels with value -1. This -1 denotes outliers.
 
 # COMMAND ----------
 
@@ -283,7 +285,7 @@ plt.scatter(x_moons[:, 0], x_moons[:, 1], c=dbscan_labels, alpha=0.7);
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC __TO DO__: indices of the core instances are available in the core_sample_indices_ attribute. Assign them to comps_idx variable
+# MAGIC __TO DO__: The indices of the core instances are available through the `core_sample_indices_` attribute. Assign them to the `comps_idx` variable.
 
 # COMMAND ----------
 
@@ -293,7 +295,7 @@ comps_idx = dbscan.core_sample_indices_
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The core instances are stored in the components_ attribute. Below we create a mask for indices which are core instances
+# MAGIC The core instances are stored in the `components_` attribute. Below we create a mask for indices which are core instances.
 
 # COMMAND ----------
 
@@ -311,9 +313,9 @@ plt.title('Core vs non-core instances');
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The DBSCAN clustering did not return expected results. Let's try different eps and min_samples
+# MAGIC The DBSCAN clustering did not return the expected results. Let's try different `eps` and `min_samples` hyperparameters. 
 # MAGIC 
-# MAGIC __TO DO__: fit DBSCAN again with eps=0.2 and min_samples=5. Plot the resulting clusters
+# MAGIC __TO DO__: Instantiate and fit DBSCAN again with `eps=0.2` and `min_samples=5`. Plot the resulting clusters.
 
 # COMMAND ----------
 
@@ -326,7 +328,7 @@ plt.scatter(x_moons[:, 0], x_moons[:, 1], c=dbscan_labels, alpha=0.7);
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC **Notice that DBSCAN class does not have .predict() method**, although it has a fit_predict() method. It cannot predict a cluster for a new instance
+# MAGIC **Notice that DBSCAN class does not have a `.predict()` method**, although it has a `fit_predict()` method. This is because DBSCAN cannot predict a cluster for a new instance!
 
 # COMMAND ----------
 

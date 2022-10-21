@@ -1,4 +1,10 @@
 # Databricks notebook source
+# MAGIC %md
+# MAGIC # 0. Loading libraries and Classes
+
+# COMMAND ----------
+
+# Import pandas and numpy libraries
 import pandas as pd
 
 import warnings
@@ -18,9 +24,9 @@ from sklearn.preprocessing import LabelEncoder
 # MAGIC %md
 # MAGIC ### Why should we use Encoding ? 
 # MAGIC 
-# MAGIC As we already know, we can't throw the data right away into machine learning models. We need to treat them in a specific way, so our model's algorithm can work with them. **Machine learning algorithm work with vectors of numbers**, so when it comes to values represented as a string, there is an issue. `scikit learn`, an industry-standard library using for machine learning, does not accept categorical values represented as strings as well. 
+# MAGIC As we already know, we can't throw the data right away into machine learning models. We need to treat them in a specific way so our model's algorithm can work with them. **Machine learning algorithm work with vectors of numbers**, so when it comes to values represented as a string there is an issue. `scikit learn`, an industry-standard library used for machine learning, does not accept categorical values represented as strings as well.
 # MAGIC 
-# MAGIC Imagine we have categorical variables stored as string in the dataset. For understanding how the encoding looks like, here's a simple example.
+# MAGIC Imagine we have categorical variables stored as string in the dataset. For understanding what the encoding looks like, here's a simple example.
 
 # COMMAND ----------
 
@@ -39,18 +45,18 @@ map_dataframe
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The unique categories of 'color' column have been converted into numerical form as 1 when the 'black' category is present and 0 otherwise. Of course, encoding categorical features using mapping or replacing can be very tedious and not effective if we have many categorical features and corresponding categories. Fortunately, you can find several encoding methods that serve for different encoding challenges. Let's move on...
+# MAGIC The unique categories of the 'color' column have been converted into numerical form as 1 when the 'black' category is present and 0 otherwise. Of course, encoding categorical features using mapping or replacing can be very tedious and not effective if we have many categorical features and corresponding categories. Fortunately, you can find several encoding methods that serve for different encoding challenges.
 # MAGIC 
 # MAGIC -------
 # MAGIC 
-# MAGIC Categorical variables take only limited numbers of possible values/categories and must be converted into a numerical form. We should perform this converting over **the training data** and propagate them to the unseen data (for example holdout data). 
+# MAGIC Categorical variables take only a limited number of possible values/categories and must be converted into numerical form. We should perform this conversion over the **training data** and propagate them to the unseen data (for example holdout data). 
 # MAGIC 
-# MAGIC **This approach's main reason is that we do not know whether the future data will have all the categories present in the training data**. There could also be fewer or more categories. Therefore the encoders must learn patterns from the training data and use those learned categories in both training and testing sets.
+# MAGIC **The main reason for this approach is that we do not know whether the future data will have all the categories present in the training data**. There could also be fewer or more categories. Therefore the encoders must learn patterns from the training data and use those learned categories in both training and testing sets.
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC In this notebook we will use Titanic and Mushrooms datasets. 
+# MAGIC In this notebook we will use the Titanic and the Mushrooms datasets. 
 
 # COMMAND ----------
 
@@ -61,7 +67,7 @@ data.head()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Only for this demonstration, let's capture only the first letter of Cabin because there are many categories.
+# MAGIC For this demonstration, let's capture only the first letter of 'Cabin'.
 
 # COMMAND ----------
 
@@ -87,9 +93,9 @@ X_train.shape, X_test.shape
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ### Cardinality the of categorical features
+# MAGIC ### Cardinality of the categorical features
 # MAGIC 
-# MAGIC Let's explore how many unique values has each of the categorical features.
+# MAGIC Let's explore how many unique values each of the categorical features has.
 
 # COMMAND ----------
 
@@ -109,7 +115,7 @@ for column in X_train.columns:
 # MAGIC 
 # MAGIC # 1. One-Hot Encoding with Pandas
 # MAGIC 
-# MAGIC We can use Pandas method `pd.get_dummies()` to encode the categorical features. In the real world, this encoding method shouldn't be used in ML pipelines (computationally and memory ineffective), however in case of some simple data analysis, you should be able to use it. We'll look at how it works and what are the advantages and limitations.
+# MAGIC We can use Pandas method `pd.get_dummies()` to encode the categorical features. In the real world this encoding method shouldn't be used in ML pipelines (computationally and memory ineffective). However, in the case of some simple data analysis you should be able to use it. We'll look at how it works and what its advantages and limitations are.
 
 # COMMAND ----------
 
@@ -124,9 +130,9 @@ type(dummies)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The main advantages are that `get_dummies()` returns a DataFrame and preserved feature names for dummy variables. Also, we can use this method even if our data contain missing values. 
+# MAGIC The main advantages are that `get_dummies()` returns a DataFrame and preserves feature names for dummy variables. Also, we can use this method even if our data contains missing values. 
 # MAGIC 
-# MAGIC Here it was created 1 column for the female category and 1 column for the male category according to its presence. We can compare created dummy variables to the original 'Sex' variable using concatenation to see what happened.
+# MAGIC In this example it has created one column for the female category and one column for the male category according to its presence. We can compare the created dummy variables to the original 'Sex' variable using concatenation to see what happened.
 
 # COMMAND ----------
 
@@ -136,10 +142,9 @@ result
 
 # COMMAND ----------
 
-# TASK 1 >>>> Get dummy variables for column 'Embarked'
-#             Concat the original 'Embarked' Series with created dummy variables Series
-#             Store it in variable result_2
-
+# TASK 1 >>>> Get dummy variables for the column 'Embarked'
+#             Concat the original 'Embarked' Series with the created dummy variables Series
+#             Store it in the variable result_2
 
 # COMMAND ----------
 
@@ -148,12 +153,12 @@ result
 # MAGIC 
 # MAGIC Categorical variables should be encoded by creating *k*-1 binary variables. What does it mean, and why should we use it? 
 # MAGIC 
-# MAGIC Here *k* represents the number of distinct categories. In the feature 'Sex' there are 2 categories of gender: male or female, so *k* = 2. We only need to create 1 binary variable (*k*-1 = 1) and still have all the information we need. In other words, if the value is 0 in all the binary variables, then it must be 1 in the final (not present) binary variable.
+# MAGIC Here *k* represents the number of distinct categories. In the feature 'Sex' there are only two categories of sex: male or female, so *k* = 2. We only need to create one binary variable (*k*-1 = 1) and still have all the information contained in the original dataset. In other words, if the value is 0 in all the binary variables, then it must be 1 in the final (not present) binary variable.
 # MAGIC For example, if we have the variable with 5 categories (*k* = 5), we would create 4 binary variables (*k* - 1 = 4). 
 # MAGIC 
 # MAGIC This approach helps to eliminate the redundancy of the information. 
 # MAGIC 
-# MAGIC To create *k*-1 dummy variables we specify parameter `drop_first = True` to drop first binary variable.
+# MAGIC To create *k*-1 dummy variables we specify parameter `drop_first = True` to drop the first binary variable.
 
 # COMMAND ----------
 
@@ -173,29 +178,28 @@ dummy_data
 
 # COMMAND ----------
 
-# TASK 2 >>>> Get dummy variable for entire test set and store it in variable dummy_data_2
-
+# TASK 2 >>>> Get dummy variables for the entire test set and store them in the variable dummy_data_2
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC **KEY LEARNING** We can notice that training and testing sets have a different number of dummy variables. In the testing set, there is no category Cabin T. Therefore dummy variables for this category can not be created. As the training set and the testing set must be of the same shape, `scikit learn's` models won't accept these as inputs. **Our entire modeling pipeline can fail because of this! We did not save the "state" of how many dummies should leave this part.** The pipeline fails, model does not predict, money are lost, people scream in panic, senior engineers debug over night and protesters burn the cars in the streets. I think you get the point.
+# MAGIC **KEY LEARNING** We can notice that training and testing sets have a different number of dummy variables. In the testing set there is no category _'Cabin T'_. Therefore dummy variables for this category cannot be created. As the training set and the testing set must be of the same shape, `scikit learn's` models won't accept these as inputs. **Our entire modeling pipeline can fail because of this! We did not save the "state" of how many dummies should leave this part.** The the pipeline fails, our model does not predict, money is lost, people scream in panic, senior engineers debug over night and protesters burn the cars in the streets! I think you get the point.
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC # 2. One-Hot Encoding with Scikit-learn
 # MAGIC 
-# MAGIC `sklearn.preprocessing` module offers `OneHotEncoder()` class that encodes categorical features by creating binary columns for each unique category of variables using a one-hot encoding scheme. The output is not a DataFrame, but a NumPy array. You can find the documentation of OneHotEncoder [here](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html).
+# MAGIC The `sklearn.preprocessing` module offers the `OneHotEncoder()` class which encodes categorical features by creating binary columns for each unique category of variables using a one-hot encoding scheme. The output is not a DataFrame, but a NumPy array. You can find the documentation of `OneHotEncoder` [here](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html).
 # MAGIC 
 # MAGIC ----
-# MAGIC Firstly we need to create the encoder object, where we can specify a set of parameters.
-# MAGIC Then we'll fit OneHotEncoder to X_train set, where we have to fill in missing values as OneHotEncoder doesn't except those. Using `.categories_` attribute, we'll find all of the determined categories. 
+# MAGIC Firstly we need to create the encoder object where we can specify a set of parameters.
+# MAGIC Then we'll fit `OneHotEncoder` to the set `X_train`. There we first have to fill in missing values as `OneHotEncoder` doesn't except those. Using the `.categories_` attribute we'll find all of the determined categories. 
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Before we start with scikit, don't forget that we need to get rid of missing values. Let's just replace them with a string "missing".
+# MAGIC Before we start with scikit, don't forget that we need to get rid of the missing values. Let's just replace them with a string "missing".
 
 # COMMAND ----------
 
@@ -210,9 +214,9 @@ X_test = X_test.fillna('Missing')
 # COMMAND ----------
 
 # Create the encoder
-# Set parameter categories = 'auto' to determine categories automatically from training set
-# Set parameter sparse = False to return dense array 
-# Set parameter handle_unknown = 'error' to raise an error if an unknown categorical feature is present during transform
+# Set parameter categories = 'auto' to determine the categories automatically from the training set
+# Set parameter sparse = False to return a dense array 
+# Set parameter handle_unknown = 'error' to raise an error if an unknown categorical feature is present during the transform
 encoder = OneHotEncoder(categories='auto', sparse=False, handle_unknown='error')
 
 #  Fit the encoder 
@@ -226,19 +230,20 @@ encoder.categories_
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC To transform X_train using our encoder, we need to fill in missing values again. Since the output will be NumPy array, we'll convert it to pandas DataFrame. 
+# MAGIC To transform `X_train` using our encoder, we need to fill in missing values again. Since the output will be a NumPy array, we'll have to convert it to a Pandas DataFrame. 
 
 # COMMAND ----------
 
 # Transform X_train using encoder 
 training_set = encoder.transform(X_train)
+
 # Convert X_train to a DataFrame
 pd.DataFrame(training_set).head()
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC As we can see, after transforming the data, the names of the features are not returned, which is inconvenient for feature exploration. There is the method for retrieving these names `.get_feature_names()` that we apply on the columns. Let's repeat the entire process of transforming.
+# MAGIC As we can see, after transforming the data the names of the features are not returned, which is inconvenient for feature exploration. There is a method for retrieving these names called `.get_feature_names()` which we can apply to the columns. Let's repeat the entire process of transforming.
 
 # COMMAND ----------
 
@@ -250,23 +255,22 @@ training_set.head()
 
 # COMMAND ----------
 
-# TASK 2 >>>> Transform X_test using one-hot encoding in the same way as we did with X_train and store it in variable testing_set
+# TASK 2 >>>> Transform X_test using one-hot encoding in the same way as we did with X_train and store it in the variable testing_set
 #             Inspect the first 5 rows to see the result
-
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Notice that after encoding, the training set and testing set have the same number of features. 
+# MAGIC Notice that after encoding the training set and testing set have the same number of features. 
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC # 3. Encoding target variable
 # MAGIC 
-# MAGIC For encoding the target variable stored as a string datatype, we can use `LabelEncoder` class from `scikit learn` module. Label Encoder normalizes labels to have values between 0 and n_classes-1. You can find the documentation [here](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html#sklearn.preprocessing.LabelEncoder).
+# MAGIC For encoding the target variable stored as a string datatype, we can use `LabelEncoder` class from the scikit learn module. `LabelEncoder` normalizes labels to have values between 0 and n_classes-1. You can find the documentation [here](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html#sklearn.preprocessing.LabelEncoder).
 # MAGIC 
-# MAGIC Let's look at the simple example of using this class on dog breeds. Firstly we create LabelEncoder object, and then we fit our data.
+# MAGIC Let's look at the simple example of using this class on dog breeds. Firstly we create a `LabelEncoder` object and then we fit our data.
 
 # COMMAND ----------
 
@@ -294,12 +298,12 @@ encoded_labels
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Instead of two binary values (0 and 1), we now have the sequence of the numbers that have not ascended order. The reason for it is that the numbering is assigned in alphabetical order.
+# MAGIC Instead of two binary values (0 and 1), we now have a sequence of numbers which are not in ascending order. The reason for this is that the numbering is assigned in alphabetical order.
 # MAGIC 
 # MAGIC -------
 # MAGIC 
 # MAGIC ### TASK
-# MAGIC Now it's your turn to encode categorical variables in the Mushrooms classification dataset.
+# MAGIC Now it's your turn to encode categorical variables in the **Mushrooms classification** dataset.
 
 # COMMAND ----------
 
@@ -326,7 +330,7 @@ for column in mushrooms.columns:
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC You should see that one of the unique values there is '?' in column stalk-root. Replace this incorrectly stored value with 'Missing'.
+# MAGIC You should see that one of the unique values there is '?' in the column 'stalk-root'. Replace this incorrectly stored value with 'Missing'.
 
 # COMMAND ----------
 
@@ -350,59 +354,52 @@ X_train.shape, X_test.shape
 
 # COMMAND ----------
 
-# TASK >>>> Create OneHotEncoder object where the categories will be automatically determined, the result will be dense array and 
-# if an unknown categorical feature will be present during transform it will raise 'error'
-# Store it in variable encoder
-
-
-# COMMAND ----------
-
-# TASK >>>> Fit X_train set using encoder
-
+# TASK >>>> Create a OneHotEncoder object where the categories will be automatically determined
+# The result will be a dense array
+# If an unknown categorical feature will be present during transform it will raise 'error'
+# Store it in the variable encoder
 
 # COMMAND ----------
 
-# TASK >>>> Get the use categories
-
+# TASK >>>> Fit X_train using encoder
 
 # COMMAND ----------
 
-# TASK >>>> Transform X_train set and convert it to pandas DataFrame
+# TASK >>>> Get the used categories
+
+# COMMAND ----------
+
+# TASK >>>> Transform X_train and convert it to a Pandas DataFrame
 # You can assign it to X_train
 # Get the feature names and inspect the changes after transforming
 
-
 # COMMAND ----------
 
-# TASK >>>> Transform X_test set and convert it to pandas DataFrame
+# TASK >>>> Transform X_test and convert it to a Pandas DataFrame
 # You can assign it to X_test
 # Get the feature names and inspect the changes after transforming
-
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Our target feature 'class' needs to be also encoded. To do so, use LabelEncoder.
+# MAGIC Our target feature 'class' also needs to be encoded. To do so, use `LabelEncoder`.
 
 # COMMAND ----------
 
 # TASK >>>> Create LabelEncoder object and store it in variable labels_encoder
 
-
 # COMMAND ----------
 
 # TASK >>>> Fit y_train using labels_encoder
 
-
 # COMMAND ----------
 
-# Print used categories
+# Print the used categories
 labels_encoder.classes_
 
 # COMMAND ----------
 
-# TASK >>>> Transform y_train data and assign to y_train
-
+# TASK >>>> Transform the y_train data and assign to y_train
 
 # COMMAND ----------
 
@@ -411,12 +408,11 @@ y_train
 
 # COMMAND ----------
 
-# TASK >>>> Fit and transform also y_test data in the same way
-
+# TASK >>>> Fit and transform y_test data in the same way
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ### Appendix
 # MAGIC 
-# MAGIC Some material adapted for RBI internal purposes with full permissions from original authors. [Source](https://github.com/zatkopatrik/authentic-data-science) 
+# MAGIC Material adapted for RBI internal purposes with full permissions from original authors. [Source](https://github.com/zatkopatrik/authentic-data-science)

@@ -9,24 +9,18 @@
 
 # COMMAND ----------
 
-!ls -l
-
-# COMMAND ----------
-
 # TASK 1 >>>
 # import pandas as pd
 # import numpy as np
-# Load the dataset 'fuel_economy_data_2010.csv' using pd.read_csv('...', index_col = 0) and store it in variable called "data"
+# Load the dataset 'fuel_economy_data_2010.csv' using pd.read_csv('...', index_col = 0) and store it in a variable called "data"
 
 # COMMAND ----------
 
 # TASK 2 >>> Display the first five rows of the DataFrame using .head() method
 
-
 # COMMAND ----------
 
 # TASK 3 >>> Display the last five rows of the DataFrame using .tail() method
-
 
 # COMMAND ----------
 
@@ -42,7 +36,6 @@ data['Test Veh Displacement (L)'].sample(n = 5)
 
 # TASK 4 >>> Display the shape of the dataset using attribute .shape
 
-
 # COMMAND ----------
 
 # Display the short summary of the dataframe using .info() method by setting argument verbose = False
@@ -52,16 +45,13 @@ data.info(verbose = False)
 
 # TASK 5 >>> Display a basic summary of the DataFrame using .info() method
 
-
 # COMMAND ----------
 
 # TASK 6 >>> Display columns in the dataframe using .columns attribute
 
-
 # COMMAND ----------
 
 # TASK 7 >>> Display data types of the variables using .dtypes attribute
-
 
 # COMMAND ----------
 
@@ -70,14 +60,13 @@ data.info(verbose = False)
 
 # COMMAND ----------
 
-# Display a subset of the dataframe’s columns based on the column's data types, using .select_dtypes() method 
-# Sett parameter include=['float64','int64']
+# Display a subset of the dataframe's columns based on the column's data types, using .select_dtypes() method 
+# Set parameter include=['float64','int64']
 data.select_dtypes(include=['float64', 'int64'])
 
 # COMMAND ----------
 
 # TASK 8 >>> Display descriptive statistics using .describe() method
-
 
 # COMMAND ----------
 
@@ -118,6 +107,7 @@ import matplotlib.pyplot as plt
 
 # Set the size of the figure
 plt.figure(figsize = (9,10))
+
 # Create a boxplot to show the distribution of datapoints of the column 'Rated Horsepower'
 sns.boxplot(data['Rated Horsepower'], orient = 'v', linewidth = 2, color ='skyblue');
 
@@ -125,10 +115,10 @@ sns.boxplot(data['Rated Horsepower'], orient = 'v', linewidth = 2, color ='skybl
 
 # Set the size of the figure
 plt.figure(figsize = (9,10))
-# TASK 9 >>> Create a boxplot to show the distribution of datapoints of the column 'Test Veh Displacement (L)' that describes engine displacement
 
+# TASK 9 >>> Create a boxplot to show the distribution of datapoints of the column 'Test Veh Displacement (L)' that describes engine displacement
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Some material adapted for RBI internal purposes with full permissions from original authors. [Source](https://github.com/zatkopatrik/authentic-data-science) 
+# MAGIC Material adapted for RBI internal purposes with full permissions from original authors. Source: https://github.com/zatkopatrik/authentic-data-science

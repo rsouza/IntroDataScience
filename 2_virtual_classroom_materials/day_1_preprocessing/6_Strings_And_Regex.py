@@ -4,6 +4,7 @@
 
 # COMMAND ----------
 
+# Run this code
 import pandas as pd
 import warnings
 warnings.filterwarnings('ignore')
@@ -20,9 +21,9 @@ print(string)
 # MAGIC %md
 # MAGIC `split()` method 
 # MAGIC 
-# MAGIC - split a string into a list where each word is a list item
-# MAGIC - we specify the `separator` to use when splitting the string
-# MAGIC - we can specifies how many splits to do by setting `maxsplit` parameter
+# MAGIC - This method splits a string into a list where each word is a list item.
+# MAGIC - We need to specify the `separator` to use when splitting the string.
+# MAGIC - We can specifiy how many splits to do by setting the `maxsplit` parameter.
 
 # COMMAND ----------
 
@@ -51,7 +52,7 @@ print(x)
 # MAGIC %md
 # MAGIC `strip()` method
 # MAGIC 
-# MAGIC - it removes whitespaces at the beginning and at the end of the string
+# MAGIC - It removes whitespaces at the beginning and at the end of the string.
 
 # COMMAND ----------
 
@@ -65,7 +66,7 @@ print(our_result)
 # MAGIC %md
 # MAGIC `join()` method
 # MAGIC 
-# MAGIC - this method takes all items in an iterable and joins them into one string 
+# MAGIC - This method takes all items in an iterable and joins them into one string.
 
 # COMMAND ----------
 
@@ -94,10 +95,10 @@ my_dictionary = {'Key_1':'1',
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC `index()`
+# MAGIC `index()` method
 # MAGIC 
-# MAGIC - returns position of first character in substring if found in the string
-# MAGIC - Raises `ValueError` if not found
+# MAGIC - It returns the position of the first character in a substring if the substring is found in the string.
+# MAGIC - It raises a `ValueError` if nothing is found.
 
 # COMMAND ----------
 
@@ -112,10 +113,10 @@ string_3.index('m')
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC `replace()`
+# MAGIC `replace()` method
 # MAGIC 
-# MAGIC - replace occurences of string with another string
-# MAGIC - commonly used to remove characters by passing an empty string
+# MAGIC - This method replaces occurences of a substring with another string.
+# MAGIC - It is commonly used to remove characters by passing an empty string.
 
 # COMMAND ----------
 
@@ -141,16 +142,15 @@ string_5 = 'Banana, avocado, pineapple, artichoke'
 
 # TASK 1 >>>> Use .replace() method to replace 'a' with 'A' in string_5 and store it in variable result_1
 
-
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC `upper()` method
 # MAGIC 
-# MAGIC - converts all lowercase characters in a string into uppercase characters and returns it
+# MAGIC - This method converts all lowercase characters in a string into uppercase characters and returns it.
 # MAGIC 
 # MAGIC `lower()` method
-# MAGIC - converts all uupercase characters in a string into lowercase characters and returns it
+# MAGIC - This method converts all upercase characters in a string into lowercase characters and returns it.
 
 # COMMAND ----------
 
@@ -168,10 +168,10 @@ print(string_to_lower.lower())
 
 # MAGIC %md
 # MAGIC ``find()`` method
-# MAGIC - this method is similar to `index()`
-# MAGIC - if the substring is found, this method returns the index of first occurrence of the substring 
-# MAGIC - if the substring is not found, -1 is returned
-# MAGIC - pay attention that this function is case sensitive
+# MAGIC - This method is similar to `index()`.
+# MAGIC - If the substring is found, this method returns the index of first occurrence of the substring.
+# MAGIC - If the substring is not found, -1 is returned.
+# MAGIC - This function is **case sensitive**.
 
 # COMMAND ----------
 
@@ -203,10 +203,10 @@ else:
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC If you go to the Documentation of find(), which can be found [here](https://python-reference.readthedocs.io/en/latest/docs/str/find.html). You will see that ``find()`` can actually take in three parameters. One is compulsory, and the rest are optional. 
+# MAGIC If you go to the [Documentation of `find()`](https://python-reference.readthedocs.io/en/latest/docs/str/find.html), you will see that ``find()`` can accept three parameters. One is compulsory, and the others are optional. 
 # MAGIC 
 # MAGIC The general syntax looks like this:
-# MAGIC ```
+# MAGIC ````
 # MAGIC string.find(value, start, end)
 # MAGIC ````
 # MAGIC 
@@ -235,14 +235,14 @@ print("Substring 'Data' from position 10 to 40: ", result)
 
 # COMMAND ----------
 
-# Import pandas library
+# Import Pandas library
 import pandas as pd
 data = pd.read_csv('Data/avocado.csv')
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC If we take a look at the column names, we can notice that these needs some cleaning, such as removing the whitespaces. Some systems and data pipelines can have issues with these.
+# MAGIC If we take a look at the column names, we notice that they need some cleaning, such as removing the whitespaces. Some systems and data pipelines can have issues with these.
 
 # COMMAND ----------
 
@@ -253,7 +253,7 @@ data_2015.columns
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Let's use lambda for that and three of the functions which we just learned - strip, lower and replace.
+# MAGIC Let's use a lambda function and three of the methods which we have just learned - strip, lower and replace.
 
 # COMMAND ----------
 
@@ -268,7 +268,7 @@ data_2015.head()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC One column is still ugly. It would not be worth it to attempt and write specific function for it. We address it manually via dictionary.
+# MAGIC One column is still ugly. It would not be worth it to attempt and write a specific function for it. We address it manually via a dictionary.
 
 # COMMAND ----------
 
@@ -280,7 +280,7 @@ data_2015.head()
 # MAGIC %md
 # MAGIC # 3. Cleaning Text Column (READ-ONLY)
 # MAGIC 
-# MAGIC Imagine we have 2 possible categories of avocado (A and B) in the same row for the same day that separated with '/'. 
+# MAGIC Imagine we have 2 possible categories of avocado (A and B) in the same row for the same day separated with '/'. 
 # MAGIC It would be an issue for us if we'd like to explore and visualize data based on the avocado's category. 
 # MAGIC 
 # MAGIC We can use `str.split()` method to resolve this issue in few steps.
@@ -290,7 +290,7 @@ data_2015.head()
 # Run this code - don't bother what it does for now
 
 data_avo = {'day':'Monday', 'category':'A/B', 'type':'organic'}
-monday_data = pd.DataFrame(data_avo, range(10))             
+monday_data = pd.DataFrame(data_avo, range(10))           
 
 # COMMAND ----------
 
@@ -305,11 +305,12 @@ monday_data
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC At first, we use split method to create a list of two objects out of the original element in the column. Take a look.
+# MAGIC At first, we use `split` the method to create a list of two objects from the original element in the column.
 
 # COMMAND ----------
 
 # Firstly, split the 'category' column with separator '/'
+
 monday_data['category'] = monday_data['category'].str.split('/')
 monday_data
 
@@ -318,12 +319,13 @@ monday_data
 # MAGIC %md
 # MAGIC As the next steps:
 # MAGIC 
-# MAGIC - next we use `apply()` function on `monday_data` that return Series: use lambda function `lambda x:` to create new Series - we also need to specify axis = 1 which return a new column for avocado's type
+# MAGIC - next we use `apply()` function on `monday_data` that return Series: use lambda function `lambda x:` to create new Series - we also need to specify `axis = 1` which returns a new column for avocado's type
 # MAGIC - after the `apply()` part add `stack()` - to stack avocado's category 
 
 # COMMAND ----------
 
 # Run this code
+
 series_2 = monday_data.apply(lambda x: pd.Series(x['category']), axis = 1).stack()
 
 # COMMAND ----------
@@ -389,7 +391,6 @@ movie_data = data_1.iloc[:,np.r_[1:3, 8:13]]
 # COMMAND ----------
 
 # Display first 5 rows of movie_data and look at the genres column
-
 movie_data.head()
 
 # COMMAND ----------
@@ -399,35 +400,38 @@ movie_data.head()
 
 # COMMAND ----------
 
-# TASK MUST DO Split the 'genres' column with separator '/'
+# Split the 'genres' column with separator '/'
 
 movie_data.genres = movie_data.genres.str.split('|')
 movie_data.head()
 
 # COMMAND ----------
 
-# Create a new Series for genres using lambda function and apply it to movie_data
+# Create a new Series for genres using a lambda function and apply it to movie_data
+
 series_genres = movie_data.apply(lambda x: pd.Series(x['genres']), axis = 1).stack().reset_index(level = 1,drop = True)
 
 # COMMAND ----------
 
 # Print the new Series
+
 print(series_genres)
 
 # COMMAND ----------
 
-# Give the Series (new column) name 'genre'
+# Give the Series (new column) the name 'genre'
 series_genres.name = 'genre'
 
 # COMMAND ----------
 
 # TASK 2 >>>> Drop the old column 'genres' from movie_data on axis = 1
-#             Join new Series 'series_genres'. Assign it to our_movie_data
- 
+#             Join to the new Series 'series_genres'. 
+#             Assign it to our_movie_data.
 
 # COMMAND ----------
 
 # Run this code
+
 print(our_movie_data)
 
 # COMMAND ----------
@@ -437,10 +441,9 @@ print(our_movie_data)
 # MAGIC 
 # MAGIC - provide a flexible way to serach or match string patterns in text
 # MAGIC - a single expression, commonly called a **regex**, is a string formed according to the regular expression language
-# MAGIC 
 # MAGIC - using built-in module `re` we can apply regular expressions to strings
 # MAGIC 
-# MAGIC Run the following cell showing example of regular expression for validating an email $^{1}$. 
+# MAGIC Run the following cell showing example of regular expression for validating an email \\(^{1}\\). 
 
 # COMMAND ----------
 
@@ -450,7 +453,6 @@ Image('Images/regex.PNG')
 # COMMAND ----------
 
 # Import re module
-
 import re
 
 # COMMAND ----------
@@ -475,7 +477,6 @@ import re
 # COMMAND ----------
 
 # Split string called 'sentence' by whitespaces 
-
 sentence = 'This  sentence contains     whitespace'
 
 # COMMAND ----------
@@ -483,56 +484,49 @@ sentence = 'This  sentence contains     whitespace'
 # MAGIC %md
 # MAGIC To split this string we need to call `re.split()`. 
 # MAGIC 
-# MAGIC Within this method we specify regex `'\s+'` describing one ore more whitespace character and string to split (in our case 'sentence').
+# MAGIC Within this method we specify regex `'\s+'` describing one or more whitespace character and string to split (in our case 'sentence').
 # MAGIC 
-# MAGIC Firstly, the regex is complied and then the split function is called on the passed string.
+# MAGIC Firstly, the regex is compiled and then the `split` function is called on the passed string.
 
 # COMMAND ----------
 
 # Run this code
-
 re.split('\s+', sentence)
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC With `re.compile()` we can combine a regular expression pattern into pattern objects, which can be used for pattern matching
+# MAGIC With `re.compile()` we can combine a regular expression pattern into pattern objects which can be used for pattern matching
 # MAGIC - this approach is recommended if you intend to apply the same expression to many strings 
 
 # COMMAND ----------
 
 # Run this code
-
 our_regex = re.compile('\s+')
 
 # COMMAND ----------
 
 # Split string 'sentence' using regex object 'our_regex'
-
 our_regex.split(sentence)
 
 # COMMAND ----------
 
 # Get the list of all patterns that match regex using findall() method
-
 our_regex.findall(sentence)
 
 # COMMAND ----------
 
 # Create regex object that match pattern contain 'e'
-
 another_regex = re.compile('e')
 
 # COMMAND ----------
 
 # Run the code
-
 sentence_2 = 'Learning RegEx is fun'
 
 # COMMAND ----------
 
 # Return the list that contain all matches in string 'sentence_2'
-
 another_regex.findall(sentence_2)
 
 # COMMAND ----------
@@ -540,24 +534,23 @@ another_regex.findall(sentence_2)
 # MAGIC %md
 # MAGIC As you can see, the regex object performed case-sensitive matching and matched lowercase letters only. 
 # MAGIC 
-# MAGIC We can also define case insensitive regex object during the pattern compile using `flags = re.IGNORECASE`
+# MAGIC We can also define a case insensitive regex object during the pattern compile using `flags = re.IGNORECASE`
 
 # COMMAND ----------
 
 # Create regex object that is not case sensitive using re.IGNORECASE
-
 regex_sensitive = re.compile('e', flags = re.IGNORECASE)
 
 # COMMAND ----------
 
 # Run this code
-
 regex_sensitive.findall(sentence_2)
 
 # COMMAND ----------
 
 text = 'Regex, Regex pattern, Expressions'
-# Create regex object that match pattern contain 's'
+
+# Create a regex object with the matche pattern 's'
 pattern = re.compile('s')
 
 # COMMAND ----------
@@ -591,7 +584,7 @@ email_pattern = r'[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+'
 
 # COMMAND ----------
 
-# Create a regex object that match email addresses and make it case-insensitive
+# Create a regex object that matches email addresses and make it case-insensitive
 
 rege = re.compile(email_pattern, flags = re.IGNORECASE)
 
@@ -613,30 +606,31 @@ text = 'The average price of the avocados was $1.35 last year, hopefully, this y
 
 # COMMAND ----------
 
-# TASK 3 >>>> Google for Regex patern to match decimal numbers and assign it to variable decimal_number
-
+# TASK 3 >>>> Google for Regex patterns to match decimal numbers and assign it to the variable decimal_number
 
 # COMMAND ----------
 
 # Regex object that match decimal number - won't work if TASK 3 is not completed
+
 pattern_dec = re.compile(decimal_number)
 
 # COMMAND ----------
 
 # Run this code - won't work if TASK 3 is not completed
+
 pattern_dec.findall(text)
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC You can find many Regular Expressions Cheat Sheets on the web, like [this one](https://cheatography.com/mutanclan/cheat-sheets/python-regular-expression-regex/):
+# MAGIC You can find many Regular Expressions Cheat Sheets on the web, like [this one](https://cheatography.com/mutanclan/cheat-sheets/python-regular-expression-regex/).
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC **Hint**
 # MAGIC 
-# MAGIC If we want to find some pattern (decimal numbers for example) within the string of Series, we can also use pandas function `str.contains`. For more information check [pandas documentation](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.contains.html).
+# MAGIC If we want to find some pattern (decimal numbers for example) within the string of a Series, we can also use the pandas function `str.contains`. For more information check the [pandas documentation](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.contains.html).
 
 # COMMAND ----------
 
@@ -654,8 +648,8 @@ pattern_dec.findall(text)
 # MAGIC 
 # MAGIC # References
 # MAGIC 
-# MAGIC 1. BreatheCode. 2017. Regex Tutorial. [ONLINE] Available at: https://content.breatheco.de/en/lesson/regex-tutorial-regular-expression-examples. [Accessed 14 September 2020].
+# MAGIC \\(^{1}\\) BreatheCode. 2017. Regex Tutorial. [ONLINE] Available at: https://content.breatheco.de/en/lesson/regex-tutorial-regular-expression-examples. [Accessed 14 September 2020].
 # MAGIC 
-# MAGIC 2. Pandas. pandas.Series.str.contains. [ONLINE] Available at: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.contains.html. [Accessed 14 September 2020].
+# MAGIC pandas. pandas.Series.str.contains. [ONLINE] Available at: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.contains.html. [Accessed 14 September 2020].
 # MAGIC 
-# MAGIC Some material adapted for RBI internal purposes with full permissions from original authors. Source: https://github.com/zatkopatrik/authentic-data-science
+# MAGIC Material adapted for RBI internal purposes with full permissions from original authors. Source: https://github.com/zatkopatrik/authentic-data-science

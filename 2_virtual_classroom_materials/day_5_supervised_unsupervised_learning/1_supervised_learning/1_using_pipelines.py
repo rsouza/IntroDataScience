@@ -2,8 +2,8 @@
 # MAGIC %md
 # MAGIC # Nice Pipeline
 # MAGIC 
-# MAGIC here we present a nice example of a pipeline which we can use for training purposes. At first glance, it looks messy and hard to read.  
-# MAGIC But if you take a moment to understand, you will notice the beauty for sure!
+# MAGIC In this notebook we present a nice example of a pipeline which we can use for training purposes. At first glance it looks messy and hard to read.  
+# MAGIC But if you take a moment to really understand it you will notice the beauty of it!
 
 # COMMAND ----------
 
@@ -14,8 +14,8 @@ from sklearn.compose import ColumnTransformer
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC We just need to import some transformers which are inside of the pipeline.  
-# MAGIC **This is not a operational code, just an example on longer pipelines.**
+# MAGIC We need to import some transformers which are going to be inside of the pipeline.  
+# MAGIC **This is not operational code, just an example of longer pipelines.**
 
 # COMMAND ----------
 
@@ -38,32 +38,36 @@ import numpy as np
 # COMMAND ----------
 
 # MAGIC %md
+# MAGIC The pipeline below will be a bit overwelming at first. Because of this we recommend the following steps to ease comprehension:
+# MAGIC 
 # MAGIC ## Step 1: Take a quick glance
-# MAGIC Please take a quick look onto the pipeline which is below and come back here.
+# MAGIC Please take a quick look at the pipeline below and come back here.
 # MAGIC 
 # MAGIC ## Step 2: Slow walkthrough
-# MAGIC Get a **high level view** like this:
-# MAGIC - look toward the top, there is a *FeatureUnion*, which is really a wrapper for entire feature engineering
-# MAGIC - look at the bottom, there is a *RandomForestClassifier*, which is our predictive model
+# MAGIC Get a **high level view** of the pipeline:
+# MAGIC - Look at the top. There is a `FeatureUnion` object, which is a wrapper for the entire feature engineering process.
+# MAGIC - Look at the bottom. There is a `RandomForestClassifier` object, which is our predictive model.
 # MAGIC 
-# MAGIC Now we can go deeper inside of our FeatureUnion, which is our **feature engineering**:
-# MAGIC - it splits into three parts, depending on which features we are attempting to process
-# MAGIC     - on top, we have numerical features
-# MAGIC     - in the middle, we have categorical features
-# MAGIC     - on the bottom, we have textual features
-# MAGIC - now zoom out again and realize that this is wrapped under FeatureUnion, which means that these features will be transformed in a parallel way and appended next to each other
+# MAGIC Now we can go deeper into the `FeatureUnion` object we have instantiated, which is where the **feature engineering** is happening.
+# MAGIC - `FeatureUntion` splits into three parts, depending on which features we are attempting to process:
+# MAGIC     - On top we have numerical features.
+# MAGIC     - In the middle we have categorical features.
+# MAGIC     - At the bottom we have textual features.
+# MAGIC - Now zoom out again and realize that this is wrapped under `FeatureUnion`, which means that **these features will be transformed in a parallel way and appended next to each other**.
 # MAGIC 
-# MAGIC Only now let's **zoom into one part of our feature engineering**, for example into "numerical features", on the top:
-# MAGIC - inside of it, we right away need ColumnTransformer as we want to specify for which columns certain transformation will be applied by name or by type
-# MAGIC - now we could already be applying transformers, but remember that ColumnTransformer by default drops all untransformed columns, which would mean that if we want to apply some transformations sequentially we would not be able to
+# MAGIC ## Step 3: Zooming in
+# MAGIC Only now let's **zoom into one part of our feature engineering**, for example into `numerical_features`, on the top:
+# MAGIC - Inside of it, we right away use `ColumnTransformer` as we want to specify for which columns certain transformation will be applied to based on name or by type.
+# MAGIC - Now we can already apply the transformers. But remember that `ColumnTransformer` by default drops all untransformed columns, which would mean that if we want to apply some transformations sequentially we would not be able to.
 # MAGIC 
-# MAGIC Finally, **get used to the indentation** (the whitespacing). Your code editor helps with this. Get used to this by clicking just behind the last visible character on the line where you are. For example go behing the last bracket on the line of *SimpleImputer*. Now if you hit Enter, it will land where a code should continue on the next line it you still want to stay within the element, which is the *Pipeline*.
+# MAGIC ## Step 4: Indentation
+# MAGIC Finally, **get used to the indentation** (the whitespacing). Your code editor helps with this. Get used to this by clicking just behind the last visible character on the line where you are. For example go behing the last bracket on the line of `SimpleImputer`. Now if you hit Enter, it will land where a code should continue on the next line it you still want to stay within the element, which is a `Pipeline` object.
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Source1: https://www.codementor.io/@bruce3557/beautiful-machine-learning-pipeline-with-scikit-learn-uiqapbxuj
-# MAGIC Source2: http://zacstewart.com/2014/08/05/pipelines-of-featureunions-of-pipelines.html 
+# MAGIC Source 1: https://www.codementor.io/@bruce3557/beautiful-machine-learning-pipeline-with-scikit-learn-uiqapbxuj   
+# MAGIC Source 2: http://zacstewart.com/2014/08/05/pipelines-of-featureunions-of-pipelines.html
 
 # COMMAND ----------
 
@@ -110,32 +114,34 @@ model_pipeline = Pipeline(steps=[
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Now we would work with the pipeline easily:
+# MAGIC Now that we have created a pipeline and know how it is structured, we can work with easily:
 
 # COMMAND ----------
 
-#model_pipeline.fit(train_data, train_labels.values)
-#predictions = model_pipeline.predict(predict_data)
+model_pipeline.fit(train_data, train_labels.values)
+predictions = model_pipeline.predict(predict_data)
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC # 3. How to write that?
-# MAGIC Alright, I now have a feeling that I am comfortable with understanding these, but how do we get to write such thing? The answer is: **from the outside - inwards**. Let's walk through an example, of course you could write things differently.  
+# MAGIC Alright, we are now slightly more comfortable with understanding how pipelines work. But how do we write them ourselves?   
+# MAGIC The answer is: **from the outside inwards**. 
 # MAGIC 
-# MAGIC At first, lay yourself a simple structure which separates your feature engineering (inside of FeatureUnion) and your predictive model.
+# MAGIC Let's walk through an example. Of course you can write things differently.    
+# MAGIC At first, lay out a simple structure which separates your feature engineering (inside of `FeatureUnion`) and your predictive model:
 
 # COMMAND ----------
 
-model_pipeline = Pipeline(steps=[
-    ("features", FeatureUnion([#all feature engineering goes here])),
-    ("classifiers", RandomForestClassifier())
-])
+# model_pipeline = Pipeline(steps=[
+#     ("features", FeatureUnion([#all feature engineering goes here])),
+#     ("classifiers", RandomForestClassifier())
+# ])
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Secondly, depending on your features, split yourself various parts inside of your feature engineering.
+# MAGIC Secondly, depending on your features, split the feature engineering into various parts:
 
 # COMMAND ----------
 
@@ -151,7 +157,7 @@ model_pipeline = Pipeline(steps=[
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Now you want to put inside a ColumnTransformer as the transformations will be applied only to specific columns.
+# MAGIC Now you want to insert a `ColumnTransformer` as the transformations will be applied only to specific columns.
 
 # COMMAND ----------
 
@@ -167,8 +173,9 @@ model_pipeline = Pipeline(steps=[
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC You can put Pipeline inside of it, for example, in case you have transformers which need to be sequential (such as numeric scaling and feature selection).  
-# MAGIC And you just start to put in your individually wrote transformations from before.
+# MAGIC You can put a `Pipeline` inside of the feature engineering, for example, in case you have transformers which need to be applied sequentially (such as numeric scaling and feature selection).  
+# MAGIC 
+# MAGIC At this point you can start inserting your individual transformations from before into the pipeline.
 
 # COMMAND ----------
 
@@ -176,13 +183,13 @@ model_pipeline = Pipeline(steps=[
 # MAGIC # 4. Reflect
 # MAGIC Continue with this point only once you went through the pipeline above.  
 # MAGIC 
-# MAGIC Usually we think that nicely written code costs significantly more effort than code scraped together in whichever way. Now that we went through the composite estimators properly, you know that it might be even simpler in many cases, not to mention robustness.  
+# MAGIC Usually we think that nicely written code costs significantly more effort than code scraped together in whichever way. Now that we went through the composite estimators properly, you know that it might be even simpler in many cases, not to mention more robust.  
 # MAGIC 
-# MAGIC You are hopefully able to tell apart two things:  
+# MAGIC At this point, you are hopefully able to tell apart two things:  
 # MAGIC - Data preprocessing and wrangling.
 # MAGIC - Data preparation for ML (Feature Engineering)  
 # MAGIC 
-# MAGIC Always try to separate these things in your use case (code). That is why we present these topics separatedely. It will be of tremendous help in the longer run to write code in this way.
+# MAGIC Always try to separate these things in your use case (code). That is why we present these topics separatedely. It will be of tremendous help in the long run to write code in this way.
 
 # COMMAND ----------
 
@@ -210,23 +217,22 @@ train.head()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Use ``ColumnTransformer`` by selecting column by names
+# MAGIC We will use ``ColumnTransformer`` where we select the columns by their names.   
+# MAGIC We will then train our classifier with the following features:
 # MAGIC 
-# MAGIC We will train our classifier with the following features:
+# MAGIC **Numeric Features**
 # MAGIC 
-# MAGIC Numeric Features:
+# MAGIC * 'Age': float;
+# MAGIC * 'Fare': float.
 # MAGIC 
-# MAGIC * ``Age``: float;
-# MAGIC * ``Fare``: float.
+# MAGIC **Categorical Features**
 # MAGIC 
-# MAGIC Categorical Features:
+# MAGIC * 'Embarked': categories encoded as strings: ``{'C', 'S', 'Q'}``;
+# MAGIC * 'Sex': categories encoded as strings: ``{'female', 'male'}``;
+# MAGIC * 'Pclass': ordinal integers: ``{1, 2, 3}``.
 # MAGIC 
-# MAGIC * ``Embarked``: categories encoded as strings ``{'C', 'S', 'Q'}``;
-# MAGIC * ``Sex``: categories encoded as strings ``{'female', 'male'}``;
-# MAGIC * ``Pclass``: ordinal integers ``{1, 2, 3}``.
-# MAGIC 
-# MAGIC We create the preprocessing pipelines for both numeric and categorical data.
-# MAGIC Note that ``pclass`` could either be treated as a categorical or numeric
+# MAGIC We first create the preprocessing pipelines for both numeric and categorical data.
+# MAGIC Note that 'Pclass' could either be treated as a categorical or a numeric
 # MAGIC feature.
 
 # COMMAND ----------
@@ -252,7 +258,7 @@ preprocessor = ColumnTransformer(transformers=[("num", numeric_transformer, nume
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Append classifier to preprocessing pipeline. Now we have a full prediction pipeline.
+# MAGIC Append a classifier, in this case a logistic regression, to preprocessing pipeline to arrive at a full prediction pipeline.
 
 # COMMAND ----------
 
@@ -271,22 +277,18 @@ clf
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Use ``ColumnTransformer`` by selecting column by data types
-# MAGIC 
+# MAGIC **We can also select columns by data types when using `ColumnTransformer`.**   
 # MAGIC When dealing with a cleaned dataset, the preprocessing can be automatic by
-# MAGIC using the data types of the column to decide whether to treat a column as a
-# MAGIC numerical or categorical feature.
+# MAGIC using the data types of the column to decide whether to treat a column as a numerical or categorical feature.
 # MAGIC 
-# MAGIC `sklearn.compose.make_column_selector` gives this possibility.
+# MAGIC The function `sklearn.compose.make_column_selector` gives this possibility.
 # MAGIC 
-# MAGIC <div class="alert alert-info"><h4>Note</h4><p>In practice, you will have to handle yourself the column data type.
-# MAGIC    If you want some columns to be considered as `category`, you will have to
-# MAGIC    convert them into categorical columns. If you are using pandas, you can
-# MAGIC    refer to their documentation regarding [Categorical data](https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html).</p></div>
+# MAGIC In practice, you will have to handle the column data type yourself.
+# MAGIC If you want some columns to be considered as `category`, you will have to convert them into categorical columns. If you are using pandas, you can refer to their documentation regarding [Categorical data](https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html).</p>
 # MAGIC 
 # MAGIC 
 # MAGIC + First, we will transform the object columns into categorical.  
-# MAGIC + Then, let's only select a subset of columns to simplify our example.
+# MAGIC + Then we will only select a subset of columns to simplify our example.
 
 # COMMAND ----------
 
@@ -306,7 +308,7 @@ X_train.info()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC We can observe that the `embarked` and `sex` columns were tagged as `category` columns.  
+# MAGIC We can observe that the 'Embarked' and 'Sex' columns were tagged as `category` columns.  
 # MAGIC Therefore, we can use this information to dispatch the categorical columns to the ``categorical_transformer`` and the remaining columns to the ``numerical_transformer``.
 
 # COMMAND ----------
@@ -331,9 +333,7 @@ clf
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The resulting score is not exactly the same as the one from the previous
-# MAGIC pipeline because the dtype-based selector treats the ``pclass`` column as
-# MAGIC a numeric feature instead of a categorical feature as previously:
+# MAGIC The resulting score is not exactly the same as the one from the previous pipeline because the dtype-based selector treats the 'Pclass' column as a numeric feature instead of a categorical feature:
 
 # COMMAND ----------
 
@@ -346,12 +346,11 @@ selector(dtype_include="category")(X_train)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Using the prediction pipeline in a grid search  
+# MAGIC **Using the prediction pipeline in a grid search**   
 # MAGIC 
-# MAGIC Grid search can also be performed on the different preprocessing steps defined in the ``ColumnTransformer`` object, together with the classifier's
-# MAGIC hyperparameters as part of the ``Pipeline``.  
+# MAGIC A grid search can also be performed on the different preprocessing steps which make up the ``ColumnTransformer`` object. So you can optimize the classifier's hyperparameters as part of the pipeline.  
 # MAGIC We will search for both the imputer strategy of the numeric preprocessing and the regularization parameter of the logistic regression using
-# MAGIC :class:`~sklearn.model_selection.GridSearchCV`.
+# MAGIC `sklearn.model_selection.GridSearchCV`.
 
 # COMMAND ----------
 
@@ -365,7 +364,7 @@ grid_search
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Calling 'fit' triggers the cross-validated search for the best hyper-parameters combination:
+# MAGIC Calling `fit` triggers the cross-validated search for the best hyper-parameters combination:
 
 # COMMAND ----------
 
@@ -377,7 +376,7 @@ print(grid_search.best_params_)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The internal cross-validation scores obtained by those parameters is:  
+# MAGIC The internal cross-validation score obtained by those parameters is:
 
 # COMMAND ----------
 
@@ -386,7 +385,7 @@ print(f"Internal CV score: {grid_search.best_score_:.3f}")
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC We can also introspect the top grid search results as a pandas dataframe:  
+# MAGIC We can also extract the top grid search results as a pandas dataframe:
 
 # COMMAND ----------
 
@@ -401,8 +400,8 @@ cv_results[["mean_test_score",
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The best hyper-parameters have be used to re-fit a final model on the full training set.  
-# MAGIC We can evaluate that final model on held out test data that was not used for hyperparameter tuning.  
+# MAGIC The best hyper-parameters have to be used to re-fit the final model on the full training set.  
+# MAGIC We can evaluate that final model on held out test data that was not used for hyperparameter tuning.
 
 # COMMAND ----------
 

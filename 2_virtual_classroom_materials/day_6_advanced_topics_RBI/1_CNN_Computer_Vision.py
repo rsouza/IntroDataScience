@@ -7,9 +7,9 @@
 # MAGIC %md
 # MAGIC #### Classify handwritten digits using the famous MNIST data
 # MAGIC 
-# MAGIC The goal in this task is to take an image of a handwritten single digit, and determine what that digit is.  
+# MAGIC The goal of this task is to take an image of a handwritten single digit and determine what digit it is.  
 # MAGIC 
-# MAGIC The data for this competition were taken from the MNIST dataset. The MNIST ("Modified National Institute of Standards and Technology") dataset is a classic within the Machine Learning community that has been extensively studied.  More detail about the dataset, including Machine Learning algorithms that have been tried on it and their levels of success, can be found at http://yann.lecun.com/exdb/mnist/index.html.  
+# MAGIC The data for this competition was taken from the **MNIST data set**. The MNIST ("Modified National Institute of Standards and Technology") data set is a classic within the Machine Learning community that has been extensively studied.  More details about the dataset, including Machine Learning algorithms that have been tried on it and their levels of success, can be found [here](http://yann.lecun.com/exdb/mnist/index.html).
 
 # COMMAND ----------
 
@@ -69,8 +69,8 @@ train_data.head()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Every image is a "stretched" array of pixel values.  
-# MAGIC In this case it's 784 pixels => 28 * 28 px  
+# MAGIC Every image is a "stretched" array of pixel values.
+# MAGIC In this case it's  28 * 28 = 784 pixels.
 
 # COMMAND ----------
 
@@ -79,7 +79,7 @@ sample_size = 4200
 images = train_data.iloc[:sample_size, 1:].values   # Decreasing the number of images to save memory
 images = images.astype(np.float16)
 
-# convert from [0:255] => [0.0:1.0]
+# convert from [0:255] to [0.0:1.0]
 images = np.multiply(images, 1.0 / 255.0)
 
 print('images numpy array have shape: ({0[0]},{0[1]})'.format(images.shape))
@@ -91,12 +91,17 @@ images
 # COMMAND ----------
 
 image_size = images.shape[1]
-print ('image_size => {0}'.format(image_size))
+print ('image_size   => {0}'.format(image_size))
 
 # in this case all images are square
 image_width = image_height = np.ceil(np.sqrt(image_size)).astype(np.uint8)
 
-print ('image_width => {0}\nimage_height => {1}'.format(image_width,image_height))
+print ('image_width  => {0}\nimage_height => {1}'.format(image_width,image_height))
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC Let us take a look at the images in a way that is more comprehensible to the human eye. 
 
 # COMMAND ----------
 
@@ -134,6 +139,11 @@ test_data.head()
 
 test_images = test_data.values.astype(np.float16)
 test_images.shape
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC Just as we did for all the previously discussed models in the last lessons, we split our data into train and test sets. 
 
 # COMMAND ----------
 
@@ -296,7 +306,7 @@ plt.show()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ### a) simple model
+# MAGIC ### a) Simple model
 
 # COMMAND ----------
 
@@ -360,7 +370,7 @@ plt.show()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ### b) slightly bigger model
+# MAGIC ### b) Slightly bigger model
 
 # COMMAND ----------
 
@@ -444,7 +454,7 @@ plt.legend()
 # MAGIC 
 # MAGIC The LeNet architecture is straightforward and small, (in terms of memory footprint), making it perfect for teaching the basics of CNNs — it can even run on the CPU (if your system does not have a suitable GPU), making it a great “first CNN”.  
 # MAGIC 
-# MAGIC However, if you do have GPU support and can access your GPU via Keras, you will enjoy extremely fast training times (in the order of 3-10 seconds per epoch, depending on your GPU).  
+# MAGIC However, if you do have GPU support and can access your GPU via Keras, you will enjoy extremely fast training times (in the order of 3-10 seconds per epoch, depending on your GPU).
 
 # COMMAND ----------
 
@@ -614,7 +624,6 @@ plt.legend()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC 
 # MAGIC ### Where can i go further?
 # MAGIC [Transfer Learning and Fine-Tuning](https://keras.io/guides/transfer_learning/)  
-# MAGIC [Visualizing the classification task](http://scs.ryerson.ca/~aharley/vis/fc/)  
+# MAGIC [Visualizing the classification task](http://scs.ryerson.ca/~aharley/vis/fc/)

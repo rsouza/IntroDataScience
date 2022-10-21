@@ -26,6 +26,7 @@ titanic.head(5)
 
 # MAGIC %md
 # MAGIC ### Data Exploration
+# MAGIC Before we get going with TPOT, we start with some simple data exploration to understand our data set. 
 
 # COMMAND ----------
 
@@ -44,7 +45,7 @@ id.div(id.sum(1).astype(float), 0)
 
 # MAGIC %md
 # MAGIC ### Data Munging
-# MAGIC The first and most important step in using TPOT on any data set is to rename the target class/response variable to class.
+# MAGIC The first and most important step in using TPOT on any data set is to rename the target class/response variable to 'class'.
 
 # COMMAND ----------
 
@@ -53,7 +54,7 @@ titanic.rename(columns={'Survived': 'class'}, inplace=True)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC At present, TPOT requires all the data to be in numerical format. As we can see below, our data set has 5 categorical variables which contain non-numerical values: Name, Sex, Ticket, Cabin and Embarked.
+# MAGIC At present, TPOT requires all the data to be in numerical format. As we can see below, our data set has 5 categorical variables which contain non-numerical values: 'Name', 'Sex', 'Ticket', 'Cabin' and 'Embarked'.
 
 # COMMAND ----------
 
@@ -62,7 +63,7 @@ titanic.dtypes
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC We then check the number of levels that each of the five categorical variables have.
+# MAGIC We then check the number of distinct levels that each of the five categorical variables have.
 
 # COMMAND ----------
 
@@ -72,7 +73,7 @@ for cat in ['Name', 'Sex', 'Ticket', 'Cabin', 'Embarked']:
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC As we can see, Sex and Embarked have few levels. Let's find out what they are.
+# MAGIC As we can see, 'Sex' and 'Embarked' have only very few levels. Let's find out what they are.
 
 # COMMAND ----------
 
@@ -82,7 +83,7 @@ for cat in ['Sex', 'Embarked']:
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC We then code these levels manually into numerical values. For nan i.e. the missing values, we simply replace them with a placeholder value (-999). In fact, we perform this replacement for the entire data set.
+# MAGIC We then code these levels manually into numerical values. For NaN i.e. the missing values, we simply replace them with a placeholder value (-999). In fact, we perform this replacement for the entire data set.
 
 # COMMAND ----------
 
@@ -97,7 +98,7 @@ pd.isnull(titanic).any()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Since Name and Ticket have so many levels, we drop them from our analysis for the sake of simplicity. For Cabin, we encode the levels as digits using Scikit-learn's MultiLabelBinarizer and treat them as new features.
+# MAGIC Since 'Name' and 'Ticket' have so many different levels, we drop them in this example from our analysis for the sake of simplicity. For 'Cabin', we encode the levels as digits using Scikit-learn's `MultiLabelBinarizer` and treat them as new features.
 
 # COMMAND ----------
 
@@ -138,7 +139,7 @@ np.isnan(titanic_new).any()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Keeping in mind that the final dataset is in the form of a numpy array, we can check the number of features in the final dataset as follows.
+# MAGIC Keep in mind that the final data set is in the form of a numpy array. We can check the number of features in the final data set as follows.
 
 # COMMAND ----------
 
@@ -147,7 +148,7 @@ titanic_new[0].size
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Finally we store the class labels, which we need to predict, in a separate variable.
+# MAGIC Finally, we store the class labels which we need to predicted in a separate variable.
 
 # COMMAND ----------
 
@@ -157,7 +158,7 @@ titanic_class = titanic['class'].values
 
 # MAGIC %md
 # MAGIC ### Data Analysis using TPOT
-# MAGIC To begin our analysis, we need to divide our training data into training and validation sets. The validation set is just to give us an idea of the test set error. The model selection and tuning is entirely taken care of by TPOT, so if we want to, we can skip creating this validation set.
+# MAGIC To begin our analysis, we need to divide our training data into training and validation sets. The validation set is just to give us an idea of the test set error. The model selection and tuning is entirely taken care of by TPOT, so if we want to, we can skip the creation of this validation set.
 
 # COMMAND ----------
 
@@ -167,14 +168,14 @@ training_indices.size, validation_indices.size
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC After that, we proceed to calling the fit, score and export functions on our training dataset. To get a better idea of how these functions work, refer the TPOT documentation here.
+# MAGIC After that, we proceed with calling the fit, score and export functions on our training dataset. To get a better idea of how these functions work, refer to the TPOT documentation here.
 # MAGIC 
-# MAGIC An important TPOT parameter to set is the number of generations. Since our aim is to just illustrate the use of TPOT, we have set maximum optimization time to 2 minutes (max_time_mins=2). On a standard laptop with 4GB RAM, it roughly takes 5 minutes per generation to run. For each added generation, it should take 5 mins more. Thus, for the default value of 100, total run time could be roughly around 8 hours.
+# MAGIC An important TPOT parameter to set is the **number of generations**. Since our aim is to just illustrate the use of TPOT, we set maximum optimization time to 2 minutes (`max_time_mins=2`). On a standard laptop with 4GB RAM it takes roughly 5 minutes per generation to run. For each added generation, it should take 5 minutes more. Thus, for the default value of 100, the total run time could be roughly around 8 hours.
 
 # COMMAND ----------
 
 import mlflow
-mlflow.autolog(disable=True)  #As MLFlow is not totally integrated with TPOT, we disable the autologging when running on Databricks
+mlflow.autolog(disable=True)  # As MLFlow is not totally integrated with TPOT, we disable the autologging when running on Databricks
 
 # COMMAND ----------
 
@@ -197,7 +198,7 @@ tpot.export('/tmp/tpot_titanic_pipeline.py')
 # MAGIC %md
 # MAGIC Let's have a look at the generated code. As we can see, the random forest classifier performed the best on the given dataset out of all the other models that TPOT currently evaluates on. If we ran TPOT for more generations, then the score should improve further.
 # MAGIC 
-# MAGIC run:
+# MAGIC Run:
 # MAGIC > `%load tpot_titanic_pipeline.py`
 
 # COMMAND ----------
@@ -235,7 +236,7 @@ titanic_sub.describe()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The most important step here is to check for new levels in the categorical variables of the submission dataset that are absent in the training set. We identify them and set them to our placeholder value of '-999', i.e., we treat them as missing values. This ensures training consistency, as otherwise the model does not know what to do with the new levels in the submission dataset.
+# MAGIC When looking at fresh data to make predictions on, the most important step is to **check for new levels in the categorical variables** of the submission data set which were absent in the training set. We identify them and set them to our placeholder value of `-999`, i.e., we treat them as missing values. This ensures training consistency, as otherwise the model would not know what to do with the new levels in the submission data set.
 
 # COMMAND ----------
 
@@ -261,7 +262,7 @@ pd.isnull(titanic_sub).any()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC While calling MultiLabelBinarizer for the submission data set, we first fit on the training set again to learn the levels and then transform the submission dataset values. This further ensures that only those levels that were present in the training dataset are transformed. If new levels are still found in the submission dataset then it will return an error and we need to go back and check our earlier step of replacing new levels with the placeholder value.
+# MAGIC While calling `MultiLabelBinarizer` on the submission data set, we first fit on the training set again to learn the levels and then transform the submission data set values. This further ensures that only those levels that were present in the training data set are transformed. If new levels are still found in the submission data set then it will return an error and we need to go back and check our earlier step of replacing new levels with the placeholder value.
 
 # COMMAND ----------
 
@@ -281,7 +282,7 @@ np.any(np.isnan(titanic_sub_new))
 
 # COMMAND ----------
 
-# Ensure equal number of features in both the final training and submission dataset
+# Ensure an equal number of features in both the final training and submission dataset
 assert (titanic_new.shape[1] == titanic_sub_new.shape[1]), "Not Equal" 
 
 # COMMAND ----------

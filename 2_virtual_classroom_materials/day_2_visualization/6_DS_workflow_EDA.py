@@ -2,7 +2,7 @@
 # MAGIC %md
 # MAGIC # Data Science workflow  
 # MAGIC 
-# MAGIC In this sequence of notebooks, we will exemplify the inner steps in the Data Science workflow.  
+# MAGIC In this sequence of notebooks we will exemplify the inner steps in the Data Science workflow.  
 # MAGIC We are not going to discuss the business requirements and deployment strategies, but just the phases below:
 # MAGIC 
 # MAGIC ### I - Exploratory Data Analysis (this notebook)  
@@ -17,11 +17,11 @@
 # MAGIC %md
 # MAGIC ## I - Exploratory Data Analysis  
 # MAGIC 
-# MAGIC Exploratory Data Analysis is a set of techniques that were developed by John Wilder Tukey in 1970. The philosophy behind this approach was to examine the data before building a model.  
+# MAGIC Exploratory Data Analysis is a set of techniques developed by John Wilder Tukey in 1970. The philosophy behind this approach was to examine the data before building a model.  
 # MAGIC John Tukey encouraged statisticians to explore the data, and possibly formulate hypotheses that could lead to new data collection and experiments.  
 # MAGIC 
-# MAGIC Today Data scientists and analysts spend most of their time in Data Wrangling and Exploratory Data Analysis also known as EDA. But what is this EDA and why it is so important? 
-# MAGIC Exploratory Data Analysis (EDA) is a step in the Data Science Workflow, where a number of techniques are used to better understand the dataset being used.
+# MAGIC Today data scientists and analysts spend most of their time in Data Wrangling and Exploratory Data Analysis also known as EDA. But what is this EDA and why is it so important? 
+# MAGIC Exploratory Data Analysis (EDA) is a step in the data science workflow, where a number of techniques are used to better understand the dataset being used.
 # MAGIC 
 # MAGIC ‘Understanding the dataset’ can refer to a number of things including but not limited to…
 # MAGIC 
@@ -29,9 +29,9 @@
 # MAGIC + Uncover underlying structure
 # MAGIC + Extracting important variables and leaving behind useless variables
 # MAGIC + Identifying outliers, anomalies, missing values, or human error
-# MAGIC + Understanding the relationship(s), or lack of, between variables
-# MAGIC + Test underlying assumptions
-# MAGIC + Ultimately, maximizing your insights of a dataset and minimizing potential error that may occur later in the process
+# MAGIC + Understanding the relationship(s), or lack thereof, between variables
+# MAGIC + Testing underlying assumptions
+# MAGIC + Ultimately, maximizing your insights in a dataset and minimizing potential error that may occur later in the process
 
 # COMMAND ----------
 
@@ -62,7 +62,7 @@
 # MAGIC The machine learning community is still trying to establish a standard process model for machine learning development. As a result, many machine learning and data science projects are still not well organized. Results are not reproducible.  
 # MAGIC In general, such projects are conducted in an ad-hoc manner. To guide ML practitioners through the development life cycle, the Cross-Industry Standard Process for the development of Machine Learning applications with Quality assurance methodology ([CRISP-ML(Q)](https://ml-ops.org/content/crisp-ml)) was recently proposed.  
 # MAGIC 
-# MAGIC There is a particular order of the individual stages. Still, machine learning workflows are fundamentally iterative and exploratory, so that depending on the results from the later phases, we might re-examine earlier steps.
+# MAGIC There is a particular order of the individual stages. Still, machine learning workflows are fundamentally iterative and exploratory so that depending on the results from the later phases we might re-examine earlier steps.
 
 # COMMAND ----------
 
@@ -100,7 +100,7 @@ import pandas as pd
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ### 2. Load Dataset and Distinguishing Attributes
+# MAGIC ### 2. Load Dataset and distinguish attributes
 
 # COMMAND ----------
 
@@ -114,16 +114,12 @@ df.head()
 
 # COMMAND ----------
 
-df.tail(9)
-
-# COMMAND ----------
-
 # MAGIC %md
 # MAGIC ##### 2.2 - Checking columns and data types
 
 # COMMAND ----------
 
-#df.columns
+# df.columns
 df.info(verbose=True, show_counts=True)
 
 # COMMAND ----------
@@ -158,25 +154,23 @@ df.isnull().sum()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC It seems there are not missing values, but that may be misleading. Let's explore a bit more:
+# MAGIC It seems there are no missing values, but that may be misleading. Let's explore a bit more:
 
 # COMMAND ----------
 
 #Checking for wrong entries like symbols -,?,#,*,etc.
 for col in df.columns:
-    print(f'{col} : {df[col].unique()}')
+    print('{} : {}'.format(col, df[col].unique()))
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC There are null values in our dataset in form of ‘?’ only but Pandas is not recognizing them so we will replace them into np.nan form.
+# MAGIC There are null values in our dataset in form of ‘?’. Pandas is not recognizing them so we will replace them with `np.nan`.
 
 # COMMAND ----------
 
 for col in df.columns:
     df[col].replace({'?': np.nan},inplace=True)
-    
-# df.applymap(lambda x:np.nan if x=='?' else x)   ## Another way of doing
     
 df.info()
 
@@ -188,7 +182,7 @@ df.isnull().sum()
 
 # MAGIC %md
 # MAGIC #### 3.1 Visualizing the missing values  
-# MAGIC Now the missing values are identified in the dataframe. With the help of heatmap, we can see the amount of data that is missing from the attribute. With this, we can make decisions whether to drop these missing values or to replace them. Usually dropping the missing values is not advisable but sometimes it may be helpful too.
+# MAGIC Now the missing values are identified in the dataframe. With the help of `heatmap`, we can see the amount of data that is missing from the attribute. With this we can make decisions whether to drop these missing values or to replace them. Usually dropping the missing values is not advisable but sometimes it may be helpful.
 
 # COMMAND ----------
 
@@ -198,7 +192,7 @@ sns.heatmap(df.isnull(),cbar=False,cmap='viridis')
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Now observe that there are many missing values in normalized_losses while other columns have fewer missing values. We can’t drop the normalized_losses column as it may be important for our prediction.  
+# MAGIC Now observe that there are many missing values in 'normalized_losses' while other columns have fewer missing values. We can’t drop the 'normalized_losses' column as it may be important for our prediction.  
 # MAGIC We can also use the **missingno** libray for a better evaluation of the missing values. First we can check the quantity and how they distribute among the rows:
 
 # COMMAND ----------
@@ -229,7 +223,7 @@ msno.heatmap(df)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The dendrogram allows you to more fully correlate variable completion, revealing trends deeper than the pairwise ones visible in the correlation heatmap
+# MAGIC The dendrogram allows you to more fully correlate variable completion, revealing trends deeper than the pairwise ones visible in the correlation heatmap.
 
 # COMMAND ----------
 
@@ -265,10 +259,6 @@ df.head()
 
 # COMMAND ----------
 
-df.info()
-
-# COMMAND ----------
-
 # MAGIC %md
 # MAGIC ### 4. Checking Data Distributions
 # MAGIC 
@@ -284,7 +274,7 @@ df.info()
 # MAGIC %md
 # MAGIC #### 4.1 Univariate Analysis  
 # MAGIC 
-# MAGIC The goal here is just to check the distribution of numeric and categorical variables (more about this later in the course)  
+# MAGIC The goal here is to check the distribution of numeric and categorical variables (more about this later in the course)  
 # MAGIC We can quickly check the distributions of every numeric column:
 
 # COMMAND ----------
@@ -313,7 +303,7 @@ for col in numeric_cols:
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Assuming the data would follow a normal distribution, we can choose some of the graphs to examine in more detail:
+# MAGIC Assuming the data would follow a normal distribution, we can choose some of the graphs to examine the data in more detail:
 
 # COMMAND ----------
 
@@ -323,7 +313,7 @@ sns.set_style("darkgrid")
 #plot the distribution of the DataFrame "Price" column
 plt.figure(figsize=(8,12))
 #sns.histplot(df['price'])
-sns.displot(df['peak-rpm'], kde=True, bins=30, height=8, aspect=2)  
+sns.displot(df['peak-rpm'], kde=True, bins=50, height=8, aspect=2)  
 
 # COMMAND ----------
 
@@ -354,7 +344,7 @@ plt.show()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Barplots with frequencies can be created on Matplotlib
+# MAGIC Barplots with frequencies can be created in Matplotlib.
 
 # COMMAND ----------
 
@@ -363,7 +353,7 @@ df["body-style"].value_counts().plot(kind="bar", figsize=(10,6))
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC There is no need to separately calculate the count when using the sns.countplot() function
+# MAGIC There is no need to separately calculate the count when using the `sns.countplot()` function
 
 # COMMAND ----------
 
@@ -391,23 +381,21 @@ sns.pairplot(df.select_dtypes(include='number'))
 # COMMAND ----------
 
 plt.figure(figsize=(12,12))
-sns.heatmap(df.corr(), cbar=True, annot=True, cmap='seismic')
-
-#https://matplotlib.org/stable/tutorials/colors/colormaps.html
+sns.heatmap(df.corr(), cbar=True, annot=True, cmap='Blues')
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ##### Positive Correlation  
-# MAGIC + Price – wheel_base, length, width, curb_weight, engine_size, bore, horsepower  
-# MAGIC + wheelbase – length, width, height, curb_weight, engine_size, price  
-# MAGIC + horsepower – length, width, curb_weight, engine_size, bore, price  
-# MAGIC + Highway mpg – city mpg  
+# MAGIC + 'Price' – 'wheel-base', 'length', 'width', 'curb_weight', 'engine-size', 'bore', 'horsepower'  
+# MAGIC + 'wheel-base' – 'length', 'width', 'height', 'curb_weight', 'engine-size', 'price'  
+# MAGIC + 'horsepower' – 'length', 'width', 'curb-weight', 'engine-size', 'bore', 'price'  
+# MAGIC + 'Highway mpg' – 'city-mpg'  
 # MAGIC 
 # MAGIC ##### Negative Correlation  
-# MAGIC + Price – highway_mpg, city_mpg  
-# MAGIC + highway_mpg – wheel base, length, width, curb_weight, engine_size, bore, horsepower, price  
-# MAGIC + city – wheel base, length, width, curb_weight, engine_size, bore, horsepower, price  
+# MAGIC + 'Price' – 'highway-mpg', 'city-mpg'  
+# MAGIC + 'highway-mpg' – 'wheel base', 'length', 'width', 'curb-weight', 'engine-size', 'bore', 'horsepower', 'price'  
+# MAGIC + 'city' – 'wheel base', 'length', 'width', 'curb-weight', 'engine-size', 'bore', 'horsepower', 'price'  
 # MAGIC 
 # MAGIC This heatmap has given us great insights into the data.  
 # MAGIC Now let us apply domain knowledge and ask the questions which will affect the price of the automobile.
@@ -445,16 +433,16 @@ sns.catplot(x="fuel-type", y="horsepower", hue="num-of-doors", kind="violin", in
 # MAGIC Try to ask questions related to independent variables and the target variable.  
 # MAGIC Example questions related to this dataset could be:  
 # MAGIC 
-# MAGIC + How fuel_type will affect the price of the car?   
-# MAGIC + How does the horsepower affect the price?  
-# MAGIC + What is the relation between engine_size and price?  
-# MAGIC + How does highway_mpg affects price?  
-# MAGIC + What is the relation between no. of doors and price?
+# MAGIC + How does 'fuel-type' affect the price of the car?   
+# MAGIC + How does the 'horsepower' affect the price?  
+# MAGIC + What is the relationship between 'engine-size' and 'price'?  
+# MAGIC + How does 'highway-mpg' affects 'price'?  
+# MAGIC + What is the relation between no. of doors and 'price'?
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC #### 5.1 How fuel_type will affect the price?  
+# MAGIC #### 5.1 How does 'fuel_type' will affect the price?  
 # MAGIC 
 # MAGIC Let's compare categorical data with numerical data. We are going to use a catplot from Seaborn, but there are other options for categorical variables:  
 # MAGIC https://seaborn.pydata.org/tutorial/categorical.html
@@ -494,7 +482,7 @@ sns.jointplot(x='horsepower',y='price', data=df, kind='hex')
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC We can see that most of the horsepower value lies between 50-150 has price mostly between 5000-25000, there are outliers also(between 200-300).  
+# MAGIC We can see that most of the horsepower values lie between 50-150 with a price mostly between 5000-25000. There are outliers as well (between 200-300).  
 # MAGIC Let’s see a count between 50-100 i.e univariate analysis of horsepower.
 
 # COMMAND ----------
@@ -511,7 +499,7 @@ sns.histplot(df.horsepower,bins=10)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC #### 5.3 What is the relation between engine_size and price?
+# MAGIC #### 5.3 What is the relation between engine-size and price?
 
 # COMMAND ----------
 
@@ -547,7 +535,7 @@ plt.ylabel('Price')
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC We can see price decreases with an increase in higway_mpg.
+# MAGIC We can see price decreases with an increase in 'higway-mpg'.
 
 # COMMAND ----------
 
@@ -558,7 +546,7 @@ plt.ylabel('Price')
 
 # COMMAND ----------
 
-#Unique values in num_of_doors
+# Unique values in num_of_doors
 df["num-of-doors"].value_counts().plot(kind="bar", figsize=(10,6))
 
 # COMMAND ----------
@@ -570,8 +558,8 @@ sns.boxplot(x='price', y='num-of-doors',data=df)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC With this boxplot, we can conclude that the average price of a vehicle with two doors is 10000,  and the average price of a vehicle with four doors is close to 12000.  
-# MAGIC With this plot, we have gained enough insights from data and our data is ready to build a model.
+# MAGIC With this boxplot we can conclude that the average price of a vehicle with two doors is 10000,  and the average price of a vehicle with four doors is close to 12000.  
+# MAGIC With this plot, we have gained enough insights fromthe  data and our data is ready to build a model.
 
 # COMMAND ----------
 
@@ -580,10 +568,10 @@ sns.boxplot(x='price', y='num-of-doors',data=df)
 
 # COMMAND ----------
 
-#Create a pivot table for car manufactures and fuel with horsepower rate as values
+# Create a pivot table for car manufactures and fuel with horsepower rate as values
 grouped = pd.pivot_table(data=df,index='make',columns='fuel-type',values='horsepower',aggfunc='mean')
 
-#Create a heatmap to visualize manufactures, fuel type and horse power
+# Create a heatmap to visualize manufactures, fuel type and horse power
 plt.figure(figsize=[12,10])
 sns.heatmap(grouped, annot=True, cmap='coolwarm', center=0.117)
 

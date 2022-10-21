@@ -1,4 +1,10 @@
 # Databricks notebook source
+# MAGIC %md
+# MAGIC # 0. Loading libraries and Classes
+
+# COMMAND ----------
+
+# Import necessary libraries for this notebook
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -18,7 +24,7 @@ from sklearn.feature_selection import VarianceThreshold
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC **Important** thing to remember is that we should perform feature selection in conjunction with the model selection
+# MAGIC An **important** thing to remember is that we should perform feature selection in conjunction with the model selection
 
 # COMMAND ----------
 
@@ -26,7 +32,7 @@ from sklearn.feature_selection import VarianceThreshold
 # MAGIC ## 1. Constant Features
 # MAGIC Constant features do not provide any information useful for further analysis or predicting the target variable. These features provide only a single value for all of the observations in the dataset. Therefore, we can remove them from the dataset.
 # MAGIC 
-# MAGIC We will be working with the subset of Santander Bank dataset $^{1}$ (30 000 rows), which contain anonymized features to predict customer satisfaction regarding their experience with the bank.
+# MAGIC We will be working with the subset of Santander Bank dataset \\(^{1}\\) (30 000 rows), which contain anonymized features to predict customer satisfaction regarding their experience with the bank.
 
 # COMMAND ----------
 
@@ -40,7 +46,7 @@ data.head(10)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Feature selection should be performed only on our training data to avoid overfitting. Let's split our dataset and drop our TARGET feature.
+# MAGIC Feature selection should be performed only on our training data to avoid overfitting. Let's split our dataset and drop our target feature 'TARGET'.
 
 # COMMAND ----------
 
@@ -56,12 +62,13 @@ X_train.shape, X_test.shape
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC There are 370 features in our dataset. We can now look at whether there are some constant features in X_train set using `NumPy's .var()` function, which computes the variance along with columns. Within this function we can specify argument `ddof = 1`, for more information here is the [documentation](https://numpy.org/doc/stable/reference/generated/numpy.var.html).
+# MAGIC There are 370 features in our dataset. We can now look at whether there are some constant features in `X_train` set using the `.var()` method which computes the variance along the columns. Within this function we can specify argument `ddof = 1`. For more information see the [documentation](https://numpy.org/doc/stable/reference/generated/numpy.var.html).
 
 # COMMAND ----------
 
 # Get the features that have the variance equal to zero
 # Optional: Specify ddof = 1 within the `.var()` function 
+
 our_constant_features = X_train.loc[:, X_train.var(ddof = 1) == 0]
 
 # COMMAND ----------
@@ -89,13 +96,13 @@ X_train.shape, X_test.shape
 # MAGIC %md
 # MAGIC ## 2. Quasi-constant Features
 # MAGIC 
-# MAGIC Quasi-constant features have very low variance (or close to 0) and contain little information, which is not useful for us. These approximately constant features won't help the ML model's performance, therefore we should consider removing them. 
+# MAGIC Quasi-constant features have very low variance (close to 0) and contain little information, which is not useful for us. These approximately constant features won't help the ML model's performance, therefore we should consider removing them. 
 # MAGIC 
-# MAGIC We could filter quasi-constant features with `pandas`  in a similar way as we did with constant features, with one difference - we would set a specific threshold. Nevertheless, now we'll leave `pandas` and use rather `scikit learn` that offers a more convenient way to find quasi-constant features. 
+# MAGIC We could filter quasi-constant features with Pandas in a similar way as we did with constant features, with one difference - we would set a specific threshold. Nevertheless, now we'll leave Pandas behind and rather use scikit learn which offers a more convenient way to find quasi-constant features. 
 # MAGIC 
-# MAGIC In the `sklearn.feature_selection module` we can find feature selector called `VarianceThreshold()`, which finds all features with low variance (based on a specified threshold) and remove them. You can find more information about this selector [here](https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.VarianceThreshold.html).
+# MAGIC In the `sklearn.feature_selection module` we can find a feature selector called `VarianceThreshold()`, which finds all features with low variance (based on a specified threshold) and removes them. You can find more information about this selector [here](https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.VarianceThreshold.html).
 # MAGIC 
-# MAGIC As a first step, we define our selector for quasi-constant features, where we set the threshold = 0.01. In other words, this is the minimum value of the variance we want to have in the dataset.  
+# MAGIC As a first step, we define our selector for quasi-constant features with a threshold of 0.01. In other words, this is the minimum value of the variance we want to have in the dataset. 
 
 # COMMAND ----------
 
@@ -105,19 +112,19 @@ our_selector = VarianceThreshold(threshold = 0.01)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Next, we fit 'X_train' data with 'our_selector' that find quasi-constant features.
+# MAGIC Next, we fit `our_selector` with the `X_train` data to find quasi-constant features.
 
 # COMMAND ----------
 
-# Fit X_train with 'our_selector'
+# Fit X_train with our_selector
 our_selector.fit(X_train)
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Using `get_support()` method, we can get all of the features we want to keep along with their names. This 'mask' we will use later to assign columns names.
+# MAGIC Using `get_support()` method, we can get all of the features we want to keep along with their names. This _mask_ we will use later to assign names to columns.
 # MAGIC 
-# MAGIC *Note: You might wonder why we are saving feature names as `features_to_keep` variable. Scikit learn will always save the necessary state inside of the fitted transformer, but we only do it for our convience so that we can later on go back from the nameless numpy to a nice dataframe with all the column names.*
+# MAGIC *Note: You might wonder why we are saving the feature names in the `features_to_keep` variable. Scikit learn will always save the necessary state inside of the fitted transformer. However, in this example we only do this for our convience, so that we can later on go back from the nameless Numpy array to a nice dataframe with all the column names.*
 
 # COMMAND ----------
 
@@ -130,7 +137,7 @@ print('The number of features that will be kept: {}'.format(len(features_to_keep
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The next step is transforming our X_train and X_test data using our_selector.
+# MAGIC The next step is to transform `X_train` and `X_test` using `our_selector`.
 
 # COMMAND ----------
 
@@ -144,7 +151,7 @@ X_train.shape, X_test.shape
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC X_train is `numpy.ndarray` object after transforming and needs to be transformed into `pandas DataFrame` again. Here, we use our created 'features_to_keep' variable to assign column names.
+# MAGIC After the trnsformation `X_train` is a `numpy.ndarray` object and needs to be transformed into a Pandas DataFrame again. Here, we use our created `features_to_keep` variable to assign column names.
 
 # COMMAND ----------
 
@@ -153,14 +160,14 @@ X_train
 
 # COMMAND ----------
 
-# Convert X_train to pandas DataFrame
+# Convert X_train to a Pandas DataFrame
 X_train= pd.DataFrame(X_train)
-# Using '.columns' attribute assign column names
+# Using the '.columns' attribute assign column names
 X_train.columns = features_to_keep
 
-# Convert X_test to pandas DataFrame
+# Convert X_test to a Pandas DataFrame
 X_test= pd.DataFrame(X_test)
-# Using '.columns' attribute assign column names
+# Using the '.columns' attribute assign column names
 X_test.columns = features_to_keep
 
 # Get the first 5 rows of X_train
@@ -172,11 +179,11 @@ X_train.head()
 # MAGIC ## 3. Duplicated Features (READ-ONLY)
 # MAGIC Duplicated features are totally redundant features, thus not providing any useful or new information for improving the model's performance.
 # MAGIC 
-# MAGIC To better understand how duplicated features can be treated using `pandas`, we create new DataFrame. We've already seen `duplicated()` function, that returns boolean Series denoting duplicate rows. To identify duplicated features, we have to first transpose our data frame, in other words, we swap the rows and columns. More information [here](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.transpose.html).
+# MAGIC To better understand how duplicated features can be treated using Pandas we create new DataFrame. We've already seen the `duplicated()` function which returns a boolean Series denoting duplicate rows. To identify duplicated features, we have to first transpose our data frame, in other words, we swap the rows and columns. More information [here](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.transpose.html).
 # MAGIC 
-# MAGIC You might wonder again, why are we not using the `scikit-learn`? The reason is that duplicated features should be already addressed within data integration and preprocessing. You might remember that these are the earliest stages. The reason is that duplicated values usually occur when we are merging data from various sources. **It was not a priority for scikit developers to implement a specific transformer for this**.
+# MAGIC You might wonder again, why are we not using the `scikit-learn`? The reason is that **duplicated features should be already addressed within data integration and preprocessing**. You might remember that these are the earliest stages. The reason is that duplicated values usually occur when we are merging data from various sources. It was not a priority for scikit developers to implement a specific transformer for this.
 # MAGIC 
-# MAGIC We are doing an ugly operation of swapping rows and columns to make use of Pandas functionality and make this operation as easy as possible. Yes, we are advising to do this with a small dataset such as ours. If you have a *big* dataset, for example, counted in TBs, you will most likely not be able to do this.
+# MAGIC We are doing an ugly operation of swapping rows and columns to make use of Pandas functionality and make this operation as easy as possible. Yes, we are only advising you to do this with a small dataset. If you have a *big* dataset, for example counted in TBs, you should not and most likely will not be able to do this.
 
 # COMMAND ----------
 
@@ -207,7 +214,7 @@ movies.shape
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC As we can see, movies DataFrame contains 10 rows and 7 features. Now we use `.transpose()` method.
+# MAGIC As we can see, the movies DataFrame contains 10 rows and 7 features. Now we use the `.transpose()` method.
 
 # COMMAND ----------
 
@@ -223,9 +230,9 @@ movies_transpose.shape
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC After transposing, there are 7 rows (features) and 10 columns in movies_transpose.
+# MAGIC After transposing, there are 7 rows (features) and 10 columns in `movies_transpose`.
 # MAGIC 
-# MAGIC Now we apply chained `duplicated().sum()` function on movies_transpose that give us the total number of duplicated rows (features).
+# MAGIC Now we apply chained `duplicated().sum()` function on `movies_transpose` that give us the total number of duplicated rows (features).
 
 # COMMAND ----------
 
@@ -235,37 +242,37 @@ movies_transpose.duplicated().sum()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC There are 2 duplicated rows (features), containing the same observations. We can drop duplicated rows using `.drop_duplicates()`, . By setting `keep = 'first'` parameter, we determine which duplicated row we want to keep.
+# MAGIC There are 2 duplicated rows (features), containing the same observations. We can drop duplicated rows using `.drop_duplicates()`. By setting `keep = 'first'` parameter, we determine which duplicated row we want to keep.
 
 # COMMAND ----------
 
-# Drop duplicates and store the result in variable unique_features
+# Drop duplicates and store the result in the variable unique_features
 unique_features = movies_transpose.drop_duplicates(keep = 'first').transpose()
 
 # COMMAND ----------
 
-# Get duplicated features and store the result in variable duplicated_feature
+# Get duplicated features and store the result in the variable duplicated_feature
 duplicated_features = [column for column in movies.columns if column not in unique_features]
 duplicated_features
 
 # COMMAND ----------
 
-# Drop duplicated features from the original DataFrame
+# Drop the duplicated features from the original DataFrame
 movies.drop(labels = duplicated_features, axis = 1, inplace = True)
 movies
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC However, this approach is not computationally and memory-efficient if you have a really large DataFrame with thousands of rows. As `scikit learn` does not offer a method to handle duplicated features, we need to create some function for this purpose. Then we drop duplicated features using `pandas .drop()` method.
+# MAGIC However, this approach is not computationally and memory-efficient if you have a really large DataFrame with thousands of rows. As `scikit learn` does not offer a method to handle duplicated features, we need to create some function for this purpose. Then we drop duplicated features using Pandas' `.drop()` method.
 
 # COMMAND ----------
 
-# Create empty list for duplicated features
+# Create an empty list for duplicated features
 features_duplicates = []
-# Create for loop for iterating over the range of columns from X_train set
+
+# Create a for loop for iterating over the range of columns from the X_train set
 for col in range(len(X_train.columns)):
-     
     column_1 = X_train.columns[col]
     # Find duplicated features by comparing columns using .equals
     for column_2 in X_train.columns[col + 1:]:
@@ -278,7 +285,7 @@ len(features_duplicates)
 
 # Drop duplicated features from X_train and X_test
 X_train.drop(labels = features_duplicates, axis = 1, inplace = True)
-X_test.drop(labels = features_duplicates, axis = 1, inplace = True)
+X_test.drop( labels = features_duplicates, axis = 1, inplace = True)
 
 # COMMAND ----------
 
@@ -288,7 +295,7 @@ X_train.shape, X_test.shape
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC `scikit learn` module offers many methods such as selecting features based on their importance, but we do not go there. You can find these methods in the [documentation](https://scikit-learn.org/stable/modules/feature_selection.html). Now we'll look at the correlation between features.
+# MAGIC `scikit learn` module offers many methods such as selecting features based on their importance but we will not go there. You can find these methods in the [documentation](https://scikit-learn.org/stable/modules/feature_selection.html). Now we'll look at the correlation between features.
 
 # COMMAND ----------
 
@@ -321,10 +328,10 @@ def correlation(dataset, threshold):
     corr_matrix = dataset.corr()
     for c in range(len(corr_matrix.columns)):
         for j in range(c):
-            # We take absolute correlation coefficient value 
-            # If this abs values are above threshold...
+            # Take absolute correlation coefficient value 
+            # If abs values are above threshold ...
             if abs(corr_matrix.iloc[c, j]) > threshold: 
-                # ...Get the name of column
+                # ... Get name of column
                 colname = corr_matrix.columns[c]
                 corelated_cols.add(colname)
     return corelated_cols
@@ -351,7 +358,7 @@ X_train.shape, X_test.shape
 # MAGIC %md
 # MAGIC ## TASK
 # MAGIC 
-# MAGIC You will be using an altered dataset containing variants of the Portuguese 'Vinho Verde' wine $^{2}$. The features provide information about wine samples recorded based on physicochemical tests. There is also the target feature that denotes the quality score of the sample. 
+# MAGIC You will be using an altered dataset containing variants of the Portuguese 'Vinho Verde' wine \\(^{2}\\). The features provide information about wine samples recorded based on physicochemical tests. There is also the target feature that denotes the quality score of the sample. 
 
 # COMMAND ----------
 
@@ -362,21 +369,21 @@ wine.head(10)
 
 # COMMAND ----------
 
-# Print dataframe's datatypes
+# Print the dataframe's datatypes
 wine.dtypes
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Several numerical features are stored as float or integer, and one feature is stored as string data in our dataset. 
+# MAGIC Several numerical features are stored as float or integer, and one feature is stored as a string in our dataset. 
 # MAGIC 
-# MAGIC These numerical variables can be used to predict the quality of wine samples. So **'quality'** column is our **target feature**.  
+# MAGIC These numerical variables can be used to predict the quality of the wine samples. So the **'quality'** column is our **target feature**.  
 
 # COMMAND ----------
 
-# Separate dataset 'wine' into training and testing set
+# Separate the dataset 'wine' into training and testing set
 # Store it in variables: X_training, X_testing, y_training, y_testing
-# Drop target feature 'quality'
+# Drop the target feature 'quality'
 # Set test_size = 0.3 and random_state = 42
 
 X_training, X_testing, y_training, y_testing = train_test_split(wine.drop(labels = ['quality'], axis=1), 
@@ -390,7 +397,7 @@ X_training.shape, X_testing.shape
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC As we already know, there is one non-numerical variable ('type'). Let's look at the unique values of this feature.
+# MAGIC As we already know there is one non-numerical variable ('type'). Let's look at the unique values of this feature.
 
 # COMMAND ----------
 
@@ -401,44 +408,39 @@ print(X_testing['type'].unique())
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The datasets can also contain this type of constant feature stored as a string and have only 1 unique value/category. As this variable is not really helpful, we will drop it from the dataset. 
+# MAGIC The datasets can also contain this type of constant feature stored as a string and have only one unique value/category. As this variable is not really helpful, we will drop it from the dataset. 
 
 # COMMAND ----------
 
-# TASK >>>> Remove constant feature from X_training using '.drop()', do not forget specify argument inplace = True
+# TASK >>>> Remove the constant feature from X_training using '.drop()'. Do not forget to specify the argument inplace = True
 
-
-# TASK >>>> Remove constant feature from X_testing using '.drop()', do not forget specify argument inplace = True
-
+# TASK >>>> Remove the constant feature from X_testing using '.drop()'. Do not forget to specify the argument inplace = True
 
 # Get the shape of X_training and X_testing sets
-X_training.shape, X_testing.shape
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Now we want to select only those features that have the variance above the threshold = 0.01. Again, we will find quasi-constant features using `scikit learn's VarianceThreshold` as we did in the previous example.
+# MAGIC Now we want to select only those features that have a variance above the threshold = 0.01. Again, we will find quasi-constant features using scikit learn's `VarianceThreshold` as we did in the previous example.
 
 # COMMAND ----------
 
-# TASK >>>> Define VarianceThreshold() object, specify parameter threshold = 0.01 and store it in variable 'selector'
-
-
-# COMMAND ----------
-
-# TASK >>>> Fit X_training set with 'selector'
-
+# TASK >>>> Define a VarianceThreshold() object, specify the parameter threshold = 0.01 and store it in variable 'selector'
 
 # COMMAND ----------
 
-# Get the mask of features we want to keep in the dataset and store it in variable 'features_we_keep'
+# TASK >>>> Fit X_training with 'selector'
+
+# COMMAND ----------
+
+# Get a mask of those features we want to keep in the dataset and store it in the variable 'features_we_keep'
 features_we_keep = X_training.columns[selector.get_support()]
 # Print the length of the variable features_we_keep
 print('The number of features that will be kept: {}'.format(len(features_we_keep)))
 
 # COMMAND ----------
 
-# Print the quasi-constant features that are meant to drop using for loop 
+# Print the quasi-constant features that we are meant to drop using a for loop 
 for column in X_training.columns:
     if column not in features_we_keep:
         print(column)
@@ -447,23 +449,20 @@ for column in X_training.columns:
 
 # TASK >>>> Transform X_training 
 
-
 # TASK >>>> Transform X_testing
-
 
 # Get the shape of X_training and X_testing
 
-
 # COMMAND ----------
 
-# Convert X_training to pandas DataFrame
+# Convert X_training to Pandas DataFrame
 X_training = pd.DataFrame(X_training)
-# Using '.columns' attribute assign column names
+# Using the '.columns' attribute assign column names
 X_training.columns = features_we_keep
 
-# Convert X_testing to pandas DataFrame
+# Convert X_testing to Pandas DataFrame
 X_testing = pd.DataFrame(X_training)
-# Using '.columns' attribute assign column names
+# Using the '.columns' attribute assign column names
 X_testing.columns = features_we_keep
 
 # Get the first 10 rows of X_train
@@ -497,7 +496,6 @@ features_duplicates
 
 # TASK >>>> Drop these duplicated features from X_training and X_testing
 
-
 # COMMAND ----------
 
 # Get the shape of X_training and X_testing
@@ -510,8 +508,8 @@ X_training.shape, X_testing.shape
 # MAGIC 
 # MAGIC Data sources:
 # MAGIC 
-# MAGIC 1. Santander dataset: https://www.kaggle.com/c/santander-customer-satisfaction/data
+# MAGIC \\(^{1}\\) Santander dataset: https://www.kaggle.com/c/santander-customer-satisfaction/data
 # MAGIC 
-# MAGIC 2. Wine quality dataset: https://archive.ics.uci.edu/ml/datasets/wine+quality
+# MAGIC \\(^{2}\\) Wine quality dataset: https://archive.ics.uci.edu/ml/datasets/wine+quality
 # MAGIC 
-# MAGIC Some material adapted for RBI internal purposes with full permissions from original authors. [Source](https://github.com/zatkopatrik/authentic-data-science) 
+# MAGIC Material adapted for RBI internal purposes with full permissions from original authors. [Source](https://github.com/zatkopatrik/authentic-data-science)
