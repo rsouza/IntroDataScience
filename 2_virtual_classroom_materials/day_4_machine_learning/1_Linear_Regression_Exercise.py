@@ -34,7 +34,7 @@ from sklearn import datasets
 
 # COMMAND ----------
 
-?datasets.make_regression # read the documentation
+? datasets.make_regression # read the documentation
 
 # COMMAND ----------
 

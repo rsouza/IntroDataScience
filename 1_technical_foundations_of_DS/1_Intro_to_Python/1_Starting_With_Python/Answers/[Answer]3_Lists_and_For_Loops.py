@@ -301,7 +301,7 @@ row_five = ['Pandora - Music & Radio', 0.0, 'USD', 1126879, 4.0]
 # Question 1:
 fb_rating_data = [row_one[0], row_one[3], row_one[-1]]
 insta_rating_data = [row_two[0], row_two[3], row_two[-1]]
-pan_rating_data = [row_three[0], row_three[3], row_three[-1]]
+pan_rating_data = [row_five[0], row_five[3], row_five[-1]]
 
 # Question 2:
 avg_rating = (fb_rating_data[-1] + insta_rating_data[-1] + pan_rating_data [-1])/3
