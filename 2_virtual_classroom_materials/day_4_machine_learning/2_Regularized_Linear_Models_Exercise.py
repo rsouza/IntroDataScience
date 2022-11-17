@@ -37,6 +37,8 @@ X_train, X_test, y_train, y_test = train_test_split(x, y, random_state=42)
 poly = PolynomialFeatures(2)
 x_train_poly = poly.fit_transform(X_train)
 x_test_poly = poly.transform(X_test)
+# depending on the version of sklearn, this will cause an error
+# in that case, replace "get_feature_names_out" with "get_feature_names"
 poly_names = poly.get_feature_names_out()
 
 names_dict = {'x0': X_train.columns[0],

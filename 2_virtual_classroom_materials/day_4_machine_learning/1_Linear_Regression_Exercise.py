@@ -650,6 +650,8 @@ model_poly.fit(x_train_poly, y_train)
     
 y_hat = model_poly.predict(x_test_poly)
 print(f"RMSE: {mean_squared_error(y_test, y_hat, squared=False)}")
+# depending on the version of sklearn, this will cause an error
+# in that case, replace "get_feature_names_out" with "get_feature_names"
 pd.DataFrame(model_poly.coef_, index = ["Coefficient"], columns = poly.get_feature_names_out())
 
 # COMMAND ----------
