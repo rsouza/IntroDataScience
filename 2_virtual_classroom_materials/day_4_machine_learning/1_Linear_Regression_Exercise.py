@@ -97,7 +97,7 @@ def plot_regression(x, y, bias, coeff):
 # MAGIC We want to fit a model that looks like this: 
 # MAGIC $$\widehat{y} = \beta_0 + \beta_1 x_1 ,$$ 
 # MAGIC where \\(\beta_0\\) is a bias term and \\(\beta_1\\) is the slope of the line.
-# MAGIC 
+# MAGIC
 # MAGIC Use our user-defined function `plot_regression()` and try different values of bias and coeff of the regression line. Observe the change in the values of the cost function and the behavior of the line with the change of the parameters. 
 # MAGIC - What does a line look like if the coeff is positive, negative or zero?
 # MAGIC - What is the influence of the bias term on the line?
@@ -106,7 +106,7 @@ def plot_regression(x, y, bias, coeff):
 
 # COMMAND ----------
 
-# Task: Try different values of bias and coeffs
+# Task 1: Try different values of bias and coeffs
 
 # plot_regression(x, y, bias=..., coeff=...)
 
@@ -114,7 +114,7 @@ def plot_regression(x, y, bias, coeff):
 
 # MAGIC %md
 # MAGIC ## Normal Equation
-# MAGIC 
+# MAGIC
 # MAGIC The function `normal_eq()`  computes \\(\widehat{\beta}= (X^T X)^{-1} X^T y \\). It takes as input X and y and returns optimal values for the bias (intercept) term and the coefficient (slope).
 
 # COMMAND ----------
@@ -139,15 +139,15 @@ def normal_eq(x,y):
 
 # MAGIC %md
 # MAGIC ### Exercise
-# MAGIC 
+# MAGIC
 # MAGIC - Use our user-defined function `normal_eq()` on the input features x and the output vector y.
 # MAGIC - Use the returned values of the bias and coef in the `plot_regression` function.
-# MAGIC 
+# MAGIC
 # MAGIC Was your guess for the bias and coeff value from the previous exercise close enough?
 
 # COMMAND ----------
 
-# Task: use normal_eq() and find coeffs
+# Task 2: use normal_eq() and find coeffs
 
 #..., ... = normal_eq(x, y) 
 #plot_regression(..., ..., ..., ...)
@@ -156,9 +156,9 @@ def normal_eq(x,y):
 
 # MAGIC %md
 # MAGIC ## Sklearn Linear Regression
-# MAGIC 
+# MAGIC
 # MAGIC Here we explore the linear regression from scikit learn for the first time. Help yourself with [examples from the documentation](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html) if needed: 
-# MAGIC 
+# MAGIC
 # MAGIC ### Exercise
 # MAGIC - Use `LinearRegression()` from `sklearn.linear_model` to fit the linear regression model on x, y. Look at the examples section in the documentation if you need help.
 # MAGIC - Return the coefficients for slope and intercept of the regression line. You can find them in the attributes section of the documentation. Store the values in the variables `lr_coef` and `lr_intercept`.
@@ -166,7 +166,7 @@ def normal_eq(x,y):
 
 # COMMAND ----------
 
-# Task: implement linear regression
+# Task 3: implement linear regression
 
 lr = ...
 lr.fit(..., ...)
@@ -180,7 +180,7 @@ print(f'Slope: {lr_coef}\nBias: {lr_intercept}')
 
 # COMMAND ----------
 
-# Task: predict the value of new observations
+# Task 4: predict the value of new observations
 
 x_new = [[1.5], [0]]
 lr.predict(...)
@@ -192,14 +192,14 @@ lr.predict(...)
 
 # COMMAND ----------
 
-# Task: predict the value of new observations
+# Task 5: predict the value of new observations
 
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ## Outliers
-# MAGIC 
+# MAGIC
 # MAGIC We will now add outliers to our dataset and save them under the names x2 and y2.
 
 # COMMAND ----------
@@ -211,12 +211,12 @@ y2 = np.append(y, [-400,-300,-350]).reshape([-1,1])
 
 # MAGIC %md
 # MAGIC ### Exercise
-# MAGIC 
+# MAGIC
 # MAGIC Fit the linear regression to x2, y2 and store the bias in the variable `lr_outlier_intercept` and the slope in the variable `lr_outlier_coef`.
 
 # COMMAND ----------
 
-# Task: Fit linear regression
+# Task 6: Fit linear regression
 
 
 # COMMAND ----------
@@ -245,7 +245,7 @@ plt.show()
 
 # MAGIC %md
 # MAGIC ## Load Dataset
-# MAGIC 
+# MAGIC
 # MAGIC Load sklearn's inbuilt dataset for regression. If you want you can read the description of the dataset [here](http://lib.stat.cmu.edu/datasets/boston). It has 13 attributes that can be used for predicting house prices. 
 
 # COMMAND ----------
@@ -259,13 +259,13 @@ x = pd.DataFrame(raw_df.iloc[:,1:-1])
 
 # MAGIC %md
 # MAGIC ## Train Test Split
-# MAGIC 
+# MAGIC
 # MAGIC ### Exercise 
 # MAGIC Use the function `train_test_split()` to split the training data into training and testing datasets.
 
 # COMMAND ----------
 
-# Task: use function train_test_split() to split the training data into training and testing dataset
+# Task 7: use function train_test_split() to split the training data into training and testing dataset
 
 X_train, X_test, y_train, y_test = train_test_split(..., ..., random_state=42)
 
@@ -281,10 +281,10 @@ X_train, X_test, y_train, y_test = train_test_split(..., ..., random_state=42)
 
 # COMMAND ----------
 
-# Task: instantiate the model
+# Task 8: instantiate the model
 
 
-# Task: fit the model to x, y
+# Task 9: fit the model to x, y
 
 
 print(f"intercept: {...}")
@@ -308,12 +308,12 @@ with other variables unchanged the effect on the target would be {np.round(df_co
 # MAGIC %md
 # MAGIC ## Prediction / Model Evaluation
 # MAGIC ### Exercise
-# MAGIC 
+# MAGIC
 # MAGIC Predict on `X_test` and store the values in `y_hat`.
 
 # COMMAND ----------
 
-# Task: predict on X_test and store the values into y_hat
+# Task 10: predict on X_test and store the values into y_hat
 
 
 # COMMAND ----------
@@ -333,9 +333,9 @@ plt.show();
 
 # MAGIC %md
 # MAGIC ### Exercise
-# MAGIC 
+# MAGIC
 # MAGIC Let's have a look at some metrics. Compute and save the following metrics on the test set:
-# MAGIC 
+# MAGIC
 # MAGIC - MSE -  `mean_squared_error` from `sklearn.metrics` (see ?mean_squared_error)
 # MAGIC - RMSE - `mean_squared_error`  from `sklearn.metrics` with the parameter `squared` set to `False`
 # MAGIC - MAE (Mean absolute error) - `mean_absolute_error`  from `sklearn.metrics` (see ?mean_absolute_error)
@@ -343,7 +343,7 @@ plt.show();
 
 # COMMAND ----------
 
-# Task: Compute and save the metrics on the test set
+# Task 11: Compute and save the metrics on the test set
 
 mse = mean_squared_error(y_test, y_hat)
 rmse = mean_squared_error(..., ..., ...)
@@ -359,11 +359,11 @@ print(f"R2: {np.round(r2, 1)}")
 
 # MAGIC %md
 # MAGIC ## Scaling
-# MAGIC 
+# MAGIC
 # MAGIC ### Exercise
 # MAGIC If features are not scaled appropriately, the intercept tells you what the expected value for the target variable would be if all the variables were equal to 0. This might be unrealistic for many features such as weight, size of the house, distance to the sea, etc. 
 # MAGIC When features are scaled correctly, the intercept can be interpreted as the expected value of a target variable when all the features are equal to their averages.
-# MAGIC 
+# MAGIC
 # MAGIC For the next exercise you will scale your features using `StandardScaler()`.
 # MAGIC - Instantiate `StandardScaler()` from `sklearn.preprocessing`.
 # MAGIC - Fit the scaler to `X_train` and transform it. Save the transformed values into `X_train_scaled`.
@@ -371,7 +371,7 @@ print(f"R2: {np.round(r2, 1)}")
 
 # COMMAND ----------
 
-# Task: Scaling
+# Task 12: Scaling
 
 scaler = ...
 X_train_scaled = scaler.fit_transform(...)
@@ -395,14 +395,14 @@ sns.boxplot(data=X_train_scaled);
 
 # MAGIC %md
 # MAGIC ### Exercise
-# MAGIC 
+# MAGIC
 # MAGIC - Fit a linear regression model to `X_train_scaled`, `y_train`.
 # MAGIC - Return the value for the intercept.
 # MAGIC - Return the values for the coefficients and save them to the variable `model_coef`.
 
 # COMMAND ----------
 
-# Task: Fit a linear regression, return values and save them to the variable model_coef
+# Task 13: Fit a linear regression, return values and save them to the variable model_coef
 
 ...
 ...
@@ -420,20 +420,20 @@ display(df_coefs)
 
 # MAGIC %md
 # MAGIC After applying `StandardScaler()` it is easier to compare coefficients with each other as the features all have the same scale. In our example the positive effect of the 'RM' variable on the output is a little bit smaller than the negative effect of the 'LSTAT' variable. In that vein, we can order the coefficients by their absolute magnitudes to understand the influence of the variables on the result. 
-# MAGIC 
+# MAGIC
 # MAGIC We could then try to fit the model with the variables that have the highest coefficient values in absolute terms.
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ### Exercise 
-# MAGIC 
+# MAGIC
 # MAGIC - Predict with the fitted model on `X_test_scaled`.
 # MAGIC - Calculate MSE, RMSE, MASE and R2. Did it change compared to the unscaled version of linear regression?
 
 # COMMAND ----------
 
-# Task
+# Task 14
 
 ...
 mse = ...
@@ -456,14 +456,14 @@ print(f"R2: {np.round(r2_score,1)}") # the same as r2_score(y_test, y_hat)
 # MAGIC %md
 # MAGIC ## Result Analysis
 # MAGIC Now that we have fitted a model on the standardized features and calculated the different scores, we need to analyse these results.
-# MAGIC 
+# MAGIC
 # MAGIC ### Residuals
 # MAGIC ### Exercise
 # MAGIC - Calculate residuals by deducting `y_test` from `y_hat`.
 
 # COMMAND ----------
 
-# Task: Calculate residuals by deducting y_test from y_hat
+# Task 15: Calculate residuals by deducting y_test from y_hat
 
 residuals = ...
 
@@ -471,7 +471,7 @@ residuals = ...
 
 # MAGIC %md
 # MAGIC One of the assumptions of a linear regression is that the **residuals are normally distributed**. 
-# MAGIC 
+# MAGIC
 # MAGIC From the histogram below it seems that the residuals are almost normally distributed. If this is actually the case can be tested with e.g. the Kolmogorov-Smironov test or the Shapiro-Wilk test. It is also possible to draw a quantile-quantile plot. We could investigate outliers to check if they impact the residuals. 
 
 # COMMAND ----------
@@ -493,15 +493,15 @@ plt.show();
 
 # MAGIC %md
 # MAGIC ### Exercise – The Dependent Variable
-# MAGIC 
+# MAGIC
 # MAGIC The lower long tail on the histogram might be also due to the distribution of the dependent variable y. When doing exploratory data analysis we should look only at the train set so that we do not detect patterns from the test set. The test set is set aside and is used only for evaluation.
-# MAGIC 
+# MAGIC
 # MAGIC - Create a boxplot of `y_train`.
 # MAGIC - Plot a histogram of `y_train`.
 
 # COMMAND ----------
 
-# Task - create a boxplot
+# Task 16 - create a boxplot
 
 
 # COMMAND ----------
@@ -511,7 +511,7 @@ plt.show();
 
 # COMMAND ----------
 
-# Task - create a histogram
+# Task 17 - create a histogram
 
 
 # COMMAND ----------
@@ -524,14 +524,14 @@ plt.show();
 
 # MAGIC %md
 # MAGIC ### Exercise – Outliers
-# MAGIC 
+# MAGIC
 # MAGIC Might the skewness of the residuals be due to the outliers in the explanatory features?
-# MAGIC 
+# MAGIC
 # MAGIC - Draw a boxplot for `X_train`. You can use for example a boxplot from the seaborn library.
 
 # COMMAND ----------
 
-# Task
+# Task 18
 
 
 # COMMAND ----------
@@ -543,14 +543,14 @@ plt.show();
 
 # MAGIC %md
 # MAGIC ### Exercise – Multicollinearity
-# MAGIC 
+# MAGIC
 # MAGIC Correlated features might cause the model to be quite unstable. 
-# MAGIC 
+# MAGIC
 # MAGIC - Calculate the correlations between all the variables with the `corr()` method called on `X_train`. Save the output into variable `corr`.
 
 # COMMAND ----------
 
-# Task
+# Task 19
 
 
 # COMMAND ----------
@@ -580,35 +580,35 @@ sns.heatmap(corr_abs, mask = mask, annot=True, cmap='Reds');
 
 # MAGIC %md
 # MAGIC ### Linearity – Exercise
-# MAGIC 
+# MAGIC
 # MAGIC Since we work with a linear model, there should be a linear relationship between X and y. Let's do some simple checks. 
-# MAGIC 
+# MAGIC
 # MAGIC - Compute the correlation between `X_train` and `y_train`. Hint: you can concatenate `X_train` and `y_train` first on `axis=1` and calculate the correlation on the concatenated data frame.
 
 # COMMAND ----------
 
-# Task
+# Task 20
 
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ### Exercise
-# MAGIC 
+# MAGIC
 # MAGIC There is a strong negative correlation between the target variable and the 'LSTAT' feature, as well as a strong positive correlation between the target variable and the 'RM' feature. 
-# MAGIC 
+# MAGIC
 # MAGIC - Draw a scatter plot showing the dependency between X and y not only for the two most correlated features 'LSTAT' and 'RM' but also for the other features to investigate if there is any pattern.
 
 # COMMAND ----------
 
-# Task
+# Task 21
 
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC We already know that there is a strong correlation between the target and the variable 'LSTAT' but the relationship seems to be rather non-linear. We can transform the variable 'LSTAT' for example with a negative logarithm or x-squared function to get a linear relationship between the modified variable and y. 
-# MAGIC 
+# MAGIC
 # MAGIC The relationship with the second highest correlated feature 'RM' seems to be linear.
 
 # COMMAND ----------
@@ -621,7 +621,7 @@ sns.heatmap(corr_abs, mask = mask, annot=True, cmap='Reds');
 
 # COMMAND ----------
 
-# Task
+# Task 22
 
 ...
 rmse = 
@@ -636,7 +636,7 @@ print(f"RMSE: {np.round(rmse,1)}")
 
 # MAGIC %md
 # MAGIC ## 2nd degree polynomial features
-# MAGIC 
+# MAGIC
 # MAGIC We have seen in the scatter plots that there likely is a non-linear relationship between 'LSTAT' and the target variable. It makes sense to test the model with the 2 variables as above but also adding polynomial features of the 2nd degree and an interaction term between the two variables. Run the cell below to see the performance of such a model.
 
 # COMMAND ----------
@@ -664,7 +664,7 @@ pd.DataFrame(model_poly.coef_, index = ["Coefficient"], columns = poly.get_featu
 # MAGIC %md
 # MAGIC ## Next steps to consider
 # MAGIC How can we improve our current model even further?
-# MAGIC 
+# MAGIC
 # MAGIC - Treatment of the y variable - Should we use two different models? Should we transform y?
 # MAGIC - Outliers need to be treated.
 # MAGIC - Feature selection methods.

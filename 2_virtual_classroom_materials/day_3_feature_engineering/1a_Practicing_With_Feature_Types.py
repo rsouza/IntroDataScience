@@ -27,18 +27,18 @@ data.head(10)
 # MAGIC %md
 # MAGIC Take a look at the first ten rows and read through the explanation below to understand what each feature represents.
 # MAGIC 
-# MAGIC - passengerID
-# MAGIC - Name
-# MAGIC - Sex
-# MAGIC - Age
-# MAGIC - Survived - not survived = 0, survived = 1, (target feature)
-# MAGIC - Pclass - ticket class = 1st, 2nd, 3rd
-# MAGIC - SibSp - number of siblings or spouses aboard the Titanic
-# MAGIC - Parch - number of parents or children aboard the Titanic
-# MAGIC - Ticket - ticket number
-# MAGIC - Fare - ticket fare
-# MAGIC - Cabin - cabin number
-# MAGIC - Embarked - port of embarkation (C = Cherbourg, Q = Queenstown, S = Southampton)
+# MAGIC - **passengerID**
+# MAGIC - **Name**
+# MAGIC - **Sex**
+# MAGIC - **Age**
+# MAGIC - **Survived** – not survived = 0, survived = 1, (target feature)
+# MAGIC - **Pclass** – ticket class = 1st, 2nd, 3rd
+# MAGIC - **SibSp** – number of siblings or spouses aboard the Titanic
+# MAGIC - **Parch** – number of parents or children aboard the Titanic
+# MAGIC - **Ticket** – ticket number
+# MAGIC - **Fare** – ticket fare
+# MAGIC - **Cabin** – cabin number
+# MAGIC - **Embarked** – port of embarkation (C = Cherbourg, Q = Queenstown, S = Southampton)
 
 # COMMAND ----------
 
@@ -46,7 +46,7 @@ data.head(10)
 # MAGIC # 1. Numerical Features
 # MAGIC 
 # MAGIC ## 1.1 Unbounded continuous type
-# MAGIC One of the numerical feature is 'Fare' representing the price that a passenger paid for the ticket. The price starts at zero and continuously increases within a specific range. This is the example of unbounded continuous feature type because the number can takes any value including decimal numbers with a fractional part. 
+# MAGIC One of the numerical feature is 'Fare' representing the price that a passenger paid for the ticket. The price starts at zero and continuously increases within a specific range. This is the example of *unbounded* continuous feature type because the number can takes any value including decimal numbers with a fractional part. 
 
 # COMMAND ----------
 
@@ -57,7 +57,7 @@ plt.title("Distribution of passenger's fare");
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The next numerical continuous feature is 'Age'. The other characteristic of a continuous feature is that it can be measured, as we can measure the age in years, for example. Let's create a boxplot to see its distribution. 
+# MAGIC The next numerical continuous feature is 'Age'. The other characteristic of a continuous feature is that it can be *measured*, as we can measure the age in years, for example. Let's create a boxplot to see its distribution. 
 
 # COMMAND ----------
 
@@ -69,7 +69,7 @@ sns.boxplot(data=data, x = 'Age',color ='r');
 # MAGIC %md
 # MAGIC ## 1.2 Unbounded discrete type
 # MAGIC 
-# MAGIC The feature 'SibSp' represents family relations as siblings or spouses. We can treat this feature as _discrete_ since the number is always some "isolated" value - logically, you can't report that you have 2.5 sisters.
+# MAGIC The feature 'SibSp' represents family relations as siblings or spouses. We can treat this feature as _discrete_ since the number is always some integer value – logically, you can't report that you have 2.5 sisters.
 # MAGIC 
 # MAGIC When we call `value_counts()` function on the 'SibSp' column, we get all of the unique values along with corresponding counts. 
 

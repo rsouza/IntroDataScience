@@ -21,7 +21,7 @@ import numpy as np
 
 # MAGIC %md
 # MAGIC # 1. Style sheets
-# MAGIC 
+# MAGIC
 # MAGIC Matplotlib offer several types of style sheets you can use. [Here is a showcase](https://matplotlib.org/stable/gallery/style_sheets/style_sheets_reference.html) of various style sheets applied to some common plots. It is also possible to create your own custom style for which you can define attributes such as the size of labels or markers, etc. To return all available style sheets, run the code below. Feel free to explore them.
 
 # COMMAND ----------
@@ -38,7 +38,7 @@ plt.style.use('default')
 
 # MAGIC %md
 # MAGIC # 2. Figure object and creating subplots
-# MAGIC 
+# MAGIC
 # MAGIC Matplotlib draw data on a Figure object. Any such Figure object can contain 1 or more Axes.
 
 # COMMAND ----------
@@ -110,32 +110,32 @@ plt.tight_layout(h_pad = 0.7, w_pad = 3)
 
 # MAGIC %md
 # MAGIC # 3. Two faces of Matplotlib
-# MAGIC 
+# MAGIC
 # MAGIC 1. **MATLAB-style interface**
 # MAGIC At the beginning, Matplotlib was originally created in Python as an alternative to MATLAB. Since the plotting style of MATLAB is within the pyplot (plt) interface, some of its syntax is reflected also in Matplotlib.  
-# MAGIC 
-# MAGIC 
+# MAGIC
+# MAGIC
 # MAGIC 2. **Object Oriented interface**  
 # MAGIC This plotting approach is more convenient when you would like to have more control over your plots. You create a grid of subplots and are able to access a certain Axes object to draw a plot. 
-# MAGIC 
+# MAGIC
 # MAGIC Let's demonstrate the main characteristics of these two interfaces.
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ## 3.1 Line plot
-# MAGIC 
+# MAGIC
 # MAGIC Let's create a Figure object and 3 subplots of line plot using a generic `.plot()` function in MATLAB-style interface.
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC Using `plt.subplot()` we create 3 subplots where the following is specified:
-# MAGIC 
+# MAGIC
 # MAGIC - **number of rows**
-# MAGIC 
+# MAGIC
 # MAGIC - **number of columns**
-# MAGIC 
+# MAGIC
 # MAGIC - **index:**  
 # MAGIC this is the position of subplot in the grid    
 # MAGIC index starts always at 1 in the left upper corner (red line plot in our example below), and increases to the right 
@@ -185,7 +185,7 @@ plt.suptitle('Subplots');        # A title of the whole Figure object
 
 # MAGIC %md
 # MAGIC Now let's recreate a Figure using the Object-oriented interface of Matplotlib. With this approach you do not need to worry about which Axis is active right now. Plotting functions are applied explicitly to the Axes object you select. 
-# MAGIC 
+# MAGIC
 # MAGIC If you have a Subplot grid consisting of 2 subplots you can access the specific axis by indexing according its position. In this case indexing starts at zero. 
 
 # COMMAND ----------
@@ -235,15 +235,15 @@ ax[1,0].plot(tg, t, color = 'green');
 
 # MAGIC %md
 # MAGIC ### 3.1.1 Line plot customization
-# MAGIC 
+# MAGIC
 # MAGIC Let's plot the newly created x variable against the y variable. Firstly, we create a Figure object and an Axes object using `plt.subplots()`. Then you can call the `.plot()` function right onto the Axes object to generate a line plot, where we specify particular properties to our line such as labels, annotations, specified size, etc.  
-# MAGIC 
+# MAGIC
 # MAGIC ___
 # MAGIC We want our line to be a **light green 'dashdotted' line containing red point markers with white color in the middle pointing to each of the data points**. 
-# MAGIC 
+# MAGIC
 # MAGIC Phew! That's a lot of conditions. However, with Matplotlib you can customize every object within the Axes.
 # MAGIC Additionally, we would like to give a name to our graph and have a labeled axis to make the graph more readable and understandable for the audience. You might want to additionally set a vertical or horizontal line to depict some value or range of values. 
-# MAGIC 
+# MAGIC
 # MAGIC But keep in mind, there is a beauty in simplicity.
 
 # COMMAND ----------
@@ -290,9 +290,9 @@ ax.legend(['our line','threshold'], loc = 4)                      # Set the labe
 
 # MAGIC %md
 # MAGIC ## 3.2 Histogram
-# MAGIC 
+# MAGIC
 # MAGIC To create a histogram of a variable we can use the `hist()` function where a set of parameters can be specified. See the [documentation](https://matplotlib.org/3.3.3/api/_as_gen/matplotlib.pyplot.hist.html). 
-# MAGIC 
+# MAGIC
 # MAGIC We use `plt.subplots()` to create a Figure object and a grid of subplots (Axes objects), where we define 1 row and 2 columns so that our subplots will be created side-by-side. After that, we will have access to each of the Axes objects by their indices and can create plots. 
 
 # COMMAND ----------
@@ -353,7 +353,7 @@ fig.suptitle('Histograms of x_var', x = 0.5, y = 0.97, fontsize = 20);
 
 # MAGIC %md
 # MAGIC ## 3.3. Boxplot
-# MAGIC 
+# MAGIC
 # MAGIC You can create a boxplot using the `plt.boxplot()` plotting function. See the documentation [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.boxplot.html). There are several options for customizing the output, for example customizing elements of a boxplot. 
 
 # COMMAND ----------
@@ -377,16 +377,16 @@ ax.boxplot(x_var2,
 
 # MAGIC %md
 # MAGIC ## 3.4 Barplot
-# MAGIC 
+# MAGIC
 # MAGIC To visualize and compare categorical features you can create a bar plot. The quantity of data points belonging to particular category will be drawn in the form of a bar. Matplotlib's `bar` function take several parameter such as:
 # MAGIC - x: the coordinates of the bars
 # MAGIC - height: the height of the bars, in other words, the amount of data points 
-# MAGIC 
+# MAGIC
 # MAGIC Other parameters include the bar's width or the alignemnt of the bars. Please refer to the documentation [here](https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.bar.html).
-# MAGIC 
+# MAGIC
 # MAGIC -----
 # MAGIC Now we'll create a barplot which depicts the top speed of different animals and compares them to Usain Bolt's top speed at the World Championships in 2009, which is 44.72 km/h. 
-# MAGIC 
+# MAGIC
 # MAGIC There are limitless options regarding adding and customizing things such as annotations, arrows or colors of your plots. All of these options are well-documented in Matplotlib's documentation.
 
 # COMMAND ----------
@@ -426,7 +426,7 @@ ax.spines['right'].set(visible = False);
 
 # MAGIC %md
 # MAGIC ## Scatterplot
-# MAGIC 
+# MAGIC
 # MAGIC Using a scatterplot we can visualize a relationship between variables. The simple example below shows a relationship between the x and y variables created using Matplotlib's `scatter()` function.
 
 # COMMAND ----------
@@ -448,9 +448,9 @@ plt.ylabel('Y values', fontsize = 13);
 # MAGIC %md
 # MAGIC # Tasks
 # MAGIC Let's load the real estate evaluation dataset that consists of 7 attributes.
-# MAGIC 
+# MAGIC
 # MAGIC **Attributes:**
-# MAGIC 
+# MAGIC
 # MAGIC - X1 transaction date
 # MAGIC - X2 house age
 # MAGIC - X3 distance to the nearest MRT station
@@ -462,7 +462,7 @@ plt.ylabel('Y values', fontsize = 13);
 # COMMAND ----------
 
 # Load the data
-houses = pd.read_excel('Data/real_estate_valuation_data.xlsx')
+houses = pd.read_csv('./Data/real_estate_valuation_data.csv', sep=";")
 
 # COMMAND ----------
 
@@ -475,6 +475,13 @@ houses
 houses.rename(columns = {'X1 transaction date':'transaction_date','X2 house age':'age','X3 distance to the nearest MRT station':
                         'distance_to_metro','X4 number of convenience stores':'n_convenience_stores',
                         'Y house price of unit area':'price_unit_area'}, inplace = True)
+
+# COMMAND ----------
+
+# Convert dtype to float for columns with continuous parameters
+float_columns = ['transaction_date', 'age', 'distance_to_metro', 'X5 latitude', 'X6 longitude', 'price_unit_area']
+for column in float_columns:
+    houses[column] = houses[column].str.replace(",",".").astype(float)
 
 # COMMAND ----------
 
@@ -526,5 +533,5 @@ houses.rename(columns = {'X1 transaction date':'transaction_date','X2 house age'
 # MAGIC %md
 # MAGIC ## Citation request: 
 # MAGIC Yeh, I. C., & Hsu, T. K. (2018). Building real estate valuation models with comparative approach through case-based reasoning. Applied Soft Computing, 65, 260-271.  
-# MAGIC 
+# MAGIC
 # MAGIC Material adapted for RBI internal purposes with full permissions from original authors. [Source](https://github.com/zatkopatrik/authentic-data-science)

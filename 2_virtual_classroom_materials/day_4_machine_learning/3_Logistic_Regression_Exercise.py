@@ -35,7 +35,7 @@ print(datasets.load_breast_cancer().DESCR)
 
 # MAGIC %md
 # MAGIC ## Make the data imbalanced
-# MAGIC 
+# MAGIC
 # MAGIC For the purpose of this exercise we will make the data imbalanced by removing 80% of the cases where `y==1`.
 
 # COMMAND ----------
@@ -60,7 +60,7 @@ plt.hist(y_imb);
 
 # COMMAND ----------
 
-#Task:
+#Task 1:
 
 X_train , X_test , y_train , y_test = ... # random_state=42
 
@@ -68,33 +68,33 @@ X_train , X_test , y_train , y_test = ... # random_state=42
 
 # MAGIC %md
 # MAGIC ### Exercise
-# MAGIC 
+# MAGIC
 # MAGIC Fit the default `LogisticRegression()` to `X_train` and `y_train`.
 
 # COMMAND ----------
 
-#Task:
+#Task 2:
 
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC The model failed to converge due to low number of iterations of the optimization solver. There are multiple solvers that can be chosen as a hyperparameter of the model. These also depend on the strategy that is chosen for regularization and for the multiclass problem. A description of which solver suits which problem is in the documentation. We have 3 options now:
-# MAGIC 
+# MAGIC
 # MAGIC - Increase the number of iterations until the default solver converges.
 # MAGIC - Select a different optimization algorithm with a hyperparameter solver.
 # MAGIC - Scale the input data which usually helps optimization algorithms to converge. However, if you do not use regularization, the scaling is not required for a logistic regression. It only helps with convergence.
-# MAGIC 
+# MAGIC
 # MAGIC ### Exercise
 # MAGIC We will go with the last option. 
-# MAGIC 
+# MAGIC
 # MAGIC - Scale the data with a `StandardScaler()`.
 # MAGIC - Fit and transform `X_train` and save it to `X_train_scaled`.
 # MAGIC - Transform `X_test` and save it to `X_test_scaled`.
 
 # COMMAND ----------
 
-#Task:
+#Task 3:
 
 scaler = ...
 X_train_scaled = ...
@@ -104,21 +104,21 @@ X_test_scaled = ...
 
 # MAGIC %md
 # MAGIC ### Exercise
-# MAGIC 
+# MAGIC
 # MAGIC - Fit the logistic regression to the scaled data.
 # MAGIC - Predict on `X_train_scaled` and save the values to `y_hat`.
 # MAGIC - What are the values that are returned from the `predict()` method?
 
 # COMMAND ----------
 
-#Task:
+#Task 4:
 
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ### Exercise
-# MAGIC 
+# MAGIC
 # MAGIC Print different metrics from `sklearn.metrics` for the predictions on the train set:
 # MAGIC  - accuracy
 # MAGIC  - confusion matrix
@@ -126,7 +126,7 @@ X_test_scaled = ...
 
 # COMMAND ----------
 
-#Task:
+#Task 5:
 
 print(f'accuracy {metrics....(...,..)}')
 print(f'confusion matrix\n {metrics....(..., ...)}')
@@ -136,51 +136,51 @@ print(f'classification report\n {metrics....(..., ...)}')
 
 # MAGIC %md
 # MAGIC __WARNING__: You should never optimize for the results of the test set. The test set should be always set aside and you should evaluate only once you have decided on the final model. You will learn later in the course how to treat such situations in the lecture about hyperparameter tuning.
-# MAGIC 
+# MAGIC
 # MAGIC You can see from the confusion matrix that there are only 19 cases of the positive class in the train set while 2 of them were classified incorrectly and 17 correctly. We would rather want to predict correctly all those cases where `target = 1`. It is not a big deal if we tell the patient that she/he has a cancer while actually there is no cancer. The bigger problem is if we predict that the patient does not have a cancer while she/he actually has it. We can achieve this by changing the value of the threshold which by default is 50%. We should therefore lower the threshold for the probability.
-# MAGIC 
+# MAGIC
 # MAGIC After calling `.predict()` on your model it returned the predicted classes. Instead of predicting classes directly you can return probabilites for each instance using the `predict_proba()` method of the logistic regression model. One row is one observation. The first column is the probability that the instance belongs to the first class and the second column tells you about the probability of the instance belonging to the second class. Sum of the first and second column for each instance is equal to 1. You can find out which class is the first and which class is the second using the `classes_` attribute of the model. 
-# MAGIC 
+# MAGIC
 # MAGIC ### Exercise
-# MAGIC 
+# MAGIC
 # MAGIC - Return the classes with the `classes_` attribute.
 # MAGIC - Return the probabilites of `X_train_scaled` with the `predict_proba()` method.
 # MAGIC - Save the probabilities of the positive class in the variable `probs_train`.
 
 # COMMAND ----------
 
-#Task:
+#Task 6:
 
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ### Exercise 
-# MAGIC 
+# MAGIC
 # MAGIC Set the value of the threshold to 20% and use the probabilities saved in the variable `probs_train`: If the value of the probability is greater than the threshold then the prediction should be equal to 1. 
 # MAGIC Hint: boolean values can be converted to 0/1 with `boolean_values.astype(int)`.
-# MAGIC 
+# MAGIC
 # MAGIC Return a confusion matrix using `.confusion_matrix()` as well as a classification report using `.classification_report()` for the train set.
 
 # COMMAND ----------
 
-#Task:
+#Task 7:
 
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC It seems now that all the positive cases are classified correctly thanks to the change of the prediction threshold. Let's check the performance on the test data.
-# MAGIC 
+# MAGIC
 # MAGIC ### Exercise
-# MAGIC 
+# MAGIC
 # MAGIC - Save the probabilities of the positive class from the model on the `X_test_scaled` dataset in the variable `probs_test`.
 # MAGIC - Convert the probabilities into predictions with a threshold 20% as above.
 # MAGIC - Return a confusion matrix using `.confusion_matrix()` as well as a classification report using `.classification_report()` for the test set.
 
 # COMMAND ----------
 
-#Task:
+#Task 8:
 
 
 # COMMAND ----------
@@ -214,13 +214,13 @@ lr.get_params()
 
 # MAGIC %md
 # MAGIC ## Regularization
-# MAGIC 
+# MAGIC
 # MAGIC Similarly to linear regression you can apply any of the l1, l2 and elastic net regularization techniques. Here the strength of the regularization is defined by the parameter C which is the inverse of alpha. This means that the smaller the C the stronger the regularization. The default value for C is 1.
-# MAGIC 
+# MAGIC
 # MAGIC Different regularization techniques work only with certain solvers, e.g. for the L1 penalty we have to use either liblinear or saga solver, L2 can be handled with newton-cg, lbfgs and sag solvers, elasticnet works only with saga solver. For elasticnet you can adjust the parameter `l1_ratio`.
-# MAGIC 
+# MAGIC
 # MAGIC ### Exercise
-# MAGIC 
+# MAGIC
 # MAGIC - Fit the logistic regression on `X_train_scaled` with a regularization of your choice through the parameter `penalty`.
 # MAGIC - Change the solver if needed, see documentation.
 # MAGIC - Try different values of C to see the effect on results. Try also stronger values such as 0.1, 0.01, ...
@@ -228,7 +228,7 @@ lr.get_params()
 
 # COMMAND ----------
 
-#Task:
+#Task 9:
 
 
 # COMMAND ----------
@@ -249,7 +249,7 @@ print(f'coefficients of the logistic regression:\n {lr.coef_}')
 
 # MAGIC %md
 # MAGIC ## Load data
-# MAGIC 
+# MAGIC
 # MAGIC Here we will use here a dataset of handwritten numbers in a low resolution of 8x8 pixels. One picture is 64 values of pixels. There are 10 classes. You can see a few examples of these obserations in the picture below. We also perform the usual train test split and a scaling of features to help the optimizers converge.
 
 # COMMAND ----------
@@ -275,20 +275,20 @@ print(data.DESCR)
 
 # MAGIC %md
 # MAGIC ### Exercise
-# MAGIC 
+# MAGIC
 # MAGIC - Fit a default logistic regression on `X_train_scaled` and `y_train`.
 # MAGIC - Predict and print the classification report on `X_test_scaled`.
 
 # COMMAND ----------
 
-#Task:
+#Task 10:
 
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC You can see that in the classification report there is 1 row per class with all the statistics.
-# MAGIC 
+# MAGIC
 # MAGIC If you return probabilites with the `predict_proba()` method you will see that it has 1 column per class. It is a generalization of the binary case. The sum of all the probabilities per row is equal to 1.
 
 # COMMAND ----------
@@ -300,14 +300,14 @@ print(f'predict_proba shape: {probs.shape}')
 
 # MAGIC %md
 # MAGIC Logistic regression can handle multinomial regression without any special setting. There is however a parameter that lets you choose the strategy for the multinomial problem which then is either _one vs rest_ or _softmax regression_. The choice of the strategy is also dependent on the selected solver. I.e. if `solver = 'liblinear'` then a softmax regression is not possible. In this case and if the problem is binary, the default strategy for `multi_class` is one vs rest. Otherwise it is softmax.
-# MAGIC 
+# MAGIC
 # MAGIC ### Exercise
 # MAGIC - Fit a logistic regression to `X_train_scaled` and `y_train`. Use the parameter `multi_class` with the value 'ovr' which is the one vs rest strategy.
 # MAGIC - Return the probabilities.
 
 # COMMAND ----------
 
-#Task:
+#Task 11:
 
 ...
 ...

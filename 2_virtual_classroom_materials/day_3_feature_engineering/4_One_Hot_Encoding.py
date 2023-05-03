@@ -23,9 +23,9 @@ from sklearn.preprocessing import LabelEncoder
 
 # MAGIC %md
 # MAGIC ### Why should we use Encoding ? 
-# MAGIC 
+# MAGIC
 # MAGIC As we already know, we can't throw the data right away into machine learning models. We need to treat them in a specific way so our model's algorithm can work with them. **Machine learning algorithm work with vectors of numbers**, so when it comes to values represented as a string there is an issue. `scikit learn`, an industry-standard library used for machine learning, does not accept categorical values represented as strings as well.
-# MAGIC 
+# MAGIC
 # MAGIC Imagine we have categorical variables stored as string in the dataset. For understanding what the encoding looks like, here's a simple example.
 
 # COMMAND ----------
@@ -46,11 +46,11 @@ map_dataframe
 
 # MAGIC %md
 # MAGIC The unique categories of the 'color' column have been converted into numerical form as 1 when the 'black' category is present and 0 otherwise. Of course, encoding categorical features using mapping or replacing can be very tedious and not effective if we have many categorical features and corresponding categories. Fortunately, you can find several encoding methods that serve for different encoding challenges.
-# MAGIC 
+# MAGIC
 # MAGIC -------
-# MAGIC 
+# MAGIC
 # MAGIC Categorical variables take only a limited number of possible values/categories and must be converted into numerical form. We should perform this conversion over the **training data** and propagate them to the unseen data (for example holdout data). 
-# MAGIC 
+# MAGIC
 # MAGIC **The main reason for this approach is that we do not know whether the future data will have all the categories present in the training data**. There could also be fewer or more categories. Therefore the encoders must learn patterns from the training data and use those learned categories in both training and testing sets.
 
 # COMMAND ----------
@@ -94,7 +94,7 @@ X_train.shape, X_test.shape
 
 # MAGIC %md
 # MAGIC ### Cardinality of the categorical features
-# MAGIC 
+# MAGIC
 # MAGIC Let's explore how many unique values each of the categorical features has.
 
 # COMMAND ----------
@@ -112,9 +112,9 @@ for column in X_train.columns:
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC 
+# MAGIC
 # MAGIC # 1. One-Hot Encoding with Pandas
-# MAGIC 
+# MAGIC
 # MAGIC We can use Pandas method `pd.get_dummies()` to encode the categorical features. In the real world this encoding method shouldn't be used in ML pipelines (computationally and memory ineffective). However, in the case of some simple data analysis you should be able to use it. We'll look at how it works and what its advantages and limitations are.
 
 # COMMAND ----------
@@ -131,7 +131,7 @@ type(dummies)
 
 # MAGIC %md
 # MAGIC The main advantages are that `get_dummies()` returns a DataFrame and preserves feature names for dummy variables. Also, we can use this method even if our data contains missing values. 
-# MAGIC 
+# MAGIC
 # MAGIC In this example it has created one column for the female category and one column for the male category according to its presence. We can compare the created dummy variables to the original 'Sex' variable using concatenation to see what happened.
 
 # COMMAND ----------
@@ -150,14 +150,14 @@ result
 
 # MAGIC %md
 # MAGIC **Encoding into *k*-1 dummy variables**
-# MAGIC 
+# MAGIC
 # MAGIC Categorical variables should be encoded by creating *k*-1 binary variables. What does it mean, and why should we use it? 
-# MAGIC 
+# MAGIC
 # MAGIC Here *k* represents the number of distinct categories. In the feature 'Sex' there are only two categories of sex: male or female, so *k* = 2. We only need to create one binary variable (*k*-1 = 1) and still have all the information contained in the original dataset. In other words, if the value is 0 in all the binary variables, then it must be 1 in the final (not present) binary variable.
 # MAGIC For example, if we have the variable with 5 categories (*k* = 5), we would create 4 binary variables (*k* - 1 = 4). 
-# MAGIC 
+# MAGIC
 # MAGIC This approach helps to eliminate the redundancy of the information. 
-# MAGIC 
+# MAGIC
 # MAGIC To create *k*-1 dummy variables we specify parameter `drop_first = True` to drop the first binary variable.
 
 # COMMAND ----------
@@ -189,9 +189,9 @@ dummy_data
 
 # MAGIC %md
 # MAGIC # 2. One-Hot Encoding with Scikit-learn
-# MAGIC 
+# MAGIC
 # MAGIC The `sklearn.preprocessing` module offers the `OneHotEncoder()` class which encodes categorical features by creating binary columns for each unique category of variables using a one-hot encoding scheme. The output is not a DataFrame, but a NumPy array. You can find the documentation of `OneHotEncoder` [here](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html).
-# MAGIC 
+# MAGIC
 # MAGIC ----
 # MAGIC Firstly we need to create the encoder object where we can specify a set of parameters.
 # MAGIC Then we'll fit `OneHotEncoder` to the set `X_train`. There we first have to fill in missing values as `OneHotEncoder` doesn't except those. Using the `.categories_` attribute we'll find all of the determined categories. 
@@ -255,7 +255,7 @@ training_set.head()
 
 # COMMAND ----------
 
-# TASK 2 >>>> Transform X_test using one-hot encoding in the same way as we did with X_train and store it in the variable testing_set
+# TASK 3 >>>> Transform X_test using one-hot encoding in the same way as we did with X_train and store it in the variable testing_set
 #             Inspect the first 5 rows to see the result
 
 # COMMAND ----------
@@ -267,9 +267,9 @@ training_set.head()
 
 # MAGIC %md
 # MAGIC # 3. Encoding target variable
-# MAGIC 
+# MAGIC
 # MAGIC For encoding the target variable stored as a string datatype, we can use `LabelEncoder` class from the scikit learn module. `LabelEncoder` normalizes labels to have values between 0 and n_classes-1. You can find the documentation [here](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html#sklearn.preprocessing.LabelEncoder).
-# MAGIC 
+# MAGIC
 # MAGIC Let's look at the simple example of using this class on dog breeds. Firstly we create a `LabelEncoder` object and then we fit our data.
 
 # COMMAND ----------
@@ -299,9 +299,9 @@ encoded_labels
 
 # MAGIC %md
 # MAGIC Instead of two binary values (0 and 1), we now have a sequence of numbers which are not in ascending order. The reason for this is that the numbering is assigned in alphabetical order.
-# MAGIC 
+# MAGIC
 # MAGIC -------
-# MAGIC 
+# MAGIC
 # MAGIC ### TASK
 # MAGIC Now it's your turn to encode categorical variables in the **Mushrooms classification** dataset.
 
@@ -354,28 +354,28 @@ X_train.shape, X_test.shape
 
 # COMMAND ----------
 
-# TASK >>>> Create a OneHotEncoder object where the categories will be automatically determined
+# TASK 4 >>>> Create a OneHotEncoder object where the categories will be automatically determined
 # The result will be a dense array
 # If an unknown categorical feature will be present during transform it will raise 'error'
 # Store it in the variable encoder
 
 # COMMAND ----------
 
-# TASK >>>> Fit X_train using encoder
+# TASK 5 >>>> Fit X_train using encoder
 
 # COMMAND ----------
 
-# TASK >>>> Get the used categories
+# TASK 6 >>>> Get the used categories
 
 # COMMAND ----------
 
-# TASK >>>> Transform X_train and convert it to a Pandas DataFrame
+# TASK 7 >>>> Transform X_train and convert it to a Pandas DataFrame
 # You can assign it to X_train
 # Get the feature names and inspect the changes after transforming
 
 # COMMAND ----------
 
-# TASK >>>> Transform X_test and convert it to a Pandas DataFrame
+# TASK 8 >>>> Transform X_test and convert it to a Pandas DataFrame
 # You can assign it to X_test
 # Get the feature names and inspect the changes after transforming
 
@@ -386,11 +386,11 @@ X_train.shape, X_test.shape
 
 # COMMAND ----------
 
-# TASK >>>> Create LabelEncoder object and store it in variable labels_encoder
+# TASK 9 >>>> Create LabelEncoder object and store it in variable labels_encoder
 
 # COMMAND ----------
 
-# TASK >>>> Fit y_train using labels_encoder
+# TASK 10 >>>> Fit y_train using labels_encoder
 
 # COMMAND ----------
 
@@ -399,7 +399,7 @@ labels_encoder.classes_
 
 # COMMAND ----------
 
-# TASK >>>> Transform the y_train data and assign to y_train
+# TASK 11 >>>> Transform the y_train data and assign to y_train
 
 # COMMAND ----------
 
@@ -408,11 +408,11 @@ y_train
 
 # COMMAND ----------
 
-# TASK >>>> Fit and transform y_test data in the same way
+# TASK 12 >>>> Fit and transform y_test data in the same way
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ### Appendix
-# MAGIC 
+# MAGIC
 # MAGIC Material adapted for RBI internal purposes with full permissions from original authors. [Source](https://github.com/zatkopatrik/authentic-data-science)

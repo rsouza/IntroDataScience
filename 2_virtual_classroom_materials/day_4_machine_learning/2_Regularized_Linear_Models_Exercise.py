@@ -19,7 +19,7 @@ plt.rcParams["figure.figsize"] = (20,15)
 
 # MAGIC %md
 # MAGIC ## Load data
-# MAGIC 
+# MAGIC
 # MAGIC We load the Boston data from `sklearn.datasets` and split it into train and test data. As in the last notebook, we generate polynomial features of the second degree. We will work further with `x_train_poly`, `y_train`, `x_test_poly` and `y_test`. 
 # MAGIC Run the cell below.
 
@@ -60,12 +60,12 @@ names_dict = {'x0': X_train.columns[0],
 
 # MAGIC %md
 # MAGIC ### Exercise
-# MAGIC 
+# MAGIC
 # MAGIC How many features are there in total?
 
 # COMMAND ----------
 
-# Task
+# Task 1
 
 
 # COMMAND ----------
@@ -92,20 +92,20 @@ def plot_coef(lr_coef):
 
 # MAGIC %md
 # MAGIC ## Fit linear regression without regularization
-# MAGIC 
+# MAGIC
 # MAGIC ### Exercise
-# MAGIC 
+# MAGIC
 # MAGIC - Instantiate alinear regression under the variable `lr`.
 # MAGIC - Fit `lr` to `x_train_poly`, `y_train `.
 # MAGIC - Predict with `lr` on `x_train_poly` and store the results to `y_hat_train`.
 # MAGIC - Predict with `lr` on `x_test_poly` and store the results to `y_hat_test`.
 # MAGIC - Return the RMSE for `y_hat_train` as well as for `y_hat_test`. 
-# MAGIC 
+# MAGIC
 # MAGIC How do you interpret the difference in performance of the model on train and on test dataset? Can you tell if the model overfits/underfits?
 
 # COMMAND ----------
 
-# Task
+# Task 2
 
 lr = ...
 ...
@@ -122,7 +122,7 @@ print(f"RMSE test: {rmse_test}")
 
 # MAGIC %md
 # MAGIC The RMSE is almost twice as big for the test set than for the train set. This suggests overfitting and a poor generalization power of the model.
-# MAGIC 
+# MAGIC
 # MAGIC We use the function `plot_coef` on the coefficients of the fitted model to see the values of the coefficients and the average value of the coefficients.
 
 # COMMAND ----------
@@ -133,20 +133,20 @@ plot_coef(lr.coef_)
 
 # MAGIC %md
 # MAGIC The coefficients in combination with the error values on train and test suggest that we deal here with overfitting of the model on the given set of polynomial features. We should therefore use **regularization**. 
-# MAGIC 
+# MAGIC
 # MAGIC ## Standardization
-# MAGIC 
+# MAGIC
 # MAGIC Before fitting any regularized model, the scaling of the features is crucial. Otherwise the regularization would not be fair to features of different scales. Regularized linear models assume that the inputs to the model have a zero mean and a variance in the same magnitude. `StandarScaler()` deducts the mean and divides by the standard deviation. 
-# MAGIC 
+# MAGIC
 # MAGIC ### Exercise
-# MAGIC 
+# MAGIC
 # MAGIC - Instantiate `StandardScaler()` under the name `scaler`.
 # MAGIC - Apply the `fit_transform` method with the input `x_train_poly` to `scaler` and store the result into `x_train_scaled`.
 # MAGIC - Once the scaler is fit to `x_train_poly` you can directly transform `x_test_poly` and store it in the variable `X_test_scaled`. You never want to fit on a test sample, because that way information from the test data might leak. Test data serves only for evaluation.
 
 # COMMAND ----------
 
-# Task
+# Task 3
 
 
 scaler = ...
@@ -176,17 +176,17 @@ plt.show()
 # MAGIC %md
 # MAGIC # Lasso
 # MAGIC Documentation: https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Lasso.html
-# MAGIC 
+# MAGIC
 # MAGIC ### Exercise
 # MAGIC - Instantiate a Lasso regression under the name `lr_l`.
 # MAGIC - Fit the model to `X_train_scaled` and `y_train`.
 # MAGIC - Predict on `X_train_scaled` and `X_test_scaled` and store the predictions in `y_hat_train` and `y_hat_test`, respectively.
-# MAGIC 
+# MAGIC
 # MAGIC Did the overfit change?
 
 # COMMAND ----------
 
-# Task
+# Task 4
 
 
 from sklearn.linear_model import Lasso
@@ -206,14 +206,14 @@ print(f"RMSE test: {rmse_test}")
 
 # MAGIC %md
 # MAGIC The performance seems to be comparable on train and test dataset. Hence, the model's generalization power is better now.
-# MAGIC 
+# MAGIC
 # MAGIC ### Exercise
-# MAGIC 
+# MAGIC
 # MAGIC Use `plot_coef()` on the coefficients of the lasso model.
 
 # COMMAND ----------
 
-# Task
+# Task 5
 
 
 # COMMAND ----------
@@ -233,14 +233,14 @@ display(names_dict)
 
 # MAGIC %md
 # MAGIC ### Exercise
-# MAGIC 
+# MAGIC
 # MAGIC - Take the subset of `X_train_scaled` with only those variables that have a non-zero coefficient and store it in the variable `x_train_lasso`
 # MAGIC - Do the same selection on `X_test_scaled` and save it to `x_test_lasso`.
 # MAGIC - How many variables are remaining? Check it with the cell above.
 
 # COMMAND ----------
 
-# Task
+# Task 6
 
 x_train_lasso = ...
 x_test_lasso = ...
@@ -255,11 +255,11 @@ x_test_lasso = ...
 
 # MAGIC %md
 # MAGIC https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html
-# MAGIC 
+# MAGIC
 # MAGIC We have effectively performed a feature selection with Lasso. Now we will build on it and use only the selected features in `x_train_lasso` and `x_test_lasso`. 
-# MAGIC 
+# MAGIC
 # MAGIC Let's try different values for the strength of the optimization, alpha. By default it is equal to 1 and it must be a positive value. Larger values specify stronger regularization. Alpha can be set also in Lasso and Elastic Net.
-# MAGIC 
+# MAGIC
 # MAGIC ### Exercise
 # MAGIC - Fit the ridge regression to `x_train_lasso` and `y_train` with the values of alpha being 0.001, 0.01, 0.1, 1, 10 and 100 to see the effect of the regularization strength.
 # MAGIC - Return the RMSE for `x_train_lasso` for each of the alpha options.
@@ -267,7 +267,7 @@ x_test_lasso = ...
 
 # COMMAND ----------
 
-# Task
+# Task 7
 
 rmses = []
 alphas = [0.001, 0.01, 0.1, 1, 10, 100]
@@ -289,7 +289,7 @@ for alpha in alphas:
 
 # COMMAND ----------
 
-# Task
+# Task 8
 
 ...
 
@@ -300,13 +300,13 @@ print(f"RMSE test: {np.round(rmse_test,2)}")
 
 # MAGIC %md
 # MAGIC The RMSEs on the train and the test set are similar!
-# MAGIC 
+# MAGIC
 # MAGIC ### Exercise
 # MAGIC Use the function `plot_coef` on the coefficients from the best model to see the coefficients values with their average.
 
 # COMMAND ----------
 
-# Task
+# Task 9
 
 
 # COMMAND ----------
@@ -318,29 +318,29 @@ print(f"RMSE test: {np.round(rmse_test,2)}")
 
 # MAGIC %md
 # MAGIC Elastic Net is a combination of Lasso and Ridge which is defined by a parameter `l1_ratio`. If it is equal to 1 the model is equivalent to Lasso, if it is 0 then it is as if we had a Ridge regression. The regularization strength alpha can be defined just as in Ridge or Lasso. 
-# MAGIC 
+# MAGIC
 # MAGIC You can enforce the values of the parameters to be positive with the parameter `positive = True`. Such an option is also available for Lasso. 
-# MAGIC 
+# MAGIC
 # MAGIC For all the variations of the linear regression you can enforce it to fit the model without an intercept. This can be done by setting the parameter `fit_intercept=False`.
-# MAGIC 
+# MAGIC
 # MAGIC There is an option to scale data by the norm of each feature. If normalization is applied to fitting of the model it is automatically also applied to the `predict()`. We can use this method instead of standard scaling done at the beginning. 
-# MAGIC 
-# MAGIC 
+# MAGIC
+# MAGIC
 # MAGIC ### Exercise
-# MAGIC 
+# MAGIC
 # MAGIC Experiment with the parameters of `ElasticNet()`. Fit the model to `x_train_lasso` and `y_train` with different set of options, e.g.
 # MAGIC - `positive=True`
 # MAGIC - `fit_intercept=False`
 # MAGIC - `l1_ratio = 0`, `0.5`, `1`
 # MAGIC - `alpha = 0.001`, `0.01`, `0.1`, `1`, `10`, `100`
 # MAGIC - `normalize=True`    
-# MAGIC 
+# MAGIC
 # MAGIC Plot the coefficients with `plot_coef` to see the effect on the coefficients.
 # MAGIC Return the RMSE on train and test set.
 
 # COMMAND ----------
 
-# Task
+# Task 10
 
 ...
 

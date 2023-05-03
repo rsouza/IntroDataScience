@@ -1,16 +1,5 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC # 0. Package Installation - Restart Required
-# MAGIC 
-# MAGIC Please run the following line to install the required packages for today's training. Make sure to **restart your kernel** after the installation is finished.
-
-# COMMAND ----------
-
-# MAGIC %run day_2_package_installation.ipynb
-
-# COMMAND ----------
-
-# MAGIC %md
 # MAGIC # Visualizations with Pandas
 
 # COMMAND ----------
