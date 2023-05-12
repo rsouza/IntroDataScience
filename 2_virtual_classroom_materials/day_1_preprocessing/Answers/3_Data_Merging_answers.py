@@ -1,7 +1,7 @@
 # Databricks notebook source
 # MAGIC %md
 # MAGIC # 1. Database-style DataFrame Merges
-# MAGIC 
+# MAGIC
 # MAGIC Merge operations combine DataFrames on common columns or indices.
 
 # COMMAND ----------
@@ -30,7 +30,7 @@ print(data_2)
 
 # MAGIC %md
 # MAGIC Our first DataFrame `data_1` has multiple rows with keys 'A' and 'B', whereas DataFrame `data_2` has only 1 row for each value in the `key` column. This is an example of `many-to-one` \\(^{1}\\) merge situation.
-# MAGIC 
+# MAGIC
 # MAGIC By merging these 2 dataframes we obtain following result:
 
 # COMMAND ----------
@@ -52,25 +52,25 @@ pd.merge(data_1, data_2, on = 'key')
 
 # MAGIC %md
 # MAGIC As you can notice 'E', 'F', 'H', 'J'  and associated data are missing from the result. It is because `merge()` acts with 'inner' merge (join) by default. However, we can explicitly specify it using `how = 'inner'`
-# MAGIC 
+# MAGIC
 # MAGIC **inner join** (or inner merge) keeps only those values that have a common key in both DataFrames, in our case 'A', 'B' and 'C'. 
-# MAGIC 
-# MAGIC 
+# MAGIC
+# MAGIC
 # MAGIC Other possible options are:
 # MAGIC  
 # MAGIC - **left join** (left outer join)
-# MAGIC 
+# MAGIC
 # MAGIC We specify `how = 'left'`: it keeps each row from the left DataFrame and only those from the right DataFrame that match. Non-matching values are replaced with NaNs.
-# MAGIC 
-# MAGIC 
+# MAGIC
+# MAGIC
 # MAGIC - **right join** (right outer join)
-# MAGIC 
+# MAGIC
 # MAGIC We specify `how = 'right'`: it is the opposite of left join. Non-matching values are filled with NaNs as well.
-# MAGIC 
+# MAGIC
 # MAGIC - **outer** (full outer join)
-# MAGIC 
+# MAGIC
 # MAGIC We specify `how = 'outer'`: it takes the union of the keys and applies both left and right join
-# MAGIC 
+# MAGIC
 # MAGIC Run the following code to see these merging strategies \\(^{2}\\).
 
 # COMMAND ----------
@@ -97,7 +97,7 @@ pd.merge(data_1, data_2, on = 'key', how = 'outer')
 
 # MAGIC %md
 # MAGIC If the key column names are different in each DataFrame object, we can specify them separately.
-# MAGIC 
+# MAGIC
 # MAGIC - for the left DataFrame: `left_on`
 # MAGIC - for the right DataFrame: `right_on`
 
@@ -144,7 +144,7 @@ pd.merge(df_1, df_2, on = 'key', how = 'left')
 
 # MAGIC %md
 # MAGIC This is _many-to-many_ \\(^{1}\\) join situation which creates **Cartesian product** of the rows. In the result we can see we have 9 'black' rows. It is because there are 3 'black' rows in the left DataFrame `df_1` and 3 'black' rows in the right DataFrame `df_2`, so in the result we have every combination of rows where the key is equal to 'black'.
-# MAGIC 
+# MAGIC
 # MAGIC As you can see `merge()` automatically renames the columns as 'values_x' and 'values_y' to distinguish where the values belong to. We can explicitly specify these column's names with the 'suffixes' option. We only need to pass the desired names into the list like this: `suffixes=['_from_df1', '_from_df2']`.
 
 # COMMAND ----------
@@ -189,9 +189,9 @@ pd.merge(df_3, df_4, on = ['key_1', 'key_2'], how = 'inner')
 
 # MAGIC %md
 # MAGIC ## 2.1 Merging DataFrames on the Index
-# MAGIC 
+# MAGIC
 # MAGIC Our key(s) columns for merging can be found in a DataFrame as an index. In this case we can use the parameters `left_index = True` or `right_index = True` (or both) to indicate that the index should be used as the merge key.
-# MAGIC 
+# MAGIC
 # MAGIC - `left_index` : bool (default False)
 # MAGIC    - if True will choose index from left DataFrame as join key
 # MAGIC - `right_index` : bool (default False)
@@ -278,17 +278,17 @@ print(joined_df)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC # 2.3 Pandas `.concat()`
-# MAGIC 
+# MAGIC ## 2.3 Pandas `.concat()`
+# MAGIC
 # MAGIC -concatenate function combines DataFrames across rows or columns 
 # MAGIC - by default performs outer join, but we can specify inner join by setting `join = 'inner'`
-# MAGIC 
+# MAGIC
 # MAGIC - by default works along `axis = 0` (rows)
-# MAGIC 
+# MAGIC
 # MAGIC `pd.concat([df1, df2])`
-# MAGIC 
+# MAGIC
 # MAGIC - we can pass `axis = 1` to concatenate along columns 
-# MAGIC 
+# MAGIC
 # MAGIC `pd.concat([df1, df2], axis = 1)`
 
 # COMMAND ----------
@@ -301,7 +301,7 @@ print(concat_by_rows)
 
 # MAGIC %md
 # MAGIC Column names in DataFrames `students_1` and `programs_1` are not the same. As we can see in the exapmle above, by default, those columns have been also added on the result and NaN values have been filled in.
-# MAGIC 
+# MAGIC
 # MAGIC We can also create a hierarchical index on the concatenation axis, when we use argument `keys = ['key1','key2','key3','key_n'...]`.
 
 # COMMAND ----------
@@ -338,75 +338,10 @@ print(concat_by_columns)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## 2.4 Pandas `.append()`
-# MAGIC 
-# MAGIC   
-
-# COMMAND ----------
-
-# MAGIC %md
-# MAGIC - this method is a shortcut to `.concat()`
-# MAGIC - it is used to add elements to the existing objects
-
-# COMMAND ----------
-
-# Call .append() method on students_1 and pass programs_1 as an argument within the method
-appended_df = students_1.append(programs_1)
-print(appended_df)
-
-# COMMAND ----------
-
-# MAGIC %md
-# MAGIC We can append new rows to our existing DataFrames as well. We simply create a new Series (or a dictionary) with items and associated indices (column name) and append it to an existing DataFrame using the `.append()` method. New row can be appended only if the `ignore_index = True` argument is set within the method.
-
-# COMMAND ----------
-
-# Run this code 
-# It will create new_row which we'll append to the students_1 
-new_row = pd.Series([8, 'Renata', 37, 'Czech Republic', 22],
-                    index = ['student_id', 'first_name', 'age', 'city', 'score'])
-
-# COMMAND ----------
-
-# Append new_row Series to the students_1 DataFrame 
-# Set argument 'ignore_index = True'
-students_1 = students_1.append(new_row, ignore_index = True)
-print(students_1)
-
-# COMMAND ----------
-
-# MAGIC %md
-# MAGIC We can use `.append()` method to add both a single element or a list to an existing list.
-
-# COMMAND ----------
-
-# Run this code
-list_1 = ['Today', 'is', 'a', 'good']
-
-# COMMAND ----------
-
-# Append word 'day' to list_1
-list_1.append('day')
-print(list_1)
-
-# COMMAND ----------
-
-# Run this code
-new_list = [10,20,30,40,50]
-
-# COMMAND ----------
-
-# Append new_list to list_1 
-list_1.append(new_list)
-print(list_1)
-
-# COMMAND ----------
-
-# MAGIC %md
 # MAGIC # 3. References
-# MAGIC 
+# MAGIC
 # MAGIC \\(^{1}\\) Wes Mckinney (2013). Python for Data Analysis. (First ed.). California: O'Reilly Media, Inc.
-# MAGIC 
+# MAGIC
 # MAGIC \\(^{2}\\) Medium. Merging DataFrames with pandas. [ONLINE] Available at: https://medium.com/swlh/merging-dataframes-with-pandas-pd-merge-7764c7e2d46d. [Accessed 14 September 2020].
-# MAGIC 
+# MAGIC
 # MAGIC Material adapted for RBI internal purposes with full permissions from original authors. Source: https://github.com/zatkopatrik/authentic-data-science

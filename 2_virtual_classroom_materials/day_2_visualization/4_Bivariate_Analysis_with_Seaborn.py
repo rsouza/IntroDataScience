@@ -1,7 +1,7 @@
 # Databricks notebook source
 # MAGIC %md
 # MAGIC # Bivariate Analysis with Seaborn
-# MAGIC 
+# MAGIC
 # MAGIC Firstly, we import the necessary libraries and load the penguins dataset as 'penguins'.
 
 # COMMAND ----------
@@ -30,29 +30,29 @@ penguins.dropna(inplace = True)
 
 # MAGIC %md
 # MAGIC # 1. Categorical variables
-# MAGIC 
+# MAGIC
 # MAGIC If you want to visualize data involving categorical variables, you can choose between 2 different plotting approaches as we already saw in the preceding notebook: 
-# MAGIC 
+# MAGIC
 # MAGIC a) The `catplot()` plotting function 
-# MAGIC 
+# MAGIC
 # MAGIC - this is a Figure-level interface that allows you to plot categories
 # MAGIC - by calling this function, `a stripplot` will be drawn by default
 # MAGIC   
 # MAGIC Important note: specifying data
-# MAGIC 
+# MAGIC
 # MAGIC - data you want to visualize must be passed in a long-form DataFrame 
 # MAGIC - categorical and numerical variables must be passed as strings to the `x` and `y` parameters in the following way:   
 # MAGIC   ```sns.catplot(data = dataset, x = 'categorical_variable', y = 'numerical_variable')```
 # MAGIC   
-# MAGIC 
+# MAGIC
 # MAGIC - In comparison, the code below won't work:  
 # MAGIC   ```sns.catplot(x = data['categorical_variable'], y = data['numerical_variable'])```
 # MAGIC   
 # MAGIC The `catplot()` functions provides us with access to other Axes-level plotting functions which you can select by passing the respective plot kind to the `kind` parameter:
-# MAGIC 
+# MAGIC
 # MAGIC - "box", "swarm", "strip", "violin", "barplot", etc. 
 # MAGIC   
-# MAGIC 
+# MAGIC
 # MAGIC b) Axes-level plotting functions
 # MAGIC - `sns.boxplot()`
 # MAGIC - `sns.swarmplot()`
@@ -65,14 +65,14 @@ penguins.dropna(inplace = True)
 
 # MAGIC %md
 # MAGIC ## 1.1 Categorical vs. Numerical feature
-# MAGIC 
+# MAGIC
 # MAGIC One thing you could be interested in is to find out how the distribution of a numerical feature varies across different categories. For this purpose you can use a plotting functions such `sns.boxplot()`, `sns.violinplot()`, `sns.boxenplot()`.
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ### 1.1.1 Boxplot
-# MAGIC 
+# MAGIC
 # MAGIC Inside the function for creating the boxplots we specify the dataset and the feature names. The categorical variable 'species' will be plotted on the x-axis and the respective values of 'body_mass_g' on the y-axis.
 
 # COMMAND ----------
@@ -124,7 +124,7 @@ sns.boxplot(data = penguins,
 
 # MAGIC %md
 # MAGIC ### 1.1.2 Swarmplot
-# MAGIC 
+# MAGIC
 # MAGIC We can also take a closer look at the three islands where the penguins live. Since our dataset does not comprise too many observations, the data points are nicely plotted.
 
 # COMMAND ----------
@@ -143,7 +143,7 @@ ax.set(title = 'Distribution of the flipper length', # Accessing Axes object and
 
 # MAGIC %md
 # MAGIC Now we see the distribution of the penguins' flipper length on the three islands, but this plot does not provide us any specific and useful information. We can say only, for example, there are penguins with either really short flippers or vast majority of penguins have long flippers about 215 milimeters on Biscoe island. 
-# MAGIC 
+# MAGIC
 # MAGIC Let's explore what species are actually present on the particular islands.
 
 # COMMAND ----------
@@ -156,15 +156,15 @@ penguins.groupby('island')['species'].value_counts()
 
 # MAGIC %md
 # MAGIC Interestingly, Adelie species inhabit all three islands. Gentoo penguins are present only in Biscoe island and Chinstrap's home is Dream island. Let's filter the dataset only for Gentoo and Chinstrap penguins.
-# MAGIC 
+# MAGIC
 # MAGIC The filtering approach is up to you. You can create a subset of a DataFrame with specific rows based on a condition using indexing like in this example:   
 # MAGIC ```subset = data['weight'] == 85```
-# MAGIC 
+# MAGIC
 # MAGIC This operation checks for whether the row contains the value 85 and returns only those rows where this condition is fulfilled.
-# MAGIC 
+# MAGIC
 # MAGIC Another option is to use `query` which we apply onto the DataFrame. We specify that we want to filter only those rows where Gentoo and Chinstrap penguins are present as species. Since we filter for more than one condition, these species must by passed as a list. We use the `in` keyword which checks whether a species is present in the list.
-# MAGIC 
-# MAGIC 
+# MAGIC
+# MAGIC
 # MAGIC Choose the approach which best suits you. Here we included both of them for you to compare the code syntax.
 
 # COMMAND ----------
@@ -196,7 +196,7 @@ penguins_filter.head()
 
 # MAGIC %md
 # MAGIC ### 1.1.3 Stripplot
-# MAGIC 
+# MAGIC
 # MAGIC As you already learned how to create a stripplot, try the following exercise of visualizing Adelie species flipper length distribution based on the category  'sex'.
 
 # COMMAND ----------
@@ -218,7 +218,7 @@ adelie_filter = penguins.query('species == "Adelie"')
 
 # MAGIC %md
 # MAGIC ### 1.1.4 Violinplot
-# MAGIC 
+# MAGIC
 # MAGIC Categories can be nicely compared using a violinplot which shows statistics from a boxplot and the shape of the distribution that comes from a density plot. A violinplot is a good choice for plotting the distribution when visualizing a large number of observations is not sufficient due to data points overlapping.
 
 # COMMAND ----------
@@ -235,9 +235,9 @@ sns.violinplot(data = penguins,
 # MAGIC %md
 # MAGIC A violinplot consists of boxplot that is displayed in the middle. The thick black bar represents the majority of values (IQR) and the white dot is the median value. Thin black lines represent the rest of data points. There shape of distribution is displayed on each side. 
 # MAGIC The interpretation of a violinplot is similar to that of a swarmplot. Wider parts represent higher frequency of observations, while thinner parts denote less observations. You can notice that most male penguings have a weight of about 4000 grams and are generally heavier than females.
-# MAGIC 
+# MAGIC
 # MAGIC ---
-# MAGIC 
+# MAGIC
 # MAGIC Please, see the [documentation](https://seaborn.pydata.org/generated/seaborn.violinplot.html) for specifying other parameters.
 
 # COMMAND ----------
@@ -257,7 +257,7 @@ ax = sns.violinplot(data = penguins,
 
 # MAGIC %md
 # MAGIC ### 1.1.5 Displot
-# MAGIC 
+# MAGIC
 # MAGIC We can also compare the spread of the values using a histogram.
 
 # COMMAND ----------
@@ -275,9 +275,9 @@ sns.displot(data = penguins,
 
 # MAGIC %md
 # MAGIC ## 1.2 Categorical vs. categorical feature
-# MAGIC 
+# MAGIC
 # MAGIC With a countplot we are able to count the number of observations in each catogory and then compared how these values vary across categories. 
-# MAGIC 
+# MAGIC
 # MAGIC Let's visualize how many female and male penguins are present in each species.
 
 # COMMAND ----------
@@ -304,20 +304,20 @@ bars.set_xlabel('Species', fontsize = 13);
 
 # MAGIC %md
 # MAGIC # 2. Numerical vs. numerical feature
-# MAGIC 
+# MAGIC
 # MAGIC During bivariate analysis of two numerical variables we attempt to determine any relationship between them.
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ## 2.1 Relplot
-# MAGIC 
+# MAGIC
 # MAGIC Seaborn's `replot()` plotting function creates a relational plot. The output of this function is a FacetGrid object which allows to extend the existing plot in several ways, for instance adding another subplot or adding a subset of the data to visually display various categories. These options will be discussed in the last notebook about Multivariate analysis.
-# MAGIC 
+# MAGIC
 # MAGIC It is also possible to choose the method of visualizing statistical relationship using `kind` parameter:
 # MAGIC - `kind = 'scatter'` - by default
 # MAGIC - `kind = 'line` 
-# MAGIC 
+# MAGIC
 # MAGIC For now let's focus on creating a default relational plot comparing 2 numerical variables at once. We specify input dataset to `data` parameter and assign numerical variables as strings to `x` and `y`. 
 
 # COMMAND ----------
@@ -374,7 +374,7 @@ rel.set(xlabel = 'Body mass (g)',
 
 # MAGIC %md
 # MAGIC ## 2.2 Scatterplot
-# MAGIC 
+# MAGIC
 # MAGIC Another option to create a relational plot is using axes-level function `scatterplot()`. 
 
 # COMMAND ----------
@@ -400,7 +400,7 @@ sns.scatterplot(data = penguins,
 
 # MAGIC %md
 # MAGIC ### 2.3.1 Regplot
-# MAGIC 
+# MAGIC
 # MAGIC The Axes-level function`regplot()` creates a scatterplot and a line of best fit with a default 95% confidence interval which is drawn using translucent bands around the fit line. A similar plotting function is `lmplot()` which makes use of regplot and FacetGrid object so that you can compare several categories in a single figure.
 
 # COMMAND ----------
@@ -418,14 +418,14 @@ sns.regplot(data = penguins,
 
 # MAGIC %md
 # MAGIC # 3. Heatmap
-# MAGIC 
+# MAGIC
 # MAGIC Often we want to compute correlation coefficients to see the strength and the direction of the relationship. This can be done using Pandas's `corr()` function which can take input data and compute the pairwise correlation coefficients of variables.
-# MAGIC 
+# MAGIC
 # MAGIC Types of correlation that can be specified as an argument to `method` parameter:
 # MAGIC - pearson
 # MAGIC - kendall
 # MAGIC - spearman
-# MAGIC 
+# MAGIC
 # MAGIC Correlation matrix can be visualized using a heatmap where correlation coefficients are represented as colors. Values of correlation coefficients can take a range from -1 (a strong negative relationship) to 1 (a strong positive relationship). Since the coefficients take either high or low values, we should select a specific color palette called _diverging_.
 
 # COMMAND ----------
@@ -447,7 +447,7 @@ sns.heatmap(corr,
 
 # MAGIC %md
 # MAGIC # 4. Practice time
-# MAGIC 
+# MAGIC
 # MAGIC Let's continue exploring the "Bank marketing" dataset as in the previous notebook.
 
 # COMMAND ----------
@@ -551,7 +551,7 @@ data
 
 # MAGIC %md
 # MAGIC ## Citation request:
-# MAGIC 
+# MAGIC
 # MAGIC [Moro et al., 2014] S. Moro, P. Cortez and P. Rita. A Data-Driven Approach to Predict the Success of Bank Telemarketing. Decision Support Systems, Elsevier, 62:22-31, June 2014  
-# MAGIC 
+# MAGIC
 # MAGIC Material adapted for RBI internal purposes with full permissions from original authors. [Source](https://github.com/zatkopatrik/authentic-data-science) 

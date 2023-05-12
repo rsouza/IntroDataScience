@@ -20,7 +20,7 @@ print(string)
 
 # MAGIC %md
 # MAGIC `split()` method 
-# MAGIC 
+# MAGIC
 # MAGIC - This method splits a string into a list where each word is a list item.
 # MAGIC - We need to specify the `separator` to use when splitting the string.
 # MAGIC - We can specifiy how many splits to do by setting the `maxsplit` parameter.
@@ -51,7 +51,7 @@ print(x)
 
 # MAGIC %md
 # MAGIC `strip()` method
-# MAGIC 
+# MAGIC
 # MAGIC - It removes whitespaces at the beginning and at the end of the string.
 
 # COMMAND ----------
@@ -65,7 +65,7 @@ print(our_result)
 
 # MAGIC %md
 # MAGIC `join()` method
-# MAGIC 
+# MAGIC
 # MAGIC - This method takes all items in an iterable and joins them into one string.
 
 # COMMAND ----------
@@ -96,7 +96,7 @@ my_dictionary = {'Key_1':'1',
 
 # MAGIC %md
 # MAGIC `index()` method
-# MAGIC 
+# MAGIC
 # MAGIC - It returns the position of the first character in a substring if the substring is found in the string.
 # MAGIC - It raises a `ValueError` if nothing is found.
 
@@ -114,7 +114,7 @@ string_3.index('m')
 
 # MAGIC %md
 # MAGIC `replace()` method
-# MAGIC 
+# MAGIC
 # MAGIC - This method replaces occurences of a substring with another string.
 # MAGIC - It is commonly used to remove characters by passing an empty string.
 
@@ -146,9 +146,9 @@ string_5 = 'Banana, avocado, pineapple, artichoke'
 
 # MAGIC %md
 # MAGIC `upper()` method
-# MAGIC 
+# MAGIC
 # MAGIC - This method converts all lowercase characters in a string into uppercase characters and returns it.
-# MAGIC 
+# MAGIC
 # MAGIC `lower()` method
 # MAGIC - This method converts all upercase characters in a string into lowercase characters and returns it.
 
@@ -204,12 +204,12 @@ else:
 
 # MAGIC %md
 # MAGIC If you go to the [Documentation of `find()`](https://python-reference.readthedocs.io/en/latest/docs/str/find.html), you will see that ``find()`` can accept three parameters. One is compulsory, and the others are optional. 
-# MAGIC 
+# MAGIC
 # MAGIC The general syntax looks like this:
 # MAGIC ````
 # MAGIC string.find(value, start, end)
 # MAGIC ````
-# MAGIC 
+# MAGIC
 # MAGIC |Parameter|Characteristics|Description|Default|
 # MAGIC |---------|-----|------------- |-----|
 # MAGIC |sub| Required|The string that you are searching for| (no default)|
@@ -279,10 +279,10 @@ data_2015.head()
 
 # MAGIC %md
 # MAGIC # 3. Cleaning Text Column (READ-ONLY)
-# MAGIC 
+# MAGIC
 # MAGIC Imagine we have 2 possible categories of avocado (A and B) in the same row for the same day separated with '/'. 
 # MAGIC It would be an issue for us if we'd like to explore and visualize data based on the avocado's category. 
-# MAGIC 
+# MAGIC
 # MAGIC We can use `str.split()` method to resolve this issue in few steps.
 
 # COMMAND ----------
@@ -318,7 +318,7 @@ monday_data
 
 # MAGIC %md
 # MAGIC As the next steps:
-# MAGIC 
+# MAGIC
 # MAGIC - next we use `apply()` function on `monday_data` that return Series: use lambda function `lambda x:` to create new Series - we also need to specify `axis = 1` which returns a new column for avocado's type
 # MAGIC - after the `apply()` part add `stack()` - to stack avocado's category 
 
@@ -438,11 +438,11 @@ print(our_movie_data)
 
 # MAGIC %md
 # MAGIC # 5. Regular expressions
-# MAGIC 
+# MAGIC
 # MAGIC - provide a flexible way to serach or match string patterns in text
 # MAGIC - a single expression, commonly called a **regex**, is a string formed according to the regular expression language
 # MAGIC - using built-in module `re` we can apply regular expressions to strings
-# MAGIC 
+# MAGIC
 # MAGIC Run the following cell showing example of regular expression for validating an email \\(^{1}\\). 
 
 # COMMAND ----------
@@ -459,18 +459,18 @@ import re
 
 # MAGIC %md
 # MAGIC Regex Methods
-# MAGIC 
+# MAGIC
 # MAGIC There is a set of methods that allows us to search a string for a match such as:
-# MAGIC 
+# MAGIC
 # MAGIC `findall`
 # MAGIC - returns a list that contain all matches
-# MAGIC 
+# MAGIC
 # MAGIC `match`
 # MAGIC - if zero or more characters at the beginning of string match this regular expression, return a corresponding match object
-# MAGIC 
+# MAGIC
 # MAGIC `search`
 # MAGIC - scan through string looking for the first location where regular expression produces a match and return a corresponding match object
-# MAGIC 
+# MAGIC
 # MAGIC `split`
 # MAGIC - breaks string into pieces at each occurence of pattern
 
@@ -483,9 +483,9 @@ sentence = 'This  sentence contains     whitespace'
 
 # MAGIC %md
 # MAGIC To split this string we need to call `re.split()`. 
-# MAGIC 
+# MAGIC
 # MAGIC Within this method we specify regex `'\s+'` describing one or more whitespace character and string to split (in our case 'sentence').
-# MAGIC 
+# MAGIC
 # MAGIC Firstly, the regex is compiled and then the `split` function is called on the passed string.
 
 # COMMAND ----------
@@ -533,7 +533,7 @@ another_regex.findall(sentence_2)
 
 # MAGIC %md
 # MAGIC As you can see, the regex object performed case-sensitive matching and matched lowercase letters only. 
-# MAGIC 
+# MAGIC
 # MAGIC We can also define a case insensitive regex object during the pattern compile using `flags = re.IGNORECASE`
 
 # COMMAND ----------
@@ -602,7 +602,7 @@ rege.search(email)
 
 # COMMAND ----------
 
-text = 'The average price of the avocados was $1.35 last year, hopefully, this year the price don`t exceed $1.50 for a piece!'
+text = "The average price of the avocados was $1.35 last year, hopefully, this year the price don't exceed $1.50 for a piece!"
 
 # COMMAND ----------
 
@@ -629,27 +629,27 @@ pattern_dec.findall(text)
 
 # MAGIC %md
 # MAGIC **Hint**
-# MAGIC 
+# MAGIC
 # MAGIC If we want to find some pattern (decimal numbers for example) within the string of a Series, we can also use the pandas function `str.contains`. For more information check the [pandas documentation](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.contains.html).
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC # Appendix
-# MAGIC 
+# MAGIC
 # MAGIC Data Source 1: https://www.kaggle.com/neuromusic/avocado-prices
-# MAGIC 
+# MAGIC
 # MAGIC License: Database: Open Database, Contents: © Original Authors
-# MAGIC 
-# MAGIC 
+# MAGIC
+# MAGIC
 # MAGIC Data source 2: https://www.kaggle.com/orgesleka/imdbmovies
-# MAGIC 
+# MAGIC
 # MAGIC License: CC0: Public Domain
-# MAGIC 
+# MAGIC
 # MAGIC # References
-# MAGIC 
+# MAGIC
 # MAGIC \\(^{1}\\) BreatheCode. 2017. Regex Tutorial. [ONLINE] Available at: https://content.breatheco.de/en/lesson/regex-tutorial-regular-expression-examples. [Accessed 14 September 2020].
-# MAGIC 
+# MAGIC
 # MAGIC pandas. pandas.Series.str.contains. [ONLINE] Available at: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.contains.html. [Accessed 14 September 2020].
-# MAGIC 
+# MAGIC
 # MAGIC Material adapted for RBI internal purposes with full permissions from original authors. Source: https://github.com/zatkopatrik/authentic-data-science

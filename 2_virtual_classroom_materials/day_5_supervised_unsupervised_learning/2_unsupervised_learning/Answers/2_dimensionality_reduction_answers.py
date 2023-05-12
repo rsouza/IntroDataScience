@@ -15,7 +15,7 @@ from sklearn import datasets
 
 # MAGIC %md
 # MAGIC ## PCA
-# MAGIC 
+# MAGIC
 # MAGIC Principal component analysis is an unsupervised learning method that tries to detect the directions in which the vector formed by the data varies most.
 
 # COMMAND ----------
@@ -60,7 +60,7 @@ x_digits.shape
 
 # MAGIC %md
 # MAGIC Our data has 64 dimensions, but we are going to reduce it to only 2. We will see that, even with just 2 dimensions, the digits are already separating into clusters.
-# MAGIC 
+# MAGIC
 # MAGIC __TO DO__: 
 # MAGIC - Import `PCA` from the `scikit-learns.decomposition` module.
 # MAGIC - `fit_transform` a `PCA()`-model with `n_components = 2` on `x_digits` and assign the result to the variable `x_reduced`.
@@ -91,12 +91,12 @@ plt.title('MNIST. PCA projection');
 
 # MAGIC %md
 # MAGIC In practice, we would choose the number of principal components such that we can explain e.g. 90% of the initial data dispersion (via the `explained_variance_ratio_`). 
-# MAGIC 
+# MAGIC
 # MAGIC __TO DO__: 
 # MAGIC - Return the explained variance ratio with `PCA()`'s attribute `explained_variance_ratio_`.  
 # MAGIC Each value returns the percentage of variance explained by each of the selected components. 
 # MAGIC - How much variance did we explain with the first two components?
-# MAGIC 
+# MAGIC
 # MAGIC https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html
 
 # COMMAND ----------
@@ -137,12 +137,12 @@ plt.show()
 
 # MAGIC %md
 # MAGIC __Scaling__
-# MAGIC 
+# MAGIC
 # MAGIC In the MNIST dataset all features have the same scale out of the box. Thus the PCA algorithm is not impacted by different scales. 
-# MAGIC 
+# MAGIC
 # MAGIC While many algorithms (such as SVM, K-nearest neighbors, and logistic regression) require features to be normalized, Principle Component Analysis (PCA) especially is a prime example of when normalization is important. In PCA we are interested in the components that maximize the variance. If one component (e.g. human height) varies less than another (e.g. weight) because of their respective scales (meters vs. kilos), PCA might determine that the direction of maximal variance more closely corresponds to the 'weight' axis if those features are not scaled. As a change in height of one meter can be considered to be much more important than a change in weight of one kilogram, this is clearly incorrect.
-# MAGIC 
-# MAGIC 
+# MAGIC
+# MAGIC
 # MAGIC Import the wine data set. 
 
 # COMMAND ----------
@@ -300,11 +300,11 @@ accuracy_score(y_test, pred_test_scaled)
 
 # MAGIC %md
 # MAGIC ## t-SNE
-# MAGIC 
+# MAGIC
 # MAGIC t-SNE (t-distributed stochastic neighbor embedding) is another dimensionality reduction method that works well for visualizing high-dimensional data.   
 # MAGIC With t-SNE you can get **different results with different initializations**.   
 # MAGIC If the number of features is high then t-SNE can get quite slow. 
-# MAGIC 
+# MAGIC
 # MAGIC Here we select 2000 random samples from the MNIST digits dataset and still t-SNE takes much more time to complete than PCA.
 
 # COMMAND ----------
@@ -339,7 +339,7 @@ print(f'Timerun: {dt.now()-t1}')
 
 # MAGIC %md
 # MAGIC With t-SNE, the picture looks better since PCA has a linear constraint while t-SNE does not. Details of the algorithm are for further reading. 
-# MAGIC 
+# MAGIC
 # MAGIC https://scikit-learn.org/stable/modules/generated/sklearn.manifold.TSNE.html
 
 # COMMAND ----------
@@ -362,8 +362,7 @@ current_dir
 
 # COMMAND ----------
 
-# for answers, remove "Answers" from path
-(x_digits, y_digits), (_, _) = tf.keras.datasets.mnist.load_data(path=current_dir+'/mnist.npz')
+(x_digits, y_digits), (_, _) = tf.keras.datasets.mnist.load_data(path=current_dir+'/../mnist.npz')
 
 # if you have problems with RAM memory run the 3 lines below that will select just a subset of the data
 
@@ -398,7 +397,7 @@ x_digits.shape
 
 # MAGIC %md
 # MAGIC There are 60.000 numbers represented by 28 x 28 matrices with each entry encoding the color intensity for a pixel. We need to flatten every matrix into a vector of 28 x 28 = 784 numbers. We will use the numpy `.reshape()` method which gives a new shape to an array without changing its data.
-# MAGIC 
+# MAGIC
 # MAGIC https://numpy.org/doc/stable/reference/generated/numpy.reshape.html
 
 # COMMAND ----------

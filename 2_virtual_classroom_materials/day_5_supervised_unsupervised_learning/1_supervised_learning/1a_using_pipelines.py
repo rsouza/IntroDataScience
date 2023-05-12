@@ -1,7 +1,7 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC # Nice Pipeline
-# MAGIC 
+# MAGIC # Using Pipelines
+# MAGIC
 # MAGIC In this notebook we present a nice example of a pipeline which we can use for training purposes. At first glance it looks messy and hard to read.  
 # MAGIC But if you take a moment to really understand it you will notice the beauty of it!
 
@@ -39,27 +39,27 @@ import numpy as np
 
 # MAGIC %md
 # MAGIC The pipeline below will be a bit overwelming at first. Because of this we recommend the following steps to ease comprehension:
-# MAGIC 
+# MAGIC
 # MAGIC ## Step 1: Take a quick glance
 # MAGIC Please take a quick look at the pipeline below and come back here.
-# MAGIC 
+# MAGIC
 # MAGIC ## Step 2: Slow walkthrough
 # MAGIC Get a **high level view** of the pipeline:
 # MAGIC - Look at the top. There is a `FeatureUnion` object, which is a wrapper for the entire feature engineering process.
 # MAGIC - Look at the bottom. There is a `RandomForestClassifier` object, which is our predictive model.
-# MAGIC 
+# MAGIC
 # MAGIC Now we can go deeper into the `FeatureUnion` object we have instantiated, which is where the **feature engineering** is happening.
 # MAGIC - `FeatureUntion` splits into three parts, depending on which features we are attempting to process:
 # MAGIC     - On top we have numerical features.
 # MAGIC     - In the middle we have categorical features.
 # MAGIC     - At the bottom we have textual features.
 # MAGIC - Now zoom out again and realize that this is wrapped under `FeatureUnion`, which means that **these features will be transformed in a parallel way and appended next to each other**.
-# MAGIC 
+# MAGIC
 # MAGIC ## Step 3: Zooming in
 # MAGIC Only now let's **zoom into one part of our feature engineering**, for example into `numerical_features`, on the top:
 # MAGIC - Inside of it, we right away use `ColumnTransformer` as we want to specify for which columns certain transformation will be applied to based on name or by type.
 # MAGIC - Now we can already apply the transformers. But remember that `ColumnTransformer` by default drops all untransformed columns, which would mean that if we want to apply some transformations sequentially we would not be able to.
-# MAGIC 
+# MAGIC
 # MAGIC ## Step 4: Indentation
 # MAGIC Finally, **get used to the indentation** (the whitespacing). Your code editor helps with this. Get used to this by clicking just behind the last visible character on the line where you are. For example go behing the last bracket on the line of `SimpleImputer`. Now if you hit Enter, it will land where a code should continue on the next line it you still want to stay within the element, which is a `Pipeline` object.
 
@@ -127,7 +127,7 @@ predictions = model_pipeline.predict(predict_data)
 # MAGIC # 3. How to write that?
 # MAGIC Alright, we are now slightly more comfortable with understanding how pipelines work. But how do we write them ourselves?   
 # MAGIC The answer is: **from the outside inwards**. 
-# MAGIC 
+# MAGIC
 # MAGIC Let's walk through an example. Of course you can write things differently.    
 # MAGIC At first, lay out a simple structure which separates your feature engineering (inside of `FeatureUnion`) and your predictive model:
 
@@ -174,7 +174,7 @@ model_pipeline = Pipeline(steps=[
 
 # MAGIC %md
 # MAGIC You can put a `Pipeline` inside of the feature engineering, for example, in case you have transformers which need to be applied sequentially (such as numeric scaling and feature selection).  
-# MAGIC 
+# MAGIC
 # MAGIC At this point you can start inserting your individual transformations from before into the pipeline.
 
 # COMMAND ----------
@@ -182,13 +182,13 @@ model_pipeline = Pipeline(steps=[
 # MAGIC %md
 # MAGIC # 4. Reflect
 # MAGIC Continue with this point only once you went through the pipeline above.  
-# MAGIC 
+# MAGIC
 # MAGIC Usually we think that nicely written code costs significantly more effort than code scraped together in whichever way. Now that we went through the composite estimators properly, you know that it might be even simpler in many cases, not to mention more robust.  
-# MAGIC 
+# MAGIC
 # MAGIC At this point, you are hopefully able to tell apart two things:  
 # MAGIC - Data preprocessing and wrangling.
 # MAGIC - Data preparation for ML (Feature Engineering)  
-# MAGIC 
+# MAGIC
 # MAGIC Always try to separate these things in your use case (code). That is why we present these topics separatedely. It will be of tremendous help in the long run to write code in this way.
 
 # COMMAND ----------
@@ -219,18 +219,18 @@ train.head()
 # MAGIC %md
 # MAGIC We will use ``ColumnTransformer`` where we select the columns by their names.   
 # MAGIC We will then train our classifier with the following features:
-# MAGIC 
+# MAGIC
 # MAGIC **Numeric Features**
-# MAGIC 
+# MAGIC
 # MAGIC * 'Age': float;
 # MAGIC * 'Fare': float.
-# MAGIC 
+# MAGIC
 # MAGIC **Categorical Features**
-# MAGIC 
+# MAGIC
 # MAGIC * 'Embarked': categories encoded as strings: ``{'C', 'S', 'Q'}``;
 # MAGIC * 'Sex': categories encoded as strings: ``{'female', 'male'}``;
 # MAGIC * 'Pclass': ordinal integers: ``{1, 2, 3}``.
-# MAGIC 
+# MAGIC
 # MAGIC We first create the preprocessing pipelines for both numeric and categorical data.
 # MAGIC Note that 'Pclass' could either be treated as a categorical or a numeric
 # MAGIC feature.
@@ -280,13 +280,13 @@ clf
 # MAGIC **We can also select columns by data types when using `ColumnTransformer`.**   
 # MAGIC When dealing with a cleaned dataset, the preprocessing can be automatic by
 # MAGIC using the data types of the column to decide whether to treat a column as a numerical or categorical feature.
-# MAGIC 
+# MAGIC
 # MAGIC The function `sklearn.compose.make_column_selector` gives this possibility.
-# MAGIC 
+# MAGIC
 # MAGIC In practice, you will have to handle the column data type yourself.
 # MAGIC If you want some columns to be considered as `category`, you will have to convert them into categorical columns. If you are using pandas, you can refer to their documentation regarding [Categorical data](https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html).</p>
-# MAGIC 
-# MAGIC 
+# MAGIC
+# MAGIC
 # MAGIC + First, we will transform the object columns into categorical.  
 # MAGIC + Then we will only select a subset of columns to simplify our example.
 
@@ -347,7 +347,7 @@ selector(dtype_include="category")(X_train)
 
 # MAGIC %md
 # MAGIC **Using the prediction pipeline in a grid search**   
-# MAGIC 
+# MAGIC
 # MAGIC A grid search can also be performed on the different preprocessing steps which make up the ``ColumnTransformer`` object. So you can optimize the classifier's hyperparameters as part of the pipeline.  
 # MAGIC We will search for both the imputer strategy of the numeric preprocessing and the regularization parameter of the logistic regression using
 # MAGIC `sklearn.model_selection.GridSearchCV`.

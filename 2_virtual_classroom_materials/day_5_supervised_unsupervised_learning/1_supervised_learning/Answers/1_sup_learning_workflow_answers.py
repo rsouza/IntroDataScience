@@ -1,7 +1,7 @@
 # Databricks notebook source
 import pandas as pd
 
-train = pd.read_csv("data_titanic/train.csv")
+train = pd.read_csv("../data_titanic/train.csv")
 train.Pclass = train.Pclass.astype(float) # to avoid DataConversionWarning
 
 # COMMAND ----------
@@ -27,11 +27,11 @@ train.describe()
 
 # MAGIC %md
 # MAGIC Let's work only with the following features for simplicity:   
-# MAGIC 
+# MAGIC
 # MAGIC **Categorical**   
 # MAGIC - Sex
 # MAGIC - Embarked
-# MAGIC 
+# MAGIC
 # MAGIC **Numerical**  
 # MAGIC - Survived: *our target feature* (0 = No, 1 = Yes)
 # MAGIC - Pclass: Ticket class (1 = 1st, 2 = 2nd, 3 = 3rd)
@@ -57,7 +57,7 @@ train.isna().sum()
 
 # MAGIC %md
 # MAGIC For simplicity, we drop any row containing missing values. 
-# MAGIC 
+# MAGIC
 # MAGIC **Note**   
 # MAGIC If you later want to experiment with composite transformers, comment out this cell and include also missing value imputation.
 
@@ -140,6 +140,11 @@ print(X_test_transformed.shape)
 
 from sklearn.dummy import DummyClassifier
 
+dummy_clf = DummyClassifier(strategy="most_frequent")
+dummy_clf.fit(X_train_transformed, y_train)
+
+y_pred_TRAIN_DUMMY = dummy_clf.predict(X_train_transformed)
+y_pred_HOLDOUT_DUMMY = dummy_clf.predict(X_test_transformed)
 
 # COMMAND ----------
 
@@ -147,6 +152,8 @@ from sklearn.dummy import DummyClassifier
 # One possibility is to use gender and for example predict that every men or every woman has survived.
 # You can store the result as y_pred_TRAIN_HEURISTIC and as y_pred_HOLDOUT_HEURISTIC.
 
+y_pred_TRAIN_HEURISTIC =   np.array([1 if idx==0 else 0 for idx in X_train_transformed[:,3]])
+y_pred_HOLDOUT_HEURISTIC = np.array([1 if idx==0 else 0 for idx in X_test_transformed[:,3]])
 
 # COMMAND ----------
 
@@ -159,8 +166,13 @@ from sklearn.dummy import DummyClassifier
 from sklearn import metrics
 
 #TASK 2A: Display ACCURACY on TRAIN set.
+print(metrics.accuracy_score(y_train, y_pred_TRAIN_DUMMY))
+print(metrics.accuracy_score(y_train,y_pred_TRAIN_HEURISTIC))  #Optional Task 1
+print()
 
 #TASK 2B: Display ACCURACY on HOLDOUT set.
+print(metrics.accuracy_score(y_test, y_pred_HOLDOUT_DUMMY))
+print(metrics.accuracy_score(y_test, y_pred_HOLDOUT_HEURISTIC))  #Optional Task 1
 
 #OPTIONAL TASK 2C: Can you think of a better measure than accuracy based on the domain problem? If yes, use it the same way.
 
@@ -172,7 +184,11 @@ from sklearn import metrics
 # COMMAND ----------
 
 #TASK 3: Display a CONFUSION MATRIX on HOLDOUT set. Hint: do not use plot_confusion_matrix but confusion_matrix only.
+metrics.confusion_matrix(y_test, y_pred_HOLDOUT_DUMMY)
 
+# COMMAND ----------
+
+metrics.confusion_matrix(y_test, y_pred_HOLDOUT_HEURISTIC)
 
 # COMMAND ----------
 
@@ -196,6 +212,10 @@ from sklearn import metrics
 
 from sklearn.compose import ColumnTransformer
 
+feature_engineering = ColumnTransformer([('numerical_scaler', preprocessing.MinMaxScaler(),['Pclass', 'Age']),
+                                         ('ohe', preprocessing.OneHotEncoder(sparse=False), ['Sex', 'Embarked'])
+                                        ],
+                                        remainder='passthrough')
 
 # COMMAND ----------
 
@@ -205,7 +225,7 @@ from sklearn.compose import ColumnTransformer
 # MAGIC ``` 
 # MAGIC entire_pipeline = feature_engineering -> model  
 # MAGIC ``` 
-# MAGIC 
+# MAGIC
 # MAGIC Both components are already available. From the step above we can directly reuse the object `feature_engineering`. As model, we just call a new `DummyClassifier`, just as we did before.
 
 # COMMAND ----------
@@ -214,13 +234,14 @@ from sklearn.compose import ColumnTransformer
 # Store the result as entire_pipeline.
 from sklearn.pipeline import Pipeline
 
+entire_pipeline = Pipeline([('feature_engineering', feature_engineering), ('dummy', DummyClassifier(strategy="most_frequent"))])
 
 # COMMAND ----------
 
 # TASK: Uncomment the line and try to train the pipeline.
 # Notice that we are using untransformed data again (X_train) as the pipeline contains all necessary transformers.
 
-# entire_pipeline.fit(X = X_train, y = y_train)
+entire_pipeline.fit(X = X_train, y = y_train)
 
 # COMMAND ----------
 
@@ -260,8 +281,10 @@ print(metrics.accuracy_score(y_test, y_pred_HOLDOUT_DUMMY))
 # Store the result as dt_pipeline.
 from sklearn.tree import DecisionTreeClassifier
 
+dt_pipeline = Pipeline([('feature_engineering', feature_engineering), ('decision_tree', DecisionTreeClassifier())])
+
 # Train the pipeline
-# dt_pipeline.fit(X = X_train, y = y_train)
+dt_pipeline.fit(X = X_train, y = y_train)
 
 # COMMAND ----------
 
@@ -269,6 +292,8 @@ from sklearn.tree import DecisionTreeClassifier
 # Store the result as y_pred_TRAIN_DT.
 # Also, display accuracy.
 
+y_pred_TRAIN_DT = dt_pipeline.predict(X_train)
+print(metrics.accuracy_score(y_train, y_pred_TRAIN_DT))
 
 # COMMAND ----------
 
@@ -276,6 +301,8 @@ from sklearn.tree import DecisionTreeClassifier
 # Store the result as y_pred_HOLDOUT_DT.
 # Also, display accuracy.
 
+y_pred_HOLDOUT_DT = dt_pipeline.predict(X_test)
+print(metrics.accuracy_score(y_test, y_pred_HOLDOUT_DT))
 
 # COMMAND ----------
 
@@ -288,6 +315,18 @@ from sklearn.tree import DecisionTreeClassifier
 # Does the RandomForest display similar results as decision tree? If not, why?
 from sklearn.ensemble import RandomForestClassifier
 
+rf_pipeline = Pipeline([('feature_engineering', feature_engineering), ('random_forest', RandomForestClassifier())])
+
+# Train the pipeline
+rf_pipeline.fit(X = X_train, y = y_train)
+
+#Predict and show accuracy TRAIN
+y_pred_TRAIN_RF = rf_pipeline.predict(X_train)
+print(metrics.accuracy_score(y_train, y_pred_TRAIN_RF))
+
+#Predict and show accuracy HOLDOUT
+y_pred_HOLDOUT_RF = rf_pipeline.predict(X_test)
+print(metrics.accuracy_score(y_test, y_pred_HOLDOUT_RF))
 
 # COMMAND ----------
 
@@ -312,6 +351,8 @@ dt_pipeline.get_params()
 # Tune parameters: max_depth and min_samples_split.
 # The values which you pick as parameters are up to you. You can think about them intuitively.
 
+param_grid = {'decision_tree__max_depth':[3, 4, 5, 6, 7, 8, 9], 
+              'decision_tree__min_samples_split':[ 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25] }
 
 # COMMAND ----------
 
@@ -338,7 +379,8 @@ tuning.best_params_
 # Hint: Reuse the pipeline and when declaring it, specify the params.
 # Store it as dt_pipeline_tuned.
 
-... 
+dt_pipeline_tuned = Pipeline([('feature_engineering', feature_engineering), 
+                              ('decision_tree', DecisionTreeClassifier(max_depth=6, min_samples_split=5))])
 
 # Train
 dt_pipeline_tuned.fit(X_train, y_train)
@@ -347,11 +389,12 @@ dt_pipeline_tuned.fit(X_train, y_train)
 
 # TASK 8B: Display accuracy on the training set of the optimized decision tree.
 
+print(metrics.accuracy_score(y_train, dt_pipeline_tuned.predict(X_train)))
 
 # COMMAND ----------
 
 # TASK 8C: Display accuracy on the holdout set of the optimized decision tree.
-
+print(metrics.accuracy_score(y_test, dt_pipeline_tuned.predict(X_test)))
 
 # COMMAND ----------
 

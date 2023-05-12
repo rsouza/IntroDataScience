@@ -1,30 +1,30 @@
 # Databricks notebook source
 # MAGIC %md
 # MAGIC # Data Science workflow  
-# MAGIC 
+# MAGIC
 # MAGIC In this sequence of notebooks we will exemplify the inner steps in the Data Science workflow.  
 # MAGIC We are not going to discuss the business requirements and deployment strategies, but just the phases below:
-# MAGIC 
+# MAGIC
 # MAGIC ### I - Exploratory Data Analysis (this notebook)  
 # MAGIC ##### II - Feature Engineering and Selection 
 # MAGIC ##### III - Modeling  
 # MAGIC ##### IV - Evaluation  
-# MAGIC 
+# MAGIC
 # MAGIC This notebook will cover the Exploratory Data Analysis (EDA)
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ## I - Exploratory Data Analysis  
-# MAGIC 
+# MAGIC
 # MAGIC Exploratory Data Analysis is a set of techniques developed by John Wilder Tukey in 1970. The philosophy behind this approach was to examine the data before building a model.  
 # MAGIC John Tukey encouraged statisticians to explore the data, and possibly formulate hypotheses that could lead to new data collection and experiments.  
-# MAGIC 
+# MAGIC
 # MAGIC Today data scientists and analysts spend most of their time in Data Wrangling and Exploratory Data Analysis also known as EDA. But what is this EDA and why is it so important? 
 # MAGIC Exploratory Data Analysis (EDA) is a step in the data science workflow, where a number of techniques are used to better understand the dataset being used.
-# MAGIC 
+# MAGIC
 # MAGIC ‘Understanding the dataset’ can refer to a number of things including but not limited to…
-# MAGIC 
+# MAGIC
 # MAGIC + Get maximum insights from a data set
 # MAGIC + Uncover underlying structure
 # MAGIC + Extracting important variables and leaving behind useless variables
@@ -42,18 +42,18 @@
 
 # MAGIC %md
 # MAGIC ## CRISP-DM
-# MAGIC 
+# MAGIC
 # MAGIC The CRoss Industry Standard Process for Data Mining ([CRISP-DM](https://www.datascience-pm.com/crisp-dm-2/)) is a process model that serves as the base for a data science process.  
 # MAGIC It has six sequential phases:
-# MAGIC 
+# MAGIC
 # MAGIC + Business understanding – What does the business need?
 # MAGIC + Data understanding – What data do we have / need? Is it clean?
 # MAGIC + Data preparation – How do we organize the data for modeling?
 # MAGIC + Modeling – What modeling techniques should we apply?
 # MAGIC + Evaluation – Which model best meets the business objectives?
 # MAGIC + Deployment – How do stakeholders access the results?
-# MAGIC 
-# MAGIC 
+# MAGIC
+# MAGIC
 # MAGIC ![CRISP-DM Process](https://miro.medium.com/max/736/1*0-mnwXXLlMB_bEQwp-706Q.png)
 
 # COMMAND ----------
@@ -61,14 +61,14 @@
 # MAGIC %md
 # MAGIC The machine learning community is still trying to establish a standard process model for machine learning development. As a result, many machine learning and data science projects are still not well organized. Results are not reproducible.  
 # MAGIC In general, such projects are conducted in an ad-hoc manner. To guide ML practitioners through the development life cycle, the Cross-Industry Standard Process for the development of Machine Learning applications with Quality assurance methodology ([CRISP-ML(Q)](https://ml-ops.org/content/crisp-ml)) was recently proposed.  
-# MAGIC 
+# MAGIC
 # MAGIC There is a particular order of the individual stages. Still, machine learning workflows are fundamentally iterative and exploratory so that depending on the results from the later phases we might re-examine earlier steps.
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ## CRISP-ML
-# MAGIC 
+# MAGIC
 # MAGIC ![CRISP-ML Process](https://ml-ops.org/img/crisp-ml-process.jpg)  
 # MAGIC [Source](https://ml-ops.org/content/crisp-ml)
 
@@ -76,7 +76,7 @@
 
 # MAGIC %md
 # MAGIC If we explode the EDA phase in each of the previous frameworks, we would have something like this:
-# MAGIC 
+# MAGIC
 # MAGIC ![EDA](https://www.researchgate.net/publication/329930775/figure/fig3/AS:873046667710469@1585161954284/The-fundamental-steps-of-the-exploratory-data-analysis-process_W640.jpg)  
 # MAGIC [Source](https://www.researchgate.net/publication/329930775_A_comprehensive_review_of_tools_for_exploratory_analysis_of_tabular_industrial_datasets)
 
@@ -169,9 +169,11 @@ for col in df.columns:
 
 # COMMAND ----------
 
-for col in df.columns:
-    df[col].replace({'?': np.nan},inplace=True)
-    
+#for col in df.columns:
+#    df[col].replace({'?': np.nan},inplace=True)
+
+df.replace({'?': np.nan},inplace=True)    # works better and faster in this specific case, avoiding the loop.
+
 df.info()
 
 # COMMAND ----------
@@ -261,19 +263,19 @@ df.head()
 
 # MAGIC %md
 # MAGIC ### 4. Checking Data Distributions
-# MAGIC 
+# MAGIC
 # MAGIC This is the most important step in EDA. 
 # MAGIC - This step will decide how much insight you can get.
 # MAGIC - Checking the distributions is fundamental for feature selection and the modeling phase
 # MAGIC - This step varies from person to person in terms of their questioning ability. 
-# MAGIC 
+# MAGIC
 # MAGIC Let's check the univariate and bivariate distributions and correlation between different variables, this will give us a roadmap on how to proceed further.
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC #### 4.1 Univariate Analysis  
-# MAGIC 
+# MAGIC
 # MAGIC The goal here is to check the distribution of numeric and categorical variables (more about this later in the course)  
 # MAGIC We can quickly check the distributions of every numeric column:
 
@@ -297,7 +299,7 @@ for col in numeric_cols:
 
 # MAGIC %md
 # MAGIC ##### 4.1.1 - Analizing distributions on numerical variables - Spotting outliers
-# MAGIC 
+# MAGIC
 # MAGIC ![Outliers](https://sphweb.bumc.bu.edu/otlt/MPH-Modules/PH717-QuantCore/PH717-Module6-RandomError/Normal%20Distribution%20deviations.png)
 
 # COMMAND ----------
@@ -364,7 +366,7 @@ sns.countplot(df["body-style"], ax=ax)
 
 # MAGIC %md
 # MAGIC #### 4.2 Bivariate Analysis  
-# MAGIC 
+# MAGIC
 # MAGIC Now we want to check the relationships between pais of variables. We can start by drawing a pairplot and a correlation plot.
 
 # COMMAND ----------
@@ -381,7 +383,7 @@ sns.pairplot(df.select_dtypes(include='number'))
 # COMMAND ----------
 
 plt.figure(figsize=(12,12))
-sns.heatmap(df.corr(), cbar=True, annot=True, cmap='Blues')
+sns.heatmap(df.corr(), cbar=True, annot=True, cmap='seismic')
 
 # COMMAND ----------
 
@@ -391,12 +393,12 @@ sns.heatmap(df.corr(), cbar=True, annot=True, cmap='Blues')
 # MAGIC + 'wheel-base' – 'length', 'width', 'height', 'curb_weight', 'engine-size', 'price'  
 # MAGIC + 'horsepower' – 'length', 'width', 'curb-weight', 'engine-size', 'bore', 'price'  
 # MAGIC + 'Highway mpg' – 'city-mpg'  
-# MAGIC 
+# MAGIC
 # MAGIC ##### Negative Correlation  
 # MAGIC + 'Price' – 'highway-mpg', 'city-mpg'  
 # MAGIC + 'highway-mpg' – 'wheel base', 'length', 'width', 'curb-weight', 'engine-size', 'bore', 'horsepower', 'price'  
 # MAGIC + 'city' – 'wheel base', 'length', 'width', 'curb-weight', 'engine-size', 'bore', 'horsepower', 'price'  
-# MAGIC 
+# MAGIC
 # MAGIC This heatmap has given us great insights into the data.  
 # MAGIC Now let us apply domain knowledge and ask the questions which will affect the price of the automobile.
 
@@ -432,7 +434,7 @@ sns.catplot(x="fuel-type", y="horsepower", hue="num-of-doors", kind="violin", in
 # MAGIC %md
 # MAGIC Try to ask questions related to independent variables and the target variable.  
 # MAGIC Example questions related to this dataset could be:  
-# MAGIC 
+# MAGIC
 # MAGIC + How does 'fuel-type' affect the price of the car?   
 # MAGIC + How does the 'horsepower' affect the price?  
 # MAGIC + What is the relationship between 'engine-size' and 'price'?  
@@ -443,7 +445,7 @@ sns.catplot(x="fuel-type", y="horsepower", hue="num-of-doors", kind="violin", in
 
 # MAGIC %md
 # MAGIC #### 5.1 How does 'fuel_type' will affect the price?  
-# MAGIC 
+# MAGIC
 # MAGIC Let's compare categorical data with numerical data. We are going to use a catplot from Seaborn, but there are other options for categorical variables:  
 # MAGIC https://seaborn.pydata.org/tutorial/categorical.html
 
@@ -459,7 +461,7 @@ plt.ylabel('Price')
 
 # MAGIC %md
 # MAGIC #### 5.2 How does the horsepower affect the price?  
-# MAGIC 
+# MAGIC
 # MAGIC Matplotlib and Seaborn have very nice graphs to visualize numerical relationships:  
 # MAGIC https://seaborn.pydata.org/tutorial/relational.html  
 # MAGIC https://matplotlib.org/stable/gallery/index.html
@@ -541,7 +543,7 @@ plt.ylabel('Price')
 
 # MAGIC %md
 # MAGIC #### 5.5 What is the relation between no. of doors and price?  
-# MAGIC 
+# MAGIC
 # MAGIC Let us first check the number of doors.
 
 # COMMAND ----------

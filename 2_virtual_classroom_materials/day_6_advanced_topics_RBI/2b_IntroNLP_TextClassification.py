@@ -62,7 +62,7 @@ train_df.shape
 # COMMAND ----------
 
 x = train_df.iloc[:,3:].sum()
-rowsums = train_df.iloc[:,2:].sum(axis=1)
+rowsums = train_df.iloc[:,3:].sum(axis=1)
 no_label_count = 0
 for sum in rowsums.items():
     if sum==0:
@@ -117,7 +117,7 @@ plt.bar(categories,category_count)
 # MAGIC %md
 # MAGIC From the above plot its clear that "Quantitative biology" and "Quantitative Finance" have too few values compared to the other categories. This means that the data set is imbalanced.  
 # MAGIC To make it balanced we can apply **resampling techniques**. The data set is small so we can try oversampling for these two classes.  
-# MAGIC 
+# MAGIC
 # MAGIC We will implement oversampling later. First we will try to build a basic classification model.
 
 # COMMAND ----------
@@ -393,7 +393,7 @@ ax.set_ylabel("Actual", fontsize=26)
 
 # MAGIC %md
 # MAGIC # References
-# MAGIC 
+# MAGIC
 # MAGIC * https://www.analyticsvidhya.com/blog/2017/08/introduction-to-multi-label-classification/  
 # MAGIC * https://towardsdatascience.com/journey-to-the-center-of-multi-label-classification-384c40229bff  
 # MAGIC * https://www.thepythoncode.com/article/text-classification-using-tensorflow-2-and-keras-in-python   

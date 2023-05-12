@@ -1,7 +1,7 @@
 # Databricks notebook source
 # MAGIC %md
 # MAGIC ## AutoML Basic Concepts
-# MAGIC 
+# MAGIC
 # MAGIC [Source](https://github.com/EpistasisLab/tpot/blob/master/tutorials/Titanic_Kaggle.ipynb)
 
 # COMMAND ----------
@@ -169,11 +169,12 @@ training_indices.size, validation_indices.size
 
 # MAGIC %md
 # MAGIC After that, we proceed with calling the fit, score and export functions on our training dataset. To get a better idea of how these functions work, refer to the TPOT documentation here.
-# MAGIC 
+# MAGIC
 # MAGIC An important TPOT parameter to set is the **number of generations**. Since our aim is to just illustrate the use of TPOT, we set maximum optimization time to 2 minutes (`max_time_mins=2`). On a standard laptop with 4GB RAM it takes roughly 5 minutes per generation to run. For each added generation, it should take 5 minutes more. Thus, for the default value of 100, the total run time could be roughly around 8 hours.
 
 # COMMAND ----------
 
+# Only relevant for Databricks users using an ML runtime. 
 import mlflow
 mlflow.autolog(disable=True)  # As MLFlow is not totally integrated with TPOT, we disable the autologging when running on Databricks
 
@@ -197,30 +198,11 @@ tpot.export('/tmp/tpot_titanic_pipeline.py')
 
 # MAGIC %md
 # MAGIC Let's have a look at the generated code. As we can see, the random forest classifier performed the best on the given dataset out of all the other models that TPOT currently evaluates on. If we ran TPOT for more generations, then the score should improve further.
-# MAGIC 
-# MAGIC Run:
+# MAGIC
+# MAGIC To take a look at the saved tpot file, run:
 # MAGIC > `%load tpot_titanic_pipeline.py`
-
-# COMMAND ----------
-
-#%load /tmp/tpot_titanic_pipeline.py
-import numpy as np
-import pandas as pd
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
-
-# NOTE: Make sure that the outcome column is labeled 'target' in the data file
-tpot_data = pd.read_csv('PATH/TO/DATA/FILE', sep='COLUMN_SEPARATOR', dtype=np.float64)
-features = tpot_data.drop('target', axis=1)
-training_features, testing_features, training_target, testing_target = \
-            train_test_split(features, tpot_data['target'], random_state=None)
-
-# Average CV score on the training set was: 0.8308382897542362
-exported_pipeline = RandomForestClassifier(bootstrap=False, criterion="entropy", max_features=0.8500000000000001, min_samples_leaf=18, min_samples_split=14, n_estimators=100)
-
-exported_pipeline.fit(training_features, training_target)
-results = exported_pipeline.predict(testing_features)
-
+# MAGIC
+# MAGIC If you want to use this file, you need to specify the path of the *preprocessed* data where it says `PATH/TO/DATA/FILE`.
 
 # COMMAND ----------
 

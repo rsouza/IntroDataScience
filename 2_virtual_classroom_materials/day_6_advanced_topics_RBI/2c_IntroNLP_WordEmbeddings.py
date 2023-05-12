@@ -48,6 +48,7 @@ begin = time.time()
 
 # COMMAND ----------
 
+import io
 class Corpus(object):
 
     def __init__(self, filename):
@@ -55,7 +56,7 @@ class Corpus(object):
         self.nlp = spacy.blank("en")
         
     def __iter__(self):
-        with open(self.filename, "r") as i:
+        with io.open(self.filename, mode="r", encoding="utf-8") as i:
             reader = csv.reader(i, delimiter=",")
             for _, abstract in reader:
                 tokens = [t.text.lower() for t in self.nlp(abstract)]
@@ -68,12 +69,12 @@ documents = Corpus(os.path.join(os.getcwd(), "data/arxiv/arxiv.csv"))
 
 # MAGIC %md
 # MAGIC When we train our word embeddings, Gensim allows us to set a number of parameters. The most important of these are `min_count`, `window`, `vector_size` and `sg`:
-# MAGIC 
+# MAGIC
 # MAGIC - `min_count` is the minimum frequency of the words in our corpus. For infrequent words we just don't have enough information to train reliable word embeddings. It therefore makes sense to set this minimum frequency to at least 10. In these experiments, we'll set it to 100 to limit the size of our model even more.
 # MAGIC - `window` is the number of words to the left and to the right that make up the context that word2vec will take into account.
 # MAGIC - `vector_size` is the dimensionality of the word vectors. This is generally between 100 and 1000. This dimensionality often forces us to make a trade-off: embeddings with a higher dimensionality are able to model more information, but also need more data to train.
 # MAGIC - `sg`: there are two algorithms to train `Word2Vec`: skip-gram and CBOW. Skip-gram tries to predict the context on the basis of the target word; CBOW tries to find the target on the basis of the context. By default, Gensim uses CBOW (`sg=0`).
-# MAGIC 
+# MAGIC
 # MAGIC We'll investigate the impact of some of these parameters later.
 
 # COMMAND ----------
@@ -162,9 +163,9 @@ print(model.wv.doesnt_match("word2vec bert glove fasttext elmo".split()))
 
 # MAGIC %md
 # MAGIC Let's now visualize some of our embeddings. To plot embeddings with a dimensionality of 100 or more, we first need to map them to a dimensionality of 2. We do this with the popular [t-SNE](https://lvdmaaten.github.io/tsne/) method. T-SNE, short for **t-distributed Stochastic Neighbor Embedding**, helps us visualize high-dimensional data by mapping similar data to nearby points and dissimilar data to distant points in the low-dimensional space.
-# MAGIC 
+# MAGIC
 # MAGIC T-SNE is present in [Scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.manifold.TSNE.html). To run it, we just have to specify the number of dimensions we'd like to map the data to (`n_components`), and the similarity metric that t-SNE should use to compute the similarity between two data points (`metric`). We're going to map to 2 dimensions and use the cosine as our similarity metric. Additionally, we use PCA as an initialization method to remove some noise and speed up computation. The [Scikit-learn user guide](https://scikit-learn.org/stable/modules/manifold.html#t-sne) contains some additional tips for optimizing performance. 
-# MAGIC 
+# MAGIC
 # MAGIC Plotting all the embeddings in our vector space would result in a very crowded figure where the labels are hardly legible. Therefore we'll focus on a subset of embeddings by selecting the 200 most similar words to a target word.
 
 # COMMAND ----------

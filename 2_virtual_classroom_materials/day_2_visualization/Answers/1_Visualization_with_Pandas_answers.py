@@ -6,7 +6,7 @@
 
 # MAGIC %md
 # MAGIC # 1. Introduction
-# MAGIC 
+# MAGIC
 # MAGIC The Pandas library will probably be your first option to create visual insights to better understand your data.
 # MAGIC The main advantage is that you can visualize the data using simple and straightforward methods. Behind the scenes of plotting with Pandas is another library - Matplotlib. But don't worry now about Matplotlib as we will cover it in a later lesson. When we call some Pandas' plotting function, Matplotlib acts as an engine. Therefore we can use a higher level of code to gain similar good-looking plots as in Matplotlib.
 
@@ -14,11 +14,11 @@
 
 # MAGIC %md
 # MAGIC # 2. Dataset
-# MAGIC 
+# MAGIC
 # MAGIC We will be working with an occupancy detection dataset which can be found [here](https://archive.ics.uci.edu/ml/datasets/Occupancy+Detection+#). 
-# MAGIC 
+# MAGIC
 # MAGIC This dataset is intended to solve binary classification problems according to attributes which could indicate whether a person is present in the room or not.
-# MAGIC 
+# MAGIC
 # MAGIC Let's import the Pandas library and load the data.
 
 # COMMAND ----------
@@ -53,9 +53,9 @@ data.shape
 
 # MAGIC %md
 # MAGIC ## 2.1 Attributes explanation
-# MAGIC 
+# MAGIC
 # MAGIC Firstly, let's examine what variables we are dealing with.
-# MAGIC 
+# MAGIC
 # MAGIC - date: the specific day and time when the values were recorded 
 # MAGIC - Temperature: measured in Celsius
 # MAGIC - Humidity: relative humidity - a present state of absolute humidity relative to a
@@ -105,13 +105,13 @@ data.isnull().sum()
 
 # MAGIC %md
 # MAGIC # 3. Plot method
-# MAGIC 
+# MAGIC
 # MAGIC The `.plot()` function
-# MAGIC 
+# MAGIC
 # MAGIC This plotting function is simply a wrapper around `Matplotlibs` plot function that create a **lineplot** by default. A lineplot plots each data point of a DataFrame and then draws a straight, continuous line connecting these values.
-# MAGIC 
+# MAGIC
 # MAGIC ---
-# MAGIC 
+# MAGIC
 # MAGIC If you call `.plot()` right onto the DataFrame, all of the features will be plotted. This approach is sometimes not quite good as you can see below. There are several variables with similar low values, thus they are overlapping. 
 
 # COMMAND ----------
@@ -133,19 +133,19 @@ data['Temperature'].plot(color = 'violet')
 
 # MAGIC %md
 # MAGIC Now only 'Temperature' is plotted with its respective values.
-# MAGIC 
+# MAGIC
 # MAGIC You can see that the `plot()` function returns an ```<AxesSubplot:>``` object. But what does this mean? 
-# MAGIC 
+# MAGIC
 # MAGIC For now, remember that each graph is actually represented as a _Figure object_ that serves as the base. Onto this base there is an Axes object in which the x-axis and y-axis are created. In the latter section, we will discuss more details about Figures and Axes. 
 # MAGIC To avoid displaying this label, you can put a semicolon at the end of the line.
-# MAGIC 
+# MAGIC
 # MAGIC ---
 # MAGIC It is also possible to plot multiple columns by passing a **list** of respective variables, separated by a comma within square brackets and then call `.plot()`. Pandas sets the colors of lines automatically so that you will be able to distinguish the features. You can manually specify the colors of the lines by using the `color` parameter. Chosen colors need to be passed in a dictionary.  See the following example:
-# MAGIC 
+# MAGIC
 # MAGIC ``` data[['variable_1', 'variable_2']].plot(color = {'variable_1':'yellow', 'variable_2': 'black'})```
-# MAGIC 
+# MAGIC
 # MAGIC Also the legend is placed by default. 
-# MAGIC 
+# MAGIC
 # MAGIC **Try it yourself in the following task.**
 
 # COMMAND ----------
@@ -188,18 +188,18 @@ data.plot(x = 'date', y = 'CO2',             # Specifying variabes on the axis
 
 # MAGIC %md
 # MAGIC ## 3.2 Plotting approaches and plot kinds
-# MAGIC 
+# MAGIC
 # MAGIC Before we proceed with the other kinds of plots, there is an important thing to mention:
-# MAGIC 
+# MAGIC
 # MAGIC **There are different ways to plot your data**. To not to get confused later on, let's clarify them a little bit. 
-# MAGIC 
+# MAGIC
 # MAGIC In the preceding examples, we use the default `plot()` function that creates **a line plot by default**. 
-# MAGIC 
+# MAGIC
 # MAGIC **First approach:**
 # MAGIC - select a specific plot style by using the `kind `parameter.
-# MAGIC 
+# MAGIC
 # MAGIC Overall, there are 10 plot styles you can specify as an argument provided as a string:
-# MAGIC 
+# MAGIC
 # MAGIC - `hist`    - histogram  
 # MAGIC - `box`     - boxplot  
 # MAGIC - `bar`     - vertical barplot  
@@ -210,11 +210,11 @@ data.plot(x = 'date', y = 'CO2',             # Specifying variabes on the axis
 # MAGIC - `density` - density plot  
 # MAGIC - `area`    - area plot  
 # MAGIC - `hexbin`  - hexagonal bin plot  
-# MAGIC 
+# MAGIC
 # MAGIC **Second approach:**
-# MAGIC 
+# MAGIC
 # MAGIC - all of these plots can be created using the corresponding plotting functions:
-# MAGIC 
+# MAGIC
 # MAGIC - `DataFrame.plot.line`
 # MAGIC - `DataFrame.plot.hist`
 # MAGIC - `DataFrame.plot.box`
@@ -226,9 +226,9 @@ data.plot(x = 'date', y = 'CO2',             # Specifying variabes on the axis
 # MAGIC - `DataFrame.plot.density`
 # MAGIC - `DataFrame.plot.area`
 # MAGIC - `DataFrame.plot.hexbin`
-# MAGIC 
+# MAGIC
 # MAGIC For a histogram and a boxplot there are aditionally two plotting functions: `DataFrame.hist()` and `DataFrame.boxplot()`.
-# MAGIC 
+# MAGIC
 # MAGIC It is up to you which of the two approaches you will decide to stick with.
 
 # COMMAND ----------
@@ -240,7 +240,7 @@ data.plot(x = 'date', y = 'CO2',             # Specifying variabes on the axis
 
 # MAGIC %md
 # MAGIC A histogram is a handy plot to get a picture of the spread of data points. It creates so-called bins that you can think of as particular ranges of values. Each data point falls into the respective bin according to its value and then the number of data points in each bin are counted. 
-# MAGIC 
+# MAGIC
 # MAGIC Look at some statistics computed on the feature 'HumidityRatio'. We know the lowest and the highest ratio, the average value, and that 50% of values are under 30.0045, etc. But it´s hard to imagine how the distribution of 9752 observations looks like based these summary statistics.
 
 # COMMAND ----------
@@ -252,7 +252,7 @@ data.HumidityRatio.describe()
 
 # MAGIC %md
 # MAGIC Let's create a histogram of the variable 'HumidityRatio'. You can use the `.plot()` method and specify `kind = "hist"` within this method. Again, we select desired column by indexing the DataFrame. In this case, Pandas does not create an x-axis label. Since the `plot` function returns `matplotlib.axes.AxesSubplot`object, we have access to Matplotlib capabilities and can specify labels.
-# MAGIC 
+# MAGIC
 # MAGIC `plt.xlabel` for the x-axis  
 # MAGIC `plt.ylabel` for the y-axis
 
@@ -297,7 +297,7 @@ plt.ylabel('Number of occurences');
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC By applying `.hist()` to the DataFrame, we are able to create a histogram of the selected column or columns. It is also posibble to visualize a distribution of all the features of the dataset.
+# MAGIC By applying `.hist()` to the DataFrame, we are able to create a histogram of the selected column or columns. It is also possible to visualize a distribution of all the features of the dataset.
 
 # COMMAND ----------
 
@@ -310,9 +310,9 @@ plt.suptitle('The distribution of variables');           # Adding a suptitle usi
 
 # MAGIC %md
 # MAGIC ### 3.2.2 Boxplot (box-and-whisker plot)
-# MAGIC 
+# MAGIC
 # MAGIC Another approach to visualize the distribution of the data is using boxplots. Moreover, the resulting plot will include a [five-number summary](https://en.wikipedia.org/wiki/Five-number_summary): the smallest data point value, the first quartile (1Q), the median (Q2), the third quartile (Q3) and the largest data point value. Boxplots can reveal to us whether there are some possible outliers in the DataFrame and whether the data distribution is skewed or rather symmetrical.
-# MAGIC 
+# MAGIC
 # MAGIC In order to draw a boxplot you can use the `.plot()` method and specifying the `kind` keyword argument as 'box'. If we want to customize things such as color, width or style of the line, we can use the `boxprops`,`whiskerprops`,`medianprops` and `capprops` parameters.
 
 # COMMAND ----------
@@ -346,7 +346,7 @@ perc_25, median, perc_75
 
 # MAGIC %md
 # MAGIC The alternative is to use Pandas' built-in method `DataFrame.boxplot()`. Since the boxplots are really usefull when comparing two or more groups, we'll look at the amount of carbon dioxide according to a person's presence. Selecting groups you'd like to compare can be done using `by` parameter with the respective variable. We'll adjust the figure size and rename the x-tick labels.
-# MAGIC 
+# MAGIC
 # MAGIC The axis grid lines are displayed by default. You can disable showing these lines by setting the parameter `grid = False`.
 
 # COMMAND ----------
@@ -369,9 +369,9 @@ plt.xticks([1,2], ['Not occupied room','Occupied room']);
 
 # MAGIC %md
 # MAGIC ### 3.2.3 Bar plot
-# MAGIC 
+# MAGIC
 # MAGIC Bar plots are useful when we want to compare categorical data based on their values. Each category will be plotted on the x-axis and the height of the bars will represent the corresponding values. 
-# MAGIC 
+# MAGIC
 # MAGIC Let's create a simple DataFrame of students and theirs exam scores for illustration. 
 
 # COMMAND ----------
@@ -401,10 +401,10 @@ plt.ylabel('Count');
 
 # MAGIC %md
 # MAGIC For creating a bar plot, we sort the values by score in a descending fashion to display student's score. If your categories have longer labels, it's appropriate to set rotation `rot` in order to avoid overlapping. You can explicitly set color of each bar either through specifying the color names or the hexadecimal color codes to the `color` parameter.
-# MAGIC 
+# MAGIC
 # MAGIC See this [link](https://seaborn.pydata.org/tutorial/color_palettes.html) from Seaborn where the general principles of using color in plots are described. 
 # MAGIC ___
-# MAGIC 
+# MAGIC
 # MAGIC You can also choose one of the built-in colormaps provided by Matplotlib. Colormaps can be accessed through `plt.cm` (`cm` stands for colormap). After that, specify a chosen colormap by its name. A reversed version of each available colormap can be done by appending `_r`to a colormap's name. Using Numpy's `arange()` function we specify an interval of colors we want to select. 
 
 # COMMAND ----------
@@ -436,7 +436,7 @@ plt.ylabel('Count');
 
 # MAGIC %md
 # MAGIC # 4. Practice time
-# MAGIC 
+# MAGIC
 # MAGIC For the further visualizations we'll use data related to habits of individuals in terms of eating habits, transportation and devices they use and attributes of physical condition. This dataset can be found [here](https://archive.ics.uci.edu/ml/datasets/Estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition+#).
 
 # COMMAND ----------
@@ -453,35 +453,35 @@ data_ob
 
 # MAGIC %md
 # MAGIC ## 4.1 Attributes explanation
-# MAGIC 
+# MAGIC
 # MAGIC The first 5 features contain some basic information about individuals along with the information about the presence of overweightedness in a family.
-# MAGIC 
+# MAGIC
 # MAGIC - Gender: the gender
 # MAGIC - Age: the age
 # MAGIC - Height: the height 
 # MAGIC - Weight: the weight 
 # MAGIC - family_history_with_overweight: family member who is/was overweight
-# MAGIC 
+# MAGIC
 # MAGIC Columns related to eating habits:
-# MAGIC 
+# MAGIC
 # MAGIC - FAVC: whether an individual consumes high caloric food frequently
 # MAGIC - FCVC: how frequently vegetables are used in main meals
 # MAGIC - NCP: the number of main meals per day
 # MAGIC - CAEC: consuming any food between main meals
 # MAGIC - SMOKE: smoking
 # MAGIC - CH2O: consumption of water per day
-# MAGIC 
+# MAGIC
 # MAGIC Columns related to physical condition:
 # MAGIC - SCC: caloriy intake tracking
 # MAGIC - FAF: physical activity frequency
 # MAGIC - TUE: usage of technological devices per day
 # MAGIC - CALC: alcohol consumption
 # MAGIC - MTRANS: type of transportation
-# MAGIC 
+# MAGIC
 # MAGIC The last feature 'NObeyesdad' was created using the equation for the BMI (Body Mass Index) for each individual. Resulting values were compared with the data provided by the WHO (World Health Organization) and the Mexican Normativity. 
-# MAGIC 
+# MAGIC
 # MAGIC Resulting labels:
-# MAGIC 
+# MAGIC
 # MAGIC -Underweight (< 18.5)   
 # MAGIC -Normal (18.5 - 24.9)   
 # MAGIC -Overweight (25 - 29.9)  
@@ -585,7 +585,7 @@ data_ob.FAVC.value_counts().plot(kind = 'bar',
 
 # MAGIC %md
 # MAGIC The question we might ask regarding obesity levels could be: 'Which individuals are more likely to be obese based on their age?' or 'Are younger adults overweight?'.
-# MAGIC 
+# MAGIC
 # MAGIC Firstly, let's look how many levels are there. We call the `.value_counts()` method on the 'Nobeyesdad' column and sort categories based on the obesity level.
 
 # COMMAND ----------
@@ -693,7 +693,7 @@ subset_transport.boxplot(figsize = (10,8),
 # MAGIC %md
 # MAGIC ### Citation request:
 # MAGIC Accurate occupancy detection of an office room from light, temperature, humidity and CO2 measurements using statistical learning models. Luis M. Candanedo, Véronique Feldheim. Energy and Buildings. Volume 112, 15 January 2016, Pages 28-39.
-# MAGIC 
+# MAGIC
 # MAGIC Palechor, F. M., & de la Hoz Manotas, A. (2019). Dataset for estimation of obesity levels based on eating habits and physical condition in individuals from Colombia, Peru and Mexico. Data in Brief, 104344.
-# MAGIC 
+# MAGIC
 # MAGIC Material adapted for RBI internal purposes with full permissions from original authors. [Source](https://github.com/zatkopatrik/authentic-data-science) 
