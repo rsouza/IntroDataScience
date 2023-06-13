@@ -1,17 +1,17 @@
 # Databricks notebook source
 # MAGIC %md
 # MAGIC # Explaining Machine Learning models using [SHAP](https://ema.drwhy.ai/shapley.html)  
-# MAGIC 
+# MAGIC
 # MAGIC SHAP is a great model interpretation tool. Even though it’s a sophisticated model, it’s intuitive to understand.  
 # MAGIC SHAP’s goal is to provide a visualization of the effect of each feature on the outcome variable.   
-# MAGIC 
+# MAGIC
 # MAGIC To do that
 # MAGIC 1. **SHAP builds a model that uses all the features except the one of interest** and see **how the model would perform without that feature**. 
 # MAGIC 2. Then, it would build the model again and do the prediction with the feature. 
 # MAGIC 3. The effect of the feature would then be the difference between the two values. 
-# MAGIC 
+# MAGIC
 # MAGIC The order at which features are passed to the model affects the output (especially in the tree-based models in which the model follows a schematic approach ordered by the features). So, SHAP computes all the possible permutation at which the different features can be passed to the model. This seems to have a huge computational cost but SHAP has optimized algorithms that make it faster for specific machine learning models.
-# MAGIC 
+# MAGIC
 # MAGIC This notebook is partially based on this [blog post](https://towardsdatascience.com/using-model-interpretation-with-shap-to-understand-what-happened-in-the-titanic-1dd42ef41888).
 
 # COMMAND ----------
@@ -36,13 +36,13 @@ mlflow.autolog(disable=True)
 
 # MAGIC %md
 # MAGIC ## 1 - Data Preprocessing
-# MAGIC 
+# MAGIC
 # MAGIC We are going to use the Titanic data set. At this point you should be fairly familiar with it. Most of the preprocessing should not contain any new material and you can focus on the sections using SHAP. 
 
 # COMMAND ----------
 
 # reading the titanic data
-df_titanic = pd.read_csv("../../Module_B/Day2/data/Titanic/kaggle_titanic_train.csv")
+df_titanic = pd.read_csv("../Data/data_titanic/train.csv")
 
 df_titanic.head()
 
@@ -65,7 +65,7 @@ for col in df_titanic.columns:
 
 # MAGIC %md
 # MAGIC The feature “Cabin” is missing 77% of the data. So we are going to remove that feature. 
-# MAGIC 
+# MAGIC
 # MAGIC Age, however, is missing 20% of the data. Age should be an important variable in this application since it must have affected the probability of survival (e.g. older people or children might have been given the priority). Usually, we would just fill the missing values with the mean of the other’s people’s age. However, in this specific dataset, people were from different classes so it’s not a good idea to treat all of them as one group. The dataset has a feature “Name” the name has the title of the people (e.g. “Mr”, “Miss”…etc). That title should be a great indication of the age. Also, we should keep in mind that at that time of the incidence (in 1912) the socioeconomic status affected the people’s title regardless on age (e.g. younger people who are rich could get titles that usual poor people at the same age wouldn’t). So we are going to group people by their title and Pclass and then we will assign the mean of the age of each group to the missing age in each group.
 
 # COMMAND ----------
@@ -202,7 +202,7 @@ display(shap_display)
 # MAGIC That’s a plot of a passenger who didn’t survive. 
 # MAGIC + The plot shows that his “Sex” (being male) and his “class” (being in the third class) were decreasing his survival rate. 
 # MAGIC + The plot also shows that the number of siblings (“SibSp) being 0 increased his chance slightly. Maybe people who were alone in the ship without family were able to run faster without distraction.
-# MAGIC 
+# MAGIC
 # MAGIC Let’s take a look at someone who survived:
 
 # COMMAND ----------

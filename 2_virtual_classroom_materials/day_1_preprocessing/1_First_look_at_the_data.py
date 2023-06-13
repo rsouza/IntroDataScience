@@ -5,14 +5,14 @@
 
 # MAGIC %md
 # MAGIC # 1. Must-do Exploration
-# MAGIC In this section we will be exploring the data on Cars used for Testing fuel economy (car models are from year 2010).
+# MAGIC In this section we will be exploring the data on cars used for testing fuel economy (car models are from year 2010).
 
 # COMMAND ----------
 
 # TASK 1 >>>
 # import pandas as pd
 # import numpy as np
-# Load the dataset 'fuel_economy_data_2010.csv' using pd.read_csv('...', index_col = 0) and store it in a variable called "data"
+# Load the dataset 'fuel_economy_data_2010.csv' in the data folder using pd.read_csv('...', index_col = 0) and store it in a variable called "data"
 
 # COMMAND ----------
 

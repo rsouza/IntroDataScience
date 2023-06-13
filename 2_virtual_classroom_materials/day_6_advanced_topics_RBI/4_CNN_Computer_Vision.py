@@ -47,7 +47,7 @@ from IPython.core.display import HTML
 
 # COMMAND ----------
 
-datapath = os.path.join(os.getcwd(), 'data')
+datapath = os.path.join(os.getcwd(), '../Data')
 print(datapath)
 
 # COMMAND ----------

@@ -19,7 +19,7 @@ import numpy as np
 # COMMAND ----------
 
 # Load the data
-titanic = pd.read_csv('data_titanic/train.csv')
+titanic = pd.read_csv('../../Data/data_titanic/train.csv')
 titanic.head(5)
 
 # COMMAND ----------
@@ -212,7 +212,7 @@ tpot.export('/tmp/tpot_titanic_pipeline.py')
 # COMMAND ----------
 
 # Read in the submission dataset
-titanic_sub = pd.read_csv('data_titanic/test.csv')
+titanic_sub = pd.read_csv('../../Data/data_titanic/test.csv')
 titanic_sub.describe()
 
 # COMMAND ----------

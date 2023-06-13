@@ -127,7 +127,7 @@ plt.ylabel('$J(C_k)$');
 # COMMAND ----------
 
 # https://www.kaggle.com/vjchoudhary7/customer-segmentation-tutorial-in-python
-customers = pd.read_csv('../data/Mall_Customers.csv')
+customers = pd.read_csv('../../Data/Mall_Customers.csv')
 customers.set_index('CustomerID', inplace = True)
 customers['Annual Income (k$)'] = customers['Annual Income (k$)']*1000
 customers.columns = ['gender', 'age', 'annual_income_$', 'spending_score']

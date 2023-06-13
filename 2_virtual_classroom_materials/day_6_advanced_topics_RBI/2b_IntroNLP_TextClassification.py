@@ -39,11 +39,11 @@ begin = time.time()
 
 # COMMAND ----------
 
-with ZipFile(os.path.join("data", "topics", 'train.csv.zip'), 'r') as myzip:
+with ZipFile(os.path.join("../Data", "topics", 'train.csv.zip'), 'r') as myzip:
     with myzip.open('train.csv') as myfile:
         train_df = pd.read_csv(myfile)
         
-with ZipFile(os.path.join("data", "topics", 'test.csv.zip'), 'r') as myzip:
+with ZipFile(os.path.join("../Data", "topics", 'test.csv.zip'), 'r') as myzip:
     with myzip.open('test.csv') as myfile:
         test_df = pd.read_csv(myfile)
 

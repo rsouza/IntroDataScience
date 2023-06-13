@@ -63,7 +63,7 @@ class Corpus(object):
                 yield tokens
                             
                     
-documents = Corpus(os.path.join(os.getcwd(), "data/arxiv/arxiv.csv"))
+documents = Corpus(os.path.join(os.getcwd(), "../Data/arxiv/arxiv.csv"))
 
 # COMMAND ----------
 
