@@ -42,7 +42,7 @@ mlflow.autolog(disable=True)
 # COMMAND ----------
 
 # reading the titanic data
-df_titanic = pd.read_csv("../Data/data_titanic/train.csv")
+df_titanic = pd.read_csv("../../../Data/data_titanic/train.csv")
 
 df_titanic.head()
 

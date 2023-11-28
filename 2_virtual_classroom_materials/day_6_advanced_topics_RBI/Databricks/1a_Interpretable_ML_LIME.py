@@ -57,7 +57,7 @@ mlflow.autolog(disable=True)
 # COMMAND ----------
 
 # reading the titanic data
-df_titanic = pd.read_csv("../Data/titanic_data.csv")
+df_titanic = pd.read_csv("../../../Data/titanic_data.csv")
 
 
 # data preparation
@@ -116,7 +116,9 @@ model = lgb.train(lgb_params,
                   lgb_train,
                   num_boost_round=20,
                   valid_sets=lgb_eval,
-                  early_stopping_rounds=5
+                      callbacks=[
+                        lgb.early_stopping(stopping_rounds=5),
+                    ]
                  )
 
 

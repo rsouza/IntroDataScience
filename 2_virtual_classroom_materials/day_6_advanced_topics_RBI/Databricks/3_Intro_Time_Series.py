@@ -58,7 +58,7 @@ rcParams['figure.figsize'] = 15, 8
 
 # COMMAND ----------
 
-data = pd.read_csv('AirPassengers.csv')
+data = pd.read_csv('../../../Data/AirPassengers.csv')
 data.head()
 
 # COMMAND ----------
@@ -179,7 +179,7 @@ ts['1949']
 
 # COMMAND ----------
 
-display(Image('img/nonstationary.png'))
+display(Image('../../../Images/nonstationary.png'))
 
 # COMMAND ----------
 

@@ -61,7 +61,7 @@ map_dataframe
 # COMMAND ----------
 
 # Load Titanic dataset using columns 'Survived','Sex','Embarked','Cabin' and store it in 'data'
-data = pd.read_csv('Data/titanic_data.csv', usecols = ['Survived','Sex','Embarked','Cabin'])
+data = pd.read_csv('../../../Data/titanic_data.csv', usecols = ['Survived','Sex','Embarked','Cabin'])
 data.head()
 
 # COMMAND ----------
@@ -316,7 +316,7 @@ cols_to_use = ['class', 'cap-shape', 'cap-surface', 'cap-color', 'bruises', 'odo
 
 # Load the dataset 'Data/mushrooms.csv' and store it in mushrooms
 # Specify parameter usecols = cols_to_use
-mushrooms = pd.read_csv('Data/mushrooms.csv', usecols = cols_to_use)
+mushrooms = pd.read_csv('../../../Data/mushrooms.csv', usecols = cols_to_use)
 # Get the first 5 rows
 mushrooms.head()
 

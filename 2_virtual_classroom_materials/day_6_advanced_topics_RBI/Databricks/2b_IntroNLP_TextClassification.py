@@ -39,11 +39,11 @@ begin = time.time()
 
 # COMMAND ----------
 
-with ZipFile(os.path.join("../Data", "topics", 'train.csv.zip'), 'r') as myzip:
+with ZipFile(os.path.join("../../../Data", "topics", 'train.csv.zip'), 'r') as myzip:
     with myzip.open('train.csv') as myfile:
         train_df = pd.read_csv(myfile)
         
-with ZipFile(os.path.join("../Data", "topics", 'test.csv.zip'), 'r') as myzip:
+with ZipFile(os.path.join("../../../Data", "topics", 'test.csv.zip'), 'r') as myzip:
     with myzip.open('test.csv') as myfile:
         test_df = pd.read_csv(myfile)
 
@@ -284,14 +284,15 @@ y_train_new.nunique(), y_test_new.nunique()
 # COMMAND ----------
 
 params={
-    'C':[0.8,1, 1.3],
-    'solver':['newton-cg', 'lbfgs', 'liblinear', 'sag', 'saga'],
-    'penalty':['l1', 'l2', 'elasticnet', 'none']
+    'C':[0.8, 1, 1.3],
+    'solver':['newton-cg', 'lbfgs', 'sag', 'saga'],
+    'penalty':['l2', 'none']
 }
+
 gs_lr = GridSearchCV(LogisticRegression(),
                      param_grid=params,
                      scoring='accuracy',
-                     cv=3, n_jobs=-1)
+                     cv=3, n_jobs=-1) 
 
 gs_model = gs_lr.fit(X_train_tfidf, y_train_new)
 
@@ -387,7 +388,7 @@ ax.set_ylabel("Actual", fontsize=26)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC We got 79.93 accuracy using logistic regression and the macro average F1 score is 0.4557.
+# MAGIC We got 89.33% accuracy using logistic regression and the macro average F1 score is 59.04%.
 
 # COMMAND ----------
 

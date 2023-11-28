@@ -140,7 +140,7 @@ test_preprocessed = preprocessing.transform(test)
 
 nb_classifier = MultinomialNB()
 svm_classifier = LinearSVC()
-lr_classifier = LogisticRegression(multi_class="ovr")
+lr_classifier = LogisticRegression(multi_class="ovr", solver='lbfgs', max_iter=3000)
 
 print("Training Naive Bayes classifier...")
 nb_classifier.fit(train_preprocessed, train_data.target)
@@ -188,8 +188,8 @@ parameters = {'C': np.logspace(0, 3, 10)}
 parameters = {'C': [0.1, 1, 10, 100, 1000]}
 
 print("Grid search for SVM")
-svm_best = GridSearchCV(svm_classifier, parameters, cv=3, verbose=1, n_jobs=-1)
-svm_best.fit(train_preprocessed, train_data.target)
+#svm_best = GridSearchCV(svm_classifier, parameters, cv=3, verbose=1, n_jobs=-1)
+#svm_best.fit(train_preprocessed, train_data.target)
 
 print("Grid search for logistic regression")
 lr_best = GridSearchCV(lr_classifier, parameters, cv=3, verbose=1, n_jobs=-1)

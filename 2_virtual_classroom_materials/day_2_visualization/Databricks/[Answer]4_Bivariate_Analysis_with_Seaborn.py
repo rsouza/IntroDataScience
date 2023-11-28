@@ -14,7 +14,7 @@ import seaborn as sns
 # COMMAND ----------
 
 # Load the data
-penguins = pd.read_csv('../Data/penguins.csv')
+penguins = pd.read_csv('../../../Data/penguins.csv')
 
 # COMMAND ----------
 
@@ -492,7 +492,7 @@ sns.heatmap(corr,
 
 # Load the data 
 
-data = pd.read_csv('../Data/bank_data.csv',sep = ';')
+data = pd.read_csv('../../../Data/bank_data.csv',sep = ';')
 # Let's rename some of variables
 data.rename(columns = {'marital':'marital_status','default':'default_credit','housing':'house_loan',
                       'contact':'contact_type','duration':'contact_duration','campaign':'number_of_contacts',

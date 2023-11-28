@@ -4,6 +4,10 @@
 
 # COMMAND ----------
 
+!pip install missingno -q
+
+# COMMAND ----------
+
 # Import pandas, numpy, seaborn and matplotlib libraries
 import pandas as pd
 import numpy as np
@@ -40,7 +44,7 @@ sns.set_style("whitegrid")
 # COMMAND ----------
 
 # Load the dataset 'Data/titanic_data.csv' and store it in variable data
-data = pd.read_csv('Data/titanic_data.csv')
+data = pd.read_csv('../../../Data/titanic_data.csv')
 # Get the first 5 rows
 data.head()
 
@@ -89,10 +93,6 @@ sns.heatmap(data_copy.isnull(), cbar = False);
 
 # MAGIC %md
 # MAGIC For even better visualization of missing values, we can again use the dedicated library [missingno](https://github.com/ResidentMario/missingno).
-
-# COMMAND ----------
-
-!pip install missingno
 
 # COMMAND ----------
 
@@ -381,7 +381,7 @@ X_train['Embarked'].isnull().sum()
 # COMMAND ----------
 
 # Load the dataset 'Data/avocado_missing.csv' and store it to variable avocado
-avocado = pd.read_csv('Data/avocado_missing.csv')
+avocado = pd.read_csv('../../../Data/avocado_missing.csv')
 # Print the first 5 rows
 avocado.head()
 

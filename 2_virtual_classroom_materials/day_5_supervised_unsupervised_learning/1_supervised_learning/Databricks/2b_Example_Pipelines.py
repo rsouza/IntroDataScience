@@ -211,7 +211,7 @@ from sklearn.model_selection import train_test_split, GridSearchCV
 
 # COMMAND ----------
 
-train = pd.read_csv("../../Data/data_titanic/train.csv")
+train = pd.read_csv("../../../../Data/data_titanic/train.csv")
 train.head()
 
 # COMMAND ----------

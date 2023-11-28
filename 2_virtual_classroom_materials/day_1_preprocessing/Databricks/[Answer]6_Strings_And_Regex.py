@@ -240,7 +240,7 @@ print("Substring 'Data' from position 10 to 40: ", result)
 
 # Import Pandas library
 import pandas as pd
-data = pd.read_csv('../Data/avocado.csv')
+data = pd.read_csv('../../../Data/avocado.csv')
 
 # COMMAND ----------
 
@@ -390,7 +390,7 @@ new_data
 
 # Run the code
 import numpy as np
-data_1 = pd.read_csv('Data/movie_metadata.csv')
+data_1 = pd.read_csv('../../../Data/movie_metadata.csv')
 movie_data = data_1.iloc[:,np.r_[1:3, 8:13]]
 
 # COMMAND ----------
@@ -455,7 +455,7 @@ print(our_movie_data)
 # COMMAND ----------
 
 # Run this code
-Image('../Images/regex.PNG')
+Image('../../../Images/regex.PNG')
 
 # COMMAND ----------
 

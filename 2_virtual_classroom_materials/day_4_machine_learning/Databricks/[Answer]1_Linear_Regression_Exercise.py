@@ -34,7 +34,7 @@ from sklearn import datasets
 
 # COMMAND ----------
 
-?datasets.make_regression # read the documentation
+?datasets.make_regression
 
 # COMMAND ----------
 
@@ -262,7 +262,7 @@ plt.show()
 
 # COMMAND ----------
 
-raw_df = pd.read_csv('../Data/Boston.csv')
+raw_df = pd.read_csv('../../../Data/Boston.csv')
 
 y = pd.DataFrame(raw_df['target'])
 x = pd.DataFrame(raw_df.iloc[:,1:-1])

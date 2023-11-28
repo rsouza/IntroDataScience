@@ -21,7 +21,7 @@ from sklearn.preprocessing import MinMaxScaler
 # COMMAND ----------
 
 # Load avocado dataset and store it in the variable dataframe
-dataframe = pd.read_csv('../Data/avocado.csv')
+dataframe = pd.read_csv('../../../Data/avocado.csv')
 # Get the first 5 rows
 dataframe.head()
 
@@ -61,19 +61,19 @@ for col in['AveragePrice', 'Total Volume', 'Small Hass Avocado','Large Hass Avoc
 
 # MAGIC %md
 # MAGIC The ranges of our variables are all different! 
-# MAGIC 
+# MAGIC
 # MAGIC # 2. Feature Scaling
-# MAGIC 
+# MAGIC
 # MAGIC Models such as logistic regression, linear regression – or other models that involve a matrix – are very sensitive to different scales of input variables. If we use such data for model fitting, the result might end up creating a bias. Therefore feature scaling techniques are used before model fitting.
-# MAGIC 
+# MAGIC
 # MAGIC As you can guess, feature scaling techniques change the scale of the variables. There are several ways how you can scale your features. In this notebook we'll demonstrate the **MinMaxScaling** technique that scales variables to their minimum and maximum values. scikit learn offers the `MinMaxScaler` class for this purpose. You can find the documentation [here](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html).
-# MAGIC 
+# MAGIC
 # MAGIC The formula for min-max scaling is: 
-# MAGIC 
+# MAGIC
 # MAGIC **X_std = (X - X.min(axis = 0)) / (X.max(axis = 0) - X.min(axis = 0))**
-# MAGIC 
+# MAGIC
 # MAGIC **X_scaled = X_std * (max - min) + min**
-# MAGIC 
+# MAGIC
 # MAGIC - our Scaler subtracts the minimum value from all observations in our dataset and divide it by the range of values
 # MAGIC - it will transform each feature individually between 0 and 1 
 
@@ -145,7 +145,7 @@ print('Maximum value: ', X_test_scaled.max(axis=0))
 
 # MAGIC %md
 # MAGIC ### TASK
-# MAGIC 
+# MAGIC
 # MAGIC Imagine you've normalized the data using `MinMaxScaler` and delivered your work to the Senior Data scientist. He/she proposed you to scale the data using different scaling technique. The technique should transform the data such that its distribution will have a mean value of 0 and a standard deviation of 1. Find the right method [here](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.preprocessing).
 
 # COMMAND ----------
@@ -192,11 +192,11 @@ print('Standard Deviation: ', X_training_scaled.std(axis=0))
 
 # MAGIC %md
 # MAGIC # Appendix
-# MAGIC 
+# MAGIC
 # MAGIC Data source: 
-# MAGIC 
+# MAGIC
 # MAGIC Avocado dataset: https://www.kaggle.com/neuromusic/avocado-prices
-# MAGIC 
+# MAGIC
 # MAGIC Data license: Database: Open Database
-# MAGIC 
+# MAGIC
 # MAGIC Material adapted for RBI internal purposes with full permissions from original authors. [Source](https://github.com/zatkopatrik/authentic-data-science)

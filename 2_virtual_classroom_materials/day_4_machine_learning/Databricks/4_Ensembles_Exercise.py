@@ -1,7 +1,7 @@
 # Databricks notebook source
 # MAGIC %md
 # MAGIC # Ensembles
-# MAGIC 
+# MAGIC
 # MAGIC We have seen in the slide presentation that ensemble methods are better than simple classifiers such as decision trees. But how do ensembles compare? Which one should we use? The answer is that there is no silver bullet, and it dependes on the data, the task and the parameters.  
 # MAGIC Let's explore some ensemble techniques:
 
@@ -23,7 +23,7 @@ plt.rcParams["figure.figsize"] = (15,6)
 
 # MAGIC %md
 # MAGIC The three most popular methods for combining the predictions from different models are:
-# MAGIC 
+# MAGIC
 # MAGIC + **Bagging/Pasting**    
 # MAGIC     Building multiple models (typically of the same type) from different subsamples of the training dataset.  
 # MAGIC + **Boosting**    
@@ -35,21 +35,21 @@ plt.rcParams["figure.figsize"] = (15,6)
 
 # MAGIC %md
 # MAGIC ## Load dataset for ensembles comparison
-# MAGIC 
+# MAGIC
 # MAGIC We are loading the Pima Indians Diabetes Database .
 # MAGIC This data set is originally from the National Institute of Diabetes and Digestive and Kidney Diseases. The objective of the data set is to diagnostically predict whether or not a patient has diabetes, based on certain diagnostic measurements included in the data set. Several constraints were placed on the selection of these instances from a larger database. In particular, all patients here are females at least 21 years old of Pima Indian heritage.
-# MAGIC 
+# MAGIC
 # MAGIC **Content**
-# MAGIC 
+# MAGIC
 # MAGIC The datasets consists of several medical predictor variables and one target variable, 'Outcome'. Predictor variables include the number of pregnancies the patient has had, their BMI, insulin level, age, and so on.
-# MAGIC 
+# MAGIC
 # MAGIC Acknowledgements  
 # MAGIC Smith, J.W., Everhart, J.E., Dickson, W.C., Knowler, W.C., & Johannes, R.S. (1988). Using the ADAP learning algorithm to forecast the onset of diabetes mellitus. In Proceedings of the Symposium on Computer Applications and Medical Care (pp. 261--265). IEEE Computer Society Press.
 
 # COMMAND ----------
 
 names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
-df = pd.read_csv("Data/pima-indians-diabetes.data.csv", names=names)
+df = pd.read_csv("../../../Data/pima-indians-diabetes.data.csv", names=names)
 df.head()
 
 # COMMAND ----------
@@ -99,7 +99,7 @@ print(results2.mean())
 
 # MAGIC %md
 # MAGIC ### Random Forest
-# MAGIC 
+# MAGIC
 # MAGIC Random forest is an extension of bagged decision trees.
 # MAGIC Samples of the training dataset are taken with replacement, but the trees are constructed in a way that reduces the correlation between individual classifiers. Specifically, rather than greedily choosing the best split point in the construction of the tree, only a random subset of features are considered for each split.
 
@@ -116,7 +116,7 @@ print(results3.mean())
 
 # MAGIC %md
 # MAGIC ### Extra Trees
-# MAGIC 
+# MAGIC
 # MAGIC [Extra Trees](https://quantdare.com/what-is-the-difference-between-extra-trees-and-random-forest/) are another modification of bagging where random forests are constructed from the whole training dataset.
 # MAGIC You can construct an Extra Trees model for classification using the `ExtraTreesClassifier` of `sklearn.ensemble` class.
 
@@ -133,11 +133,11 @@ print(results4.mean())
 
 # MAGIC %md
 # MAGIC ### Boosting Algorithms  
-# MAGIC 
-# MAGIC 
+# MAGIC
+# MAGIC
 # MAGIC Boosting ensemble algorithms create a sequence of models that attempt to correct the mistakes of the models before them in the sequence. 
 # MAGIC Once created, the models make predictions which may be weighted by their demonstrated accuracy and the results are combined to create a final output prediction. The two most common boosting ensemble machine learning algorithms are:
-# MAGIC 
+# MAGIC
 # MAGIC + AdaBoost
 # MAGIC + Stochastic Gradient Boosting
 
@@ -145,7 +145,7 @@ print(results4.mean())
 
 # MAGIC %md
 # MAGIC #### AdaBoost
-# MAGIC 
+# MAGIC
 # MAGIC AdaBoost was perhaps the first successful boosting ensemble algorithm. It generally works by weighting instances in the dataset by how easy or difficult they are to classify, allowing the algorithm to pay or or less attention to them in the construction of subsequent models.  
 # MAGIC You can construct an AdaBoost model for classification using the AdaBoostClassifier class.  
 
@@ -161,7 +161,7 @@ print(results5.mean())
 
 # MAGIC %md
 # MAGIC #### Stochastic Gradient Boosting  
-# MAGIC 
+# MAGIC
 # MAGIC Stochastic Gradient Boosting (also called Gradient Boosting Machines) is one of the most sophisticated ensemble techniques. It is also a technique that is currently proving to be perhaps of the the best techniques available for improving performance via ensembles.  
 # MAGIC You can construct a Gradient Boosting model for classification using the GradientBoostingClassifier class.  
 
@@ -177,10 +177,10 @@ print(results6.mean())
 
 # MAGIC %md
 # MAGIC ### Voting Ensemble
-# MAGIC 
+# MAGIC
 # MAGIC Voting is one of the simplest ways of combining the predictions from multiple machine learning algorithms.
 # MAGIC It works by first creating two or more stan-dalone models from your training dataset. A Voting Classifier can then be used to wrap your models and average the predictions of the sub-models when asked to make predictions for new data.
-# MAGIC 
+# MAGIC
 # MAGIC The predictions of the sub-models can be weighted, but specifying the weights for classifiers manually or even heuristically is difficult. 
 # MAGIC You can create a voting ensemble model for classification using the `VotingClassifier` class.
 # MAGIC The code below provides an example of combining the predictions of logistic regression, classification and regression trees and support vector machines for a classification problem.
@@ -206,7 +206,7 @@ print(results7.mean())
 
 # MAGIC %md
 # MAGIC #### Stacking Classifier
-# MAGIC 
+# MAGIC
 # MAGIC More advanced methods, similar to voting, can learn how to best weight the predictions from submodels (stacked generalization).   
 # MAGIC We can use the `StackingClassifier` from Scikit-Learn.
 
@@ -239,7 +239,7 @@ print(results8.mean())
 
 # MAGIC %md
 # MAGIC # Task
-# MAGIC 
+# MAGIC
 # MAGIC + Change the parameters of the estimators above.
 # MAGIC + Try to optmize and discuss the results.
 

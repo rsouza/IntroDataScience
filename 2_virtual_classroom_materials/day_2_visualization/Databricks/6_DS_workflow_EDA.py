@@ -92,6 +92,10 @@
 
 # COMMAND ----------
 
+!pip install missingno
+
+# COMMAND ----------
+
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns #https://towardsdatascience.com/a-major-seaborn-plotting-tip-i-wish-i-had-learned-earlier-d8209ad0a20e
@@ -109,7 +113,7 @@ import pandas as pd
 
 # COMMAND ----------
 
-df = pd.read_csv('Data/Automobile_data.csv')
+df = pd.read_csv('../../../Data/Automobile_data.csv')
 df.head()
 
 # COMMAND ----------
@@ -195,11 +199,7 @@ sns.heatmap(df.isnull(),cbar=False,cmap='viridis')
 
 # MAGIC %md
 # MAGIC Now observe that there are many missing values in 'normalized_losses' while other columns have fewer missing values. We can’t drop the 'normalized_losses' column as it may be important for our prediction.  
-# MAGIC We can also use the **missingno** libray for a better evaluation of the missing values. First we can check the quantity and how they distribute among the rows:
-
-# COMMAND ----------
-
-#!pip install missingno
+# MAGIC We can also use the **missingno** library for a better evaluation of the missing values. First we can check the quantity and how they distribute among the rows:
 
 # COMMAND ----------
 
@@ -360,7 +360,8 @@ df["body-style"].value_counts().plot(kind="bar", figsize=(10,6))
 # COMMAND ----------
 
 fig, ax = plt.subplots(figsize=(12,8))
-sns.countplot(df["body-style"], ax=ax) 
+#sns.countplot(df["body-style"], ax=ax)
+sns.countplot(df, x="body-style")
 
 # COMMAND ----------
 
@@ -623,10 +624,10 @@ plt.show()
 
 # COMMAND ----------
 
-df = pd.read_csv("../../3_artificial_use_case/1_Classification_RECOMMENDED/Bank_Dataset/bank-additional-full.csv", sep=";")
+df = pd.read_csv("../../../3_artificial_use_case/1_Classification_RECOMMENDED/Bank_Dataset/bank-additional-full.csv", sep=";")
 df.head()
 
 # COMMAND ----------
 
-df = pd.read_csv("../../3_artificial_use_case/2_Regression_RECOMMENDED/Datasets/2015.csv")
+df = pd.read_csv("../../../3_artificial_use_case/2_Regression_RECOMMENDED/Datasets/2015.csv")
 df.head()

@@ -1,11 +1,11 @@
 # Databricks notebook source
 # MAGIC %md
 # MAGIC # 1. Missing values
-# MAGIC 
+# MAGIC
 # MAGIC In the real world, data is rarely clean and homogenous and can have missing values for several reasons: data was lost or corrupted during the transmission from the database, human error, programming error. Whether the missing data will be removed, replaced or filled depends on the type of missing data.
-# MAGIC 
+# MAGIC
 # MAGIC Pandas uses the floating point value `NaN` (Not a Number) to represent missing data in both numeric as well as in non-numeric datatypes. The built-in Python `None` value is also treated as NaN in object arrays.
-# MAGIC 
+# MAGIC
 # MAGIC There are several functions for detecting, removing, replacing and imputing null values in a Pandas DataFrame.
 
 # COMMAND ----------
@@ -34,14 +34,14 @@ print(our_series)
 # COMMAND ----------
 
 # Load the Titanic dataset
-data = pd.read_csv('../Data/titanic.csv')
+data = pd.read_csv('../../../Data/titanic.csv')
 data.head(10)
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC `isnull().values.any()`
-# MAGIC 
+# MAGIC
 # MAGIC - it is used if we only want to know if there are any missing values in the dataset
 
 # COMMAND ----------
@@ -55,7 +55,7 @@ data.isnull().values.any()
 # MAGIC `isnull()`
 # MAGIC - it is used to detect missing values for an array-like object
 # MAGIC - returns a boolean same-sized object indicating if the values are missing
-# MAGIC 
+# MAGIC
 # MAGIC - it is an alias of `isna()`
 
 # COMMAND ----------
@@ -67,7 +67,7 @@ data.isnull()
 
 # MAGIC %md
 # MAGIC `notnull()`
-# MAGIC 
+# MAGIC
 # MAGIC - it is used to detect existing (non-missing) values
 # MAGIC - it is an alias of `notna()`
 
@@ -81,7 +81,7 @@ data.notnull()
 
 # MAGIC %md
 # MAGIC `isnull().sum()`
-# MAGIC 
+# MAGIC
 # MAGIC - we can use function chaining to check the total number of missing values for each column in the DataFrame
 
 # COMMAND ----------
@@ -117,26 +117,26 @@ ax = plt.bar(np.arange(len(missing_values)), missing_values, color = 'skyblue');
 
 # MAGIC %md
 # MAGIC In some cases, it is appropriate to just drop the rows with missing data, in other cases replacing missing data would be a better options. 
-# MAGIC 
+# MAGIC
 # MAGIC `dropna()` function \\(^{1}\\)
-# MAGIC 
+# MAGIC
 # MAGIC - to remove rows or columns from the DataFrame which contain missing values
 # MAGIC - by default drops any row that contain a missing value
-# MAGIC 
+# MAGIC
 # MAGIC Arguments:
-# MAGIC 
+# MAGIC
 # MAGIC `axis = 0` to drop rows
-# MAGIC 
+# MAGIC
 # MAGIC `axis = 1` to drop columns
-# MAGIC 
+# MAGIC
 # MAGIC `how = 'all'` to drop if all the values are missing
-# MAGIC 
+# MAGIC
 # MAGIC `how = 'any'` to drop if any missing value is present
-# MAGIC 
+# MAGIC
 # MAGIC `tresh = ` treshold for missing values
-# MAGIC 
+# MAGIC
 # MAGIC `subset = ['column']` to remove rows in which values are missing or selected column or columns
-# MAGIC 
+# MAGIC
 # MAGIC **If we want to make changes in the original dataset** (for example remove a particular column), we have to specify `inplace = True` within the method. Otherwise the copy of the dataset will be returned and the change will not be performed in the original dataset. 
 
 # COMMAND ----------
@@ -170,6 +170,10 @@ data_copy = data.copy()
 # Set inplace = True
 
 data_copy.dropna(how = 'any', inplace = True)
+
+# COMMAND ----------
+
+data_copy
 
 # COMMAND ----------
 
@@ -221,25 +225,25 @@ print(df_copy)
 
 # MAGIC %md
 # MAGIC # 5. Filling in missing data
-# MAGIC 
+# MAGIC
 # MAGIC `fillna()` method
-# MAGIC 
+# MAGIC
 # MAGIC - this method fill in missing data (can be used on a particular column as well)
-# MAGIC 
+# MAGIC
 # MAGIC Arguments:
-# MAGIC 
+# MAGIC
 # MAGIC - we can specify **value** (any number or summary statistics such as mean or median) 
-# MAGIC 
+# MAGIC
 # MAGIC - we can use **interpolation method**: 
-# MAGIC 
+# MAGIC
 # MAGIC `ffill` : uses previous valid values to fill gap
-# MAGIC 
+# MAGIC
 # MAGIC `bfill` : uses next valid value to fill gap
-# MAGIC 
+# MAGIC
 # MAGIC `limit` : for ffill and bfill - maximum number of consecutive periods to fill
-# MAGIC 
+# MAGIC
 # MAGIC `axis` : axis to fill on, default axis = 0 
-# MAGIC 
+# MAGIC
 # MAGIC `inplace = True`
 
 # COMMAND ----------
@@ -274,7 +278,7 @@ print(dataframe_1)
 
 # MAGIC %md
 # MAGIC # 6. More Complex Methods
-# MAGIC 
+# MAGIC
 # MAGIC We will go through the theory of these more complex methods later as they relate to Machine Learning. 
 
 # COMMAND ----------
@@ -304,17 +308,16 @@ print(our_df)
 
 # COMMAND ----------
 
-# Convert the datatype of the column 'Age' from the DataFrame data to integer data type
-
-data_copy.Age = data_copy.Age.astype('int')
-
-# COMMAND ----------
-
 # Fill in missing data of the column 'Age' in the DataFrame data with the average age
 # Set inplace = True
 
-average_age = data_copy.Age.mean()
+data_copy = data.copy()
+average_age = int(data_copy.Age.mean())
 data_copy.Age.fillna(average_age, inplace = True)
+
+# COMMAND ----------
+
+data_copy
 
 # COMMAND ----------
 
@@ -359,15 +362,15 @@ print(df_2)
 
 # MAGIC %md
 # MAGIC # Appendix
-# MAGIC 
+# MAGIC
 # MAGIC Data source: https://www.kaggle.com/hesh97/titanicdataset-traincsv
-# MAGIC 
+# MAGIC
 # MAGIC License: CC0: Public Domain
-# MAGIC 
+# MAGIC
 # MAGIC # References
-# MAGIC 
+# MAGIC
 # MAGIC \\(^{1}\\) Pandas documentation. 2020. pandas.DataFrame.dropna. [ONLINE] Available at: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.dropna.html. [Accessed 14 September 2020].
-# MAGIC 
+# MAGIC
 # MAGIC \\(^{2}\\) Pandas documentation. 2020. pandas.DataFrame.fillna. [ONLINE] Available at: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.fillna.html. [Accessed 14 September 2020].
-# MAGIC 
+# MAGIC
 # MAGIC Material adapted for RBI internal purposes with full permissions from original authors. Source: https://github.com/zatkopatrik/authentic-data-science

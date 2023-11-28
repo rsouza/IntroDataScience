@@ -52,7 +52,7 @@ df
 
 # COMMAND ----------
 
-df.dropna(axis=0, how='any', thresh=None, subset=["C"], inplace=True)
+df.dropna(axis=0, how='any', subset=["C"], inplace=True)
 df
 
 # COMMAND ----------
@@ -62,7 +62,7 @@ df
 
 # COMMAND ----------
 
-df.dropna(axis=0, how='any', thresh=None, subset=None, inplace=True)
+df.dropna(axis=0, how='any', subset=None, inplace=True)
 df
 
 # COMMAND ----------

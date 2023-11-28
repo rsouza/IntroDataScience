@@ -1,7 +1,7 @@
 # Databricks notebook source
 # MAGIC %md
 # MAGIC # Multivariate Analysis with Seaborn
-# MAGIC 
+# MAGIC
 # MAGIC Multivariate visualizations are an expansion of bivariate analysis, where we add another variable (or variables). Often, adding the third variable helps us to find some important pattern or information that we couldn't have observed before.
 
 # COMMAND ----------
@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 # COMMAND ----------
 
 # Load the data
-penguins = pd.read_csv('Data/penguins.csv')
+penguins = pd.read_csv('../../../Data/penguins.csv')
 penguins.dropna(inplace = True)
 
 # COMMAND ----------
@@ -25,13 +25,13 @@ penguins.head()
 
 # MAGIC %md
 # MAGIC # Mapping the third variable to encoding
-# MAGIC 
+# MAGIC
 # MAGIC There are 3 ways how to map the third variable to create a visual semantic:
-# MAGIC 
+# MAGIC
 # MAGIC - **encoding with color**
 # MAGIC - **encoding with the size**
 # MAGIC - **encoding with the shape**
-# MAGIC 
+# MAGIC
 # MAGIC Again, choosing appropriate encoding depends on the question we ask, input data or purpose of visualizations. Let's look at some examples.
 
 # COMMAND ----------
@@ -43,9 +43,9 @@ penguins.head()
 
 # MAGIC %md
 # MAGIC ## 1.1 Boxplot
-# MAGIC 
+# MAGIC
 # MAGIC As we mentioned in the Bivariate analysis notebook, boxplots are great when becomes to comparing several groups. Let's say we want to see the distribution of penguins body mass based on the island. We are also interested whether there are some differences in the ranges of the values between females and males. As before, we plot the first categorical variable 'island', then numerical variable 'body_mass_g' and pass the third groupiny variable 'sex' to `hue` parameter.
-# MAGIC 
+# MAGIC
 # MAGIC Here, the third variable is mapped with **color encoding** that produces different colors and visually help determines levels of a subset.
 
 # COMMAND ----------
@@ -67,7 +67,7 @@ plt.title('The distribution of body mass', fontsize = 20);
 
 # MAGIC %md
 # MAGIC ## 1.2 Stripplots
-# MAGIC 
+# MAGIC
 # MAGIC A stripplot is another kind of categorical scatterplot that can be useful when comparing different groups. Again, the categories of the third variable are distinguished using **different colors**.
 
 # COMMAND ----------
@@ -89,10 +89,10 @@ plt.legend(loc = 4, prop = {'size': 13});           # Adjusting the legend's pos
 
 # MAGIC %md
 # MAGIC In the above plot we can observe the flipper length distribution based on species and the gender of penguins. We can immediately see some differences and similarities between species thanks to adding a third variable.
-# MAGIC 
+# MAGIC
 # MAGIC ---
 # MAGIC ## 1.3 Relplot
-# MAGIC 
+# MAGIC
 # MAGIC When we want to see a possible relationship between variables we can choose between three encoding approaches and decide which kind is the most suitable. In the below example we can see how body mass and the flipper length relate based on penguins's species.
 
 # COMMAND ----------
@@ -114,7 +114,7 @@ plt.title('The relationship of body mass and the flipper length', fontsize = 20)
 
 # MAGIC %md
 # MAGIC ## 1.4 Scatterplot
-# MAGIC 
+# MAGIC
 # MAGIC In some cases, encoding with the third variable with **the size** can emphasize important aspects we found during exploratory data analysis. The graph below shows that the Gentoo species' penguin has the highest body mass and the longest flippers.
 
 # COMMAND ----------
@@ -135,7 +135,7 @@ plt.title('The relationship of body mass and the flipper length', fontsize = 20)
 
 # MAGIC %md
 # MAGIC ## 1.5 Lmplot
-# MAGIC 
+# MAGIC
 # MAGIC Sometimes, we want to emphasize different categories of subset more sophisticatedly. In that case, we can choose specific  **markers** for each category.
 
 # COMMAND ----------
@@ -158,12 +158,12 @@ plt.title('The relationship of body mass and the bill length', fontsize = 20);
 
 # MAGIC %md
 # MAGIC # 2.  FacetGrid
-# MAGIC 
+# MAGIC
 # MAGIC Sometimes we want to display a relationship or a distribution not in a single Axes, but create a separate subplots. This can be done using a FacetGrid object, where we specify 3 dimensions:
 # MAGIC - row 
 # MAGIC - col
 # MAGIC - hue - plotting different subset
-# MAGIC 
+# MAGIC
 # MAGIC Let's say we want to look at the distribution of penguins species, so we assign 'species' to `col` parameter.
 
 # COMMAND ----------
@@ -228,16 +228,16 @@ g.add_legend();
 
 # MAGIC %md
 # MAGIC # 3. PairGrid
-# MAGIC 
+# MAGIC
 # MAGIC Pairwise relationships of variables can be visualized using PairGrid. The initialization of a PairGrid results in a subplot grid with multiple Axes. Then we can call Axes-level plotting functions to draw plots in the upper and lower triangles and the marginal distribution of variables can be drawn along the diagonal. Creation of a PairGrid and a FacetGrid is similar, but the main difference is that using a FacetGrid you are allowed to use only one specific plotting function that is applied on each subplot. 
-# MAGIC 
+# MAGIC
 # MAGIC ## 3.1 Customizations of a PairGrid
-# MAGIC 
+# MAGIC
 # MAGIC You can customize a PairGrid output in several ways, all of which are described in the [documentation](https://seaborn.pydata.org/generated/seaborn.PairGrid.html#seaborn.PairGrid).
-# MAGIC 
+# MAGIC
 # MAGIC Since the upper and lower triangles have mirrored plots you can specify different plotting functions using `map_upper()` or `map.lower()`. 
 # MAGIC There are also possibilities to encode the third variable in plots other than through color.  
-# MAGIC 
+# MAGIC
 # MAGIC Similar result can be accomplished using a high-level interface `pairplot()`. However, if you want to have more control of subplot grid, use a PairGrid.
 
 # COMMAND ----------

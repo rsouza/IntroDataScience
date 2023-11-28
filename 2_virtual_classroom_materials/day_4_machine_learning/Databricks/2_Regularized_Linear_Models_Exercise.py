@@ -27,7 +27,7 @@ plt.rcParams["figure.figsize"] = (20,15)
 
 # The data set is originally downloaded from  "http://lib.stat.cmu.edu/datasets/boston".
 
-raw_df = pd.read_csv('Data/Boston.csv')
+raw_df = pd.read_csv('../../../Data/Boston.csv')
 
 y = pd.DataFrame(raw_df['target'])
 x = pd.DataFrame(raw_df.iloc[:,1:-1])

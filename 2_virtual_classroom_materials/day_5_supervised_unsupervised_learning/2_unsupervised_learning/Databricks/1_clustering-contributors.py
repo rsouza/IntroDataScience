@@ -17,9 +17,9 @@ import pandas as pd
 
 # MAGIC %md
 # MAGIC The scikit-learn library has an implementation of the _k-means algorithm_. Let’s apply it to a set of randomly generated blobs whose labels we throw away. 
-# MAGIC 
+# MAGIC
 # MAGIC The `make_blobs()` function generates a data set for clustering. You can read more about how this works in the [documention](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_blobs.html).
-# MAGIC 
+# MAGIC
 # MAGIC __TO DO__: Find out how many instances with how many features were generated.
 
 # COMMAND ----------
@@ -39,10 +39,10 @@ plt.scatter(X[:,0],X[:,1]);
 
 # MAGIC %md
 # MAGIC In this toy example you can guess the number of clusters by eye. Let's see if the k-means algorithm can recover these clusters as well. 
-# MAGIC 
+# MAGIC
 # MAGIC __TO DO__: Import `KMeans` and create an instance of the k-means model by giving it 3 as a hyperparameter for the number of clusters. Fit the model to your dataset X.    
 # MAGIC Notice that we do not feed the labels y into the model! 
-# MAGIC 
+# MAGIC
 # MAGIC https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html
 
 # COMMAND ----------
@@ -53,7 +53,7 @@ plt.scatter(X[:,0],X[:,1]);
 
 # MAGIC %md
 # MAGIC __TO DO__: Assign the centroids to the variable `centroids` and print it. For this use the KMeans model's attribute `cluster_centers_`. 
-# MAGIC 
+# MAGIC
 # MAGIC - The centroids are important because they are what enables KMeans to assign new, previously unseen points to the existing clusters!
 
 # COMMAND ----------
@@ -83,7 +83,7 @@ plt.scatter(centroids[:,0], centroids[:,1], s=100, color="red"); # Show the cent
 
 # MAGIC %md
 # MAGIC __TO DO__: Return KMeans' performance measure _inertia_  using the attribute `inertia_`.
-# MAGIC 
+# MAGIC
 # MAGIC - inertia = Sum of squared distances of samples to their closest cluster center. The lower the inertia the better.
 
 # COMMAND ----------
@@ -121,13 +121,13 @@ plt.ylabel('$J(C_k)$');
 
 # MAGIC %md
 # MAGIC ### Scaling numerical variables
-# MAGIC 
+# MAGIC
 # MAGIC Read the data set below.
 
 # COMMAND ----------
 
 # https://www.kaggle.com/vjchoudhary7/customer-segmentation-tutorial-in-python
-customers = pd.read_csv('../../Data/Mall_Customers.csv')
+customers = pd.read_csv('../../../../Data/Mall_Customers.csv')
 customers.set_index('CustomerID', inplace = True)
 customers['Annual Income (k$)'] = customers['Annual Income (k$)']*1000
 customers.columns = ['gender', 'age', 'annual_income_$', 'spending_score']
@@ -138,7 +138,7 @@ print(customers.shape)
 
 # MAGIC %md
 # MAGIC THe 'Annual Income (k$)' has a very different scale compared to the other two numerical features. 
-# MAGIC 
+# MAGIC
 # MAGIC For distance based methods scaling is important if the original features have very different scales. In this example we will scale all numerical features with [`StandardScaler()`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html). It standardizes features by shifting the mean to zero and scaling everything to a unit variance.
 
 # COMMAND ----------
@@ -189,7 +189,7 @@ customers = pd.get_dummies(customers, drop_first=True)
 # MAGIC %md
 # MAGIC ## DBSCAN  
 # MAGIC #### This part is voluntary. Do it if you have managed to finish the first part before the time limit.  
-# MAGIC 
+# MAGIC
 # MAGIC DBSCAN: Density-Based Spatial Clustering of Applications with Noise. This algorithm finds core samples of high density and expands clusters from them. It is good for data which contains clusters of similar density.
 
 # COMMAND ----------
@@ -289,7 +289,7 @@ plt.title('Core vs non-core instances');
 
 # MAGIC %md
 # MAGIC The DBSCAN clustering did not return the expected results. Let's try different `eps` and `min_samples` hyperparameters. 
-# MAGIC 
+# MAGIC
 # MAGIC __TO DO__: Instantiate and fit DBSCAN again with `eps=0.2` and `min_samples=5`. Plot the resulting clusters.
 
 # COMMAND ----------

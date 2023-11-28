@@ -14,8 +14,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 
-
-train = pd.read_csv("../../Data/data_titanic/train.csv")
+train = pd.read_csv("../../../../Data/data_titanic/train.csv")
 train.Pclass = train.Pclass.astype(float) # to avoid DataConversionWarning
 train = train[['Sex','Embarked','Pclass', 'Age','Survived']]
 
@@ -58,11 +57,6 @@ X_train, X_test, y_train, y_test = train_test_split(train[['Pclass', 'Age', 'Sex
 # Store the resulting composite as feature_engineering
 # Hint: Use the argument remainder='passthrough'
 
-feature_engineering = ColumnTransformer([('numerical_scaler', preprocessing.MinMaxScaler(),['Pclass', 'Age']),
-                                         ('ohe', preprocessing.OneHotEncoder(sparse=False), ['Sex', 'Embarked'])
-                                        ],
-                                        remainder='passthrough')
-
 # COMMAND ----------
 
 # MAGIC %md
@@ -79,14 +73,12 @@ feature_engineering = ColumnTransformer([('numerical_scaler', preprocessing.MinM
 # TASK 2: Wrap the feature engineering and the predictive model (dummy) into a single Pipeline composite estimator. 
 # Store the result as entire_pipeline.
 
-entire_pipeline = Pipeline([('feature_engineering', feature_engineering), ('dummy', DummyClassifier(strategy="most_frequent"))])
-
 # COMMAND ----------
 
 # TASK 3: Uncomment the line and try to train the pipeline.
 # Notice that we are using untransformed data again (X_train) as the pipeline contains all necessary transformers.
 
-entire_pipeline.fit(X = X_train, y = y_train)
+# entire_pipeline.fit(X = X_train, y = y_train)
 
 # COMMAND ----------
 

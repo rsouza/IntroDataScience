@@ -475,7 +475,7 @@ plt.ylabel('Y values', fontsize = 13);
 # COMMAND ----------
 
 # Load the data
-houses = pd.read_csv('../Data/real_estate_valuation_data.csv', sep=";")
+houses = pd.read_csv('../../../Data/real_estate_valuation_data.csv', sep=";")
 
 # COMMAND ----------
 

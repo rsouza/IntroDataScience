@@ -12,7 +12,7 @@ import numpy as np
 # COMMAND ----------
 
 # Load the dataset
-data = pd.read_csv('../Data/avocado.csv')
+data = pd.read_csv('../../../Data/avocado.csv')
 
 # COMMAND ----------
 
@@ -23,7 +23,7 @@ data
 
 # MAGIC %md
 # MAGIC # 1. 1-D aggregations on Pandas Series
-# MAGIC 
+# MAGIC
 # MAGIC Let's recall computing aggregations such as `sum()`, `mean()`, `median()`, `max()` and `min()` using Pandas Series. 
 
 # COMMAND ----------
@@ -46,10 +46,10 @@ print(f'The minimum value is: {our_series.min()}')
 
 # MAGIC %md
 # MAGIC # 2. 2-D aggregations on Pandas DataFrame
-# MAGIC 
+# MAGIC
 # MAGIC To understand the true power of `groupby()` we can take a look at what is going on under the hood.  
 # MAGIC Let's say we want to compute the average price of avocados based on their type: conventional and organic. 
-# MAGIC 
+# MAGIC
 # MAGIC Firstly, we have to split our dataset into 2 different groups based on the type:
 
 # COMMAND ----------
@@ -170,7 +170,7 @@ print(by_year)
 
 # MAGIC %md
 # MAGIC When we are using the `.groupby()`, the resulting object will be slightly different from a standard Pandas dataframe. You can see it in the print statement and how "type" and "year" are nicely printed. 
-# MAGIC 
+# MAGIC
 # MAGIC If we would like to work with the resulting object further, we should reset its row index by using `reset_index()` and convert it into a regular dataframe.
 
 # COMMAND ----------
@@ -183,21 +183,21 @@ print(our_df)
 
 # MAGIC %md
 # MAGIC # 4. Aggregate function (ADVANCED)
-# MAGIC 
+# MAGIC
 # MAGIC ![](https://keytodatascience.com/wp-content/uploads/2020/04/image-1.png)
-# MAGIC 
+# MAGIC
 # MAGIC [image source](https://keytodatascience.com/groupby-pandas-python/)
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC The aggregation method `agg()`.
-# MAGIC 
+# MAGIC
 # MAGIC - it is an alias for aggregate
 # MAGIC - it is used to pass a function or list of functions to be applied on a series or even each element of a series separately
-# MAGIC 
+# MAGIC
 # MAGIC This can be done by passing the columns and functions within a dictionary like this:
-# MAGIC 
+# MAGIC
 # MAGIC `our_dataset.agg({'First_column' : ['max', 'min'], 'Second_column' : ['mean', 'median']})`
 
 # COMMAND ----------
@@ -241,9 +241,9 @@ data[['Small Bags','Large Bags','XLarge Bags']].agg([percentile_95, 'mean'])
 
 # MAGIC %md
 # MAGIC # 5. Bonus Task (HARD)
-# MAGIC 
+# MAGIC
 # MAGIC `groupby()` can be useful when we want to look at the proportion of avocado's type. We would like to see what percentages of conventional and organic avocados have been sold. For example: 97 % and 3%.
-# MAGIC 
+# MAGIC
 # MAGIC To reach this result:
 # MAGIC - Group the data by 'type' and obtain sums on the 'Total Volume' column, assign result to `volume_by_type`
 # MAGIC - Divide `volume_by_type` by the sum of all avocados. Assign the result to the variable `proportion`.
@@ -271,9 +271,9 @@ print(proportion*100)
 
 # MAGIC %md
 # MAGIC # 6. Appendix
-# MAGIC 
+# MAGIC
 # MAGIC Data Source: https://www.kaggle.com/neuromusic/avocado-prices
-# MAGIC 
+# MAGIC
 # MAGIC License: Database: Open Database, Contents: © Original Authors
-# MAGIC 
+# MAGIC
 # MAGIC Material adapted for RBI internal purposes with full permissions from original authors. Source: https://github.com/zatkopatrik/authentic-data-science

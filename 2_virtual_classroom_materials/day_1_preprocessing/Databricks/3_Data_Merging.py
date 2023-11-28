@@ -76,7 +76,7 @@ pd.merge(data_1, data_2, on = 'key')
 # COMMAND ----------
 
 # Run this to print merging strategies
-Image(filename='./Images/merging.png')
+Image(filename='../../../Images/merging.png')
 
 # COMMAND ----------
 

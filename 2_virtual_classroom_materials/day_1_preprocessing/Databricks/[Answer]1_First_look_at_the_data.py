@@ -13,7 +13,7 @@
 import pandas as pd
 import numpy as np
 # Load the dataset 'fuel_economy_data_2010.csv' in the data folder using pd.read_csv('...', index_col = 0) and store it in a variable called "data"
-data = pd.read_csv('../Data/fuel_economy_data_2010.csv', index_col = 0)
+data = pd.read_csv('../../../Data/fuel_economy_data_2010.csv', index_col = 0)
 
 # COMMAND ----------
 

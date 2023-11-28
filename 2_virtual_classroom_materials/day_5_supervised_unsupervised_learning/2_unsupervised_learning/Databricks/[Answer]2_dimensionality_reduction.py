@@ -357,7 +357,7 @@ import random
 import tensorflow as tf
 
 current_dir = os.getcwd()
-current_dir = os.path.join(current_dir, "../../Data")
+current_dir = os.path.join(current_dir, "../../../../Data")
 current_dir
 
 # COMMAND ----------

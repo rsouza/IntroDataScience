@@ -16,7 +16,7 @@ from sklearn.ensemble import RandomForestClassifier
 
 
 
-train = pd.read_csv("../../Data/data_titanic/train.csv")
+train = pd.read_csv("../../../../Data/data_titanic/train.csv")
 train.Pclass = train.Pclass.astype(float) # to avoid DataConversionWarning
 
 # COMMAND ----------

@@ -37,7 +37,7 @@ plt.rcParams['figure.figsize'] = [10,6]
 # COMMAND ----------
 
 # Load the data
-data = pd.read_csv('Data/room_occupancy.txt')
+data = pd.read_csv('../../../Data/room_occupancy.txt')
 
 # COMMAND ----------
 
@@ -424,7 +424,7 @@ plt.ylabel('Count');
 # COMMAND ----------
 
 # Read the data
-data_ob = pd.read_csv('Data/obesity_data.csv')
+data_ob = pd.read_csv('../../../Data/obesity_data.csv')
 
 # COMMAND ----------
 

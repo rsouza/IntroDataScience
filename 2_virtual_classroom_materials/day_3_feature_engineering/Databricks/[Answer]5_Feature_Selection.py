@@ -37,7 +37,7 @@ from sklearn.feature_selection import VarianceThreshold
 # COMMAND ----------
 
 # Load the subset dataset called 'subset_santander.csv' and store it to variable data
-data = pd.read_csv('../Data/subset_santander.csv')
+data = pd.read_csv('../../../Data/subset_santander.csv')
 
 # Print the shape of the dataframe and get the first 10 rows
 print(data.shape)
@@ -363,7 +363,7 @@ X_train.shape, X_test.shape
 # COMMAND ----------
 
 # Load the dataset 'wine_quality.csv' and store it to variable wine
-wine = pd.read_csv('../Data/quality_of_wine.csv', sep = ',', )
+wine = pd.read_csv('../../../Data/quality_of_wine.csv', sep = ',', )
 # Get the first 10 rows
 wine.head(10)
 

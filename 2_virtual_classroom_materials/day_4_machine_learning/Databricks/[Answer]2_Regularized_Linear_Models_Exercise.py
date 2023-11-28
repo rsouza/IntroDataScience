@@ -27,7 +27,7 @@ plt.rcParams["figure.figsize"] = (20,15)
 
 # The data set is originally downloaded from  "http://lib.stat.cmu.edu/datasets/boston".
 
-raw_df = pd.read_csv('../Data/Boston.csv')
+raw_df = pd.read_csv('../../../Data/Boston.csv')
 
 y = pd.DataFrame(raw_df['target'])
 x = pd.DataFrame(raw_df.iloc[:,1:-1])
@@ -124,6 +124,10 @@ print(f"RMSE test: {mean_squared_error(y_test, y_hat_test, squared=False)}")
 # MAGIC The RMSE is almost twice as big for the test set than for the train set. This suggests overfitting and a poor generalization power of the model.
 # MAGIC
 # MAGIC We use the function `plot_coef` on the coefficients of the fitted model to see the values of the coefficients and the average value of the coefficients.
+
+# COMMAND ----------
+
+lr.coef_
 
 # COMMAND ----------
 
