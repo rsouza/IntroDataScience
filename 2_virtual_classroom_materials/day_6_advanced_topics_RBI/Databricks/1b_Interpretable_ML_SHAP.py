@@ -129,7 +129,7 @@ df_titanic.drop(columns =["Survived"], inplace=True)
 
 # COMMAND ----------
 
-X_train, X_test, y_train, y_test = train_test_split(df_titanic, target, test_size=0.3)
+X_train, X_test, y_train, y_test = train_test_split(df_titanic, target, test_size=0.3, random_state=42)
 
 # COMMAND ----------
 
@@ -183,7 +183,7 @@ shap.dependence_plot("Fare", shap_values, X_test)
 
 # COMMAND ----------
 
-idx = 1
+idx = 0
 print(X_test.iloc[idx,:])
 print(y_test[idx])
 
@@ -207,7 +207,7 @@ display(shap_display)
 
 # COMMAND ----------
 
-idx = 4
+idx = 5
 print(X_test.iloc[idx,:])
 print(y_test[idx])
 
@@ -223,7 +223,7 @@ display(shap_display)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC As expected, this person is female in class 1 who paid a high fare. This gave her a higher chance of survival. Also, the fact that she was a bit old (for the standard of time) decreased her chance a little bit.
+# MAGIC As expected, this person is female in class 1 who paid a high fare. This gave her a higher chance of survival. The fact that she embarked in the second stop decreased her chance a little bit.
 
 # COMMAND ----------
 
