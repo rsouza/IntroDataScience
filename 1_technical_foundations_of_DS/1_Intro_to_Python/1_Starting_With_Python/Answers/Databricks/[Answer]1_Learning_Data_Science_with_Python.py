@@ -1,9 +1,9 @@
 # Databricks notebook source
 # MAGIC %md
 # MAGIC ## About This Notebook
-# MAGIC 
+# MAGIC
 # MAGIC Within this notebook, we are going to make our very first steps into the vast world of Python. 
-# MAGIC 
+# MAGIC
 # MAGIC - What does one line of *code* looks like?
 # MAGIC - What is *syntax*?
 # MAGIC - What are *comments*?
@@ -19,8 +19,8 @@
 
 # MAGIC %md
 # MAGIC Python is one of the most popular programming langugage these days. It designed for readability, and it shares some similarities with the English Language as well as having influence from mathematics. It is one of the most straight-forward and easily understandable programming languages.
-# MAGIC 
-# MAGIC 
+# MAGIC
+# MAGIC
 # MAGIC ### Task 1.1.1:
 # MAGIC 1. How does Python compute 25+5? Try type in 25 + 5 in the following cell, just below where the text indicates it:
 
@@ -34,7 +34,7 @@
 
 # MAGIC %md
 # MAGIC 2. In the line above, a single calculation is instructed: 25 + 5. However, the computer is capable to perform more than just one calculation. Try to instruct the computer to perform multiple calculations like:
-# MAGIC 
+# MAGIC
 # MAGIC 25 + 5 <br>
 # MAGIC 20 - 7 <br>
 # MAGIC 30 + 2 <br>
@@ -54,7 +54,7 @@
 # MAGIC %md
 # MAGIC The output is 45 and it seems like the computer only performed the last subtraction, 67 - 22. Hmm strange...
 # MAGIC ## 2. The print() Command
-# MAGIC 
+# MAGIC
 # MAGIC What really happens is that the computer performed all the calculations above, but it only displays the last one as the output result. To display all calculation results, what we need is to use the `print()` command (function), like this:
 
 # COMMAND ----------
@@ -77,7 +77,7 @@ print(12 + 38)
 # MAGIC -  55 + 5
 # MAGIC - 300 - 8
 # MAGIC - 21 + 67
-# MAGIC 
+# MAGIC
 # MAGIC 2. Click the Run button when you're ready to see your results.
 
 # COMMAND ----------
@@ -111,19 +111,19 @@ print(55 + 5); print(300 - 8); print(21 + 67)
 # MAGIC %md
 # MAGIC ## 3. Python Syntax
 # MAGIC Yes, indeed. We'd get an **error**. And in fact it is described as a syntax error. This is because all programming languages like Python, Java, C++ all have its own **syntax rules**. Each line of instructions must comply with these rules. 
-# MAGIC 
+# MAGIC
 # MAGIC You can compare these syntax rules with grammar in human languages. If we want to convey a message, we must respect and follow the syntax rules in order to deliver our message in a meaningful way. For example, people will understand "Data Science is super cool", but not "science super cool data is".  Likewise, the computer didn't understand print(55 + 5) print(300 - 8) print(21 + 67) because the syntax was wrong.
-# MAGIC 
+# MAGIC
 # MAGIC **Running into errors while programming is more common than you would think!** Forget those action scenes from blockbuster movies where hackers code faster than the speed of light! The real life of a programmer often times is about examining (calmly and with patience) why a certain error occurred.
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC After learning about some syntax rules, let's dive into the next task.
-# MAGIC 
+# MAGIC
 # MAGIC ### Task 1.1.3:
 # MAGIC 1. Try to run the instructions in the line below and see what the computer outputs as result. Remember that each command must be on a separate line.
-# MAGIC 
+# MAGIC
 # MAGIC - print(30 + 20 + 50)
 # MAGIC - print(5)
 # MAGIC - print(-2)
@@ -140,13 +140,13 @@ print(-2)
 
 # MAGIC %md
 # MAGIC In the line above, three instructions were given to the computer:
-# MAGIC 
+# MAGIC
 # MAGIC - print(30 + 20 + 50)
 # MAGIC - print(5)
 # MAGIC - print(-2)
-# MAGIC 
+# MAGIC
 # MAGIC All these instructions are collectively known as **code**. Each line of command is known as a **line of code**. When we program or when we write code, we instruct or program the computer to do some tasks. Therefore, we can also call the code we write a computer program, or just simply a program.
-# MAGIC 
+# MAGIC
 # MAGIC The program we wrote in *Task 2.1* had three lines of code, but a program can be as small as one line.
 
 # COMMAND ----------
@@ -185,9 +185,9 @@ print(10 - 9) #This is the line that outputs 1
 # MAGIC We can also use code comments to add a general description at the beginning of our program.
 # MAGIC Now let's have some practice with the ``#`` symbol.
 # MAGIC Please type the following code in the editor below:
-# MAGIC - #print(5 + 21) <br>
-# MAGIC - #print(5) <br>
-# MAGIC - #print(-5) <br>
+# MAGIC - `#print(5 + 21)`
+# MAGIC - `#print(5)`
+# MAGIC - `#print(-5)`
 
 # COMMAND ----------
 
@@ -234,7 +234,7 @@ print(10 - 9) #This is the line that outputs 1
 
 # MAGIC %md
 # MAGIC The arithmetical operations in Python follow the usual order of operations from mathematics. Just like from mathematics, calculations in parentheses are calculated first, then follows by exponentiation, division, multiplication, and at last, addition and subtraction.
-# MAGIC 
+# MAGIC
 # MAGIC ### Task 1.1.5: 
 # MAGIC 1. Perform the following calculations in Python.
 # MAGIC - 5 * 30

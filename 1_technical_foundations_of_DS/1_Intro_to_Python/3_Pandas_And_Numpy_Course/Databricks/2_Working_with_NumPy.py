@@ -9,20 +9,20 @@
 # MAGIC - How to assign one or more new values to an ndarray based on their values.
 # MAGIC ***
 # MAGIC ## 1. Reading CSV files with NumPy
-# MAGIC 
+# MAGIC
 # MAGIC In this chapter, we will learn a technique called <b>Boolean Indexing</b>. Before we dig deeper into this topic, let's first learn how to read files into NumPy ndarrays. Below is the simplified syntax of the function, as well as an explanation for the two parameters:
-# MAGIC 
+# MAGIC
 # MAGIC ````python
 # MAGIC np.genfromtxt(filename, delimiter=None)
 # MAGIC ````
-# MAGIC 
+# MAGIC
 # MAGIC - ``filename``: A positional argument, usually a string representing the path to the text file to be read.
 # MAGIC - ``delimiter``: A named argument, specifying the string used to separate each value.
-# MAGIC 
+# MAGIC
 # MAGIC In our case, the data is stored in a CSV file, therefore the delimiter is a comma ",".
 # MAGIC So this is how we can read in a file named ``data.csv``:
-# MAGIC 
-# MAGIC 
+# MAGIC
+# MAGIC
 # MAGIC ````python
 # MAGIC data = np.genfromtxt('data.csv', delimiter = ',')
 # MAGIC ````
@@ -32,9 +32,9 @@
 # MAGIC %md
 # MAGIC ### Task 3.2.1:
 # MAGIC Now let's try to read our nyc_taxis.csv file into NumPy.
-# MAGIC 
+# MAGIC
 # MAGIC 1. Import the NumPy library and assign to the alias ``np``.
-# MAGIC 2. Use the `np.genfromtxt()` function to read the nyc_taxis.csv file into NumPy. Assign the result to taxi. Do not forget to use also delimiter argument, such as shown above.
+# MAGIC 2. Use the `np.genfromtxt()` function to read the nyc_taxis.csv file into NumPy. Assign the result to ``taxi``. Do not forget to use also delimiter argument, such as shown above.
 # MAGIC 3. Use the ``ndarray.shape`` attribute to assign the shape of taxi to ``taxi_shape``.
 
 # COMMAND ----------
@@ -46,9 +46,9 @@
 
 # MAGIC %md
 # MAGIC ## 2. Reading CSV files with NumPy Continued
-# MAGIC 
+# MAGIC
 # MAGIC We have used the `numpy.genfromtxt()` function to read the ``nyc_taxis.csv`` file into NumPy in the previous notebook.
-# MAGIC 
+# MAGIC
 # MAGIC Just to refresh your memory, in the previous mission we have done something like this:
 
 # COMMAND ----------
@@ -58,10 +58,10 @@
 # MAGIC # import nyc_taxi.csv as a list of lists
 # MAGIC f = open("nyc_taxis.csv", "r")
 # MAGIC taxi_list = list(csv.reader(f))
-# MAGIC 
+# MAGIC
 # MAGIC # remove the header row
 # MAGIC taxi_list = taxi_list[1:]
-# MAGIC 
+# MAGIC
 # MAGIC # convert all values to floats
 # MAGIC converted_taxi_list = []
 # MAGIC for row in taxi_list:
@@ -69,7 +69,7 @@
 # MAGIC     for item in row:
 # MAGIC         converted_row.append(float(item))
 # MAGIC     converted_taxi_list.append(converted_row)
-# MAGIC 
+# MAGIC
 # MAGIC taxi = np.array(converted_taxi_list)
 # MAGIC ````
 
@@ -78,9 +78,9 @@
 # MAGIC %md
 # MAGIC Have you noticed that we converted all the values to floats before we converted the list of lists to an ndarray? 
 # MAGIC > The reason for this is because that NumPy ndarrays can contain only **one datatype**.
-# MAGIC 
+# MAGIC
 # MAGIC This part of the code was omitted in the previous exercise, because when `numpy.getfromtxt()` is called, the function automatically tries to determine the data type of the file by looking at the values.
-# MAGIC 
+# MAGIC
 # MAGIC To see which datatype we have in the ndarray, simply use `ndarray.dtype` attribute like this:
 # MAGIC ````python
 # MAGIC print(taxi.dtype)
@@ -98,20 +98,20 @@
 
 # MAGIC %md
 # MAGIC ## 3. Boolean Arrays
-# MAGIC 
+# MAGIC
 # MAGIC In this session, we're going to focus on the boolean array.
-# MAGIC 
+# MAGIC
 # MAGIC Do you remember that the boolean (or bool) type is a built-in Python type that can be one of two unique values:
-# MAGIC 
+# MAGIC
 # MAGIC - True
 # MAGIC - False
-# MAGIC 
+# MAGIC
 # MAGIC Do you also remember that we've used boolean values when working with Python comparison operators like 
 # MAGIC - ``==`` equal
 # MAGIC - ``>`` greater than
 # MAGIC - ``<`` less than
 # MAGIC - ``!=`` not equal
-# MAGIC 
+# MAGIC
 # MAGIC See a couple examples of simple boolean operations below just to refresh your memory:
 
 # COMMAND ----------
@@ -148,7 +148,7 @@ print(np.array([2,4,6,8]) < 5)
 
 # MAGIC %md
 # MAGIC ## 4. Boolean Indexing with 1D ndarrays
-# MAGIC 
+# MAGIC
 # MAGIC In the last exercise, we learned how to create boolean arrays using vectorized boolean operations. Now, I want to show you a technique known as **boolean indexing**, (or index/select) using boolean arrays.
 # MAGIC See an example from the previous notebook:
 
@@ -172,7 +172,7 @@ print(result)
 
 # MAGIC %md
 # MAGIC The boolean array acts as a filter, the values that corresponding to **True** become part of the result and the values that corresponding to **False** are removed from the final list.
-# MAGIC 
+# MAGIC
 # MAGIC How can we use boolean indexing knowledge in our data set?
 # MAGIC For example, to confirm the number of taxi rides from the month of january, we can do this:
 
@@ -195,7 +195,7 @@ print(january_rides)
 
 # MAGIC %md
 # MAGIC ### Task 3.2.4:
-# MAGIC 
+# MAGIC
 # MAGIC 1. Calculate the number of rides in the taxi ndarray that are from **February**:
 # MAGIC     - Create a boolean array, ``february_bool``, that evaluates whether the items in ``pickup_month`` are equal to ``2``.
 # MAGIC     - Use the ``february_bool`` boolean array to index ``pickup_month``. Assign the result to ``february``.
@@ -210,7 +210,7 @@ print(january_rides)
 
 # MAGIC %md
 # MAGIC ## 5. Boolean Indexing with 2D ndaarays
-# MAGIC 
+# MAGIC
 # MAGIC Now it is time to use boolean indexing with ``2D ndarrays``. 
 # MAGIC > One thing to keep in mind is that the boolean array must have the same length as the dimension you're indexing. This is one of the constraints when we work with 2D ndarrays.
 
@@ -298,9 +298,9 @@ print(trips_over_20000_mph)
 
 # MAGIC %md
 # MAGIC ## 6. Assigning Values in ndarrays (OPTIONAL)
-# MAGIC 
+# MAGIC
 # MAGIC After having learned how to retrieve data from ndarrays, now we will use the same indexing techniques to modify values within an ndarray. The syntax looks like this: <br>
-# MAGIC 
+# MAGIC
 # MAGIC ````python
 # MAGIC ndarray[location_of_values] = new_value
 # MAGIC ````
@@ -363,7 +363,7 @@ print(ones)
 
 # MAGIC %md
 # MAGIC ## 7. Assignment Using Boolean Arrays (OPTIONAL)
-# MAGIC 
+# MAGIC
 # MAGIC Boolean arrays become extremely powerful when used for assignment, like this:
 
 # COMMAND ----------
@@ -393,7 +393,7 @@ print(a)
 
 # MAGIC %md
 # MAGIC ## 8. Assignment Using Boolean Arrays Continued (OPTIONAL)
-# MAGIC 
+# MAGIC
 # MAGIC Now let's take a look at an example of assignment using a boolean array with two dimensions:
 
 # COMMAND ----------
@@ -431,7 +431,7 @@ print(c)
 
 # MAGIC %md
 # MAGIC The above code selected the second column (with column index 1), and used boolean index technique (which value is > 2). The boolean array is only applied to the second column, while all other values remaining unchanged.
-# MAGIC 
+# MAGIC
 # MAGIC The pseudocode syntax for this code is the following, first we used an intermediate variable:
 
 # COMMAND ----------

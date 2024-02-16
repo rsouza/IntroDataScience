@@ -4,8 +4,6 @@
 
 # COMMAND ----------
 
-# Import pandas as pd
-# Import numpy as np
 import pandas as pd
 import numpy as np
 
@@ -24,7 +22,13 @@ data
 # MAGIC %md
 # MAGIC # 1. 1-D aggregations on Pandas Series
 # MAGIC
-# MAGIC Let's recall computing aggregations such as `sum()`, `mean()`, `median()`, `max()` and `min()` using Pandas Series. 
+# MAGIC Let's recall computing aggregations such as
+# MAGIC [`sum()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.sum.html),
+# MAGIC [`mean()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.mean.html),
+# MAGIC [`median()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.median.html),
+# MAGIC [`max()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.max.html) and
+# MAGIC [`min()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.min.html) 
+# MAGIC using Pandas Series.
 
 # COMMAND ----------
 
@@ -47,7 +51,9 @@ print(f'The minimum value is: {our_series.min()}')
 # MAGIC %md
 # MAGIC # 2. 2-D aggregations on Pandas DataFrame
 # MAGIC
-# MAGIC To understand the true power of `groupby()` we can take a look at what is going on under the hood.  
+# MAGIC To understand the true power of
+# MAGIC [`groupby()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html)
+# MAGIC we can take a look at what is going on under the hood.  
 # MAGIC Let's say we want to compute the average price of avocados based on their type: conventional and organic. 
 # MAGIC
 # MAGIC Firstly, we have to split our dataset into 2 different groups based on the type:
@@ -70,12 +76,12 @@ data_organic
 
 # COMMAND ----------
 
-# TASK 2 >>>> Filter only those records that are of type conventional and assign it to the variable filter_c
+# TASK 2.1 >>>> Filter only those records that are of type conventional and assign it to the variable filter_c
 filter_c = data['type'] == 'conventional'
 
 # COMMAND ----------
 
-# TASK 2 >>>> Use .loc[] on data to access all columns based on our condition filter_c and assign it to the variable data_conventional
+# TASK 2.2 >>>> Use .loc[] on data to access all columns based on our condition filter_c and assign it to the variable data_conventional
 data_conventional = data.loc[filter_c]
 data_conventional
 
@@ -120,7 +126,9 @@ print('\nResult dataframe :\n',data_output)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC However, we can use `groupby()` to achieve the same result with only 1 line of the code!
+# MAGIC However, we can use
+# MAGIC [`groupby()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html)
+# MAGIC to achieve the same result with only 1 line of the code!
 
 # COMMAND ----------
 
@@ -130,7 +138,15 @@ print('\nResult dataframe :\n',data_output)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC  `groupby()` function allows us to quickly and efficiently split the data into separate groups to perform computations. When we pass the desired column or columns within `groupby()`, it will return _DataFrameGroupBy object_. We can think of it as a special view on our DataFrame. No computation will be done until we specify functions such as `mean()`, `sum()` etc. 
+# MAGIC [`groupby()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html)
+# MAGIC function allows us to quickly and efficiently split the data into separate groups to perform computations.
+# MAGIC When we pass the desired column or columns within
+# MAGIC [`groupby()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html), 
+# MAGIC it will return _DataFrameGroupBy object_.
+# MAGIC We can think of it as a special view on our DataFrame. 
+# MAGIC No computation will be done until we specify functions such as
+# MAGIC [`mean()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.core.groupby.DataFrameGroupBy.mean.html), 
+# MAGIC [`sum()`](https://pandas.pydata.org/docs/reference/api/pandas.core.groupby.DataFrameGroupBy.sum.html) etc.
 
 # COMMAND ----------
 
@@ -140,7 +156,8 @@ data.groupby('year')
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Now we compute the average price for organic and conventional avocados again but we'll make use of `groupby()`.
+# MAGIC Now we compute the average price for organic and conventional avocados again but we'll make use of
+# MAGIC [`groupby()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html).
 
 # COMMAND ----------
 
@@ -169,7 +186,10 @@ print(by_year)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC When we are using the `.groupby()`, the resulting object will be slightly different from a standard Pandas dataframe. You can see it in the print statement and how "type" and "year" are nicely printed. 
+# MAGIC When we are using
+# MAGIC [`groupby()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html), 
+# MAGIC the resulting object will be slightly different from a standard Pandas dataframe.
+# MAGIC You can see it in the print statement and how "type" and "year" are nicely printed. 
 # MAGIC
 # MAGIC If we would like to work with the resulting object further, we should reset its row index by using `reset_index()` and convert it into a regular dataframe.
 
@@ -191,7 +211,8 @@ print(our_df)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The aggregation method `agg()`.
+# MAGIC The aggregation method
+# MAGIC [`agg()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.agg.html).
 # MAGIC
 # MAGIC - it is an alias for aggregate
 # MAGIC - it is used to pass a function or list of functions to be applied on a series or even each element of a series separately
@@ -208,7 +229,9 @@ data.agg({'Total Volume' : ['max', 'min'], 'Small Bags' : ['min', 'mean']})
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC We can pass `.agg()` also to our grouped object and compute statistics for selected column.
+# MAGIC We can pass
+# MAGIC [`.agg()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.core.groupby.DataFrameGroupBy.agg.html)
+# MAGIC also to our grouped object and compute statistics for selected column.
 
 # COMMAND ----------
 
@@ -223,7 +246,9 @@ grouped
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC - within `agg()` we can have our custom function along with computing aggregation
+# MAGIC - within
+# MAGIC [`agg()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.agg.html)
+# MAGIC we can have our custom function along with computing aggregation
 
 # COMMAND ----------
 
@@ -242,7 +267,10 @@ data[['Small Bags','Large Bags','XLarge Bags']].agg([percentile_95, 'mean'])
 # MAGIC %md
 # MAGIC # 5. Bonus Task (HARD)
 # MAGIC
-# MAGIC `groupby()` can be useful when we want to look at the proportion of avocado's type. We would like to see what percentages of conventional and organic avocados have been sold. For example: 97 % and 3%.
+# MAGIC [`groupby()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html)
+# MAGIC can be useful when we want to look at the proportion of avocado's type. 
+# MAGIC We would like to see what percentages of conventional and organic avocados have been sold. 
+# MAGIC For example: 97 % and 3%.
 # MAGIC
 # MAGIC To reach this result:
 # MAGIC - Group the data by 'type' and obtain sums on the 'Total Volume' column, assign result to `volume_by_type`
@@ -251,19 +279,19 @@ data[['Small Bags','Large Bags','XLarge Bags']].agg([percentile_95, 'mean'])
 
 # COMMAND ----------
 
-# TASK 6 >>>> Group data based on their types and compute count of the Total Volume 
+# TASK 6.1 >>>> Group data based on their types and compute count of the Total Volume 
 
 volume_by_type = data.groupby('type')['Total Volume'].sum()
 
 # COMMAND ----------
 
-# TASK 6 >>>> Compute the proportion of the avocado's type
+# TASK 6.2 >>>> Compute the proportion of the avocado's type
 
 proportion = volume_by_type / sum(volume_by_type)
 
 # COMMAND ----------
 
-# TASK 6 >>>> Print the output multiply by 100
+# TASK 6.3 >>>> Print the output multiply by 100
 
 print(proportion*100)
 

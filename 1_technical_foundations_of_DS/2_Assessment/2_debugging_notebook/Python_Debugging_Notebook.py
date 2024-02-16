@@ -9,7 +9,7 @@
 # MAGIC This Jupyter notebook contains ``10 tasks`` and is meant to be a checkpoint for your Python skill (on a very basic level). 
 # MAGIC Each task is worth ``1 point``. You must achieve at least ``6 points`` in order to pass this checkpoint. 
 # MAGIC You may find it helpful inserting a markdown cell if you would like to explain your code or your thought process. 
-# MAGIC 
+# MAGIC
 # MAGIC Alongside of this notebook, you can find also other files files:
 # MAGIC - Python_Debugging_Notebook.ipynb, which is the file you are currently looking at
 # MAGIC - TestExample.png file that contains an useful example on how the feedback from the tests should be interpreted
@@ -24,8 +24,8 @@
 # MAGIC - Run all the cells and test your code at the bottom of this notebook - you should pass at least 6/10 tests
 # MAGIC - Finally after you passed the tests, go back to the 'Technical Foundations of Data Science' course and push your branch as described there. 
 # MAGIC ***
-# MAGIC 
-# MAGIC 
+# MAGIC
+# MAGIC
 # MAGIC Although most of the tasks should be easily solvable (considering you went through the previous notebooks) note that this is a **debugging notebook** and it is meant to make you solve and understand any errors you are getting (Google is your best friend). 
 # MAGIC In case you have difficulties filling the TO-DOs, please contact <renato.rocha-souza@rbinternational.com> 
 # MAGIC ***
@@ -60,7 +60,7 @@ print(f"Your current path is: {pathlib.Path().absolute()}")
 # Task 2:
 
 ### TO-DO:
-# - Not all Python libraries come pre-installed in Jupyter like numpy and pandas, thus your task is 
+# - Not all Python libraries come pre-installed in Databricks like numpy and pandas, thus your task is 
 #   to install a library called 'xgboost' using the command '!pip install' (example: !pip install superpowers)  
 # - Import the newly installed 'xgboost' with the 'import' keyword
 # - Call the 'XGBClassifier()' function from the xgboost library using the dot notation (example: pandas.read_csv())
@@ -78,18 +78,17 @@ print(f"Your current path is: {pathlib.Path().absolute()}")
 # Task 3:
 
 ### TO-DO:
-# - Write a function named 'multiply_by_three' that takes any positive integer (incl. the zero) as a parameter 
-#   and returns that integer multiplied by 3 (example: 5 ==> 15); for any negative integer the function 
+# - Write a function named 'multiply_by_three' that takes any positive integer (incl. the zero) as a parameter
+#   and returns that integer multiplied by 3 (example: 5 ==> 15); for any negative integer the function
 #   must return 0 (example: -5 ==> 0).
 ###
 
 # Write your def function below:
-#_____________________________________
-
+# _____________________________________
 
 # ____________________________________
 
-#print(multiply_by_three(1))
+# print(multiply_by_three(1))
 
 # COMMAND ----------
 
@@ -103,7 +102,7 @@ print(f"Your current path is: {pathlib.Path().absolute()}")
 # - Fix the bug and remove the Country column from the list of columns (i.e. solve the KeyError) saving the result in 'df_2015_new'
 ###
 
-df_2015 = pd.read_csv('2015.csv')                                        # Reading the data
+df_2015 = pd.read_csv('../../../Data/2015.csv')                                        # Reading the data
 print(f"Column values:\n[{(', ').join(df_2015.columns)}]", end='\n\n')   # Listing the columns
       
 # Fix the buggy line of code below:
@@ -154,6 +153,11 @@ b = ['Python', 'R', 'SQL', 'Python', 'Git', 'Tableau', 'SAS', 'Python', 'Python'
 
 
 # Don't forget to define the variable 'cheeky'
+
+# Write your solution below:
+#_____________________________________
+
+# ____________________________________
 
 print(cheeky)
 
@@ -224,7 +228,7 @@ class BankAccount:
 # - Store the result in a variable named 'diff'
 ## 
 
-df_2015 = pd.read_csv('2015.csv') 
+df_2015 = pd.read_csv('../../../Data/2015.csv') 
 df_2015['Happiness Rank'] = df_2015['Happiness Rank'].astype('str')
 df_2015.head()                         # Note that this loads only the first 5 rows of the dataframe
 
@@ -246,8 +250,8 @@ df_2015.head()                         # Note that this loads only the first 5 r
 # - Write some short lines of Python code below to print out the current date. 
 #       Every time when the 'run' button is hit on this cell, the most up-to-date date will be generated 
 #       without you manually updating the code. 
-# - Subtract 5 days from the current date and store the result in a variable called 'dt'. Meaning going back 5 days before.
-#       Note that manually writing the date (example: dt="2021-01-01") will result in a failed test. 
+# - Subtract 5 days from the current date and store the result in a variable called 'five_days_ago'. Meaning going back 5 days before.
+#       Note that manually writing the date (example: five_days_ago="2021-01-01") will result in a failed test. 
 #       You have to dynamically subtract 5 days every time you run the cell. 
 #       You may want to use the timedelta function to do this.
 ###
@@ -255,7 +259,6 @@ df_2015.head()                         # Note that this loads only the first 5 r
 
 # Your code goes below:
 #_____________________________________
-
 
 # ____________________________________
 
@@ -265,18 +268,18 @@ df_2015.head()                         # Note that this loads only the first 5 r
 # MAGIC ### 3. Tests
 # MAGIC Please run the cell below (the last cell of this notebook) to test your solutions. 
 # MAGIC Note that you will have to **run all previous cells** in order to load the variables that will be checked. 
-# MAGIC 
+# MAGIC
 # MAGIC You will see a message next to each task - "ok" means you pass the test. 
 # MAGIC  
-# MAGIC <img align="left" width="300" height="300" src="TestExample.PNG"> <br><br><br><br><br><br><br><br>
-# MAGIC 
+# MAGIC <img align="left" width="300" height="300" src="../../../Images/TestExample.PNG"> <br><br><br><br><br><br><br><br>
+# MAGIC
 # MAGIC  You have to pass at least 6 out of the 10 tests. Good luck! 
 
 # COMMAND ----------
 
-### Run me
-%run tests.ipynb                                    # Runs the tests
+# MAGIC %md
+# MAGIC Please run the cell below. It will automatically run test on all tasks and show the results.
 
 # COMMAND ----------
 
-
+# MAGIC %run ./tests

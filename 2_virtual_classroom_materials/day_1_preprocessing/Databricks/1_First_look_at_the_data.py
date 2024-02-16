@@ -1,11 +1,7 @@
 # Databricks notebook source
-# data source: https://www.epa.gov/compliance-and-fuel-economy-data/data-cars-used-testing-fuel-economy
-
-# COMMAND ----------
-
 # MAGIC %md
 # MAGIC # 1. Must-do Exploration
-# MAGIC In this section we will be exploring the data on cars used for testing fuel economy (car models are from year 2010).
+# MAGIC In this section we will be exploring the data on cars used for testing fuel economy\\(^{1}\\) (car models are from year 2010).
 
 # COMMAND ----------
 
@@ -121,4 +117,5 @@ plt.figure(figsize = (9,10))
 # COMMAND ----------
 
 # MAGIC %md
+# MAGIC \\(^{1}\\) Data Source: https://www.epa.gov/compliance-and-fuel-economy-data/data-cars-used-testing-fuel-economy  
 # MAGIC Material adapted for RBI internal purposes with full permissions from original authors. Source: https://github.com/zatkopatrik/authentic-data-science

@@ -1,14 +1,14 @@
 # Databricks notebook source
 # MAGIC %md
 # MAGIC ## About This Notebook
-# MAGIC 
+# MAGIC
 # MAGIC Our focus in this notebook is twofold. Firstly, we focus on **understanding modules** and **ways to import them**. This is the more crucial part of this Notebook. Without this knowledge, we won't be able to move forward. Secondly, we will go into dates and times. Do not worry at all if you don't go too thoroughly through this part. You can always come back to this notebook and read through dates and times when you have the need.
-# MAGIC 
+# MAGIC
 # MAGIC The data from date/time contains a lot of information:
 # MAGIC - Weather data with dates and/or times.
 # MAGIC - Computer logs with the timestamp for each event.
 # MAGIC - Sales data with date/time range included.
-# MAGIC 
+# MAGIC
 # MAGIC In this session, we will be working with records of visitors to the White House which was published in 2009.
 # MAGIC ***
 
@@ -16,18 +16,18 @@
 
 # MAGIC %md
 # MAGIC ## 1. Importing Modules (IMPORTANT)
-# MAGIC 
+# MAGIC
 # MAGIC In earlier notebooks, we used the csv module to make reading CSV files easier. 
 # MAGIC > In Python, a **module** is simply a collection of variables, functions, and/or classes (which we'll collectively call 'definitions') that can be imported into a Python script.
-# MAGIC 
+# MAGIC
 # MAGIC **Python contains many standard modules** that help us perform various tasks, such as performing advanced mathematical operations, working with specific file formats and databases, and working with dates and times.
-# MAGIC 
+# MAGIC
 # MAGIC The **csv module** is one of the many standard modules from Python.
-# MAGIC 
+# MAGIC
 # MAGIC Whenever we use definitions from a module, we first need to import those definitions. There are a number of ways we can import modules and their definitions using the `import` statement. You can ready more about the `import` statement [here](https://docs.python.org/3/reference/simple_stmts.html#import). 
-# MAGIC 
+# MAGIC
 # MAGIC *Note: Please note that the cells below are formatted as raw text (not as a code). We do not want to create a mess by importing same module several times, in different ways.*
-# MAGIC 
+# MAGIC
 # MAGIC #### 1. Import the whole module by name. This is the most common method for importing a module.
 
 # COMMAND ----------
@@ -36,7 +36,7 @@
 # MAGIC ````python
 # MAGIC # import the module
 # MAGIC import csv
-# MAGIC 
+# MAGIC
 # MAGIC # definitions are available using the format
 # MAGIC # module_name.definition_name
 # MAGIC csv.reader()
@@ -53,7 +53,7 @@
 # MAGIC ````python
 # MAGIC # import the module with an alias
 # MAGIC import csv as c
-# MAGIC 
+# MAGIC
 # MAGIC # definitions are available using the format
 # MAGIC # alias.definition_name
 # MAGIC c.reader()
@@ -70,7 +70,7 @@
 # MAGIC ````python
 # MAGIC # import a single definition
 # MAGIC from csv import reader
-# MAGIC 
+# MAGIC
 # MAGIC # the definition you imported is available
 # MAGIC # by name
 # MAGIC reader()
@@ -82,7 +82,7 @@
 # MAGIC ````python
 # MAGIC # import multiple definitions
 # MAGIC from csv import reader, writer
-# MAGIC 
+# MAGIC
 # MAGIC # the definitions you imported are available
 # MAGIC # using the format definition_name
 # MAGIC reader()
@@ -100,49 +100,49 @@
 # MAGIC ````python
 # MAGIC # import all definitions
 # MAGIC from csv import *
-# MAGIC 
+# MAGIC
 # MAGIC # all definitions from the module are
 # MAGIC # available using the format definition_name
 # MAGIC reader()
 # MAGIC writer()
-# MAGIC get_dialect()``
+# MAGIC get_dialect()
 # MAGIC ````
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC Choosing which option to use when importing is often a matter of taste, but it's good to keep in mind how each choice can affect the readability of your code:
-# MAGIC 
+# MAGIC
 # MAGIC - If we're importing a long-name module by name and use it often, our code can become harder to read.
 # MAGIC - If we use an uncommon alias, it may not be clear in our code which module we are using.
 # MAGIC - If we use the specific definition or wildcard approach, and the script is long or complex, it may not be immediately clear where a definition comes from. This can also be a problem if we use this approach with multiple modules.
 # MAGIC - If we use the specific definition or wildcard approach, it's easier to accidentally overwrite an imported definition.
-# MAGIC 
+# MAGIC
 # MAGIC In the end, there is often more than one "correct" way, so the most important thing is to be mindful of the trade-offs when you make a decision on how to import definitions from modules.
-# MAGIC 
+# MAGIC
 # MAGIC We'll learn about these trade-offs in the next screen as we learn about Python's datetime module, and make a decision on how to import it for our needs.
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ## 2. The Datetime Module
-# MAGIC 
+# MAGIC
 # MAGIC There are three standard modules in Python that can help us working with dates and times.
 # MAGIC - The calendar module
 # MAGIC - The time module
 # MAGIC - The datetime module
-# MAGIC 
+# MAGIC
 # MAGIC The module that we will go in deep into is the
 # MAGIC [datetime module](https://docs.python.org/3/library/datetime.html#module-datetime). 
-# MAGIC 
+# MAGIC
 # MAGIC The datetime module contains a number of classes, including:
-# MAGIC 
+# MAGIC
 # MAGIC - `datetime.datetime`: For working with date and time data.
 # MAGIC - `datetime.time`: For working with time data only.
 # MAGIC - `datetime.timedelta`: For representing time periods.
-# MAGIC 
+# MAGIC
 # MAGIC You see that the first class, datetime, has the same name as the module. This could create confusion in our code. Now, let's look at different ways of importing and working with this first class, and the pros and cons.
-# MAGIC 
+# MAGIC
 # MAGIC <b>Import the whole module by name</b>
 # MAGIC - Pro: It's super clear whenever you use datetime whether you're referring to the module or the class.
 # MAGIC - Con: It has the potential to create long lines of code, which can be harder to read.
@@ -154,12 +154,12 @@
 # MAGIC ````python
 # MAGIC # import the datetime module
 # MAGIC import datetime
-# MAGIC 
+# MAGIC
 # MAGIC # use the datetime class
 # MAGIC my_datetime_object = datetime.datetime()
 # MAGIC # the first datetime represents the datetime module
 # MAGIC # the second datetime represents the datetime class
-# MAGIC 
+# MAGIC
 # MAGIC ````
 
 # COMMAND ----------
@@ -168,19 +168,19 @@
 # MAGIC <b>Import definitions via name or wildcard</b>
 # MAGIC - Pro: Shorter lines of code, which are easier to read.
 # MAGIC - Con: When we use datetime, it's not clear whether we are referring to the module or the class.
-# MAGIC 
+# MAGIC
 # MAGIC See Example below:
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ````python
-# MAGIC # import the datetime module
+# MAGIC # import the datetime class
 # MAGIC from datetime import datetime 
-# MAGIC 
+# MAGIC
 # MAGIC # import all definitions using wildcard
 # MAGIC from datetime import *
-# MAGIC 
+# MAGIC
 # MAGIC # use the datetime class
 # MAGIC my_datetime_object = datetime()
 # MAGIC ````
@@ -199,10 +199,10 @@
 # MAGIC ````python
 # MAGIC # import the datetime module 
 # MAGIC import datetime as dt
-# MAGIC 
+# MAGIC
 # MAGIC # use the datetime class
 # MAGIC my_datetime_object = dt.datetime()
-# MAGIC 
+# MAGIC
 # MAGIC # dt is the alias for the datetime module
 # MAGIC # datetime() is the datetime class as we mentioned before
 # MAGIC ````
@@ -224,7 +224,7 @@ import datetime as dt
 
 # MAGIC %md
 # MAGIC ## 3. The Datetime Class
-# MAGIC 
+# MAGIC
 # MAGIC The datetime.datetime class is the most commonly-used class from the datetime module, and has attributes and methods designed to work with data containing both the date and time. The signature of the class is below (with some lesser used parameters omitted):
 
 # COMMAND ----------
@@ -238,7 +238,7 @@ import datetime as dt
 
 # MAGIC %md
 # MAGIC The above code indicates that the `year`, `month`, and `day` arguments are required. The time arguments are optional and can be set to the equivalent of midnight if omitted.
-# MAGIC 
+# MAGIC
 # MAGIC Now, let's take a look at an example of creating a datetime object.
 
 # COMMAND ----------
@@ -281,7 +281,7 @@ print(eg_3)
 
 # MAGIC %md
 # MAGIC ### Task 2.4.3:
-# MAGIC 
+# MAGIC
 # MAGIC 1. Import the datetime class using the alias `dt`.
 # MAGIC 2. Instantiate a datetime object representing midnight on June 16, 1911. Assign the object to the variable name `ibm_founded`.
 # MAGIC 3. Instantiate a datetime object representing 8:17 p.m. on July 20, 1969. Assign the object to the variable name `man_on_moon`.
@@ -337,16 +337,16 @@ print(type(date_dt))
 
 # MAGIC %md
 # MAGIC We see that `datetime.strptime()` [constructor](https://docs.python.org/3/library/datetime.html#datetime.datetime.strptime) returns a datetime object. It defined the datetime object using a syntax system to describe date and time formats called `strftime`. (Pay attention to strftime with an "f" versus the constructor strptime with a "p".)
-# MAGIC 
+# MAGIC
 # MAGIC The strftime syntax consists of a `%` character followed by a single character which specifies a date or time part in a particular format.
-# MAGIC 
+# MAGIC
 # MAGIC For example "09/102/1998":
 
 # COMMAND ----------
 
-from datetime import datetime
+import datetime as dt
 
-datetime.strptime("09/02/1998", "%d/%m/%Y")
+dt.datetime.strptime("09/02/1998", "%d/%m/%Y")
 
 #%d - the day of the month in a two digit format, eg "09"
 #%m - the month of the year in a two digit format, eg "02"
@@ -356,7 +356,7 @@ datetime.strptime("09/02/1998", "%d/%m/%Y")
 
 # MAGIC %md
 # MAGIC The first argument from the `datetime.strptime()` constructor is the string we want to parse, and the second argument is a string that helps us specify the format of the datetime object.
-# MAGIC 
+# MAGIC
 # MAGIC The `%d`, `%m`, and `%Y` format codes specify a two-digit day, two-digit month, and four-digit year respectively, and the forward slashes between them specify the forward slashes in the original string. Let's take a look at an example below:
 
 # COMMAND ----------
@@ -370,7 +370,7 @@ print(date_1_dt)
 
 # MAGIC %md
 # MAGIC Do you see that the constructor returns a datetime object?
-# MAGIC 
+# MAGIC
 # MAGIC Now, let's look at another example: "12-24-1984", the same exact date as above. What's different is the date parts are separated using a dash instead of a slash, in addition the order of the day and month are reversed:
 
 # COMMAND ----------
@@ -387,7 +387,7 @@ print(date_2_dt)
 
 # MAGIC %md
 # MAGIC Below is a table of the most common format codes, take a look and simply know their existance. You don't need to known them by heart, you can always look them up in the [Python documentation](https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior).
-# MAGIC 
+# MAGIC
 # MAGIC |Strftime Code| Meaning| Examples|
 # MAGIC |-|-|-|
 # MAGIC |%d|Day of the month as a zero-padded number1|04|
@@ -405,15 +405,15 @@ print(date_2_dt)
 
 # MAGIC %md
 # MAGIC ## 5. Using Strftime to format dates
-# MAGIC 
+# MAGIC
 # MAGIC Below is a list of attributes from the <b> datetime </b> class, which can help us retrieve the various parts that make up the date stored within the object much easier:
-# MAGIC 
+# MAGIC
 # MAGIC - `datetime.day:` The day of the month.
 # MAGIC - `datetime.month:` The month of the year.
 # MAGIC - `datetime.year:` The year.
 # MAGIC - `datetime.hour:` The hour of the day.
 # MAGIC - `datetime.minute:` The minute of the hour.
-# MAGIC 
+# MAGIC
 # MAGIC How can we use those attributes to extract the values? Look at the example below:
 
 # COMMAND ----------
@@ -440,7 +440,7 @@ print(type(dt_string))
 # MAGIC It seems like what we performed above is a lot of code. There is a much easier method called [` datetime.strftime() `](https://docs.python.org/3/library/datetime.html#datetime.datetime.strftime), which will return a string representation of the date using the strftime syntax. Don't mix up strptime and strftime:
 # MAGIC - strptime >> str-p-time >> string parse time
 # MAGIC - strftime >> str-f-time >> string format time
-# MAGIC 
+# MAGIC
 # MAGIC With the `strftime()` method we can use `%d`, `%m`, and `%Y` to represent the date, month, and year.
 
 # COMMAND ----------
@@ -473,15 +473,15 @@ print(dt_string)
 
 # MAGIC %md
 # MAGIC ## 6. The Time Class
-# MAGIC 
+# MAGIC
 # MAGIC The time class holds only time data: hours, minutes, seconds, and microseconds.
 # MAGIC An example to instantiate a time object is like this:
 
 # COMMAND ----------
 
-import datetime
+import datetime as dt
 
-datetime.time(hour=0, minute=0, second=0, microsecond=0)
+dt.time(hour=0, minute=0, second=0, microsecond=0)
 
 # COMMAND ----------
 
@@ -540,7 +540,7 @@ print(time_t)
 
 # MAGIC %md
 # MAGIC ## 7. Comparing time objects
-# MAGIC 
+# MAGIC
 # MAGIC One of the best features of time objects is comparison. Take a look at the comparison example below:
 
 # COMMAND ----------
@@ -586,7 +586,7 @@ print(dt1 + dt2)
 
 # MAGIC %md
 # MAGIC You see that when we  try to add two date objects using the `+` operator, we get a `TypeError` which tells us the operator is not valid.
-# MAGIC 
+# MAGIC
 # MAGIC But how about the <b> `-` </b> operator?
 
 # COMMAND ----------
@@ -597,7 +597,7 @@ print(dt1 - dt2)
 
 # MAGIC %md
 # MAGIC It works! When we use the **`-`** operator with two date objects, the result is the time difference between the two datetime objects. 
-# MAGIC 
+# MAGIC
 # MAGIC Let's look at the type of the resulting object:
 
 # COMMAND ----------
@@ -612,8 +612,9 @@ print(type(diff))
 
 # COMMAND ----------
 
-datetime.timedelta(days=0, seconds=0, microseconds=0,
-                   milliseconds=0, minutes=0, hours=0, weeks=0)
+dt.timedelta(
+    days=0, seconds=0, microseconds=0, milliseconds=0, minutes=0, hours=0, weeks=0
+)
 
 # COMMAND ----------
 

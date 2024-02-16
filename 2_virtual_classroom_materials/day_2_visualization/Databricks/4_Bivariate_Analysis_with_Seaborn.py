@@ -2,7 +2,7 @@
 # MAGIC %md
 # MAGIC # Bivariate Analysis with Seaborn
 # MAGIC
-# MAGIC Firstly, we import the necessary libraries and load the penguins dataset as 'penguins'.
+# MAGIC Firstly, we import the necessary libraries and load the [penguins dataset](https://github.com/allisonhorst/palmerpenguins) as 'penguins'.
 
 # COMMAND ----------
 
@@ -33,40 +33,48 @@ penguins.dropna(inplace = True)
 # MAGIC
 # MAGIC If you want to visualize data involving categorical variables, you can choose between 2 different plotting approaches as we already saw in the preceding notebook: 
 # MAGIC
-# MAGIC a) The `catplot()` plotting function 
+# MAGIC a) The [`catplot()`](https://seaborn.pydata.org/generated/seaborn.catplot.html) plotting function 
 # MAGIC
 # MAGIC - this is a Figure-level interface that allows you to plot categories
-# MAGIC - by calling this function, `a stripplot` will be drawn by default
+# MAGIC - by calling this function, a [`stripplot`](https://seaborn.pydata.org/generated/seaborn.stripplot.html#seaborn.stripplot) will be drawn by default
 # MAGIC   
 # MAGIC Important note: specifying data
 # MAGIC
 # MAGIC - data you want to visualize must be passed in a long-form DataFrame 
 # MAGIC - categorical and numerical variables must be passed as strings to the `x` and `y` parameters in the following way:   
 # MAGIC   ```sns.catplot(data = dataset, x = 'categorical_variable', y = 'numerical_variable')```
-# MAGIC   
-# MAGIC
 # MAGIC - In comparison, the code below won't work:  
 # MAGIC   ```sns.catplot(x = data['categorical_variable'], y = data['numerical_variable'])```
-# MAGIC   
-# MAGIC The `catplot()` functions provides us with access to other Axes-level plotting functions which you can select by passing the respective plot kind to the `kind` parameter:
 # MAGIC
-# MAGIC - "box", "swarm", "strip", "violin", "barplot", etc. 
+# MAGIC The [`catplot()`](https://seaborn.pydata.org/generated/seaborn.catplot.html)
+# MAGIC functions provides us with access to other Axes-level plotting functions which you can select by passing the respective plot kind to the `kind` parameter:
+# MAGIC
+# MAGIC - `box`
+# MAGIC - `swarm`
+# MAGIC - `strip`
+# MAGIC - `violin`
+# MAGIC - `barplot`
+# MAGIC - etc. 
 # MAGIC   
 # MAGIC
 # MAGIC b) Axes-level plotting functions
-# MAGIC - `sns.boxplot()`
-# MAGIC - `sns.swarmplot()`
-# MAGIC - `sns.stripplot()`
-# MAGIC - `sns.violinplot()`
-# MAGIC - `sns.countplot()`
-# MAGIC - `sns.barplot()`, etc.
+# MAGIC - [`sns.boxplot()`](https://seaborn.pydata.org/generated/seaborn.boxplot.html)
+# MAGIC - [`sns.swarmplot()`](https://seaborn.pydata.org/generated/seaborn.swarmplot.html)
+# MAGIC - [`sns.stripplot()`](https://seaborn.pydata.org/generated/seaborn.stripplot.html)
+# MAGIC - [`sns.violinplot()`](https://seaborn.pydata.org/generated/seaborn.violinplot.html)
+# MAGIC - [`sns.countplot()`](https://seaborn.pydata.org/generated/seaborn.countplot.html)
+# MAGIC - [`sns.barplot()`](https://seaborn.pydata.org/generated/seaborn.barplot.html)
+# MAGIC - etc.
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ## 1.1 Categorical vs. Numerical feature
 # MAGIC
-# MAGIC One thing you could be interested in is to find out how the distribution of a numerical feature varies across different categories. For this purpose you can use a plotting functions such `sns.boxplot()`, `sns.violinplot()`, `sns.boxenplot()`.
+# MAGIC One thing you could be interested in is to find out how the distribution of a numerical feature varies across different categories. For this purpose you can use a plotting functions such
+# MAGIC [`sns.boxplot()`](https://seaborn.pydata.org/generated/seaborn.boxplot.html),
+# MAGIC [`sns.violinplot()`](https://seaborn.pydata.org/generated/seaborn.violinplot.html),
+# MAGIC [`sns.boxenplot()`](https://seaborn.pydata.org/generated/seaborn.boxenplot.html).
 
 # COMMAND ----------
 
@@ -162,7 +170,9 @@ penguins.groupby('island')['species'].value_counts()
 # MAGIC
 # MAGIC This operation checks for whether the row contains the value 85 and returns only those rows where this condition is fulfilled.
 # MAGIC
-# MAGIC Another option is to use `query` which we apply onto the DataFrame. We specify that we want to filter only those rows where Gentoo and Chinstrap penguins are present as species. Since we filter for more than one condition, these species must by passed as a list. We use the `in` keyword which checks whether a species is present in the list.
+# MAGIC Another option is to use
+# MAGIC [`query`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.query.html)
+# MAGIC which we apply onto the DataFrame. We specify that we want to filter only those rows where Gentoo and Chinstrap penguins are present as species. Since we filter for more than one condition, these species must by passed as a list. We use the `in` keyword which checks whether a species is present in the list.
 # MAGIC
 # MAGIC
 # MAGIC Choose the approach which best suits you. Here we included both of them for you to compare the code syntax.
@@ -312,13 +322,15 @@ bars.set_xlabel('Species', fontsize = 13);
 # MAGIC %md
 # MAGIC ## 2.1 Relplot
 # MAGIC
-# MAGIC Seaborn's `replot()` plotting function creates a relational plot. The output of this function is a FacetGrid object which allows to extend the existing plot in several ways, for instance adding another subplot or adding a subset of the data to visually display various categories. These options will be discussed in the last notebook about Multivariate analysis.
+# MAGIC Seaborn's
+# MAGIC [`replot()`](https://seaborn.pydata.org/generated/seaborn.relplot.html)
+# MAGIC plotting function creates a relational plot. The output of this function is a FacetGrid object which allows to extend the existing plot in several ways, for instance adding another subplot or adding a subset of the data to visually display various categories. These options will be discussed in the last notebook about Multivariate analysis.
 # MAGIC
 # MAGIC It is also possible to choose the method of visualizing statistical relationship using `kind` parameter:
-# MAGIC - `kind = 'scatter'` - by default
-# MAGIC - `kind = 'line` 
+# MAGIC - [`kind = 'scatter'`](https://seaborn.pydata.org/generated/seaborn.scatterplot.html#seaborn.scatterplot) - by default
+# MAGIC - [`kind = 'line`](https://seaborn.pydata.org/generated/seaborn.lineplot.html) 
 # MAGIC
-# MAGIC For now let's focus on creating a default relational plot comparing 2 numerical variables at once. We specify input dataset to `data` parameter and assign numerical variables as strings to `x` and `y`. 
+# MAGIC For now let's focus on creating a default relational plot comparing 2 numerical variables at once. We specify input dataset to `data` parameter and assign numerical variables as strings to `x` and `y`.
 
 # COMMAND ----------
 
@@ -375,7 +387,7 @@ rel.set(xlabel = 'Body mass (g)',
 # MAGIC %md
 # MAGIC ## 2.2 Scatterplot
 # MAGIC
-# MAGIC Another option to create a relational plot is using axes-level function `scatterplot()`. 
+# MAGIC Another option to create a relational plot is using axes-level function [`scatterplot()`](https://seaborn.pydata.org/generated/seaborn.scatterplot.html#seaborn.scatterplot).
 
 # COMMAND ----------
 
@@ -401,7 +413,12 @@ sns.scatterplot(data = penguins,
 # MAGIC %md
 # MAGIC ### 2.3.1 Regplot
 # MAGIC
-# MAGIC The Axes-level function`regplot()` creates a scatterplot and a line of best fit with a default 95% confidence interval which is drawn using translucent bands around the fit line. A similar plotting function is `lmplot()` which makes use of regplot and FacetGrid object so that you can compare several categories in a single figure.
+# MAGIC The Axes-level function 
+# MAGIC [`regplot()`](https://seaborn.pydata.org/generated/seaborn.regplot.html)
+# MAGIC creates a scatterplot and a line of best fit with a default 95% confidence interval which is drawn using translucent bands around the fit line. 
+# MAGIC A similar plotting function is 
+# MAGIC [`lmplot()`](https://seaborn.pydata.org/generated/seaborn.lmplot.html) 
+# MAGIC which makes use of regplot and FacetGrid object so that you can compare several categories in a single figure.
 
 # COMMAND ----------
 
@@ -419,14 +436,17 @@ sns.regplot(data = penguins,
 # MAGIC %md
 # MAGIC # 3. Heatmap
 # MAGIC
-# MAGIC Often we want to compute correlation coefficients to see the strength and the direction of the relationship. This can be done using Pandas's `corr()` function which can take input data and compute the pairwise correlation coefficients of variables.
+# MAGIC Often we want to compute correlation coefficients to see the strength and the direction of the relationship. 
+# MAGIC This can be done using Pandas's
+# MAGIC [`corr()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.corr.html)
+# MAGIC function which can take input data and compute the pairwise correlation coefficients of variables.
 # MAGIC
 # MAGIC Types of correlation that can be specified as an argument to `method` parameter:
-# MAGIC - pearson
-# MAGIC - kendall
-# MAGIC - spearman
+# MAGIC - [`pearson`](https://en.wikipedia.org/wiki/Pearson_correlation_coefficient) - by default
+# MAGIC - [`kendall`](https://en.wikipedia.org/wiki/Kendall_rank_correlation_coefficient)
+# MAGIC - [`spearman`](https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient)
 # MAGIC
-# MAGIC Correlation matrix can be visualized using a heatmap where correlation coefficients are represented as colors. Values of correlation coefficients can take a range from -1 (a strong negative relationship) to 1 (a strong positive relationship). Since the coefficients take either high or low values, we should select a specific color palette called _diverging_.
+# MAGIC Correlation matrix can be visualized using a heatmap where correlation coefficients are represented as colors. Values of correlation coefficients can take a range from -1 (a strong negative relationship) to 1 (a strong positive relationship). Since the coefficients take either high or low values, we should select a specific color palette called [_diverging_](https://seaborn.pydata.org/tutorial/color_palettes.html#custom-diverging-palettes).
 
 # COMMAND ----------
 
@@ -441,7 +461,8 @@ fig, ax = plt.subplots(figsize = (13,9))
 sns.heatmap(corr, 
             annot = True,                 # Correlation coeficients will be displayed in each cell
             annot_kws = {'fontsize':14},  # Setting a fontsize
-            cmap = 'Blues');              # Setting a color map
+            cmap = 'vlag',                # Setting a color map
+            vmin = -1, vmax = 1);         # Setting min and max for color map 
 
 # COMMAND ----------
 

@@ -9,19 +9,19 @@
 # MAGIC This Jupyter notebook contains 10 tasks and is meant to be a checkpoint for your Python skill (on a very basic level). 
 # MAGIC Each task is worth 1 point. You must achieve at least 7 points in order to pass this checkpoint. 
 # MAGIC You may find helpful inserting a markdown cell if you feel like explaining your code or your thought process. 
-# MAGIC 
+# MAGIC
 # MAGIC The notebook is inside of a folder called 05_Assessment. Inside the folder there are three files:
 # MAGIC - Python_Debugging_Notebook.ipynb, which is the file you are currently looking at
 # MAGIC - TestExample.png file that contains an useful example on how the feedback from the tests should be interpreted
 # MAGIC - 2015.csv, where data for some of the exrcises is contained 
 # MAGIC - tests.ipynb, which contains tests for checking your code - you can run these tests using the **last code cell at the bottom of this notebook**, you have to pass at least 7/10 tests
-# MAGIC 
+# MAGIC
 # MAGIC ### 2.Your Task
 # MAGIC - Fill out the **TODOs** tasks in each section of the Jupyter notebook. 
 # MAGIC - Run all the cells and test your code at the bottom of this notebook - you should pass at least 7/10 tests
 # MAGIC - Finally after you pass the tests, go back to the "Your turn with Git" section and push your branch as described there. 
-# MAGIC 
-# MAGIC 
+# MAGIC
+# MAGIC
 # MAGIC Although most of the tasks should be easily solveable (considering you went through the previous notebooks) note that this is a **debugging notebook** and it is meant to make you solve and understand any errors you are getting (Google is your best friend). 
 # MAGIC In case you have difficulties filling the TODOs, contact <renato.rocha-souza@rbinternational.com>.
 
@@ -47,11 +47,8 @@ from pathlib import Path
 
 # Write your solution below:
 #_____________________________________
-
-path = os.getcwd()
-potus_path = str(Path(path).parents[1]) + '/1_Intro_to_Python/2_Python_Intermediate_Course/potus.csv'
-f500_path  = str(Path(path).parents[1]) + '/1_Intro_to_Python/3_Pandas_And_Numpy_Course/f500.csv'
-
+potus_path = '../../../Data/potus.csv'
+f500_path  = '../../../Data/f500.csv'
 
 df_potus = pd.read_csv(potus_path)
 df_f500 = pd.read_csv(f500_path)
@@ -64,17 +61,17 @@ df_f500.head()
 # Task 2:
 
 ### TODO:
-# - Not all Python libraries come pre-installed in Jupyter like numpy and pandas, thus your task is 
+# - Not all Python libraries come pre-installed in Databricks like numpy and pandas, thus your task is 
 #   to install a library called 'xgboost' using the command '!pip install' (example: !pip install superpowers)  
 # - Import the newly installed 'xgboost' library using the 'import' keyword
 # - Call the 'XGBClassifier()' function from the xgboost library using the dot notation (example: pandas.read_csv())
 # - Store the called function in a variable named 'xgb'
 ###
 
-# !pip install xgboost
-import xgboost
 # Write your solution below:
 #_____________________________________
+!pip install xgboost
+import xgboost
 xgb = xgboost.XGBClassifier()
 # ____________________________________
 
@@ -112,7 +109,7 @@ print(multiply_by_three(1))
 # - Fix the bug and remove the Country column from the list of columns (i.e. solve the KeyErorr) saving the result in 'df_2015_new'
 ###
 
-df_2015 = pd.read_csv('2015.csv')                                        # Reading the data
+df_2015 = pd.read_csv('../../../Data/2015.csv')                                        # Reading the data
 print(f"Column values:\n[{(', ').join(df_2015.columns)}]", end='\n\n')   # Listing the columns
       
 # Fix the buggy line of code below:
@@ -253,7 +250,7 @@ print(total_balance)
 # - Store the result in a variable named 'diff'
 ## 
 
-df_2015 = pd.read_csv('2015.csv') 
+df_2015 = pd.read_csv('../../../Data/2015.csv') 
 df_2015['Happiness Rank'] = df_2015['Happiness Rank'].astype('str')
 df_2015.head()                         # Note that this loads only the first 5 rows of the dataframe
 
@@ -284,8 +281,8 @@ type(diff)
 # - Write some short lines of Python code below to print out the current date. 
 #       Every time when the 'run' button is hit on this cell, the most up-to-date date will be generated 
 #       without you manually updating the code. 
-# - Subsract 5 days from the current date and store the result in a variable called 'dt'. 
-#       Note that manually writing the date (example: dt="2021-01-01") will result in a failed test. 
+# - Subsract 5 days from the current date and store the result in a variable called 'five_days_ago'. 
+#       Note that manually writing the date (example: five_days_ago="2021-01-01") will result in a failed test. 
 #       You have to dynamically substract 5 days every time you run the cell. 
 #       You may want to use the timedelta function to do this.
 ###
@@ -298,7 +295,7 @@ type(diff)
 import datetime
 print(datetime.datetime.now().date())
 from datetime import date, timedelta
-dt = date.today() - timedelta(5)
+five_days_ago = date.today() - timedelta(5)
 
 # ____________________________________
 
@@ -308,19 +305,10 @@ dt = date.today() - timedelta(5)
 # MAGIC ### 3.Tests
 # MAGIC Please run the cell below (the last cell of this notebook) to test your solutions. 
 # MAGIC Note that you will have to **run all previous cells** in order to load the varaibles that will be checked. 
-# MAGIC 
+# MAGIC
 # MAGIC You will see a message next to each task - "ok" means you pass the test. 
 # MAGIC You have to pass at least 7 out of the 10 tests. Good luck! 
 
 # COMMAND ----------
 
-### Run me
-%run tests.ipynb                                    # Runs the tests
-
-# COMMAND ----------
-
-
-
-# COMMAND ----------
-
-
+# MAGIC %run ./tests

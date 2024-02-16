@@ -169,7 +169,7 @@ for col in df.columns:
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC There are null values in our dataset in form of ‘?’. Pandas is not recognizing them so we will replace them with `np.nan`.
+# MAGIC There are null values in our dataset in form of ‘?’. Pandas is not recognizing them so we will replace them with [`np.nan`](https://numpy.org/doc/stable/reference/constants.html#numpy.nan).
 
 # COMMAND ----------
 
@@ -188,7 +188,10 @@ df.isnull().sum()
 
 # MAGIC %md
 # MAGIC #### 3.1 Visualizing the missing values  
-# MAGIC Now the missing values are identified in the dataframe. With the help of `heatmap`, we can see the amount of data that is missing from the attribute. With this we can make decisions whether to drop these missing values or to replace them. Usually dropping the missing values is not advisable but sometimes it may be helpful.
+# MAGIC Now the missing values are identified in the dataframe.
+# MAGIC With the help of [`heatmap`](https://seaborn.pydata.org/generated/seaborn.heatmap.html), we can see the amount of data that is missing from the attribute.
+# MAGIC With this we can make decisions whether to drop these missing values or to replace them.
+# MAGIC Usually dropping the missing values is not advisable but sometimes it may be helpful.
 
 # COMMAND ----------
 
@@ -199,7 +202,7 @@ sns.heatmap(df.isnull(),cbar=False,cmap='viridis')
 
 # MAGIC %md
 # MAGIC Now observe that there are many missing values in 'normalized_losses' while other columns have fewer missing values. We can’t drop the 'normalized_losses' column as it may be important for our prediction.  
-# MAGIC We can also use the **missingno** library for a better evaluation of the missing values. First we can check the quantity and how they distribute among the rows:
+# MAGIC We can also use the [**missingno**](https://github.com/ResidentMario/missingno) libray for a better evaluation of the missing values. First we can check the quantity and how they distribute among the rows:
 
 # COMMAND ----------
 
@@ -216,7 +219,7 @@ msno.matrix(df)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The missingno correlation heatmap measures nullity correlation: how strongly the presence or absence of one variable affects the presence of another
+# MAGIC The missingno [correlation heatmap](https://github.com/ResidentMario/missingno?tab=readme-ov-file#heatmap) measures nullity correlation: how strongly the presence or absence of one variable affects the presence of another
 
 # COMMAND ----------
 
@@ -225,7 +228,7 @@ msno.heatmap(df)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The dendrogram allows you to more fully correlate variable completion, revealing trends deeper than the pairwise ones visible in the correlation heatmap.
+# MAGIC The [dendrogram](https://github.com/ResidentMario/missingno?tab=readme-ov-file#dendrogram) allows you to more fully correlate variable completion, revealing trends deeper than the pairwise ones visible in the correlation heatmap.
 
 # COMMAND ----------
 
@@ -346,7 +349,7 @@ plt.show()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Barplots with frequencies can be created in Matplotlib.
+# MAGIC [Barplots](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.plot.bar.html) with frequencies can be created in Matplotlib.
 
 # COMMAND ----------
 
@@ -355,7 +358,7 @@ df["body-style"].value_counts().plot(kind="bar", figsize=(10,6))
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC There is no need to separately calculate the count when using the `sns.countplot()` function
+# MAGIC There is no need to separately calculate the count when using the [`sns.countplot()`](https://seaborn.pydata.org/generated/seaborn.countplot.html) function
 
 # COMMAND ----------
 
@@ -368,7 +371,7 @@ sns.countplot(df, x="body-style")
 # MAGIC %md
 # MAGIC #### 4.2 Bivariate Analysis  
 # MAGIC
-# MAGIC Now we want to check the relationships between pais of variables. We can start by drawing a pairplot and a correlation plot.
+# MAGIC Now we want to check the relationships between pais of variables. We can start by drawing a [pairplot](https://seaborn.pydata.org/generated/seaborn.pairplot.html) and a correlation plot.
 
 # COMMAND ----------
 
@@ -379,12 +382,12 @@ sns.pairplot(df.select_dtypes(include='number'))
 
 # MAGIC %md
 # MAGIC The pairplot can help us gaining quick insights on the correlations of variables, but can get cluttered if we have many features.  
-# MAGIC We can also try the heatmap of correlations:
+# MAGIC We can also try the [heatmap](https://seaborn.pydata.org/generated/seaborn.heatmap.html) of correlations:
 
 # COMMAND ----------
 
 plt.figure(figsize=(12,12))
-sns.heatmap(df.corr(), cbar=True, annot=True, cmap='seismic')
+sns.heatmap(df.corr(), cbar=True, annot=True, cmap='vlag', vmin = -1, vmax = 1)
 
 # COMMAND ----------
 

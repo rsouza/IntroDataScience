@@ -8,14 +8,18 @@
 # MAGIC # 1. Introduction
 # MAGIC
 # MAGIC The Pandas library will probably be your first option to create visual insights to better understand your data.
-# MAGIC The main advantage is that you can visualize the data using simple and straightforward methods. Behind the scenes of plotting with Pandas is another library - Matplotlib. But don't worry now about Matplotlib as we will cover it in a later lesson. When we call some Pandas' plotting function, Matplotlib acts as an engine. Therefore we can use a higher level of code to gain similar good-looking plots as in Matplotlib.
+# MAGIC The main advantage is that you can visualize the data using simple and straightforward methods. 
+# MAGIC Behind the scenes of plotting with Pandas is another library - [Matplotlib](https://matplotlib.org/). 
+# MAGIC But don't worry now about Matplotlib as we will cover it in a later lesson. 
+# MAGIC When we call some Pandas' plotting function, Matplotlib acts as an engine. 
+# MAGIC Therefore we can use a higher level of code to gain similar good-looking plots as in Matplotlib.
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC # 2. Dataset
 # MAGIC
-# MAGIC We will be working with an occupancy detection dataset which can be found [here](https://archive.ics.uci.edu/ml/datasets/Occupancy+Detection+#). 
+# MAGIC We will be working with an occupancy detection dataset which can be found [here](https://archive.ics.uci.edu/ml/datasets/Occupancy+Detection). 
 # MAGIC
 # MAGIC This dataset is intended to solve binary classification problems according to attributes which could indicate whether a person is present in the room or not.
 # MAGIC
@@ -56,20 +60,22 @@ data.shape
 # MAGIC
 # MAGIC Firstly, let's examine what variables we are dealing with.
 # MAGIC
-# MAGIC - date: the specific day and time when the values were recorded 
-# MAGIC - Temperature: measured in Celsius
-# MAGIC - Humidity: relative humidity - a present state of absolute humidity relative to a
-# MAGIC     maximum humidity given the same temperature expressed as a percentage
-# MAGIC - Light: measured in Lux
-# MAGIC - CO2: in ppm (parts per million)
-# MAGIC - HumidityRatio: derived quantity from temperature and relative humidity, expressed in kilograms of water vapor per kilogram of dry air  
-# MAGIC - Occupancy: the presence of a person in the room. The occupancy of the room was obtained from pictures that were taken every minute for a period of 8 days (1 if a person is present, 0 otherwise)
+# MAGIC - ``date``: the specific day and time when the values were recorded 
+# MAGIC - ``Temperature``: measured in Celsius
+# MAGIC - ``Humidity``: relative humidity - a present state of absolute humidity relative to a
+# MAGIC maximum humidity given the same temperature expressed as a percentage
+# MAGIC - ``Light``: measured in Lux
+# MAGIC - ``CO2``: in ppm (parts per million)
+# MAGIC - ``HumidityRatio``: derived quantity from temperature and relative humidity, expressed in kilograms of water vapor per kilogram of dry air  
+# MAGIC - ``Occupancy``: the presence of a person in the room. 
+# MAGIC The occupancy of the room was obtained from pictures that were taken every minute for a period of 8 days (1 if a person is present, 0 otherwise)
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ### 2.1.2 Exploring the data
-# MAGIC Let's look at the variables data type using `.dtypes` attribute.
+# MAGIC Let's look at the variables data type using
+# MAGIC [`.dtypes`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.dtypes.html) attribute.
 
 # COMMAND ----------
 
@@ -79,7 +85,9 @@ data.dtypes
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC There are 6 numerical variables in the dataset. Almost all of the variables have been correctly interpreted according to their datatypes, except for the 'date' column, which Python recognized as an object. Convert this object datatype to the datetime datatype using Pandas. 
+# MAGIC ### 2.1.2 Exploring the data
+# MAGIC Let's look at the variables data type using
+# MAGIC [`.dtypes`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.dtypes.html) attribute.
 
 # COMMAND ----------
 
@@ -104,15 +112,21 @@ data.isnull().sum()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC # 3. Plot method
+# MAGIC # 3. ``plot()`` method
 # MAGIC
-# MAGIC The `.plot()` function
-# MAGIC
-# MAGIC This plotting function is simply a wrapper around `Matplotlibs` plot function that create a **lineplot** by default. A lineplot plots each data point of a DataFrame and then draws a straight, continuous line connecting these values.
+# MAGIC The
+# MAGIC [`.plot()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html)
+# MAGIC method is simply a wrapper around [Matplotlibs](https://matplotlib.org/) plot function that create a
+# MAGIC [**lineplot**](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.line.html) by default. 
+# MAGIC A lineplot plots each data point of a DataFrame and then draws a straight, continuous line connecting these values.
 # MAGIC
 # MAGIC ---
 # MAGIC
-# MAGIC If you call `.plot()` right onto the DataFrame, all of the features will be plotted. This approach is sometimes not quite good as you can see below. There are several variables with similar low values, thus they are overlapping. 
+# MAGIC If you call
+# MAGIC [`.plot()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html)
+# MAGIC right onto the DataFrame, all of the features will be plotted. 
+# MAGIC This approach is sometimes not quite good as you can see below. 
+# MAGIC There are several variables with similar low values, thus they are overlapping.
 
 # COMMAND ----------
 
@@ -122,7 +136,7 @@ data.plot()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Let´s create a violet line plot of variable 'Temperature'. You can select desired variable by indexing the DataFrame with square brackets. 
+# MAGIC Let´s create a violet line plot of variable `Temperature`. You can select desired variable by indexing the DataFrame with square brackets.
 
 # COMMAND ----------
 
@@ -132,17 +146,27 @@ data['Temperature'].plot(color = 'violet')
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Now only 'Temperature' is plotted with its respective values.
+# MAGIC Now only `Temperature` is plotted with its respective values.
 # MAGIC
-# MAGIC You can see that the `plot()` function returns an ```<AxesSubplot:>``` object. But what does this mean? 
+# MAGIC You can see that the
+# MAGIC [`.plot()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html)
+# MAGIC function returns an 
+# MAGIC [`<Axes:>`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html) 
+# MAGIC object. 
+# MAGIC But what does this mean? 
 # MAGIC
 # MAGIC For now, remember that each graph is actually represented as a _Figure object_ that serves as the base. Onto this base there is an Axes object in which the x-axis and y-axis are created. In the latter section, we will discuss more details about Figures and Axes. 
 # MAGIC To avoid displaying this label, you can put a semicolon at the end of the line.
 # MAGIC
 # MAGIC ---
-# MAGIC It is also possible to plot multiple columns by passing a **list** of respective variables, separated by a comma within square brackets and then call `.plot()`. Pandas sets the colors of lines automatically so that you will be able to distinguish the features. You can manually specify the colors of the lines by using the `color` parameter. Chosen colors need to be passed in a dictionary.  See the following example:
+# MAGIC It is also possible to plot multiple columns by passing a **list** of respective variables, separated by a comma within square brackets and then call
+# MAGIC [`.plot()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html). 
+# MAGIC Pandas sets the colors of lines automatically so that you will be able to distinguish the features. 
+# MAGIC You can manually specify the colors of the lines by using the `color` parameter. 
+# MAGIC Chosen colors need to be passed in a dictionary.  
+# MAGIC See the following example:
 # MAGIC
-# MAGIC ``` data[['variable_1', 'variable_2']].plot(color = {'variable_1':'yellow', 'variable_2': 'black'})```
+# MAGIC ```data[['variable_1', 'variable_2']].plot(color = {'variable_1':'yellow', 'variable_2': 'black'})```
 # MAGIC
 # MAGIC Also the legend is placed by default. 
 # MAGIC
@@ -160,12 +184,13 @@ data[['Temperature','Humidity']].plot(color = {'Temperature':'green', 'Humidity'
 
 # MAGIC %md
 # MAGIC ## 3.1 Customizing parameters of a line plot
-
-# COMMAND ----------
-
-# MAGIC %md
-# MAGIC It is possible to plot one column against another one as we see in the example below. We specify the 'date' feature on the x-axis and 'CO2' feature on the y-axis.
-# MAGIC Within the `.plot()` method you can set several parameters such as title, axis labels, size of plot, etc. For more information about parameter settings take a look at [the documentation](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html).
+# MAGIC It is possible to plot one column against another one as we see in the example below. 
+# MAGIC We specify the 'date' feature on the x-axis and 'CO2' feature on the y-axis.
+# MAGIC Within the
+# MAGIC [`.plot()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html)
+# MAGIC method you can set several parameters such as title, axis labels, size of plot, etc. 
+# MAGIC For more information about parameter settings take a look at 
+# MAGIC [the documentation](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html).
 
 # COMMAND ----------
 
@@ -193,41 +218,46 @@ data.plot(x = 'date', y = 'CO2',             # Specifying variabes on the axis
 # MAGIC
 # MAGIC **There are different ways to plot your data**. To not to get confused later on, let's clarify them a little bit. 
 # MAGIC
-# MAGIC In the preceding examples, we use the default `plot()` function that creates **a line plot by default**. 
+# MAGIC In the preceding examples, we use the default
+# MAGIC [`plot()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html)
+# MAGIC method that creates **a line plot by default**. 
 # MAGIC
 # MAGIC **First approach:**
 # MAGIC - select a specific plot style by using the `kind `parameter.
 # MAGIC
-# MAGIC Overall, there are 10 plot styles you can specify as an argument provided as a string:
+# MAGIC Overall, there are 11 plot styles you can specify as an argument provided as a string:
 # MAGIC
-# MAGIC - `hist`    - histogram  
-# MAGIC - `box`     - boxplot  
-# MAGIC - `bar`     - vertical barplot  
-# MAGIC - `barh`    - horizontal barplot  
-# MAGIC - `scatter` - scatterplot  
-# MAGIC - `pie`     - pie plot  
-# MAGIC - `kde`     - density plot  
-# MAGIC - `density` - density plot  
-# MAGIC - `area`    - area plot  
-# MAGIC - `hexbin`  - hexagonal bin plot  
+# MAGIC - [`line`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.line.html) - line (default)
+# MAGIC - [`hist`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.hist.html)    - histogram  
+# MAGIC - [`box`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.box.html)     - boxplot  
+# MAGIC - [`bar`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.bar.html)     - vertical barplot  
+# MAGIC - [`barh`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.barh.html)    - horizontal barplot  
+# MAGIC - [`scatter`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.scatter.html) - scatterplot  
+# MAGIC - [`pie`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.pie.html)     - pie plot  
+# MAGIC - [`kde`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.kde.ht)     - density plot  
+# MAGIC - [`density`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.density.html) - density plot  
+# MAGIC - [`area`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.area.html)    - area plot  
+# MAGIC - [`hexbin`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.hexbin.html)  - hexagonal bin plot  
 # MAGIC
 # MAGIC **Second approach:**
 # MAGIC
 # MAGIC - all of these plots can be created using the corresponding plotting functions:
+# MAGIC   - [`DataFrame.plot.line`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.line.html)
+# MAGIC   - [`DataFrame.plot.hist`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.hist.html)
+# MAGIC   - [`DataFrame.plot.box`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.box.html)
+# MAGIC   - [`DataFrame.plot.bar`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.bar.html)
+# MAGIC   - [`DataFrame.plot.barh`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.barh.html)
+# MAGIC   - [`DataFrame.plot.scatter`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.scatter.html)
+# MAGIC   - [`DataFrame.plot.pie`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.pie.html)
+# MAGIC   - [`DataFrame.plot.kde`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.kde.ht)
+# MAGIC   - [`DataFrame.plot.density`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.density.html)
+# MAGIC   - [`DataFrame.plot.area`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.area.html)
+# MAGIC   - [`DataFrame.plot.hexbin`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.hexbin.html)
 # MAGIC
-# MAGIC - `DataFrame.plot.line`
-# MAGIC - `DataFrame.plot.hist`
-# MAGIC - `DataFrame.plot.box`
-# MAGIC - `DataFrame.plot.bar`
-# MAGIC - `DataFrame.plot.barh`
-# MAGIC - `DataFrame.plot.scatter`
-# MAGIC - `DataFrame.plot.pie`
-# MAGIC - `DataFrame.plot.kde`
-# MAGIC - `DataFrame.plot.density`
-# MAGIC - `DataFrame.plot.area`
-# MAGIC - `DataFrame.plot.hexbin`
-# MAGIC
-# MAGIC For a histogram and a boxplot there are aditionally two plotting functions: `DataFrame.hist()` and `DataFrame.boxplot()`.
+# MAGIC For a histogram and a boxplot there are aditionally two plotting functions:
+# MAGIC [`DataFrame.hist()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.hist.html) 
+# MAGIC and
+# MAGIC [`DataFrame.boxplot()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.boxplot.html).
 # MAGIC
 # MAGIC It is up to you which of the two approaches you will decide to stick with.
 
@@ -251,10 +281,19 @@ data.HumidityRatio.describe()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Let's create a histogram of the variable 'HumidityRatio'. You can use the `.plot()` method and specify `kind = "hist"` within this method. Again, we select desired column by indexing the DataFrame. In this case, Pandas does not create an x-axis label. Since the `plot` function returns `matplotlib.axes.AxesSubplot`object, we have access to Matplotlib capabilities and can specify labels.
+# MAGIC Let's create a histogram of the variable 'HumidityRatio'. You can use the
+# MAGIC [`.plot()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html)
+# MAGIC method and specify `kind = "hist"` within this method. 
+# MAGIC Again, we select desired column by indexing the DataFrame. 
+# MAGIC In this case, Pandas does not create an x-axis label. 
+# MAGIC Since the
+# MAGIC [`.plot()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html)
+# MAGIC method returns 
+# MAGIC [`matplotlib.axes.Axes`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html)
+# MAGIC object, we have access to Matplotlib capabilities and can specify labels.
 # MAGIC
-# MAGIC `plt.xlabel` for the x-axis  
-# MAGIC `plt.ylabel` for the y-axis
+# MAGIC [`plt.xlabel`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xlabel.html) for the x-axis  
+# MAGIC [`plt.ylabel`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.ylabel.html) for the y-axis
 
 # COMMAND ----------
 
@@ -297,7 +336,7 @@ plt.ylabel('Number of occurences');
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC By applying `.hist()` to the DataFrame, we are able to create a histogram of the selected column or columns. It is also possible to visualize a distribution of all the features of the dataset.
+# MAGIC By applying [`.hist()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.hist.html) to the DataFrame, we are able to create a histogram of the selected column or columns. It is also posibble to visualize a distribution of all the features of the dataset.
 
 # COMMAND ----------
 
@@ -313,7 +352,9 @@ plt.suptitle('The distribution of variables');           # Adding a suptitle usi
 # MAGIC
 # MAGIC Another approach to visualize the distribution of the data is using boxplots. Moreover, the resulting plot will include a [five-number summary](https://en.wikipedia.org/wiki/Five-number_summary): the smallest data point value, the first quartile (1Q), the median (Q2), the third quartile (Q3) and the largest data point value. Boxplots can reveal to us whether there are some possible outliers in the DataFrame and whether the data distribution is skewed or rather symmetrical.
 # MAGIC
-# MAGIC In order to draw a boxplot you can use the `.plot()` method and specifying the `kind` keyword argument as 'box'. If we want to customize things such as color, width or style of the line, we can use the `boxprops`,`whiskerprops`,`medianprops` and `capprops` parameters.
+# MAGIC In order to draw a boxplot you can use the [`.plot()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html) 
+# MAGIC method and specifying the `kind` keyword argument as 'box'. 
+# MAGIC If we want to customize things such as color, width or style of the line, we can use the `boxprops`,`whiskerprops`,`medianprops` and `capprops` parameters.
 
 # COMMAND ----------
 
@@ -330,7 +371,7 @@ data['HumidityRatio'].plot(kind = 'box',
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC This boxplot illustrates how the values of the humidity ratio are spread out. Based on the shape it seems that the distribution is rather symetrical and also that there are no extreme values, e.g. outliers. The actual box represent 50% of records along with the median value that is displayed as a red line. You can return actual values (of quartiles/percentiles) using the `quantile` method.
+# MAGIC This boxplot illustrates how the values of the humidity ratio are spread out. Based on the shape it seems that the distribution is rather symetrical and also that there are no extreme values, e.g. outliers. The actual box represent 50% of records along with the median value that is displayed as a red line. You can return actual values (of quartiles/percentiles) using the [`.quantile()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.quantile.html) method.
 
 # COMMAND ----------
 
@@ -345,7 +386,11 @@ perc_25, median, perc_75
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The alternative is to use Pandas' built-in method `DataFrame.boxplot()`. Since the boxplots are really usefull when comparing two or more groups, we'll look at the amount of carbon dioxide according to a person's presence. Selecting groups you'd like to compare can be done using `by` parameter with the respective variable. We'll adjust the figure size and rename the x-tick labels.
+# MAGIC The alternative is to use Pandas' built-in method
+# MAGIC [`DataFrame.boxplot()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.boxplot.html). 
+# MAGIC Since the boxplots are really usefull when comparing two or more groups, we'll look at the amount of carbon dioxide according to a person's presence. 
+# MAGIC Selecting groups you'd like to compare can be done using `by` parameter with the respective variable.
+# MAGIC We'll adjust the figure size and rename the x-tick labels.
 # MAGIC
 # MAGIC The axis grid lines are displayed by default. You can disable showing these lines by setting the parameter `grid = False`.
 
@@ -437,7 +482,7 @@ plt.ylabel('Count');
 # MAGIC %md
 # MAGIC # 4. Practice time
 # MAGIC
-# MAGIC For the further visualizations we'll use data related to habits of individuals in terms of eating habits, transportation and devices they use and attributes of physical condition. This dataset can be found [here](https://archive.ics.uci.edu/ml/datasets/Estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition+#).
+# MAGIC For the further visualizations we'll use data related to habits of individuals in terms of eating habits, transportation and devices they use and attributes of physical condition. This dataset can be found [here](https://archive.ics.uci.edu/ml/datasets/Estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition).
 
 # COMMAND ----------
 
@@ -456,38 +501,38 @@ data_ob
 # MAGIC
 # MAGIC The first 5 features contain some basic information about individuals along with the information about the presence of overweightedness in a family.
 # MAGIC
-# MAGIC - Gender: the gender
-# MAGIC - Age: the age
-# MAGIC - Height: the height 
-# MAGIC - Weight: the weight 
-# MAGIC - family_history_with_overweight: family member who is/was overweight
+# MAGIC - `Gender`: the gender
+# MAGIC - `Age`: the age
+# MAGIC - `Height`: the height 
+# MAGIC - `Weight`: the weight 
+# MAGIC - `family_history_with_overweight`: family member who is/was overweight
 # MAGIC
 # MAGIC Columns related to eating habits:
 # MAGIC
-# MAGIC - FAVC: whether an individual consumes high caloric food frequently
-# MAGIC - FCVC: how frequently vegetables are used in main meals
-# MAGIC - NCP: the number of main meals per day
-# MAGIC - CAEC: consuming any food between main meals
-# MAGIC - SMOKE: smoking
-# MAGIC - CH2O: consumption of water per day
+# MAGIC - `FAVC`: whether an individual consumes high caloric food frequently
+# MAGIC - `FCVC`: how frequently vegetables are used in main meals
+# MAGIC - `NCP`: the number of main meals per day
+# MAGIC - `CAEC`: consuming any food between main meals
+# MAGIC - `SMOKE`: smoking
+# MAGIC - `CH2O`: consumption of water per day
 # MAGIC
 # MAGIC Columns related to physical condition:
-# MAGIC - SCC: caloriy intake tracking
-# MAGIC - FAF: physical activity frequency
-# MAGIC - TUE: usage of technological devices per day
-# MAGIC - CALC: alcohol consumption
-# MAGIC - MTRANS: type of transportation
+# MAGIC - `SCC`: caloriy intake tracking
+# MAGIC - `FAF`: physical activity frequency
+# MAGIC - `TUE`: usage of technological devices per day
+# MAGIC - `CALC`: alcohol consumption
+# MAGIC - `MTRANS`: type of transportation
 # MAGIC
-# MAGIC The last feature 'NObeyesdad' was created using the equation for the BMI (Body Mass Index) for each individual. Resulting values were compared with the data provided by the WHO (World Health Organization) and the Mexican Normativity. 
+# MAGIC The last feature `NObeyesdad` was created using the equation for the BMI (Body Mass Index) for each individual. Resulting values were compared with the data provided by the WHO (World Health Organization) and the Mexican Normativity. 
 # MAGIC
 # MAGIC Resulting labels:
 # MAGIC
-# MAGIC -Underweight (< 18.5)   
-# MAGIC -Normal (18.5 - 24.9)   
-# MAGIC -Overweight (25 - 29.9)  
-# MAGIC -Obesity I (30 - 34.9)  
-# MAGIC -Obesity II (35 - 39)  
-# MAGIC -Obesity III (> 40)  
+# MAGIC - `Underweight` (< 18.5)   
+# MAGIC - `Normal` (18.5 - 24.9)   
+# MAGIC - `Overweight` (25 - 29.9)  
+# MAGIC - `Obesity I` (30 - 34.9)  
+# MAGIC - `Obesity II` (35 - 39)  
+# MAGIC - `Obesity III` (> 40)
 
 # COMMAND ----------
 
@@ -584,9 +629,13 @@ data_ob.FAVC.value_counts().plot(kind = 'bar',
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The question we might ask regarding obesity levels could be: 'Which individuals are more likely to be obese based on their age?' or 'Are younger adults overweight?'.
+# MAGIC The question we might ask regarding obesity levels could be: 
+# MAGIC 'Which individuals are more likely to be obese based on their age?' or 'Are younger adults overweight?'.
 # MAGIC
-# MAGIC Firstly, let's look how many levels are there. We call the `.value_counts()` method on the 'Nobeyesdad' column and sort categories based on the obesity level.
+# MAGIC Firstly, let's look how many levels are there. 
+# MAGIC We call the
+# MAGIC [`.value_counts()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.value_counts.html)
+# MAGIC method on the `NObeyesdad` column and sort categories based on the obesity level.
 
 # COMMAND ----------
 
@@ -607,7 +656,9 @@ obesity_levels = ['Insufficient_Weight','Normal_Weight', 'Overweight_Level_I', '
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Then we create a CategoricalDtype `ob_levels` where we specify categories and orderness.
+# MAGIC Then we create a
+# MAGIC [`CategoricalDtype`](https://pandas.pydata.org/docs/reference/api/pandas.CategoricalDtype.html)
+# MAGIC `ob_levels` where we specify categories and orderness.
 
 # COMMAND ----------
 
@@ -617,7 +668,8 @@ ob_level = pd.api.types.CategoricalDtype(ordered = True, categories = obesity_le
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The last step is to convert the original data type of the 'NObeyesdad' feature to CategoricalDtype.
+# MAGIC The last step is to convert the original data type of the `NObeyesdad` feature to
+# MAGIC [`CategoricalDtype`](https://pandas.pydata.org/docs/reference/api/pandas.CategoricalDtype.html).
 
 # COMMAND ----------
 

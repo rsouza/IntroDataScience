@@ -44,7 +44,7 @@ penguins.head()
 # MAGIC %md
 # MAGIC ## 1.1 Boxplot
 # MAGIC
-# MAGIC As we mentioned in the Bivariate analysis notebook, boxplots are great when becomes to comparing several groups. Let's say we want to see the distribution of penguins body mass based on the island. We are also interested whether there are some differences in the ranges of the values between females and males. As before, we plot the first categorical variable 'island', then numerical variable 'body_mass_g' and pass the third groupiny variable 'sex' to `hue` parameter.
+# MAGIC As we mentioned in the Bivariate analysis notebook, [boxplots](https://seaborn.pydata.org/generated/seaborn.boxplot.html) are great when becomes to comparing several groups. Let's say we want to see the distribution of penguins body mass based on the island. We are also interested whether there are some differences in the ranges of the values between females and males. As before, we plot the first categorical variable 'island', then numerical variable 'body_mass_g' and pass the third groupiny variable 'sex' to `hue` parameter.
 # MAGIC
 # MAGIC Here, the third variable is mapped with **color encoding** that produces different colors and visually help determines levels of a subset.
 
@@ -68,7 +68,7 @@ plt.title('The distribution of body mass', fontsize = 20);
 # MAGIC %md
 # MAGIC ## 1.2 Stripplots
 # MAGIC
-# MAGIC A stripplot is another kind of categorical scatterplot that can be useful when comparing different groups. Again, the categories of the third variable are distinguished using **different colors**.
+# MAGIC A [stripplot](https://seaborn.pydata.org/generated/seaborn.stripplot.html) is another kind of categorical scatterplot that can be useful when comparing different groups. Again, the categories of the third variable are distinguished using **different colors**.
 
 # COMMAND ----------
 
@@ -91,7 +91,7 @@ plt.legend(loc = 4, prop = {'size': 13});           # Adjusting the legend's pos
 # MAGIC In the above plot we can observe the flipper length distribution based on species and the gender of penguins. We can immediately see some differences and similarities between species thanks to adding a third variable.
 # MAGIC
 # MAGIC ---
-# MAGIC ## 1.3 Relplot
+# MAGIC ## 1.3 [Relplot](https://seaborn.pydata.org/generated/seaborn.relplot.html)
 # MAGIC
 # MAGIC When we want to see a possible relationship between variables we can choose between three encoding approaches and decide which kind is the most suitable. In the below example we can see how body mass and the flipper length relate based on penguins's species.
 
@@ -113,7 +113,7 @@ plt.title('The relationship of body mass and the flipper length', fontsize = 20)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## 1.4 Scatterplot
+# MAGIC ## 1.4 [Scatterplot](https://seaborn.pydata.org/generated/seaborn.scatterplot.html)
 # MAGIC
 # MAGIC In some cases, encoding with the third variable with **the size** can emphasize important aspects we found during exploratory data analysis. The graph below shows that the Gentoo species' penguin has the highest body mass and the longest flippers.
 
@@ -134,7 +134,7 @@ plt.title('The relationship of body mass and the flipper length', fontsize = 20)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## 1.5 Lmplot
+# MAGIC ## 1.5 [Lmplot](https://seaborn.pydata.org/generated/seaborn.lmplot.html)
 # MAGIC
 # MAGIC Sometimes, we want to emphasize different categories of subset more sophisticatedly. In that case, we can choose specific  **markers** for each category.
 
@@ -159,10 +159,10 @@ plt.title('The relationship of body mass and the bill length', fontsize = 20);
 # MAGIC %md
 # MAGIC # 2.  FacetGrid
 # MAGIC
-# MAGIC Sometimes we want to display a relationship or a distribution not in a single Axes, but create a separate subplots. This can be done using a FacetGrid object, where we specify 3 dimensions:
-# MAGIC - row 
-# MAGIC - col
-# MAGIC - hue - plotting different subset
+# MAGIC Sometimes we want to display a relationship or a distribution not in a single Axes, but create a separate subplots. This can be done using a [FacetGrid](https://seaborn.pydata.org/generated/seaborn.FacetGrid.html) object, where we specify 3 dimensions:
+# MAGIC - `row` 
+# MAGIC - `col`
+# MAGIC - `hue` - plotting different subset
 # MAGIC
 # MAGIC Let's say we want to look at the distribution of penguins species, so we assign 'species' to `col` parameter.
 
@@ -174,7 +174,8 @@ g = sns.FacetGrid(penguins, col = 'species')
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC When we initialized FacetGrid object, a Figure and Axes will be returned. To create some plot we apply `.map()` on a FacetGrid, where we specify plotting function and variables we want to plot.
+# MAGIC When we initialized FacetGrid object, a Figure and Axes will be returned. 
+# MAGIC To create some plot we apply [`.map()`](https://seaborn.pydata.org/generated/seaborn.FacetGrid.map.html) on a FacetGrid, where we specify plotting function and variables we want to plot.
 
 # COMMAND ----------
 
@@ -235,10 +236,14 @@ g.add_legend();
 # MAGIC
 # MAGIC You can customize a PairGrid output in several ways, all of which are described in the [documentation](https://seaborn.pydata.org/generated/seaborn.PairGrid.html#seaborn.PairGrid).
 # MAGIC
-# MAGIC Since the upper and lower triangles have mirrored plots you can specify different plotting functions using `map_upper()` or `map.lower()`. 
+# MAGIC Since the upper and lower triangles have mirrored plots you can specify different plotting functions using 
+# MAGIC [`map_upper()`](https://seaborn.pydata.org/generated/seaborn.PairGrid.map_upper.html) or 
+# MAGIC [`map_lower()`](https://seaborn.pydata.org/generated/seaborn.PairGrid.map_lower.html). 
 # MAGIC There are also possibilities to encode the third variable in plots other than through color.  
 # MAGIC
-# MAGIC Similar result can be accomplished using a high-level interface `pairplot()`. However, if you want to have more control of subplot grid, use a PairGrid.
+# MAGIC Similar result can be accomplished using a high-level interface 
+# MAGIC [`pairplot()`](https://seaborn.pydata.org/generated/seaborn.pairplot.html). 
+# MAGIC However, if you want to have more control of subplot grid, use a PairGrid.
 
 # COMMAND ----------
 

@@ -1,13 +1,13 @@
 # Databricks notebook source
 # MAGIC %md
 # MAGIC ## About This Notebook
-# MAGIC 
+# MAGIC
 # MAGIC In the previous notebook we learned what variables are and how these can store various values (strings, integers ...). 
-# MAGIC 
-# MAGIC - In this notebook, we will expand our toolset with a more complex type of variable - **list**. As you will see, a list can store many elements (not just one like a variables in the previous lecture). 
+# MAGIC
+# MAGIC - In this notebook, we will expand our toolset with a more complex type of variable - **list**. As you will see, a list can store many elements (not just one like variables in the previous lecture). 
 # MAGIC - We will learn later on how to manipulate these lists, such as how to navigate through them and how to retrieve elements from them. 
 # MAGIC - In the final part of the notebook we will hop on to a different concept - **loops**. These are closely connected to the topic of lists (and for example retrieval from lists). If the list is *very* long it might become unfeasible to retrieve elements from it manually. We will need loops for this.
-# MAGIC 
+# MAGIC
 # MAGIC Please note that in this notebook you will see **libraries being imported**. To understand what these imports of libraries are (with all the functions and commands) is not yet required knowledge. Try to follow only the examples which are shown.
 # MAGIC ***
 
@@ -15,10 +15,10 @@
 
 # MAGIC %md
 # MAGIC ## 1. Lists
-# MAGIC 
+# MAGIC
 # MAGIC From last chapter we have worked with the table below:
-# MAGIC 
-# MAGIC 
+# MAGIC
+# MAGIC
 # MAGIC | Track_name |  Price |  Currency |  Rating_count_total | User_rating|
 # MAGIC |------------|:------:|----------:|---------------------:|-----------:|
 # MAGIC | Facebook | 0.0 | USD | 2974676 | 3.5|
@@ -26,14 +26,14 @@
 # MAGIC | Clash of Clans | 0.0|    USD | 2130805 |4.5|
 # MAGIC | Temple Run |    0.0  |   USD |1724546 |4.5|
 # MAGIC | Pandora - Music & Radio | 0.0|    USD | 1126879 |4.5|
-# MAGIC 
+# MAGIC
 # MAGIC Data Source:  [Mobile App Store Data Set (Ramanathan Perumal)](https://www.kaggle.com/ramamet4/app-store-apple-data-set-10k-apps)</p>
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC There are 5 rows and 5 columns in this table. Each value in this table is called a **data point**. For example in the first row, we have five data points and they are:
-# MAGIC 
+# MAGIC
 # MAGIC - Facebook
 # MAGIC - 0.0
 # MAGIC - USA
@@ -44,7 +44,7 @@
 
 # MAGIC %md
 # MAGIC When we have a collection of data points it is called a **data set**. We can understand the table above as a collection of data points, so we can call the entire table a data set as well. We see that the data set has five rows and five columns. 
-# MAGIC 
+# MAGIC
 # MAGIC When we want to work with data sets in the computer, we need to store them properly in the computer memory so we can retrieve and manipulate the data points according to our needs. To store each data point in the computer, we can for instance take what we have learned so far and do it this way:
 
 # COMMAND ----------
@@ -70,10 +70,10 @@ type(row_one)
 
 # MAGIC %md
 # MAGIC How did we create the list above? 
-# MAGIC 
+# MAGIC
 # MAGIC 1. Enter a sequence of data points that we want to include in our data set and **separated each with a comma**: 'Facebook', 0.0, 'USD', 2974676, 3.5
 # MAGIC 2. Use **brackets for surrounding** the sequence of data points
-# MAGIC 
+# MAGIC
 # MAGIC After we created the list, the list is stored in the computer's memory by assignment to the variable name row_one. 
 
 # COMMAND ----------
@@ -107,12 +107,12 @@ print(row_two, row_three)
 
 # MAGIC %md
 # MAGIC A list can contain both -- mixed and identical data types.
-# MAGIC 
+# MAGIC
 # MAGIC For example, a list that contains only integers looks like this: `[ 1, 2, 3]`. A mixed data type list looks like the one we created above: `['Facebbok', 0.0, 'USD', 2974676, 3.5]`. In this list, we have:
 # MAGIC - Two strings ('Facebook', 'USD')
 # MAGIC - Two floats (0.0, 3.5)
 # MAGIC - One integer (2974676)
-# MAGIC 
+# MAGIC
 # MAGIC In order to find out the **length of a list, we can use the `len()` command**. 
 # MAGIC The row_one list for example has five data points.
 
@@ -131,11 +131,11 @@ print(len(list_b))
 
 # MAGIC %md
 # MAGIC ## 2. Indexing a List
-# MAGIC 
+# MAGIC
 # MAGIC **Each data point or element in the list has a specific index number (position) associated with it**. In Python, the indexing always starts with 0. For example, the first element always has the index number 0, and the second element always has the index number 1, and so on.
-# MAGIC 
+# MAGIC
 # MAGIC To find the index of an element in the list, simply count the position of the index and then minus one. For example, the user rating is the 5th element in the list and it has an index number of 4 (5 - 1 = 4).
-# MAGIC 
+# MAGIC
 # MAGIC *Note: Please really write this down - the indexing in Python starts at 0.*
 
 # COMMAND ----------
@@ -163,9 +163,9 @@ print(average_rating)
 
 # MAGIC %md
 # MAGIC ### Task 1.3.2
-# MAGIC 
-# MAGIC In the code editor below, you can see the lists for the first three rows from the table. Retrieve the fourth element from each list, which represents the rating each app has received, and fnid the average value of the retrieved numbers.
-# MAGIC 
+# MAGIC
+# MAGIC In the code editor below, you can see the lists for the first three rows from the table. Retrieve the fourth element from each list, which represents the rating each app has received, and find the average value of the retrieved numbers.
+# MAGIC
 # MAGIC 1. Assign the fourth element from the list ``row_one`` to a variable named ``rating_one``. Don't forget that the indexing starts at 0. <br>
 # MAGIC 2. Repeat the same step for the fourth element from the list ``row_two``, to a variable named ``rating_two``.<br>
 # MAGIC 3. Repeat the same step for for the fourth element from the list ``row_three``, to a variable named  ``rating_three``.<br>
@@ -191,11 +191,11 @@ print(average_rating)
 
 # MAGIC %md
 # MAGIC ## 3. Negative Indexing
-# MAGIC 
+# MAGIC
 # MAGIC There are two indexing systems for lists in Python.
 # MAGIC - Positive indexing: the one we have encountered so far starting with the first element having the index number 0 and the second element having the index number 1, and so on.
 # MAGIC - Negative indexing: starting with the **last element** having the index number -1, the second to last element having the index number -2, and so on.
-# MAGIC 
+# MAGIC
 # MAGIC Positive indexing is often put into practice in day to day programming. However, negative indexing can also come in handy when we want to select the last element of a list, especially when this list is long and we have no idea how many elements it contains.
 
 # COMMAND ----------
@@ -219,11 +219,11 @@ print(row_one[5])
 
 # MAGIC %md
 # MAGIC ### Task 1.3.3
-# MAGIC 
+# MAGIC
 # MAGIC The last element in each list represents the rating of each app.
-# MAGIC 
+# MAGIC
 # MAGIC 1. Retrieve the ratings for the first three rows (like what you have done in task 2), and then find the average of all the ratings retrieved and print it to the screen.
-# MAGIC 
+# MAGIC
 # MAGIC <b>Try to use the negative indexing system.</b>
 
 # COMMAND ----------
@@ -277,13 +277,13 @@ print(fb_rating)
 
 # MAGIC %md
 # MAGIC ### Task 1.3.4
-# MAGIC 
+# MAGIC
 # MAGIC 1. Abstract the rating data for Facebook, Instagram, Pandora - Music & Radio into separate lists. Each list should contain information like: the name of the app, the total rating count, and the user rating. Don't forget the positive index system begins with indexing number 0.
 # MAGIC   - For Facebook, assign the list to a variable called `fb_rating_data`
 # MAGIC   - For Instagram, assign the list to a variable called `insta_rating_data`
 # MAGIC   - For Pandora - Music & Radio, assign the list to a variable called `pan_rating_data`
-# MAGIC 
-# MAGIC 
+# MAGIC
+# MAGIC
 # MAGIC 2. Compute the average user rating for Instagram, and Pandora — Music & Radio using the data you just created ``fb_rating_data``, ``insta_rating_data``, and ``pan_rating_data``.
 # MAGIC   - Sum up all the ratings together and compute the average rating.
 # MAGIC   - Assign the result to a variable named `avg_rating`.
@@ -311,10 +311,10 @@ print(avg_rating)
 
 # MAGIC %md
 # MAGIC ## 5. List Slicing (IMPORTANT)
-# MAGIC 
+# MAGIC
 # MAGIC In the previous exercise, we retrieved the first, fourth, and the last element and put them into a separate list.
 # MAGIC We can also retrieve the first three elements from the list and create a separate pricing data list.
-# MAGIC 
+# MAGIC
 # MAGIC For example:
 
 # COMMAND ----------
@@ -340,9 +340,9 @@ print(clash_pricing_data)
 
 # MAGIC %md
 # MAGIC As shown in the code, if we want to select the first <b> n</b> elements from a list called list_one, we can use the syntax shortcut `list_one[0:n]`. 
-# MAGIC In the example above, we have selected the first three elements from the list called `row_three`, so we have used: `row_3[0:3]` .
+# MAGIC In the example above, we have selected the first three elements from the list called `row_three`, so we have used: `row_three[0:3]` .
 # MAGIC The process of selecting a particular part of a list is known as list slicing.
-# MAGIC 
+# MAGIC
 # MAGIC In order to retrieve any list slice we want, we need to:
 # MAGIC 1. Identify the first and last element of the slice.
 # MAGIC 2. Identify the index numbers of the first and last element of the slice.
@@ -371,7 +371,7 @@ print(last_3)
 
 # MAGIC %md
 # MAGIC ### Task 1.3.5
-# MAGIC 
+# MAGIC
 # MAGIC 1. Select the first four elements from `row_one` using the list slicing syntax shortcut and assign the result to a variable named `first_four_elem_fb`.
 # MAGIC 2. Select the last two elements from `row_one` using the list slicing syntax shortcut and assign the result to a variable named `last_two_elem_fb`.
 # MAGIC 3. For `row_five`, select the list slice `[ 0.0, 'USD', 1126879]` using the list slicing syntax shortcut and assign the result to a variable named `pan_2_3_4`.
@@ -400,7 +400,7 @@ pan_2_3_4 = row_five[1:4]
 # MAGIC %md
 # MAGIC ## 6. List of Lists
 # MAGIC So far we have only worked with a data set of small scale (only five rows!) and we have stored each row as a list in a seprate variable like `row_one`, `row_two`, `row_three`, `row_four`, `row_five`. However, if we had a data set with more than 10,000 rows, then we'd have ended up with 10,000 more variables which is unrealistic and redundant.
-# MAGIC 
+# MAGIC
 # MAGIC To solve this problem, we can store all five lists in one single variable like this:
 
 # COMMAND ----------
@@ -418,7 +418,7 @@ data_set
 
 # MAGIC %md
 # MAGIC We can see that now the variable data_set contains all five lists `row_one, row_two, row_three, row_four, row_five`. Such a list that contains other lists is called a <b> list of lists </b>.
-# MAGIC 
+# MAGIC
 # MAGIC `data_set` is declared as a list, so we can retrieve the individual list elements and perform list slicing with what we have learned.
 
 # COMMAND ----------
@@ -472,8 +472,8 @@ print(data_set[0] [0])
 
 # MAGIC %md
 # MAGIC ### Task 1.3.6
-# MAGIC 
-# MAGIC 
+# MAGIC
+# MAGIC
 # MAGIC 1. In the code editor below please group together the five lists into a **list of lists** named ``app_data_set``.
 # MAGIC 2. Compute the average rating of the apps by retrieving the right data points from the ``app_data_set`` list of lists.
 # MAGIC   - The user rating is always the last element of each row. Sum up the ratings and then divide by the number of ratings to get the average.
@@ -502,17 +502,22 @@ print(average_rating)
 
 # MAGIC %md
 # MAGIC ## 7. Opening a File (OPTIONAL)
-# MAGIC 
+# MAGIC
 # MAGIC The data set we've been working with so far is a small snippet from a much larger data set from Kaggle. See data source: [Mobile App Store Data Set (Ramanathan Perumal)](https://www.kaggle.com/ramamet4/app-store-apple-data-set-10k-apps). 
 # MAGIC The data set contains 7,197 rows and 16 columns, which amounts to 115,152 (7,197 * 16) data points. It would be impossible to type all the data points manually into our computer and have them saved in the computer memory. However, we can always download a file and open it in our computer by using the `open()` command. For example if we have a file saved on the computer called "AppleStore.csv", we could open it like this:
-# MAGIC 
+# MAGIC
 # MAGIC *my_file = open('AppleStore.csv')*
-# MAGIC 
-# MAGIC Once we've opened the file we can read it in using a command called `reader()`. We need to import the `reader()` command from the **csv module** using the code `from csv import reader` (a **module is a collection of commands and variables**). Then we can transform the file into a list of lists using the `list()` command. The entire process looks like this:
+# MAGIC
+# MAGIC Once we've opened the file we can read it in using a command called `reader()`. We need to import the `reader()` command from the **csv module** using the code `from csv import reader` (a **module is a collection of commands and variables**). Then we can transform the file into a list of lists using the `list()` command. 
+# MAGIC
+# MAGIC Note: Since the file is not stored in the same location as the notebook we need to specify the locaiton of the file relatively to the notebook.
+# MAGIC `../` allows us to navigate to the parent directory.
+# MAGIC
+# MAGIC The entire process looks like this:
 
 # COMMAND ----------
 
-my_file = open('AppleStore.csv', encoding='utf8')
+my_file = open('../../../../../Data/AppleStore.csv', encoding='utf8')
 
 from csv import reader
 read_file = reader(my_file)
@@ -530,13 +535,13 @@ len(apps_data)
 # MAGIC ## 7.1. Dealing with files with the context manager
 # MAGIC We started to open CSV files. We did so using a very simplified snippet of code, which would not be the case in professional code. Normally we work with the context manager `with`.  
 # MAGIC The Python `with` statement creates a runtime context that allows you to run a group of statements under the control of a context manager. In case of opening files, the `with` closes them automatically for us at the end of the block.
-# MAGIC 
+# MAGIC
 # MAGIC Each file should be closed once we finished the work -- that will release resources back to OS. It is not necessary in case of few files (such as in these training notebooks), but the best practices is to do so everytime. It will prevent many possible problems in your future career as Data Scientist. We can use two following ways:
 
 # COMMAND ----------
 
 # context manager
-with open('AppleStore.csv', encoding='utf8') as my_file: 
+with open('../../../../../Data/AppleStore.csv', encoding='utf8') as my_file: 
     from csv import reader
     read_file = reader(my_file)
     apps_data = list(read_file)
@@ -550,7 +555,7 @@ with open('AppleStore.csv', encoding='utf8') as my_file:
     
 # or a more classical approach      
 print("*** Second way to do it ***")
-my_file_2 = open('AppleStore.csv', encoding='utf8')
+my_file_2 = open('../../../../../Data/AppleStore.csv', encoding='utf8')
 read_file = reader(my_file_2)
 apps_data = list(read_file)
 print(apps_data[:5])
@@ -563,7 +568,7 @@ my_file_2.close()
 
 # MAGIC %md
 # MAGIC ## 8. Repetitive Processes
-# MAGIC 
+# MAGIC
 # MAGIC In the previous task, we have retrieved ratings manually. However, try to retrieve 7,197 ratings manually is impractical because it takes a lot of time. How can we find a way that retrieve all 7,197 ratings in just a couple seconds? Luckily, Python offers us an easy way to repeat a process. Let's look at the following example:
 
 # COMMAND ----------
@@ -617,7 +622,7 @@ print(app_data_set[4])
 
 # MAGIC %md
 # MAGIC The for loop technique requires us to write only two lines of code regardless of the number of rows in the data set, even if the data set has couple millions rows! :)
-# MAGIC 
+# MAGIC
 # MAGIC One thing to pay attention to: do not forget to **indent** the code after the `for` line. To indent means to use for example TAB at the beginning of next line if your editor does not do it automatically for you.
 
 # COMMAND ----------
@@ -645,9 +650,9 @@ for x in app_data_set:
 
 # MAGIC %md
 # MAGIC ## 9. For Loops
-# MAGIC 
+# MAGIC
 # MAGIC What we just learned above is called <b>for loop</b>, as we have already mentioned.
-# MAGIC 
+# MAGIC
 # MAGIC There are three structural parts in a <b>for loop</b>:
 # MAGIC 1. iteration variable
 # MAGIC 2. iterable variable
@@ -669,11 +674,11 @@ for value in a_list:
 
 # MAGIC %md
 # MAGIC The indented code in the <b>body</b> gets executed the same number of times as elements in the <b>iterable variable</b>. If the iterable variable is a list that has three elements, the indented code in the body gets executed three times. We call each code execution an<b> iteration</b>, so there'll be three iterations for a list that has three elements. For each iteration, the <b>iteration variable</b> will take a different value, following this pattern:
-# MAGIC 
+# MAGIC
 # MAGIC - In the first iteration, the value is the first element of the iterable (we have the list `[1, 2, 3]` as the iterable, so the value will be 1).
 # MAGIC - In the second iteration, the value is the second element of the iterable (we have the list `[1, 2, 3]` as the iterable, so the value will be 2).
 # MAGIC - In the third iteration, the value is the third element of the iterable (we have the list `[1, 2, 3]` as the iterable, so the value will be 3).
-# MAGIC 
+# MAGIC
 # MAGIC Do you know that the code outside the loop body can also interact with the code inside the loop body? Look at the following example:
 
 # COMMAND ----------
@@ -697,7 +702,7 @@ for value in a_list: # for every iteration of the loop
 # MAGIC %md
 # MAGIC ### Task 1.3.9:
 # MAGIC Compute the average app rating for the apps stored in the `app_data_set` variable.
-# MAGIC 
+# MAGIC
 # MAGIC 1. Initialize a variable named `rating_sum` with a value of zero outside the loop body.
 # MAGIC 2. Loop (iterate) over the `app_data_set` list of lists. For each of the five iterations of the loop (for each row in `app_data_set`):
 # MAGIC 3. Extract the rating of the app and store it to a variable named `rating`. The rating is the last element of each row.

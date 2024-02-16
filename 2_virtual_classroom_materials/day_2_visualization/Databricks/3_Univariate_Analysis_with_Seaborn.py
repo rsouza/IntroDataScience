@@ -4,9 +4,9 @@
 # MAGIC
 # MAGIC You are presumably wondering: "Yeah, Matplotlib is great, it allows me to customize everything I want. But is there any other visualization library which is able to conjure up a good-looking graph with less code? 
 # MAGIC
-# MAGIC In fact, there are many visualization libraries for Python. We will explore **Seaborn**, which is built on top of the Matplotlib.
+# MAGIC In fact, there are many visualization libraries for Python. We will explore [**Seaborn**](https://seaborn.pydata.org/index.html), which is built on top of the Matplotlib.
 # MAGIC
-# MAGIC The strength of Seaborn is the ability to create attractive, aesthetically pleasing plots integrating **Pandas DataFrame**s functionalities. So far, in order to create plots we always needed to 'extract' a Series of the DataFrame and then we were able to apply some plotting function. Seaborn, on the other hand, operates on the whole dataset, intelligently using labels of the `DataFrame` and internally performing the necessary steps. Seaborn makes creating visualizations very easy and intuitive by using high-level functions. 
+# MAGIC The strength of Seaborn is the ability to create attractive, aesthetically pleasing plots integrating [**Pandas DataFrame**s](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html) functionalities. So far, in order to create plots we always needed to 'extract' a Series of the DataFrame and then we were able to apply some plotting function. Seaborn, on the other hand, operates on the whole dataset, intelligently using labels of the `DataFrame` and internally performing the necessary steps. Seaborn makes creating visualizations very easy and intuitive by using high-level functions.
 
 # COMMAND ----------
 
@@ -14,8 +14,8 @@
 # MAGIC ### [Figure-level vs. axes-level functions](https://seaborn.pydata.org/tutorial/function_overview.html)  
 # MAGIC
 # MAGIC There is a cross-cutting classification of seaborn functions as “axes-level” or “figure-level”. 
-# MAGIC + **Axes-level** functions plot data onto a single matplotlib.pyplot.Axes object, which is the return value of the function.
-# MAGIC + **Figure-level** functions interface with matplotlib through a seaborn object, usually a FacetGrid, that manages the figure. Each module has a single figure-level function, which offers a unitary interface to its various axes-level functions.
+# MAGIC + [**Axes-level**](https://seaborn.pydata.org/tutorial/function_overview.html#axes-level-functions-make-self-contained-plots) functions plot data onto a single matplotlib.pyplot.Axes object, which is the return value of the function.
+# MAGIC + [**Figure-level**](https://seaborn.pydata.org/tutorial/function_overview.html#figure-level-functions-own-their-figure) functions interface with matplotlib through a seaborn object, usually a FacetGrid, that manages the figure. Each module has a single figure-level function, which offers a unitary interface to its various axes-level functions.
 
 # COMMAND ----------
 
@@ -36,7 +36,7 @@ import matplotlib.pyplot as plt
 # MAGIC %md
 # MAGIC There are 18 example datasets provided by Seaborn. After completing this notebook, you can choose a few of them that seem interesting to you and and try to apply your gained knowledge about visualization using Seaborn. 
 # MAGIC
-# MAGIC To get a list of available datasets you can use `get_dataset_names()` function.
+# MAGIC To get a list of available datasets you can use [`get_dataset_names()`](https://seaborn.pydata.org/generated/seaborn.get_dataset_names.html) function.
 
 # COMMAND ----------
 
@@ -53,42 +53,50 @@ import matplotlib.pyplot as plt
 # MAGIC
 # MAGIC But if your visualization will be presented to others, it is appropriate to take care of the plot's appearance in order to make it appealing and catching the attention. This is true also in the case of a theme. 
 # MAGIC
-# MAGIC There are 5 predefined themes ('darkgrid' is by default):
+# MAGIC There are [5 predefined themes](https://seaborn.pydata.org/tutorial/aesthetics.html#seaborn-figure-styles) ('darkgrid' is by default):
 # MAGIC
-# MAGIC - darkgrid
-# MAGIC - whitegrid
-# MAGIC - dark
-# MAGIC - white
-# MAGIC - ticks
+# MAGIC - `darkgrid`
+# MAGIC - `whitegrid`
+# MAGIC - `dark`
+# MAGIC - `white`
+# MAGIC - `ticks`
 # MAGIC
-# MAGIC To set a specific theme use `set_style('ticks')` with the chosen theme as the argument. Take a look at the documentation [here](https://seaborn.pydata.org/tutorial/aesthetics.html) for more information.
+# MAGIC To set a specific theme use
+# MAGIC [`set_style('ticks')`](https://seaborn.pydata.org/generated/seaborn.set_style.html)
+# MAGIC with the chosen theme as the argument. Take a look at the documentation [here](https://seaborn.pydata.org/tutorial/aesthetics.html) for more information.
 
 # COMMAND ----------
 
 # Setting style
-sns.set_style('dark')
+sns.set_style('whitegrid')
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC # 2. Loading dataset
 # MAGIC
-# MAGIC We will go with the 'penguins' dataset that can be loaded using `load_dataset()` function which returns a Pandas DataFrame.
+# MAGIC We will go with the 'penguins' dataset that can be loaded using
+# MAGIC [`load_dataset()`](https://seaborn.pydata.org/generated/seaborn.load_dataset.html#seaborn-load-dataset)
+# MAGIC function which returns a Pandas DataFrame.
 # MAGIC
 # MAGIC This dataset consists of 7 attributes and 344 observations about penguins from islands in the Palmer Archipelago in Antarctica.
 # MAGIC
 # MAGIC **Attributes explanation**
-# MAGIC - species: species of a penguin (Adelie, Gentoo and Chinstrap)
-# MAGIC - island: the name of an island (Biscoe, Dream, Torgersen)
-# MAGIC - bill_length_mm: the length of the bill (in mm)
-# MAGIC - bill_depth_mm: the depth of the bill (in mm)
-# MAGIC - flipper_length_mm: the length of the flipper (in mm)
-# MAGIC - body_mass_g: body mass (in grams)
-# MAGIC - sex: the sex of a penguin
+# MAGIC - `species`: species of a penguin (Adelie, Gentoo and Chinstrap)
+# MAGIC - `island`: the name of an island (Biscoe, Dream, Torgersen)
+# MAGIC - `bill_length_mm`: the length of the bill (in mm)
+# MAGIC - `bill_depth_mm`: the depth of the bill (in mm)
+# MAGIC - `flipper_length_mm`: the length of the flipper (in mm)
+# MAGIC - `body_mass_g`: body mass (in grams)
+# MAGIC - `sex`: the sex of a penguin
 
 # COMMAND ----------
 
-# Load the data
+# Load the example dataset
+# This is blocked by security.
+# penguins = sns.load_dataset("penguins")
+
+# Load the example dataset from .csv file
 penguins = pd.read_csv('../../../Data/penguins.csv')
 
 # COMMAND ----------
@@ -126,18 +134,39 @@ penguins.duplicated().sum()
 # MAGIC %md
 # MAGIC ## 3.1 Histogram
 # MAGIC
-# MAGIC We'll look at the distribution of our data using the `displot()` function where we specify parameters such as `data` and `x` that define a position on the x-axis. `displot()` is a Figure-level method and the size of the output can be changed using the parameters `height` and `aspect`. In case of Axes-level functions, the size can be controlled with `plt.figure(figsize = (Width, height in inches))`. You can find all necessary information in Seaborn's documentation.
+# MAGIC We'll look at the distribution of our data using the
+# MAGIC [`displot()`](https://seaborn.pydata.org/generated/seaborn.displot.html)
+# MAGIC function where we specify parameters such as `data` and `x` that define a position on the x-axis.
+# MAGIC [`displot()`](https://seaborn.pydata.org/generated/seaborn.displot.html)
+# MAGIC is a Figure-level method and the size of the output can be changed using the parameters `height` and `aspect`. 
+# MAGIC In case of Axes-level functions, the size can be controlled with `plt.figure(figsize = (Width, height in inches))`. 
+# MAGIC You can find all necessary information in [Seaborn's documentation](https://seaborn.pydata.org/generated/seaborn.displot.html).
 # MAGIC
-# MAGIC This function uses the same underlying code as `histplot()` function. Moreover it provides different approaches for visualizing the distribution. The histogram will be drawn by default. But we can choose a particular approach with the `kind` parameter:  
+# MAGIC This function uses the same underlying code as
+# MAGIC [`histplot()`](https://seaborn.pydata.org/generated/seaborn.histplot.html)
+# MAGIC function. 
+# MAGIC Moreover it provides different approaches for visualizing the distribution. 
+# MAGIC The histogram will be drawn by default. 
+# MAGIC But we can choose a particular approach with the `kind` parameter:  
+# MAGIC
 # MAGIC `kind = 'hist'`   
 # MAGIC `kind = 'kde'`  
 # MAGIC `kind = 'ecdf'`  
 # MAGIC
-# MAGIC All of these approaches to visualize distributions have their very own function in the _distribution module_ and belong to the _distribution plots category_. We'll discuss all approaches later on. 
+# MAGIC All of these approaches to visualize distributions have their very own function in the _distribution module_ and belong to the _distribution plots category_.
+# MAGIC We'll discuss all approaches later on. 
 # MAGIC
-# MAGIC Now let's see how we can display the distribution of the length of penguins' bills. Seaborn's function `displot()` returns a Matplotlib's FacetGrid object. Assign the resulting object to the `ax` variable to be able add things such as title or axes labels.
+# MAGIC Now let's see how we can display the distribution of the length of penguins' bills. 
+# MAGIC Seaborn's function
+# MAGIC [`displot()`](https://seaborn.pydata.org/generated/seaborn.displot.html)
+# MAGIC returns a Seaborn's FacetGrid object.
+# MAGIC Assign the resulting object to the `ax` variable to be able add things such as title or axes labels.
 # MAGIC
-# MAGIC Another way is to use `plt.title()`, `plt.xlabel()` and `plt.ylabel()`.
+# MAGIC Another way is to use
+# MAGIC [`plt.title()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.title.html), 
+# MAGIC [`plt.xlabel()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xlabel.html)
+# MAGIC and
+# MAGIC [`plt.ylabel()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.ylabel.html).
 
 # COMMAND ----------
 
@@ -157,11 +186,14 @@ ax.set(title = 'The distribution of bill length');
 # MAGIC
 # MAGIC As we have already learned, it is always appropriate to experiment and try different numbers of bins as well as change the size of bins. By default, `displot()` and `histplot()` plotting functions determine the size of the bins based on the number of observations and the variance. 
 # MAGIC
-# MAGIC If you want to zoom in into the particular area of a histogram, you can do so by limiting the axis using Matplotlib's `xlim` (alteratively `ylim`). The options are:
+# MAGIC If you want to zoom in into the particular area of a histogram, you can do so by limiting the axis using Matplotlib's
+# MAGIC [`xlim`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xlim.html) (alteratively [`ylim`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.ylim.html)). 
 # MAGIC
-# MAGIC - `plt.xlim(left, right)` - setting values for the left and the right limit
-# MAGIC - `plt.xlim(left)` - setting a value only for left limit
-# MAGIC - `plt.xlim(right)` - setting a value only for right limit
+# MAGIC The options are:
+# MAGIC
+# MAGIC - [`plt.xlim(left, right)`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xlim.html) - setting values for the left and the right limit
+# MAGIC - [`plt.xlim(left)`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xlim.html) - setting a value only for left limit
+# MAGIC - [`plt.xlim(right)`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xlim.html) - setting a value only for right limit
 
 # COMMAND ----------
 
@@ -227,7 +259,7 @@ sns.displot(data = penguins,
 # MAGIC %md
 # MAGIC ## 3.2 Plotting the distribution using KDE plot
 # MAGIC
-# MAGIC KDE abbreviation stands for Kernel Density Estimate and using this approach we can create distribution using continuous probability density curve. KDE is calculated using a specific formula which you do not need to worry about. There are however mathematical and statistical reasons why sometimes it might be more appropriate to show a KDE.
+# MAGIC KDE abbreviation stands for [Kernel Density Estimate](https://en.wikipedia.org/wiki/Kernel_density_estimation) and using this approach we can create distribution using continuous probability density curve. KDE is calculated using a specific formula which you do not need to worry about. There are however mathematical and statistical reasons why sometimes it might be more appropriate to show a KDE.
 
 # COMMAND ----------
 
@@ -243,13 +275,16 @@ sns.displot(data = penguins,
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## 3.4 Boxplot
+# MAGIC ## 3.3 Boxplot
 # MAGIC
 # MAGIC Now we'll look at the distribution of penguins' body mass using boxplot. 
 # MAGIC
-# MAGIC Seaborn's `boxplot()` function takes several parameters. Refer to the documentation [here](https://seaborn.pydata.org/generated/seaborn.boxplot.html) to learn more. 
+# MAGIC Seaborn's
+# MAGIC [`boxplot()`](https://seaborn.pydata.org/generated/seaborn.boxplot.html)
+# MAGIC function takes several parameters. 
+# MAGIC Refer to the documentation [here](https://seaborn.pydata.org/generated/seaborn.boxplot.html) to learn more. 
 # MAGIC
-# MAGIC Below you can see what the default boxplot looks like. We passed our dataset to the `data` parameter and the 'body_mass_g' feature as the input of the x parameter. 
+# MAGIC Below you can see what the default boxplot looks like. We passed our dataset to the `data` parameter and the 'body_mass_g' feature as the input of the x parameter.
 
 # COMMAND ----------
 
@@ -262,7 +297,7 @@ sns.boxplot(data = penguins,
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ### 3.4.1 Customizing boxplots
+# MAGIC ### 3.3.1 Customizing boxplots
 # MAGIC
 # MAGIC If you want to further customize a boxplot, you can do so with Matplotlib's help.
 # MAGIC
@@ -330,11 +365,17 @@ ax = sns.boxplot(data = penguins,
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## 3.5 Swarmplot
+# MAGIC ## 3.4 Swarmplot
 # MAGIC
-# MAGIC The `swarmplot()` plotting function is useful if we want to better see the distribution of the values. In this case, each data point will be drawn and adjusted to avoid overlapping of values. You can, of course, create a swarmplot on its own, but it's nice to see drawn values on the top of distribution created with boxplot. 
+# MAGIC The [`swarmplot()`](https://seaborn.pydata.org/generated/seaborn.swarmplot.html)
+# MAGIC plotting function is useful if we want to better see the distribution of the values. 
+# MAGIC In this case, each data point will be drawn and adjusted to avoid overlapping of values.
+# MAGIC You can, of course, create a swarmplot on its own, but it's nice to see drawn values on the top of distribution created with boxplot. 
 # MAGIC
-# MAGIC There is one disadvantage of the swarmplot: if you have dataset with large number of observations, let's say in thousands, there will be a huge overlap of data points. We can, however, take a random sample of only a few percent of points to be able to utilize the swarmplot. In such case, do not forget to mention next to your visual that the swarmplot displays only a subsample of data. In the case of the penguins dataset, swarmplot is a good choice of plotting method and we can nicely see the drawn observations. 
+# MAGIC There is one disadvantage of the swarmplot: if you have dataset with large number of observations, let's say in thousands, there will be a huge overlap of data points. 
+# MAGIC We can, however, take a random sample of only a few percent of points to be able to utilize the swarmplot. 
+# MAGIC In such case, do not forget to mention next to your visual that the swarmplot displays only a subsample of data. 
+# MAGIC In the case of the penguins dataset, swarmplot is a good choice of plotting method and we can nicely see the drawn observations.
 
 # COMMAND ----------
 
@@ -373,15 +414,17 @@ sns.swarmplot(data = penguins,
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## 3.6 Stripplot
+# MAGIC ## 3.5 Stripplot
 # MAGIC
-# MAGIC Stripplots are very similar to swarmplots since they also show all of the data. There is the same disadvantage of the data overlapping, but you can add some random noise (jitter) among values. Sometimes it's hard to tell what the distribution of the data is without additional representation of the underlying distribution (for instance, created with a boxplot). 
+# MAGIC [Stripplots](https://seaborn.pydata.org/generated/seaborn.stripplot.html) are very similar to swarmplots since they also show all of the data. 
+# MAGIC There is the same disadvantage of the data overlapping, but you can add some random noise (jitter) among values. 
+# MAGIC Sometimes it's hard to tell what the distribution of the data is without additional representation of the underlying distribution (for instance, created with a boxplot). 
 # MAGIC
 # MAGIC You can change the amount of jitter using the `jitter` parameter where you have 2 options:
 # MAGIC - set `jitter = True` for a good default amount of jitter
 # MAGIC - specify amount of jitter 
 # MAGIC
-# MAGIC Stripplots can be useful for indicating outliers in the data, too. 
+# MAGIC Stripplots can be useful for indicating outliers in the data, too.
 
 # COMMAND ----------
 
@@ -409,7 +452,10 @@ sns.stripplot(data = penguins,
 # MAGIC %md
 # MAGIC ## 4.1 Catplot
 # MAGIC
-# MAGIC To create a visualization of a categorical variable you can use the `catplot()` plotting function. This is a Figure-level interface which allows you to specify a certain plot type such as boxplot using the `kind` parameter. 
+# MAGIC To create a visualization of a categorical variable you can use the
+# MAGIC [`catplot()`](https://seaborn.pydata.org/generated/seaborn.catplot.html)
+# MAGIC plotting function. 
+# MAGIC This is a Figure-level interface which allows you to specify a certain plot type such as boxplot using the `kind` parameter. 
 # MAGIC
 # MAGIC For example, if you want to visualize the number of occurences of observations based on the specific category the code would be:
 
@@ -433,7 +479,7 @@ sns.catplot(data = penguins,
 # MAGIC %md
 # MAGIC ## 4.2 Countplot
 # MAGIC
-# MAGIC Alternatively, we can use the Axis-level ploting function `sns.countplot()`.
+# MAGIC Alternatively, we can use the Axis-level ploting function [`sns.countplot()`](https://seaborn.pydata.org/generated/seaborn.countplot.html).
 
 # COMMAND ----------
 
@@ -479,36 +525,36 @@ ax.set(title = 'Count of penguins based on the island',
 # MAGIC **Attributes explanation:**
 # MAGIC
 # MAGIC Bank client data:
-# MAGIC - age
-# MAGIC - job : type of job
-# MAGIC - marital : marital status
-# MAGIC - education
-# MAGIC - default: has credit in default?
-# MAGIC - housing: has housing loan?
-# MAGIC - loan: has personal loan?
+# MAGIC - `age`
+# MAGIC - `job` : type of job
+# MAGIC - `marital` : marital status
+# MAGIC - `education`
+# MAGIC - `default`: has credit in default?
+# MAGIC - `housing`: has housing loan?
+# MAGIC - `loan`: has personal loan?
 # MAGIC
 # MAGIC Related with the last contact of the current campaign:
-# MAGIC - contact: contact communication type
-# MAGIC - month: last contact month of year
-# MAGIC - day_of_week: last contact day of the week
-# MAGIC - duration: last contact duration, in seconds (numeric). Important note: this attribute highly affects the output target (e.g., if duration=0 then y='no'). Yet, the duration is not known before a call is performed. Also, after the end of the call y is obviously known. Thus, this input should only be included for benchmark purposes and should be discarded if the intention is to have a realistic predictive model.
+# MAGIC - `contact`: contact communication type
+# MAGIC - `month`: last contact month of year
+# MAGIC - `day_of_week`: last contact day of the week
+# MAGIC - `duration`: last contact duration, in seconds (numeric). Important note: this attribute highly affects the output target (e.g., if duration=0 then y='no'). Yet, the duration is not known before a call is performed. Also, after the end of the call y is obviously known. Thus, this input should only be included for benchmark purposes and should be discarded if the intention is to have a realistic predictive model.
 # MAGIC
 # MAGIC Other attributes:
-# MAGIC - campaign: number of contacts performed during this campaign and for this client
-# MAGIC - pdays: number of days that passed by after the client was last contacted from a previous campaign (999 means client was not previously contacted)
-# MAGIC - previous: number of contacts performed before this campaign and for this client
-# MAGIC - poutcome: outcome of the previous marketing campaign
+# MAGIC - `campaign`: number of contacts performed during this campaign and for this client
+# MAGIC - `pdays`: number of days that passed by after the client was last contacted from a previous campaign (999 means client was not previously contacted)
+# MAGIC - `previous`: number of contacts performed before this campaign and for this client
+# MAGIC - `poutcome`: outcome of the previous marketing campaign
 # MAGIC
 # MAGIC Social and economic context attributes
-# MAGIC - emp.var.rate: employment variation rate - quarterly indicator
-# MAGIC - cons.price.idx: consumer price index - monthly indicator
-# MAGIC - cons.conf.idx: consumer confidence index - monthly indicator
-# MAGIC - euribor3m: euribor 3 month rate - daily indicator
+# MAGIC - `emp.var.rate`: employment variation rate - quarterly indicator
+# MAGIC - `cons.price.idx`: consumer price index - monthly indicator
+# MAGIC - `cons.conf.idx`: consumer confidence index - monthly indicator
+# MAGIC - `euribor3m`: euribor 3 month rate - daily indicator
 # MAGIC it is calculated by eliminating the highest 15% and the lowest 15% of the interest rates submitted and calculating the arithmetic mean of the remaining values
-# MAGIC - nr.employed: number of employees - quarterly indicator
+# MAGIC - `nr.employed`: number of employees - quarterly indicator
 # MAGIC
 # MAGIC Target variable:
-# MAGIC - y - has the client subscribed to a term deposit?
+# MAGIC - `y`: has the client subscribed to a term deposit?
 
 # COMMAND ----------
 
@@ -636,7 +682,7 @@ data.month = data.month.map(mapping_months)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The values of the feature 'contact_duration' are recorded in seconds. Run the line below to convert them to minutes.
+# MAGIC The values of the feature `contact_duration` are recorded in seconds. Run the line below to convert them to minutes.
 
 # COMMAND ----------
 

@@ -1,7 +1,7 @@
 # Databricks notebook source
 # MAGIC %md
 # MAGIC # Cleaning and Preparing Data in Python
-# MAGIC 
+# MAGIC
 # MAGIC A lot of what Data Scientists do is about cleaning data. In this following notebook, you will be going over some basic steps on hwo to do this.
 # MAGIC ***
 
@@ -9,11 +9,11 @@
 
 # MAGIC %md
 # MAGIC ## 1. Reading our MoMA Data Set
-# MAGIC 
+# MAGIC
 # MAGIC This time we will work with data from the Museum of Modern Art (MoMA), a museum with one of the largest collections of modern art in the world in the center of New York City. Each row in this table represents a unique piece of art from the Museum of Modern Art. Let's take a look at the first five rows:
-# MAGIC 
-# MAGIC 
-# MAGIC 
+# MAGIC
+# MAGIC
+# MAGIC
 # MAGIC | Title |  Artist |  Nationality | BeginDate|EndDate|Gender|Date|Department|
 # MAGIC |------------|:------:|----------:|---------------------:|-----------:|----------:|---------------------:|-----------:|
 # MAGIC | Dress MacLeod from Tartan Sets |Sarah Charlesworth |(American) | (1947) | (2013)|(Female)|1986|Prints & Illustrated Books|
@@ -21,9 +21,9 @@
 # MAGIC |Tailpiece (page 55) from SAGESSE | Maurice Denis| (French) | (1870)|(1943)|(Male)|1889-1911|Prints & Illustrated Books|
 # MAGIC |Headpiece (page 129) from LIVRET DE FOLASTRIES, À JANOT PARISIEN |Aristide Maillol| (French) |	(1861) |(1944)|(Male)|1927-1940|Prints & Illustrated Books|
 # MAGIC |97 rue du Bac| Eugène Atget| (French) |(1857) |(1927)|(Male)|1903|	Photography|
-# MAGIC 
+# MAGIC
 # MAGIC The MoMA data is in a ``CSV`` file called ``artworks.csv``. Below is a short explanation of some of the variable names that you encountered above.
-# MAGIC 
+# MAGIC
 # MAGIC - `Title:` The title of the artwork.
 # MAGIC - `Artist:` The name of the artist who created the artwork.
 # MAGIC - `Nationality:` The nationality of the artist.
@@ -32,7 +32,7 @@
 # MAGIC - `Gender:` The gender of the artist.
 # MAGIC - `Date:` The date that the artwork was created.
 # MAGIC - `Department:` The department inside MoMA to which the artwork belongs.
-# MAGIC 
+# MAGIC
 # MAGIC How do we access the csv file using Python then?
 # MAGIC Just like we learned in the first course, **Python has a built-in csv module that can handle the work of opening a CSV for us**.
 
@@ -42,13 +42,12 @@
 from csv import reader
 
 #Second, use the Python built-in function open() to open the Artworks.csv file:
-opened_file = open('Artworks.csv')
+with open('../../../../../Data/Artworks.csv') as opened_file:
+    #Then use reader() to parse (or interpret) the opened_file:
+    read_file = reader(opened_file)
 
-#Then use reader() to parse (or interpret) the opened_file:
-read_file = reader(opened_file)
-
-#Use the list() function to convert the read_file into a list of lists format:
-artworks = list(read_file)
+    #Use the list() function to convert the read_file into a list of lists format:
+    artworks = list(read_file)
 
 #Finally, remove the first row of the data, which contains the column names:
 artworks = artworks[1:]
@@ -57,20 +56,20 @@ artworks = artworks[1:]
 
 # MAGIC %md
 # MAGIC ## 2. Replacing Substrings with the replace Method
-# MAGIC 
+# MAGIC
 # MAGIC Sometimes when we're cleaning data, some parts of strings need to be replace in order to make our data look clean and consistent.
-# MAGIC 
+# MAGIC
 # MAGIC The technique we will learn in this section is called <b>substring</b>. 
 # MAGIC >For example, if we have a string "Swimming is my favorite activity" and we want to change "Swimming" to "Running", with the substring technique, the sentence will look like this: "Running is my favorite activity".
-# MAGIC 
+# MAGIC
 # MAGIC In order to do this, we'll need to use the `str.replace()` function. The following steps take place:
 # MAGIC 1.  to find all instances of the old substring, which in our example "Swimming".
 # MAGIC 2.  to replace each of those instances with the new substring, "Running".
-# MAGIC 
+# MAGIC
 # MAGIC `str.replace()` takes two arguments:
 # MAGIC 1. old: The substring we want to find and replace.
 # MAGIC 2. new: The substring we want to replace old with.
-# MAGIC 
+# MAGIC
 # MAGIC When we use `str.replace()`, we substitute the str for the variable name of the string we want to modify. Let's look at an example in code:
 
 # COMMAND ----------
@@ -84,11 +83,11 @@ print(fav_activity)
 
 # MAGIC %md
 # MAGIC In the code above, we:
-# MAGIC 
+# MAGIC
 # MAGIC - Created the original string and assigned it to the variable name ``fav_activity``.
 # MAGIC - Replaced the substring "Swimming" with the substring "Running" by calling `fav_activity.replace()`.
 # MAGIC - Assigned the result back to the original variable name using the `=` sign.
-# MAGIC 
+# MAGIC
 # MAGIC There is something to pay attention to is that when we use `str.replace()`, this function will replace all instances of the substring it finds. See the following example:
 
 # COMMAND ----------
@@ -105,7 +104,7 @@ print(fav_activity)
 
 # MAGIC %md
 # MAGIC ### Task 2.1.2:
-# MAGIC 
+# MAGIC
 # MAGIC In the text editor below, we have created a string variable `string1` containing the string `"I am awesome"`.
 # MAGIC Now use the `str.replace()` method to create a new string, `string2`:
 # MAGIC - The new string should have the value `"I am amazing"`.
@@ -123,21 +122,21 @@ print(string2)
 
 # MAGIC %md
 # MAGIC ## 3. Cleaning the Nationality and Gender Columns
-# MAGIC 
+# MAGIC
 # MAGIC Now let's see how we can use the `str.replace()` method on a bigger data set. I have a shortened version of our data set below:
-# MAGIC 
+# MAGIC
 # MAGIC | Title |  Artist |  Nationality |Gender|
 # MAGIC |------------|:------:|----------:|---------------------:
-# MAGIC | Dress MacLeod from Tartan Sets |Sarah Charlesworth |(American) | (1947) | (2013)|(Female)|
+# MAGIC | Dress MacLeod from Tartan Sets |Sarah Charlesworth |(American) | (Female)|
 # MAGIC |Duplicate of plate from folio 11 verso (supplementary suite, plate 4) from ARDICIA|   Pablo Palazuelo |  (Spanish)|(Male)|
 # MAGIC |Tailpiece (page 55) from SAGESSE | Maurice Denis| (French) |(Male)|
 # MAGIC |Headpiece (page 129) from LIVRET DE FOLASTRIES, À JANOT PARISIEN |Aristide Maillol| (French) |(Male)|
 # MAGIC |97 rue du Bac| Eugène Atget| (French) |(Male)|
-# MAGIC 
+# MAGIC
 # MAGIC Do you see that the Nationality and Gender columns have parentheses (()) at the start and the end of the values? In this session, we want to learn how to remove those values.
-# MAGIC 
+# MAGIC
 # MAGIC In the session, we learned how to use `str.replace()` to replace one substring with another. What we want, however, is to remove a substring, not replace it. **In order to remove a substring, all we need to do is to replace the substring with an empty string: `""`**.
-# MAGIC 
+# MAGIC
 # MAGIC We need to perform this action many times in order to replace all unwanted characters in our whole moma data set. We can do this with a for loop. Let's see an example using a small sample of our data:
 
 # COMMAND ----------
@@ -171,9 +170,10 @@ for n in nationalities:
 
 # Read in csv file
 from csv import reader
-opened_file = open('Artworks.csv',encoding="utf-8")
-read_file = reader(opened_file)
-moma = list(read_file)
+
+with open('../../../../../Data/Artworks.csv',encoding="utf-8") as opened_file:
+    read_file = reader(opened_file)
+    moma = list(read_file)
 moma = moma[1:]
 
 print(moma[200][4])
@@ -184,7 +184,7 @@ print(moma[800][4])
 
 # MAGIC %md
 # MAGIC Next, we'll loop over each row in the moma data set. In each row, we'll:
-# MAGIC 
+# MAGIC
 # MAGIC - Assign the Nationality value from index `4` to a variable name.
 # MAGIC - Use `nationality.replace()` to remove all instances of the open parentheses.
 # MAGIC - Use `nationality.replace()` to remove all instances of the close parentheses.
@@ -235,9 +235,9 @@ print(moma[800][7])
 
 # MAGIC %md
 # MAGIC ## 4. String Capitalization
-# MAGIC 
+# MAGIC
 # MAGIC The Gender column in our data set contains four unique values:
-# MAGIC 
+# MAGIC
 # MAGIC - (an empty string)
 # MAGIC - "Male"
 # MAGIC - "Female"
@@ -247,15 +247,15 @@ print(moma[800][7])
 
 # MAGIC %md
 # MAGIC In our data set, there are two different capitalizations used in our data set for "male." This could be caused by manual data entry. Different people could use different capitalizations when they enter words.
-# MAGIC 
+# MAGIC
 # MAGIC There are a few ways we could handle this using what we know so far:
-# MAGIC 
+# MAGIC
 # MAGIC 1. We could use ``str.replace()`` to replace m with ``M``, but then we'd end up with instances of FeMale.
 # MAGIC 2. We could use ``str.replace()`` to replace male with ``Male``. This would also give us instances of FeMale.
-# MAGIC 
+# MAGIC
 # MAGIC However, here comes the problem: even if the word "male" wasn't contained in the word "female," both of these techniques wouldn't be good options if we had a column with many different values, like our Nationality column. Instead, what we should use is the <b>str.title()</b> method.
 # MAGIC > ``str.title()``: a Python string method designed specifically for handling capitalization. The method returns a copy of the string with the first letter of each word transformed to uppercase (also known as <b>title case</b>).
-# MAGIC 
+# MAGIC
 # MAGIC Let's take a look at an example:
 
 # COMMAND ----------
@@ -269,22 +269,22 @@ print(my_string_title)
 
 # MAGIC %md
 # MAGIC Using title case will give us consistent capitalization for all values in the Gender column.
-# MAGIC 
+# MAGIC
 # MAGIC We have a number of rows containing an empty string (`""`) for the Gender column. This could be a result of:
-# MAGIC 
+# MAGIC
 # MAGIC - The person entering the data has no information about the gender of the artist.
 # MAGIC - The artist is unknown and so is the gender.
 # MAGIC - The artist's gender is non-binary.
-# MAGIC 
+# MAGIC
 # MAGIC Now let's try to use this technique to make the capitalization of both the Nationality and Gender columns uniform. The Nationality column has 84 unique values, so to help you, we'll provide you with the values that aren't already in title case:
-# MAGIC 
+# MAGIC
 # MAGIC - `''`
 # MAGIC - `'Nationality unknown'`
-# MAGIC 
+# MAGIC
 # MAGIC ### Task 2.1.4:
-# MAGIC 
+# MAGIC
 # MAGIC Use a loop to iterate over all rows in the moma list of lists. For each row:
-# MAGIC 
+# MAGIC
 # MAGIC 1. Clean the Gender column.
 # MAGIC     - Assign the value from the Gender column, at index ``7``, to a variable.
 # MAGIC     - Make the changes to the value of that variable.
@@ -324,9 +324,9 @@ def Capitalization(index):
 
 # MAGIC %md
 # MAGIC ## 5. Errors During Data Cleaning
-# MAGIC 
+# MAGIC
 # MAGIC We have analyzed the artist nationalities. Now let's have a look at the <b>BeginDate</b> and <b>EndDate</b> columns
-# MAGIC 
+# MAGIC
 # MAGIC These two columns contain the birth and death dates of the artist who created the work. Let's take a look at the column:
 
 # COMMAND ----------
@@ -342,7 +342,7 @@ for row in moma[:5]:
 # MAGIC These values are wrapped in parentheses as four-digit strings. How can we clean these columns? We need to:
 # MAGIC - Remove the parentheses from the start and the end of each value.
 # MAGIC - Convert the values from the string type to an integer type. This will help us perform calculations with them later.
-# MAGIC 
+# MAGIC
 # MAGIC In the previous two screens, we had to repeat code twice — first when we cleaned the Gender column, and then when we cleaned the Nationality column. If we don't want to keep repeating code, we can create a function that performs these operations, then use that function to clean each column.
 
 # COMMAND ----------
@@ -402,11 +402,11 @@ cleaned_date = clean_and_convert(birth_date)
 
 # MAGIC %md
 # MAGIC ## 6. Parsing Numbers from Complex Strings, Part One
-# MAGIC 
+# MAGIC
 # MAGIC We have successfully converted the ``BeginDate`` and ``EndDate`` columns into numeric values. If we were to combine the data from the BeginDate column (the artist's year of birth) with the data in the Date column (the year of creation) we can therefore calculate the age at which the artist produced this piece of artwork.
-# MAGIC 
+# MAGIC
 # MAGIC That means we need to clean the data in the `Date` column in order to perform such calculation as mentioned above.
-# MAGIC 
+# MAGIC
 # MAGIC Let's examine a sample of the types of values contained in this column:
 
 # COMMAND ----------
@@ -434,14 +434,14 @@ cleaned_date = clean_and_convert(birth_date)
 
 # MAGIC %md
 # MAGIC This column contains data in many different formats:
-# MAGIC 
+# MAGIC
 # MAGIC - Some years are in parentheses.
 # MAGIC - Some years have c. or C. before them, indicating that the year is approximate.
 # MAGIC - Some have year ranges, indicated with a dash.
 # MAGIC - Some have 's to indicate a decade.
-# MAGIC 
+# MAGIC
 # MAGIC In this session,we want to to remove all the extra characters and be left with either a range or a single year. We will then finish processing the data in the sessions that follow. For the two special cases listed above:
-# MAGIC 
+# MAGIC
 # MAGIC - Where there is an 's that signifies a decade, we'll use the year without the 's.
 # MAGIC - Where c. or similar indicates an approximate year, we'll remove the c. but keep the year.
 
@@ -522,13 +522,13 @@ print(stripped_test_data)
 
 # MAGIC %md
 # MAGIC As a data scientist, you need to make decisions on how you will structure your code. One option could be to discard all approximate years so we know that our calculations are exact. For example, when we're calculating an artist's age, an approximate age is also acceptable (the difference between 30 and 33 years old is more nuanced than we need).
-# MAGIC 
+# MAGIC
 # MAGIC Whichever way you decide to proceed isn't as important as thinking about your analysis and having a valid reason for this particular decision.
-# MAGIC 
+# MAGIC
 # MAGIC So this is what we will do:
 # MAGIC - when we have values in a single year, like 1912, we'll keep it as it is.
 # MAGIC - when we also have values in ranges of years, like 1913-1923, we'll average the two years.
-# MAGIC 
+# MAGIC
 # MAGIC How do we proceed with our above decision? We can do the following:
 # MAGIC 1. Have an if statement to check if there is a dash character ``-`` in the string, so we know if it's a range or not.
 # MAGIC 2. If the date is a range:
@@ -569,9 +569,9 @@ print(year_in_range.split("-"))
 
 # MAGIC %md
 # MAGIC ### Task 2.1.7(HARD):
-# MAGIC 
+# MAGIC
 # MAGIC The `stripped_test_data` list, `strip_characters()` function and `bad_chars` list are provided for you in the editor below.
-# MAGIC 
+# MAGIC
 # MAGIC 1. Create a function called `process_date()` which accepts a string, and follows the logic we outlined above:
 # MAGIC     - Checks if the dash character ``-`` is in the string so we know if it's a range or not.
 # MAGIC     - If it is a range:
@@ -583,8 +583,8 @@ print(year_in_range.split("-"))
 # MAGIC     - Finally, returns the value.
 # MAGIC 2. Create an empty list `processed_test_data`.
 # MAGIC 3. Loop over the `test_data` list using the `strip_characters()` function and your `process_date()` function. Process the dates and append each processed date back to the `processed_test_data` list.
-# MAGIC 
-# MAGIC 
+# MAGIC
+# MAGIC
 # MAGIC 4. (OPTIONAL) Once your code works with the test data, you can then iterate over the moma list of lists. This list contains several date formats that we have not discussed so far. Try to deal with them, and any error you might get, in a way that seems sensible to you. In each iteration:
 # MAGIC     - Create an empty list called `moma_dates`.
 # MAGIC     - Loop over the rows of the `moma` list of lists.
@@ -593,15 +593,16 @@ print(year_in_range.split("-"))
 # MAGIC     - Use the `process_date()` to convert the date.
 # MAGIC     - Perform any other processing that you see fit to get a clean, single date.
 # MAGIC     - Append the processed value to `moma_dates`.
-# MAGIC 
+# MAGIC
 # MAGIC  
 
 # COMMAND ----------
 
 from csv import reader
-opened_file = open('Artworks.csv', encoding='utf8')
-read_file = reader(opened_file)
-moma = list(read_file)
+
+with open('../../../../../Data/Artworks.csv', encoding='utf8') as opened_file:
+    read_file = reader(opened_file)
+    moma = list(read_file)
 
 test_data = ["1912", "1929", "1913-1923",
              "(1951)", "1994", "1934",

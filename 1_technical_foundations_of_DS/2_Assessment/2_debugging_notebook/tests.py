@@ -52,7 +52,7 @@ class TestNotebook(unittest.TestCase):
         assert(int(diff) == 157)
     
     def test_task_x10(self):
-        self.assertIsInstance(dt, datetime.date)
+        self.assertIsInstance(five_days_ago, datetime.date)
             
             
 unittest.main(argv=[''], verbosity=3, exit=False)

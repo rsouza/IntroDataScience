@@ -41,7 +41,9 @@ pd.merge(data_1, data_2)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Our DataFrames have the same column `key ` and in this case `.merge()` uses the overlapping column named as `keys` to join on. However it is a good practice to specify explicitly the `key` column like this:
+# MAGIC Our DataFrames have the same column `key ` and in this case
+# MAGIC [`.merge()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.merge.html)
+# MAGIC uses the overlapping column named as `keys` to join on. However it is a good practice to specify explicitly the `key` column like this:
 
 # COMMAND ----------
 
@@ -51,7 +53,9 @@ pd.merge(data_1, data_2, on = 'key')
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC As you can notice 'E', 'F', 'H', 'J'  and associated data are missing from the result. It is because `merge()` acts with 'inner' merge (join) by default. However, we can explicitly specify it using `how = 'inner'`
+# MAGIC As you can notice 'E', 'F', 'H', 'J'  and associated data are missing from the result. It is because
+# MAGIC [`merge()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.merge.html)
+# MAGIC acts with 'inner' merge (join) by default. However, we can explicitly specify it using `how = 'inner'`
 # MAGIC
 # MAGIC **inner join** (or inner merge) keeps only those values that have a common key in both DataFrames, in our case 'A', 'B' and 'C'. 
 # MAGIC
@@ -145,7 +149,9 @@ pd.merge(df_1, df_2, on = 'key', how = 'left')
 # MAGIC %md
 # MAGIC This is _many-to-many_ \\(^{1}\\) join situation which creates **Cartesian product** of the rows. In the result we can see we have 9 'black' rows. It is because there are 3 'black' rows in the left DataFrame `df_1` and 3 'black' rows in the right DataFrame `df_2`, so in the result we have every combination of rows where the key is equal to 'black'.
 # MAGIC
-# MAGIC As you can see `merge()` automatically renames the columns as 'values_x' and 'values_y' to distinguish where the values belong to. We can explicitly specify these column's names with the 'suffixes' option. We only need to pass the desired names into the list like this: `suffixes=['_from_df1', '_from_df2']`.
+# MAGIC As you can see
+# MAGIC [`merge()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.merge.html)
+# MAGIC automatically renames the columns as 'values_x' and 'values_y' to distinguish where the values belong to. We can explicitly specify these column's names with the 'suffixes' option. We only need to pass the desired names into the list like this: `suffixes=['_from_df1', '_from_df2']`.
 
 # COMMAND ----------
 
@@ -243,11 +249,10 @@ print(merged_df)
 
 # MAGIC %md
 # MAGIC ## 2.2 Pandas `.join()`
-
-# COMMAND ----------
-
-# MAGIC %md
-# MAGIC - it is an object method function - it means that it enables us to specify only 1 DataFrame to be joined to the DataFrame from which you call `.join()` on
+# MAGIC
+# MAGIC - it is an object method function - it means that it enables us to specify only 1 DataFrame to be joined to the DataFrame from which you call
+# MAGIC [`.join()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.join.html)
+# MAGIC on
 # MAGIC - by default it performs left join
 # MAGIC - by default it **joins on indices**
 
@@ -278,18 +283,14 @@ print(joined_df)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## 2.3 Pandas `.concat()`
+# MAGIC # 2.3 Pandas `.concat()`
 # MAGIC
 # MAGIC -concatenate function combines DataFrames across rows or columns 
 # MAGIC - by default performs outer join, but we can specify inner join by setting `join = 'inner'`
-# MAGIC
-# MAGIC - by default works along `axis = 0` (rows)
-# MAGIC
-# MAGIC `pd.concat([df1, df2])`
-# MAGIC
-# MAGIC - we can pass `axis = 1` to concatenate along columns 
-# MAGIC
-# MAGIC `pd.concat([df1, df2], axis = 1)`
+# MAGIC - by default works along `axis = 0` (rows)  
+# MAGIC [`pd.concat([df1, df2])`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.concat.html)
+# MAGIC - we can pass `axis = 1` to concatenate along columns   
+# MAGIC [`pd.concat([df1, df2], axis = 1)`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.concat.html)
 
 # COMMAND ----------
 
@@ -320,7 +321,9 @@ print(concat_df)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC DataFrames `df_3` and `df_4` have the same column names 'key_1' and 'key_2'. Therefore the indices are repeating when tha DataFrames are stacked. If you want to have 0-based index, you'll need to set parameter `ignore_index = True` within `.concat()` function.
+# MAGIC DataFrames `df_3` and `df_4` have the same column names 'key_1' and 'key_2'. Therefore the indices are repeating when tha DataFrames are stacked. If you want to have 0-based index, you'll need to set parameter `ignore_index = True` within
+# MAGIC [`.concat()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.concat.html)
+# MAGIC function.
 
 # COMMAND ----------
 

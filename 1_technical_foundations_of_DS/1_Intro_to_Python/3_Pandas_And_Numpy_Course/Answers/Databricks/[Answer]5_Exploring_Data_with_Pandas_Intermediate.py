@@ -11,7 +11,7 @@
 # MAGIC - Use aggregation to perform advanced analysis using loops.
 # MAGIC ***
 # MAGIC ## 1. Reading CSV files with pandas (IMPORTANT)
-# MAGIC 
+# MAGIC
 # MAGIC In the previous notebook about the fundamentals of exploring data with pandas, we worked with Fortune Global 500 dataset. In this chapter, we will learn how to use the `pandas.read_csv()` function to read in CSV files.
 
 # COMMAND ----------
@@ -22,7 +22,7 @@
 # COMMAND ----------
 
 import pandas as pd
-f500 = pd.read_csv("f500.csv", index_col=0)
+f500 = pd.read_csv("../../../../../Data/f500.csv", index_col=0)
 f500.index.name = None
 f500.head()
 
@@ -45,19 +45,19 @@ f500.head()
 
 # MAGIC %md
 # MAGIC You will see that in the [`read_csv()` function](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html), the `index_col` parameter is optional from the official documentation. When we specify a value of `0`, the first column will be used as the row labels.
-# MAGIC 
+# MAGIC
 # MAGIC Compare with the dataframe above, notice how the `f500` dataframe looks like if we remove the second line using `f500.index.name = None`.
 
 # COMMAND ----------
 
-f500 = pd.read_csv("f500.csv", index_col=0)
+f500 = pd.read_csv("../../../../../Data/f500.csv", index_col=0)
 f500.head()
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC Do you see the text **company** above the index labels? This is the name of the first column in the CSV. This value is used as the **axis name** for the index axis in Pandas.
-# MAGIC 
+# MAGIC
 # MAGIC You see that both the column and index axes can have names assigned to them. Originally, we accessed the name of the index axes and set it to `None`, that's why the dataframe didn't have a name for the index axis.
 
 # COMMAND ----------
@@ -79,22 +79,22 @@ f500.head()
 import pandas as pd
 import numpy as np
 
-f500 = pd.read_csv("f500.csv")
+f500 = pd.read_csv("../../../../../Data/f500.csv")
 f500.index.name = None
 
 f500.loc[f500["previous_rank"] == 0, "previous_rank"] = np.nan
-f500_selection = f500.loc[:,["rank","revenues", "revenue_change"]].head()
+f500_selection = f500.loc[:, ["rank", "revenues", "revenue_change"]].head()
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ## 2. Using iloc to select by integer position
-# MAGIC 
+# MAGIC
 # MAGIC In the previous exercise we read our CSV file into pandas. But this time, we didn't use the `index_col` parameter:
 
 # COMMAND ----------
 
-f500 = pd.read_csv("f500.csv")
+f500 = pd.read_csv("../../../../../Data/f500.csv")
 print(f500[['company', 'rank', 'revenues']].head())
 
 # COMMAND ----------
@@ -103,22 +103,22 @@ print(f500[['company', 'rank', 'revenues']].head())
 # MAGIC There are two significant differences with the approach that we just took above:
 # MAGIC - the **company** column is now included as a regular column, not as an index column
 # MAGIC - the **index labels** now start from `0` as **integers**
-# MAGIC 
+# MAGIC
 # MAGIC This is the more conventional way how we should read in a dataframe, and we will be going with this method from now on.
-# MAGIC 
+# MAGIC
 # MAGIC However, do you still remember how we worked with a dataframe with **string index labels**? We used `loc[]` to select the data.
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC For selecting rows and columns by their integer positions, we use `iloc[]`. Using `iloc[]` is almost identical to indexing with NumPy, with integer positions starting at `0` like ndarrays and Python lists.
-# MAGIC 
+# MAGIC
 # MAGIC `DataFrame.iloc[]` behaves similarly to `DataFrame.loc[]`. The full syntax for `DataFrame.iloc[]`, in pseudocode, is: 
-# MAGIC 
+# MAGIC
 # MAGIC ````python
 # MAGIC df.iloc[row_index, column_index]
 # MAGIC ````
-# MAGIC 
+# MAGIC
 # MAGIC To help you memorize the two syntaxes easier:
 # MAGIC - ``loc``: label based selection
 # MAGIC - ``iloc``: integer position based selection
@@ -141,7 +141,7 @@ company_value = f500.iloc[0,0] # company is the first row
 
 # MAGIC %md
 # MAGIC ## 3. Using iloc to select by integer position continued
-# MAGIC 
+# MAGIC
 # MAGIC If we want to select the first column from our `f500` dataset, we need to use ``:``, a colon, to specify all rows, and then use the integer ``0`` to specify the first column, like this:
 
 # COMMAND ----------
@@ -156,19 +156,19 @@ print(first_column)
 
 # COMMAND ----------
 
-second_to_sixth_rows = f500[1:5]
-print(second_to_sixth_rows)
+second_to_fifth_rows = f500[1:5]
+print(second_to_fifth_rows)
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC Pay attention to the fact that the row at index position `5` is not included, just as if we were slicing with a Python list or NumPy ndarray. Recall that `loc[]` handles slicing differently:
-# MAGIC 
+# MAGIC
 # MAGIC - With `loc[]`, the ending slice **is** included.
 # MAGIC - With `iloc[]`, the ending slice **is not** included.
-# MAGIC 
+# MAGIC
 # MAGIC The table below summarizes the usage of `DataFrame.iloc[]` and `Series.iloc[]` to select by integer position:
-# MAGIC 
+# MAGIC
 # MAGIC |Select by integer position| Explicit Syntax| Shorthand Convention|
 # MAGIC |--|--|--|
 # MAGIC |Single column from dataframe|df.iloc[:,3]| |
@@ -202,9 +202,9 @@ print(first_seventh_row_slice)
 
 # MAGIC %md
 # MAGIC ## 4. Using pandas methods to create boolean masks
-# MAGIC 
+# MAGIC
 # MAGIC There are two methods that I want to introduce to you in this chapter, which are the `Series.isnull()` [method](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.isnull.html) and `Series.notnull()` [method](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.notnull.html). These two methods can be either used to select rows that contain null (or NaN) values or to select rows that do **not** contain null values.
-# MAGIC 
+# MAGIC
 # MAGIC Let's first have a look at the `Series.isnull()` method, which is used to view rows with null values (i.e. missing values) in one column.
 # MAGIC Here is an example for the `revenue_change` column:
 
@@ -223,7 +223,7 @@ print(rev_is_null.head())
 import pandas as pd
 import numpy as np
 
-f500 = pd.read_csv("f500.csv")
+f500 = pd.read_csv("../../../../../Data/f500.csv")
 f500.index.name = None
 
 
@@ -248,7 +248,7 @@ print(null_profit_change)
 
 # MAGIC %md
 # MAGIC ## 5. Working with Integer Labels (OPTIONAL)
-# MAGIC 
+# MAGIC
 # MAGIC Now let's check the difference between `DataFrame.loc[]` and `DataFrame.iloc[]` – what kind of different output will they provide?:
 
 # COMMAND ----------
@@ -276,10 +276,10 @@ first_null_profit_change = null_profit_change.loc[0]
 
 # MAGIC %md
 # MAGIC We get an error, telling us that **the label [0] is not in the [index]**. Remember that `DataFrame.loc[]` is used for label based selection:
-# MAGIC 
+# MAGIC
 # MAGIC - ``loc``: label based selection
 # MAGIC - ``iloc``: integer position based selection
-# MAGIC 
+# MAGIC
 # MAGIC We see that there is no row with a 0 label in the index, we got the error above. If we wanted to select a row using `loc[]`, we'd have to use the integer label for the first row — `5`.
 
 # COMMAND ----------
@@ -321,12 +321,12 @@ food
 
 # MAGIC %md
 # MAGIC When we perform the code above, pandas will intentionally ignore the order of the ``alt_name`` series, and automatically align on the index labels.
-# MAGIC 
+# MAGIC
 # MAGIC In addition, Pandas will also:
-# MAGIC 
+# MAGIC
 # MAGIC - Discard any items that have an index that doesn't match the dataframe (like `arugula`).
 # MAGIC - Fill any remaining rows with `NaN`.
-# MAGIC 
+# MAGIC
 # MAGIC Observe the result again carefully.
 
 # COMMAND ----------
@@ -344,13 +344,13 @@ food
 # MAGIC %md
 # MAGIC ## 7. Using Boolean Operators (IMPORTANT)
 # MAGIC We can combine boolean arrays using **boolean operators**. In Python, these boolean operators are `and`, `or`, and `not`. But in pandas, there is a slight difference compared to Python. Take a look at the chart below: 
-# MAGIC 
+# MAGIC
 # MAGIC |pandas|Python equivalent|Meaning|
 # MAGIC |-|-|-|
 # MAGIC |a & b| a and b| True if both a and b are True, else False|
 # MAGIC | a \| b| a or b| True if either a or b is True|
 # MAGIC |~a| not a | True if a is False, else False|
-# MAGIC 
+# MAGIC
 # MAGIC Let's try to use the syntaxes in the table in the small example below:
 
 # COMMAND ----------
@@ -396,7 +396,7 @@ result.head()
 
 # MAGIC %md
 # MAGIC This is the end result which fulfills all of our criteria.
-# MAGIC 
+# MAGIC
 # MAGIC ### Task 3.5.7
 # MAGIC Now try to do a similar task by yourself:
 # MAGIC 1. Select all companies with revenues over **100 billion** and **negative profits** from the `f500` dataframe. Note that the entries in the profits column are given in millions of dollars (USD). The result should include all columns.
@@ -418,7 +418,7 @@ big_rev_neg_profit = f500[combined]
 
 # MAGIC %md
 # MAGIC ## 8. Sorting Values
-# MAGIC 
+# MAGIC
 # MAGIC Now let's try to answer some more complicated questions about our data set. What if we wanted to find the company that employs the most people in China? How can we achieve this? We can first select all of the rows where the `country` column equals `China`, like this:
 
 # COMMAND ----------
@@ -439,7 +439,7 @@ print(sorted_rows[["company", "country", "employees"]].head())
 
 # MAGIC %md
 # MAGIC The `sort_values()` method will by default automatically sort the rows in ascending order — from smallest to largest.
-# MAGIC 
+# MAGIC
 # MAGIC But if we want to sort the rows in descending order instead, we can achieve this by setting the `ascending` parameter to `False`, like this:
 
 # COMMAND ----------
@@ -451,10 +451,10 @@ print(sorted_rows[["company", "country", "employees"]].head())
 
 # MAGIC %md
 # MAGIC Now we see the Companies in China who employ the most people is China National Petroleum. 
-# MAGIC 
+# MAGIC
 # MAGIC Can you find out the same about Japanese company?
 # MAGIC ### Task 3.5.8
-# MAGIC 
+# MAGIC
 # MAGIC 1. Find the companies headquartered in Japan with the largest number of employees.
 # MAGIC     - Select only the rows that have a country name equal to `Japan`.
 # MAGIC     - Use `DataFrame.sort_values()` to sort those rows by the `employees` column in descending order.

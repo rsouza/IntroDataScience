@@ -1,14 +1,14 @@
 # Databricks notebook source
 # MAGIC %md
 # MAGIC # Data Analysis Basics
-# MAGIC 
+# MAGIC
 # MAGIC In this notebook, we'll build on the data cleaning we did with the Museum of Modern Art (MoMA) data set in the previous mission, and get into the fun part: analyzing the data! Analyzing the data is extremely important and the techniques that you will learn will be extremely valuable to help you become a data scientist. You can use the techniques to analyze data, to explore data, and to understand data better.
-# MAGIC 
+# MAGIC
 # MAGIC There is a cleaned data set called <b>artworks_clean.csv</b> stored in the instance for you. You don't have to re-clean the data again, but we have to convert these values to numeric types so we can do further analysis on them.
 # MAGIC ***
 # MAGIC ### Task 2.2.0:
 # MAGIC Use a `for` loop to iterate over each row in the moma list of lists. Inside the body of the loop:
-# MAGIC 
+# MAGIC
 # MAGIC 1. Assign the value from index 6 (Date) to a variable called `date`.
 # MAGIC 2. Use an ``if`` statement to check if date is not equal to "".
 # MAGIC 3. If date isn't equal to "", convert it to an integer type using the `int()` function.
@@ -19,9 +19,9 @@
 from csv import reader
 
 # Read the `artworks_clean.csv` file
-opened_file = open('artworks_clean.csv', encoding='utf8')
-read_file = reader(opened_file)
-moma = list(read_file)
+with open('../../../../Data/artworks_clean.csv', encoding='utf8') as opened_file:
+    read_file = reader(opened_file)
+    moma = list(read_file)
 moma = moma[1:]
 
 
@@ -47,21 +47,21 @@ for row in moma:
 
 # MAGIC %md
 # MAGIC ## 1. Calculating Artist Ages
-# MAGIC 
+# MAGIC
 # MAGIC In this session, we want to calculate the ages at which artists created their pieces of art. All we need to do is to subtract the artist's birth year (BeginDate) from the year in which their artwork was created (Date). 
-# MAGIC 
+# MAGIC
 # MAGIC Pay attention to the missing values for <b>BeginDate</b>. We'll use a value of 0 for the missing values in BeginDate, but later on we can replace them with something more meaningful.
-# MAGIC 
+# MAGIC
 # MAGIC There are a plenty of cases where the artist's age (according to our data set) is very low, including some where the age is negative. We could investigate these specific cases one by one, but since we're looking for a summary, we'll take care of these by categorizing artists younger than 20 as "Unknown" also. This has the handy effect of also categorizing the artists without birth years as "Unknown".
-# MAGIC 
+# MAGIC
 # MAGIC To give you a better understanding of some of the values you'll be working with and how they will progress through our code, look at the following table as an example:
-# MAGIC 
+# MAGIC
 # MAGIC | Year Artwork Created (date)|Birth Year (birth)|age|final_age|
 # MAGIC |- |-|-|-|
 # MAGIC |1968|1898 |70|70|
 # MAGIC |1931|""|0|"Unknown"|
 # MAGIC |1972|1976|-4|"Unknown"|
-# MAGIC 
+# MAGIC
 # MAGIC ### Task 2.2.1:
 # MAGIC 1. Create an empty list, `ages`, to store the artist age data.
 # MAGIC 2. Use a loop to iterate over the `rows` in moma.
@@ -84,7 +84,7 @@ for row in moma:
 
 # MAGIC %md
 # MAGIC ## 2. Inserting Variables Into Strings (OPTIONAL)
-# MAGIC 
+# MAGIC
 # MAGIC Sometimes it is easiser to interpret a value when we insert a list of values into a sentence. For example, if we have some information about one of our collegue's favorite numbers:
 
 # COMMAND ----------
@@ -116,7 +116,7 @@ print(output)
 
 # MAGIC %md
 # MAGIC The[ <b>str.format() method <b>](https://docs.python.org/3/library/stdtypes.html#str.format)is a powerful tool that helps us write easy-to-read code while combining strings with other variables.
-# MAGIC 
+# MAGIC
 # MAGIC We use the method with a string — which acts as a template — using the brace characters (`{}`) to signify where we want any variables to be inserted. We then pass those variables as arguments to the method. Let's look at a few examples:
 
 # COMMAND ----------
@@ -128,7 +128,7 @@ print(output)
 
 # MAGIC %md
 # MAGIC The code is very easy to understand and the `str.format()` method automatically converts the integer to a string for us. The order in which the variables are inserted into the `{}` is by the order of how we pass them as arguments.
-# MAGIC 
+# MAGIC
 # MAGIC But if we want to specify the ordering or even to repeat some of the variables, we can do the following:
 
 # COMMAND ----------
@@ -174,9 +174,9 @@ print(f'My name is {name} and i am {age} years old.')
 
 # MAGIC %md
 # MAGIC ### Task 2.2.2:
-# MAGIC 
+# MAGIC
 # MAGIC We have provided an artist's name and birth year in the `artist` and `birth_year` variables.
-# MAGIC 
+# MAGIC
 # MAGIC 1. Create a template string to insert the `artist` and `birth_year` variables into a string, using the format provided above. You may use your choice of the three techniques you learned for specifying which variables goes where.
 # MAGIC 2. Use `str.format()` to insert the two variables into your template string, assigning the result to a variable.
 # MAGIC 3. Use the `print()` function to call that variable.
@@ -193,21 +193,21 @@ birth_year = 1881
 
 # MAGIC %md
 # MAGIC ### 3. Creating an Artist Summary Function (OPTIONAL)
-# MAGIC 
+# MAGIC
 # MAGIC Below we have created a dictionary containing the counts of each artist's artworks. 
 # MAGIC Your final task will be to create a function that displays information for a specific artist.
-# MAGIC 
+# MAGIC
 # MAGIC This function will take a single argument, which will be the name of an artist, and will display a formatted sentence about that artist.
 # MAGIC If we pass "Marc Chagall" into our function as an argument, the final output should be something like: "There are 173 artworks by Marc Chagall in the data set.".
-# MAGIC 
+# MAGIC
 # MAGIC Inside the function, we'll need to:
-# MAGIC 
+# MAGIC
 # MAGIC - Retrieve the number of artworks by the artist from the `artist_freq` dictionary.
 # MAGIC - Define a template for our output.
 # MAGIC - Use `str.format() `to insert the artists name and number of artworks into our template.
 # MAGIC - Use the `print()` function to display the output.
-# MAGIC 
-# MAGIC 
+# MAGIC
+# MAGIC
 # MAGIC ### Task 2.2.3:
 # MAGIC 1. Create a function `artist_summary()` which accepts a single argument, the name of an artist.
 # MAGIC 2. The function should print a summary of the artist using the steps below:
@@ -216,7 +216,7 @@ birth_year = 1881
 # MAGIC     - Use `str.format()` method to insert the artist's name and number of artworks into the string template.
 # MAGIC     - Use the `print()` function to display the final string.
 # MAGIC 3. Use your function to display a summary for the Artist "Henri Matisse".
-# MAGIC 
+# MAGIC
 # MAGIC The answer should be: `There are 129 artworks by Henri Matisse in the data set.`
 
 # COMMAND ----------

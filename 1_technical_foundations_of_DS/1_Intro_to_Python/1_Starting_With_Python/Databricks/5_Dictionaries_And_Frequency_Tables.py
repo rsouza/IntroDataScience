@@ -1,17 +1,17 @@
 # Databricks notebook source
 # MAGIC %md
 # MAGIC ## About This Notebook
-# MAGIC 
+# MAGIC
 # MAGIC In this notebook, we are moving towards a very important new concept called **dictionary**. We already know how to work with lists and lists of lists (which can store data sets). These are however rather basic forms of data. Dictionaries offer us a key/value approach to store data. For example, we might have looped through a list of lists and extracted certain *information* into a dictionary. 
 # MAGIC ***
-# MAGIC 
+# MAGIC
 # MAGIC ## 1. Dictionaries
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC In the previous notebook we worked with the `AppleStore.csv` data set. The `cont_rating` column provides a lot of information regarding the content rating of each app. See below:<br>
-# MAGIC 
+# MAGIC
 # MAGIC |Content rating |Number of apps|
 # MAGIC |--|--|
 # MAGIC |4+|4,433|
@@ -57,9 +57,9 @@ print(content_ratings)
 
 # MAGIC %md
 # MAGIC ## 2. Indexing (IMPORTANT)
-# MAGIC 
+# MAGIC
 # MAGIC We can change the index numbers of a list to content rating values in a dictionary. So the connection between content ratings their corresponding numbers becomes much clearer.
-# MAGIC 
+# MAGIC
 # MAGIC Now the question arises of how we can retrieve the individual values of the content_ratings dictionary.  We can use indices like we did with the individual list elements following a `variable_name[index]` pattern:
 
 # COMMAND ----------
@@ -73,7 +73,7 @@ print(content_ratings['12+'])
 # MAGIC %md
 # MAGIC The indexing of dictionary is something different than the list. 
 # MAGIC > The order of the dictionary is not necessarily preserved whereas in the lists, the order is **always** preserved.
-# MAGIC 
+# MAGIC
 # MAGIC For example, the index value 0 always retrieves the list element that's positioned first in a list. With dictionaries, there is no direct connection between the index of a value and the position of that value in the dictionary. That means that the order is unimportant. The index value '4+' will retrieve tha value 4433 no matter its position. It could be the first element, or the last element in the dictionary, is doesn't matter.
 
 # COMMAND ----------
@@ -85,7 +85,7 @@ print(content_ratings)
 
 # MAGIC %md
 # MAGIC ### Task 1.5.2:
-# MAGIC 
+# MAGIC
 # MAGIC 1. Retrieve values from the ``content_ratings`` dictionary.
 # MAGIC     - Assign the value at index `'9+'` to a variable named `over_9`.
 # MAGIC     - Assign the value at index `'17+'` to a variable named `over_17`.
@@ -100,14 +100,14 @@ print(content_ratings)
 
 # MAGIC %md
 # MAGIC ## 3. Alternative way of Creating a Dictionary
-# MAGIC 
+# MAGIC
 # MAGIC There is an alternative way of creating a dictionary like this:
 # MAGIC 1. Create an empty dictionary.
 # MAGIC 2. Add values one by one to that empty dictionary.
 # MAGIC     - like this: `dictionary_name[index] = value`
 # MAGIC     
 # MAGIC Take for example, if we want to add a value 4455 with an index `'5+'` to a dictionary named `content_ratings`, we need to use the code:
-# MAGIC 
+# MAGIC
 # MAGIC ````python
 # MAGIC content_ratings['5+'] = 4455
 # MAGIC ````
@@ -135,9 +135,9 @@ print(content_ratings)
 
 # MAGIC %md
 # MAGIC ## 4. Key-Value Pairs
-# MAGIC 
+# MAGIC
 # MAGIC A <b>key </b>is a index of a dictionary value. Such as in our example `'4+': 4433`, the dictionary key is `'4+'`, and the dictionary value is `4433`. As a whole, `'4+': 4433` is a <b>key-value pair</b>.
-# MAGIC 
+# MAGIC
 # MAGIC All of the data types such as strings, integers, floats, Booleans, lists, and even dictionaries can be dictionary values.
 
 # COMMAND ----------
@@ -181,9 +181,9 @@ d_2 = {{'key':'value'}:'dictionary'}
 
 # MAGIC %md
 # MAGIC ### Task 1.5.4:
-# MAGIC 
+# MAGIC
 # MAGIC Create the following dictionary and assign it to a variable named ``d_1``:
-# MAGIC 
+# MAGIC
 # MAGIC {'key_1': 'first_value', <br>
 # MAGIC  'key_2': 2, <br>
 # MAGIC  'key_3': 3.14, <br>
@@ -201,7 +201,7 @@ d_2 = {{'key':'value'}:'dictionary'}
 
 # MAGIC %md
 # MAGIC ## 5. Counting with Dictionaries
-# MAGIC 
+# MAGIC
 # MAGIC The code below will show you how to update or change the dictionary values within an existing dictionary.
 
 # COMMAND ----------
@@ -261,7 +261,7 @@ print('Final dictionary:', content_ratings)
 
 # MAGIC %md
 # MAGIC How it's time to read in our data set (AppleStore.csv) and use the technique we learned above to count number of times each unique content rating occurs.
-# MAGIC 
+# MAGIC
 # MAGIC ### Task 1.5.5:
 # MAGIC Count the number of times each unique content rating occurs in the data set.
 # MAGIC 1. Create a dictionary named `content_ratings` where the keys are the unique content ratings and the values are all 0 (the values of 0 are temporary at this point, and they'll be updated).
@@ -272,21 +272,21 @@ print('Final dictionary:', content_ratings)
 
 # COMMAND ----------
 
-opened_file = open('AppleStore.csv', encoding='utf8')
 from csv import reader
-read_file = reader(opened_file)
-apps_data = list(read_file)
+
+with open('../../../../Data/AppleStore.csv', encoding = 'utf8') as opened_file:
+  read_file = reader(opened_file)
+  apps_data = list(read_file)
 
 ### Start your code below:
-
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ## 6. Finding the Unique Values
-# MAGIC 
+# MAGIC
 # MAGIC In the example that we worked on in the previous session, we knew each of the unique values we wanted to count beforehand. This is not always the case. For example, what should we do if we don't have enough information to create the dictionary `{'4+': 0, '9+': 0, '12+': 0, '17+': 0}`?
-# MAGIC 
+# MAGIC
 # MAGIC We can update the code that we wrote for the list `['4+', '4+', '4+', '9+', '9+', '12+', '17+']` to accomodate this charateristic. 
 # MAGIC In in addition to the `if` statement, we also added an `else` statement. If this dictionary key does not exist in our dictionary, then we create a new key-value pair in the `content_ratings` dictionary, where the dictionary key is the iteration variable (`c_rating`) and the dictionary value is 1.
 
@@ -327,7 +327,7 @@ content_ratings
 # MAGIC %md
 # MAGIC ### Task 1.5.6:
 # MAGIC Now let's apply what we have just learned in our data set:
-# MAGIC 
+# MAGIC
 # MAGIC Count the number of times each unique content rating occurs in the data set while finding the unique values automatically.
 # MAGIC 1. Create an empty dictionary named `content_ratings`.
 # MAGIC 2. Loop through the `apps_data` list of lists (make sure you don't include the header row). For each iteration of the loop:
@@ -338,10 +338,11 @@ content_ratings
 
 # COMMAND ----------
 
-opened_file = open('AppleStore.csv', encoding='utf8')
 from csv import reader
-read_file = reader(opened_file)
-apps_data = list(read_file)
+
+with open('../../../../Data/AppleStore.csv', encoding = 'utf8') as opened_file:
+  read_file = reader(opened_file)
+  apps_data = list(read_file)
 
 ### Start your code here:
 
@@ -350,35 +351,35 @@ apps_data = list(read_file)
 
 # MAGIC %md
 # MAGIC ## 7. Proportions and Percentages
-# MAGIC 
+# MAGIC
 # MAGIC The following table is known as the frequency table. A frequency is the number of times a unique value occurs.
-# MAGIC 
+# MAGIC
 # MAGIC |Content rating|Number of apps (frequency)|
 # MAGIC |--|--|
 # MAGIC |4+|4,433|
 # MAGIC |9+|987|
 # MAGIC |12+|1,155|
 # MAGIC |17+|622|
-# MAGIC 
+# MAGIC
 # MAGIC 4+ occurs 4,433 times, so it has a frequency of 4,433. 12+ has a frequency of 1,155. 9+ has a frequency of 987. 17+ has the lowest frequency: 622.
-# MAGIC 
+# MAGIC
 # MAGIC When we analyze the data set, it might also be interesting to look at the following questions:
 # MAGIC - What proportion of apps has a content rating of 4+?
 # MAGIC - What percentage of apps has a content rating of 17+?
 # MAGIC - What percentage of apps has a 15-year-old download?
-# MAGIC 
+# MAGIC
 # MAGIC To get the proportion of apps with a content rating of 4+, we can use the number of 4+ apps divide by the total number of apps like this:
 # MAGIC 4,443/7,197
-# MAGIC 
+# MAGIC
 # MAGIC Instead of a fraction, we can also express proportion as a decimal between 0 and 1. So the result of 4,443/7,197 will be 0.62.
-# MAGIC 
+# MAGIC
 # MAGIC We can get percentage of 4+ apps by simply multiplying the proportions by 100 -- so it will be 62%.
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ## 8. Looping over Dictionaries
-# MAGIC 
+# MAGIC
 # MAGIC We can transform the frequencies to proportions or percentages individually by performing the required arithmetical operations like this:
 
 # COMMAND ----------
@@ -437,7 +438,7 @@ print(content_ratings)
 # MAGIC %md
 # MAGIC ## 9. Small Bonus (OPTIONAL)
 # MAGIC The looping through dictionaries which we used in this notebook is really used only for training purposes. In a productive and professional code, you would not want to use it. 
-# MAGIC 
+# MAGIC
 # MAGIC Here is a recommendation from our RBCZ colleague *Jakub Korecek*:
 # MAGIC >  The dictionary type has one important and very useful method to check whether a key *exists*. This method is called ``get()``.
 # MAGIC The useful part about this is that we can assign value if a key does not exist instead of having a KeyError. The default value is ``None``, but we can set up anything we want.

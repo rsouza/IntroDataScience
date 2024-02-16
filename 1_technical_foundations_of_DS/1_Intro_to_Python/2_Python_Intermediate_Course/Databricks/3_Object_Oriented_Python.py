@@ -1,23 +1,23 @@
 # Databricks notebook source
 # MAGIC %md
 # MAGIC ## Object Oriented Programming (OOP)
-# MAGIC 
+# MAGIC
 # MAGIC There are only two options on how I think you will perceive this lecture. If you have some IT background and already some experience with OOP, this notebook will be a piece of cake. If these notebooks are your first programming experience, you may feel a bit confused at the beginning. Don't worry, once you get a grip of it, the path of OOP in Python will be smooth! The truth is, we have all been there when we first met OOP. 
-# MAGIC 
+# MAGIC
 # MAGIC ## What is OOP?
 # MAGIC Imagine that you have a store with clothes. You are an IT person which is in charge of software that is supporting this store. The software holds information on all the products that are being offered - prices, sizes, counts, colours, anything. As we are talking about clothes - new pieces of clothing are coming every month. During the first months, you are describing with data structures manually every piece of clothing - what its parameters are, what functions are available in the online shop with regards to this item.
-# MAGIC 
+# MAGIC
 # MAGIC After a few months, you get bored by how repetitive your work is! You realize that many items belong into a certain **group**. For example, many items can be simply regarded as *shirts*. Now, each shirt is going to have some **characterists** and certain **actions** can be done with it. For example, it has collar, it covers upper part of body. We are able to filter by the general size, size at waist and also length within our online shop. Each particular shirt is an **object**. The *shirt group* is a  **class** into which all particular objects (shirts) belong. This class is going to have some **methods** which relate to the characteristics of the shirts and what can be done with those. Each particular shirt which is in the store will now **inherit** some properties of the class, which will simplify the job for us.
-# MAGIC 
+# MAGIC
 # MAGIC The creation of classes, with respective methods and inheritance for objects will save us a lot of time! **Whenever a new shirt arrives, we just attribute it into shirts class and so it will instantly inherit all the methods.**
-# MAGIC 
+# MAGIC
 # MAGIC ***
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ## 1. Classes and Objects
-# MAGIC 
+# MAGIC
 # MAGIC To begin with this notebook, let's start by looking at the following example:
 
 # COMMAND ----------
@@ -41,23 +41,23 @@ print(type(d))
 
 # MAGIC %md
 # MAGIC We can see that when we used the `type()` function, the values labeled "class" is returned. We can deduct that "type" and "class" are used interchangeably. You see that we've been using classes for some time already:
-# MAGIC 
+# MAGIC
 # MAGIC - Python lists are objects of the <b>list</b> class.
 # MAGIC - Python strings are objects of the <b>str </b>class.
 # MAGIC - Python dictionaries are objects of the <b>dict</b> class.
-# MAGIC 
+# MAGIC
 # MAGIC In this chapter, we will go on a journey of creating a class of our own. We're going to create a simple class called `NewList` and recreate some of the basic functionality of the Python list class.
-# MAGIC 
+# MAGIC
 # MAGIC Before we get started, let's look at the relationship between objects and classes.
-# MAGIC 
+# MAGIC
 # MAGIC - An <b> object</b> is an entity that stores data.
 # MAGIC - An object's <b>class</b> defines specific properties objects of that class will have.
-# MAGIC 
+# MAGIC
 # MAGIC > A class is a template for objects. A class defines object properties including a valid range of values, and a default value. A class also describes object behavior. 
-# MAGIC 
+# MAGIC
 # MAGIC > An object is a member or an "instance" of a class. 
 # MAGIC An object has a state in which all of its properties have values that you either explicitly define or that are defined by default settings.
-# MAGIC 
+# MAGIC
 # MAGIC You can read more about classes and objects here: https://www.javatpoint.com/python-oops-concepts.
 # MAGIC For people who previously have little programming experience, we highly recommend you to watch this short video explaining [what is object oriented programming](https://www.youtube.com/watch?v=xoL6WvCARJY).
 
@@ -65,8 +65,10 @@ print(type(d))
 
 # MAGIC %md
 # MAGIC ## 2. Defining a Class
-# MAGIC 
-# MAGIC Now the question arises of how we can define a class in Python. It turns out that creating a class is very similar to how we define a function:
+# MAGIC
+# MAGIC Now the question arises of how we can define a class in Python. It turns out that creating a class is very similar to how we define a function.
+# MAGIC
+# MAGIC Note that we are using the ``pass`` keyword. The `pass` keyword is used as a placeholder for future code in code blocks where code is required syntactically like a class, function, method, for loop or if statement. If we were to not use the ``pass`` keyword an error would be thrown.
 
 # COMMAND ----------
 
@@ -86,12 +88,12 @@ class MyClass():
 
 # MAGIC %md
 # MAGIC Similar to a function, parentheses and a colon are used after the class name ``():`` when defining a class. Just like a function, the body of our class is indented like a function's body is.
-# MAGIC 
+# MAGIC
 # MAGIC The rules for naming classes are the same as they are for naming functions and variables.
 # MAGIC There is a **general rule of thumb in naming functions and classes**: 
 # MAGIC - when naming for variables and and **functions**, all lowercase letters are used with underscores between: `like_this` 
 # MAGIC - And when naming **classes**, there are no underscores are used between words, and the first letter of each word is capitalized: `LikeThis` 
-# MAGIC 
+# MAGIC
 # MAGIC Following is an example of a definition of a class named ``MyClass``:
 # MAGIC ````python
 # MAGIC class MyClass():
@@ -106,8 +108,7 @@ class MyClass():
 # COMMAND ----------
 
 #Start your code below:
-class NewList():
-    pass
+
 
 # COMMAND ----------
 
@@ -127,17 +128,17 @@ string_2 = "The second string"
 
 # MAGIC %md
 # MAGIC Once we have defined our class, we can create an object of that class, which is known as **instantiation**. If you create an object of a particular class, the technical phrase for what you did is to "instantiate an object of that class." Let's learn how to instantiate an instance of our new class:
-# MAGIC 
+# MAGIC
 # MAGIC ````python
 # MAGIC my_class_instance = MyClass()
 # MAGIC ````
-# MAGIC 
+# MAGIC
 # MAGIC This single line performed two thigns:
 # MAGIC - Instantiation of an object of the class `MyClass`.
 # MAGIC - Assignment of this instance to the variable named `my_class_instance`.
-# MAGIC 
+# MAGIC
 # MAGIC To illustrate this more clearly, let's look at an example using Python's built-in integer class. In the previous mission, we used the syntax `int()` to convert numeric values stored as strings to integers. Let's look at a simple example of this in code and break down the syntax into parts, which we'll read right-to-left:
-# MAGIC 
+# MAGIC
 # MAGIC ````python
 # MAGIC my_int = int("5")
 # MAGIC ````
@@ -149,7 +150,7 @@ string_2 = "The second string"
 # MAGIC - `int("5")` <<< Instantiate an object of the class int
 # MAGIC - `my_int` <<< Assign the object to a variable with the name `my_int`
 # MAGIC >The syntax to the right of the assignment operator ``=`` **instantiates** the object, and the assignment operator and variable name create the variable. 
-# MAGIC 
+# MAGIC
 # MAGIC This helps us understand some of the subtle differences between an object and a variable.
 
 # COMMAND ----------
@@ -172,9 +173,9 @@ string_2 = "The second string"
 # MAGIC %md
 # MAGIC Lovely! We have just created and instantiated our fist class! However, our class is lacking some of behaviours, it doesn't do anything yet. 
 # MAGIC That means we need to define some **methods** which allow objects to perform actions.
-# MAGIC 
+# MAGIC
 # MAGIC Let's think of methods like special functions that belong to a particular class. This is why we call the replace method `str.replace()` — because the method belongs to the str class.
-# MAGIC 
+# MAGIC
 # MAGIC While a function can be used with any object, did you know that each class has its own set of methods? Let's look at an example using some Python built in classes:
 
 # COMMAND ----------
@@ -226,7 +227,7 @@ class MyClass():
 
 # MAGIC %md
 # MAGIC ### Task 2.3.2.3:
-# MAGIC 
+# MAGIC
 # MAGIC 1. Define a new class called `NewList()`.
 # MAGIC     - Use `NewList()` when defining the class, so we can perform answer checking on your class.
 # MAGIC 2. Inside the class, define a method called `first_method()`.
@@ -259,9 +260,9 @@ instance.first_method()
 
 # MAGIC %md
 # MAGIC This error is a bit confusing. It says that one argument was given to `first_method()`, but when we called the method we didn't provide any arguments. It seems like there is a "phantom" argument being inserted somewhere.
-# MAGIC 
+# MAGIC
 # MAGIC When we call the `first_method()` method belonging to the instance object, Python interprets that syntax and adds in an argument representing the instance we're calling the method on.
-# MAGIC 
+# MAGIC
 # MAGIC We can verify that this is the case by checking it with Python's built-in str type. We'll use `str.title()` to convert a string to title case.
 
 # COMMAND ----------
@@ -303,14 +304,14 @@ mc.print_self()
 
 # MAGIC %md
 # MAGIC The same output was displayed both when we printed the object using the syntax `print(mc)` and when we printed the object inside the method using `print_self()` — **which proves that this "phantom" argument is the object itself**!
-# MAGIC 
+# MAGIC
 # MAGIC Technically, we can give this first argument — which is passed to every method — any parameter name we like. However, the **convention is to call the parameter `self`**. This is an important convention, as without it class definitions can get confusing.
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ### Task 2.3.3:
-# MAGIC 
+# MAGIC
 # MAGIC In the editor below:
 # MAGIC 1. Modify the `first_method()` method by changing the argument to `self`.
 # MAGIC 2. Create an instance of the NewList class. Assign it to the variable name ``newlist``.
@@ -326,9 +327,9 @@ mc.print_self()
 
 # MAGIC %md
 # MAGIC ## 4. Creating a Method That Accepts an Argument
-# MAGIC 
+# MAGIC
 # MAGIC The method we worked with on the previous two screens didn't accept any arguments except the self argument. Like with functions, methods are often called with one or more arguments so that the method can use or modify that argument.
-# MAGIC 
+# MAGIC
 # MAGIC Let's create a method that accepts a string argument and then returns that string. The first argument will always be the object itself, so we'll specify self as the first argument, and the string as our second argument:
 
 # COMMAND ----------
@@ -352,7 +353,7 @@ print(result)
 
 # MAGIC %md
 # MAGIC Now it's time to pratice creating methods for our classes.
-# MAGIC 
+# MAGIC
 # MAGIC ### Task 2.3.4:
 # MAGIC 1. Define a new class called `NewList()`.
 # MAGIC 2. Inside the class, define a method called `return_list()`.
@@ -371,15 +372,15 @@ print(result)
 # MAGIC %md
 # MAGIC ## 5. Atrributes and the Init Method (IMPORTANT)
 # MAGIC Let's recap what we've already learned since the beginning of this lecture.
-# MAGIC 
+# MAGIC
 # MAGIC - We can define a ``class``.
 # MAGIC - We know that a class can have ``methods``. These are something like a functions or commands which can be performed with the objects belonging to that class.
-# MAGIC 
+# MAGIC
 # MAGIC We now need to learn about **2 new things** at the same time, as they are closely related:
-# MAGIC 
+# MAGIC
 # MAGIC - init method
 # MAGIC - attributes
-# MAGIC 
+# MAGIC
 # MAGIC The power of objects is in their ability to store data, and data is stored inside objects using **attributes**. You can think of attributes like **special variables that belong to a particular class**. Attributes let us store specific values about each instance of our class. When we instantiate an object, most of the time we specify the data that we want to store inside that object. Let's look at an example of instantiating an int object:
 
 # COMMAND ----------
@@ -390,9 +391,9 @@ my_int = int("3")
 
 # MAGIC %md
 # MAGIC When `int()` was used, the argument "3" was provided, which was converted and stored inside the object. **We define what is done with an arguments provided at instantiation using the init method.**
-# MAGIC 
+# MAGIC
 # MAGIC > The init method — also called a ``constructor`` — is a special method that runs when an instance is created so we can perform any tasks to set up the instance.
-# MAGIC 
+# MAGIC
 # MAGIC The init method has a **special name that starts and ends with two underscores: `__init__()`**. Let's look at an example:
 
 # COMMAND ----------
@@ -442,14 +443,14 @@ print(mc.my_attribute)
 
 # MAGIC %md
 # MAGIC To summarize what we've learned so far:
-# MAGIC 
+# MAGIC
 # MAGIC - The power of objects is in their ability to store data.
 # MAGIC - Data is stored as attributes inside objects.
 # MAGIC - We access attributes using dot notation.
 # MAGIC - To give attributes values when we instantiate objects, we pass them as arguments to a special method called `__init__()`, which runs when we instantiate an object.
-# MAGIC 
+# MAGIC
 # MAGIC We now have what we need to create a working version of our NewList class! This first version will:
-# MAGIC 
+# MAGIC
 # MAGIC - Accept an argument when you instantiate a NewList object.
 # MAGIC - Use the init method to store that argument in an attribute: `NewList.data`.
 
@@ -457,7 +458,7 @@ print(mc.my_attribute)
 
 # MAGIC %md
 # MAGIC ### Task 2.3.5:
-# MAGIC 
+# MAGIC
 # MAGIC 1. Define a new class called `NewList()`.
 # MAGIC 2. Create an init method which accepts a single argument, `initial_state`.
 # MAGIC 3. Inside the init method, assign `initial_state` to an attribute called `data`.
@@ -474,7 +475,7 @@ print(mc.my_attribute)
 
 # MAGIC %md
 # MAGIC ## 6. Creating and Updating an Attribute (OPTIONAL)
-# MAGIC 
+# MAGIC
 # MAGIC To summarize the work we've done so far:
 # MAGIC - We've created a <b>NewList class</b> which stores a list at the point of instantiation using the init constructor.
 # MAGIC - We stored that list inside an attribute `NewList.data`.
@@ -526,11 +527,11 @@ print(my_list.length)
 
 # MAGIC %md
 # MAGIC Because the code we added that defined `NewList.length` was added **only in the init method, if the list is made longer using the `append()` method, our `NewList.length` attribute is no longer accurate.**
-# MAGIC 
+# MAGIC
 # MAGIC To address this, we need to run the code that calculates the length after any operation which modifies the data, which, in our case, is just the `append()` method.
-# MAGIC 
+# MAGIC
 # MAGIC Rather than writing the code out twice, we can add a helper method, which calculates the length, and just call that method in the appropriate places.
-# MAGIC 
+# MAGIC
 # MAGIC Here's a quick example of a helper method in action:
 
 # COMMAND ----------
@@ -586,6 +587,6 @@ print(mbb.string)
 
 # MAGIC %md
 # MAGIC We see that our helper methods are defined after our init method. We mentioned earlier that the order in which you define methods within a class doesn't matter, but there is a convention to order methods as follows:
-# MAGIC 
+# MAGIC
 # MAGIC 1. Init method
 # MAGIC 2. Other methods

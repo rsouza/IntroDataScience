@@ -1,12 +1,11 @@
 # Databricks notebook source
 # MAGIC %md
 # MAGIC # Mechanics of plotting in Matplotlib
-
-# COMMAND ----------
-
-# MAGIC %md
-# MAGIC Now that we have worked with Pandas visualisation we will start getting to know Matplotlib, the library underlying the Pandas plotting tools. 
-# MAGIC For this we will import the `matplotlib` package along with `pyplot` module and give it the alias `plt` which is the naming convention for this module. [Here](https://matplotlib.org/3.3.3/api/_as_gen/matplotlib.pyplot.html#module-matplotlib.pyplot) you can see all of the functions available in this module. But don't worry, you are not supposed to memorize all of them. 
+# MAGIC
+# MAGIC Now that we have worked with Pandas visualisation we will start getting to know
+# MAGIC [Matplotlib](https://matplotlib.org/), the library underlying the Pandas plotting tools. 
+# MAGIC For this we will import the `matplotlib` package along with `pyplot` module and give it the alias `plt` which is the naming convention for this module. 
+# MAGIC [Here](https://matplotlib.org/stable/api/pyplot_summary.html) you can see all of the functions available in this module. But don't worry, you are not supposed to memorize all of them.
 
 # COMMAND ----------
 
@@ -39,7 +38,9 @@ plt.style.use('default')
 # MAGIC %md
 # MAGIC # 2. Figure object and creating subplots
 # MAGIC
-# MAGIC Matplotlib draw data on a Figure object. Any such Figure object can contain 1 or more Axes.
+# MAGIC Matplotlib draw data on a
+# MAGIC [Figure object](https://matplotlib.org/stable/api/figure_api.html). 
+# MAGIC Any such Figure object can contain 1 or more Axes.
 
 # COMMAND ----------
 
@@ -49,7 +50,11 @@ fig = plt.figure()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC For creating a new Figure object we can use `plt.figure()` which accepts several parameters. We see that the created Figure object is of size 432x288 which represents the width and height in inches (6.4x4.8 by default). We can change the size of the figure using the `figsize` parameter where we define the desired size in the form of a tuple.
+# MAGIC For creating a new Figure object we can use
+# MAGIC [`plt.figure()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.figure.html) 
+# MAGIC which accepts several parameters. 
+# MAGIC We see that the created Figure object is of size 432x288 which represents the width and height in inches (6.4x4.8 by default). 
+# MAGIC We can change the size of the figure using the `figsize` parameter where we define the desired size in the form of a tuple.
 
 # COMMAND ----------
 
@@ -58,7 +63,8 @@ fig = plt.figure(figsize=(20,15))
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The size of the Figure object has changed to 1440x1080. Notice that our figure does not contain any axes so far. To generate a single Axes object or multiple subplots we can use `plt.subplots()`.
+# MAGIC The size of the Figure object has changed to 1440x1080. Notice that our figure does not contain any axes so far. To generate a single Axes object or multiple subplots we can use 
+# MAGIC [`plt.subplots()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html).
 
 # COMMAND ----------
 
@@ -69,7 +75,12 @@ type(ax)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC We have created a Figure object within wich there is an Axes object labeled as AxesSubplot. Now that we have created an Axes object you can see the change of the figure size. 
+# MAGIC We have created a
+# MAGIC [Figure object](https://matplotlib.org/stable/api/figure_api.html)
+# MAGIC within wich there is an
+# MAGIC [Axes object](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html)
+# MAGIC labeled as AxesSubplot. 
+# MAGIC Now that we have created an Axes object you can see the change of the figure size.
 
 # COMMAND ----------
 
@@ -89,7 +100,9 @@ fig, ax = plt.subplots(2,3)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Our subplots are now overlapping. But we can easily adjust spacing between the Figure edge and subplots' edges using `plt.tight_layout()`.
+# MAGIC Our subplots are now overlapping. 
+# MAGIC But we can easily adjust spacing between the Figure edge and subplots' edges using
+# MAGIC [`plt.tight_layout()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.tight_layout.html).
 
 # COMMAND ----------
 
@@ -99,7 +112,8 @@ plt.tight_layout()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC `plt.tight_layout()` can take parameters such `h_pad` and `w_pad` to customize spacing between edges of adjacent subplots.
+# MAGIC [`plt.tight_layout()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.tight_layout.html)
+# MAGIC can take parameters such `h_pad` and `w_pad` to customize spacing between edges of adjacent subplots.
 
 # COMMAND ----------
 
@@ -111,11 +125,11 @@ plt.tight_layout(h_pad = 0.7, w_pad = 3)
 # MAGIC %md
 # MAGIC # 3. Two faces of Matplotlib
 # MAGIC
-# MAGIC 1. **MATLAB-style interface**
+# MAGIC 1. [**MATLAB-style interface**](https://matplotlib.org/stable/users/explain/figure/api_interfaces.html#the-implicit-pyplot-interface)
 # MAGIC At the beginning, Matplotlib was originally created in Python as an alternative to MATLAB. Since the plotting style of MATLAB is within the pyplot (plt) interface, some of its syntax is reflected also in Matplotlib.  
 # MAGIC
 # MAGIC
-# MAGIC 2. **Object Oriented interface**  
+# MAGIC 2. [**Object Oriented interface**](https://matplotlib.org/stable/users/explain/figure/api_interfaces.html#the-explicit-axes-interface)  
 # MAGIC This plotting approach is more convenient when you would like to have more control over your plots. You create a grid of subplots and are able to access a certain Axes object to draw a plot. 
 # MAGIC
 # MAGIC Let's demonstrate the main characteristics of these two interfaces.
@@ -125,20 +139,21 @@ plt.tight_layout(h_pad = 0.7, w_pad = 3)
 # MAGIC %md
 # MAGIC ## 3.1 Line plot
 # MAGIC
-# MAGIC Let's create a Figure object and 3 subplots of line plot using a generic `.plot()` function in MATLAB-style interface.
+# MAGIC Let's create a Figure object and 3 subplots of line plot using a generic
+# MAGIC [`.plot()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.plot.html) 
+# MAGIC function in MATLAB-style interface.
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Using `plt.subplot()` we create 3 subplots where the following is specified:
+# MAGIC Using
+# MAGIC [`plt.subplot()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplot.html) we create 3 subplots where the following is specified:
 # MAGIC
 # MAGIC - **number of rows**
-# MAGIC
 # MAGIC - **number of columns**
-# MAGIC
-# MAGIC - **index:**  
-# MAGIC this is the position of subplot in the grid    
-# MAGIC index starts always at 1 in the left upper corner (red line plot in our example below), and increases to the right 
+# MAGIC - **index:**
+# MAGIC   - this is the position of subplot in the grid    
+# MAGIC   - index starts always at 1 in the left upper corner (red line plot in our example below), and increases to the right
 
 # COMMAND ----------
 
@@ -179,7 +194,11 @@ plt.suptitle('Subplots');        # A title of the whole Figure object
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC By specifying for example `plt.subplot(2,2,1)` we activate the first subplot. After activating a certain subplot, all functions we call will be applied only to this Axes object. Thus this process is "stateful". It means that Matplotlib keeps track of the active Axes (and Figure object).
+# MAGIC By specifying for example 
+# MAGIC [`plt.subplot(2,2,1)`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplot.html)
+# MAGIC we activate the first subplot.
+# MAGIC After activating a certain subplot, all functions we call will be applied only to this Axes object. 
+# MAGIC Thus this process is "stateful". It means that Matplotlib keeps track of the active Axes (and Figure object).
 
 # COMMAND ----------
 
@@ -224,7 +243,9 @@ ax[1,0].plot(tg, t, color = 'green');
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The output of `plt.subplots(2,2)` is 2-dimensional array, thus the location of Axes objects are specified by their respective rows and columns. 
+# MAGIC The output of
+# MAGIC [`plt.subplots(2,2)`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html)
+# MAGIC is 2-dimensional array, thus the location of Axes objects are specified by their respective rows and columns.
 
 # COMMAND ----------
 
@@ -236,7 +257,10 @@ ax[1,0].plot(tg, t, color = 'green');
 # MAGIC %md
 # MAGIC ### 3.1.1 Line plot customization
 # MAGIC
-# MAGIC Let's plot the newly created x variable against the y variable. Firstly, we create a Figure object and an Axes object using `plt.subplots()`. Then you can call the `.plot()` function right onto the Axes object to generate a line plot, where we specify particular properties to our line such as labels, annotations, specified size, etc.  
+# MAGIC Let's plot the newly created x variable against the y variable. 
+# MAGIC Firstly, we create a Figure object and an Axes object using
+# MAGIC [`plt.subplots()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html). 
+# MAGIC Then you can call the [`.plot()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.plot.html) function right onto the Axes object to generate a line plot, where we specify particular properties to our line such as labels, annotations, specified size, etc.  
 # MAGIC
 # MAGIC ___
 # MAGIC We want our line to be a **light green 'dashdotted' line containing red point markers with white color in the middle pointing to each of the data points**. 
@@ -282,8 +306,20 @@ ax.legend(['our line','threshold'], loc = 4)                      # Set the labe
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The frequency of ticks are generated by Matplotlib in the way that is the most suitable given the data. We can see that ticks on the x-axis start at 0 and end at 14 while the values are increasing by 2. The y-axis ranges from 15 to 45 by steps of 5. 
-# MAGIC If we would like to customize the frequency of ticks we can use `plt.xticks` and `plt.yticks` to do so. Take a closer look at the original ticks and then uncomment those two rows in the previous cell to see the difference. The new positions of ticks are set using Numpy's `arange()` function where we define the start and end of the interval and the desired spacing between the values. In case of the x-axis, the tick's stopping point is defined as the length of the variable x and values increase set by 1. The last tick on the y-axis is defined as the maximum value of the variable y plus 2 additional numbers. 
+# MAGIC The frequency of ticks are generated by Matplotlib in the way that is the most suitable given the data. 
+# MAGIC We can see that ticks on the x-axis start at 0 and end at 14 while the values are increasing by 2. 
+# MAGIC The y-axis ranges from 15 to 45 by steps of 5. 
+# MAGIC If we would like to customize the frequency of ticks we can use
+# MAGIC [`plt.xticks`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xticks.html) 
+# MAGIC and
+# MAGIC [`plt.yticks`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.yticks.html) 
+# MAGIC to do so. 
+# MAGIC Take a closer look at the original ticks and then uncomment those two rows in the previous cell to see the difference. 
+# MAGIC The new positions of ticks are set using Numpy's
+# MAGIC [`arange()`](https://numpy.org/doc/stable/reference/generated/numpy.arange.html)
+# MAGIC function where we define the start and end of the interval and the desired spacing between the values.
+# MAGIC In case of the x-axis, the tick's stopping point is defined as the length of the variable x and values increase set by 1.
+# MAGIC The last tick on the y-axis is defined as the maximum value of the variable y plus 2 additional numbers. 
 # MAGIC Try to change these values for yourself to see how the position of ticks will adjust.
 
 # COMMAND ----------
@@ -291,9 +327,12 @@ ax.legend(['our line','threshold'], loc = 4)                      # Set the labe
 # MAGIC %md
 # MAGIC ## 3.2 Histogram
 # MAGIC
-# MAGIC To create a histogram of a variable we can use the `hist()` function where a set of parameters can be specified. See the [documentation](https://matplotlib.org/3.3.3/api/_as_gen/matplotlib.pyplot.hist.html). 
+# MAGIC To create a histogram of a variable we can use the 
+# MAGIC [`hist()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.hist.html) function where a set of parameters can be specified. 
+# MAGIC See the [documentation](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.hist.html). 
 # MAGIC
-# MAGIC We use `plt.subplots()` to create a Figure object and a grid of subplots (Axes objects), where we define 1 row and 2 columns so that our subplots will be created side-by-side. After that, we will have access to each of the Axes objects by their indices and can create plots. 
+# MAGIC We use 
+# MAGIC [`plt.subplots()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html) to create a Figure object and a grid of subplots (Axes objects), where we define 1 row and 2 columns so that our subplots will be created side-by-side. After that, we will have access to each of the Axes objects by their indices and can create plots.
 
 # COMMAND ----------
 
@@ -354,7 +393,11 @@ fig.suptitle('Histograms of x_var', x = 0.5, y = 0.97, fontsize = 20);
 # MAGIC %md
 # MAGIC ## 3.3. Boxplot
 # MAGIC
-# MAGIC You can create a boxplot using the `plt.boxplot()` plotting function. See the documentation [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.boxplot.html). There are several options for customizing the output, for example customizing elements of a boxplot. 
+# MAGIC You can create a boxplot using the 
+# MAGIC [`boxplot()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.boxplot.html)
+# MAGIC plotting function. 
+# MAGIC See the documentation [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.boxplot.html). 
+# MAGIC There are several options for customizing the output, for example customizing elements of a boxplot.
 
 # COMMAND ----------
 
@@ -378,11 +421,14 @@ ax.boxplot(x_var2,
 # MAGIC %md
 # MAGIC ## 3.4 Barplot
 # MAGIC
-# MAGIC To visualize and compare categorical features you can create a bar plot. The quantity of data points belonging to particular category will be drawn in the form of a bar. Matplotlib's `bar` function take several parameter such as:
-# MAGIC - x: the coordinates of the bars
-# MAGIC - height: the height of the bars, in other words, the amount of data points 
+# MAGIC To visualize and compare categorical features you can create a bar plot. 
+# MAGIC The quantity of data points belonging to particular category will be drawn in the form of a bar. 
+# MAGIC Matplotlib's [`bar`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.bar.html) function take several parameter such as:
+# MAGIC - `x`: the coordinates of the bars
+# MAGIC - `height`: the height of the bars, in other words, the amount of data points 
 # MAGIC
-# MAGIC Other parameters include the bar's width or the alignemnt of the bars. Please refer to the documentation [here](https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.bar.html).
+# MAGIC Other parameters include the bar's width or the alignemnt of the bars. 
+# MAGIC Please refer to the documentation [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.bar.html).
 # MAGIC
 # MAGIC -----
 # MAGIC Now we'll create a barplot which depicts the top speed of different animals and compares them to Usain Bolt's top speed at the World Championships in 2009, which is 44.72 km/h. 
@@ -425,9 +471,11 @@ ax.spines['right'].set(visible = False);
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## Scatterplot
+# MAGIC ## 3.5 Scatterplot
 # MAGIC
-# MAGIC Using a scatterplot we can visualize a relationship between variables. The simple example below shows a relationship between the x and y variables created using Matplotlib's `scatter()` function.
+# MAGIC Using a scatterplot we can visualize a relationship between variables. 
+# MAGIC The simple example below shows a relationship between the x and y variables created using Matplotlib's 
+# MAGIC [`scatter()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.scatter.html) function.
 
 # COMMAND ----------
 
@@ -446,18 +494,18 @@ plt.ylabel('Y values', fontsize = 13);
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC # Tasks
+# MAGIC # 4. Tasks
 # MAGIC Let's load the real estate evaluation dataset that consists of 7 attributes.
 # MAGIC
 # MAGIC **Attributes:**
 # MAGIC
-# MAGIC - X1 transaction date
-# MAGIC - X2 house age
-# MAGIC - X3 distance to the nearest MRT station
-# MAGIC - X4 number of convenience stores
-# MAGIC - X5 latitude
-# MAGIC - X6 longitude
-# MAGIC - Y house price of unit area
+# MAGIC - `X1` transaction date
+# MAGIC - `X2` house age
+# MAGIC - `X3` distance to the nearest MRT station
+# MAGIC - `X4` number of convenience stores
+# MAGIC - `X5` latitude
+# MAGIC - `X6` longitude
+# MAGIC - `Y` house price of unit area
 
 # COMMAND ----------
 
