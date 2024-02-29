@@ -627,10 +627,89 @@ plt.show()
 
 # COMMAND ----------
 
-df = pd.read_csv("../../../3_artificial_use_case/1_Classification_RECOMMENDED/Bank_Dataset/bank-additional-full.csv", sep=";")
-df.head()
+bank_df = pd.read_csv("../../../3_artificial_use_case/1_Classification_RECOMMENDED/Bank_Dataset/bank-additional-full.csv", sep=";")
+bank_df.head()
 
 # COMMAND ----------
 
-df = pd.read_csv("../../../3_artificial_use_case/2_Regression_RECOMMENDED/Datasets/2015.csv")
-df.head()
+happiness_df = pd.read_csv("../../../3_artificial_use_case/2_Regression_RECOMMENDED/Datasets/2015.csv")
+happiness_df.head()
+
+# COMMAND ----------
+
+# Your EDA...
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC # AutoEDA
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC Now we will introduce Automated Exploratory Data Analysis (AutoEDA). AutoEDA refers to the automated process of performing exploratory data analysis on a dataset without the need for manual intervention. One popular AutoEDA tool is [**Pandas Profiling**](https://docs.profiling.ydata.ai/latest/).
+# MAGIC
+# MAGIC Pandas Profiling is an open-source library that generates detailed reports with descriptive statistics and visualizations for a given dataset. It offers a convenient way to quickly understand the structure and characteristics of the data, including:
+# MAGIC
+# MAGIC * Summary statistics such as mean, median, mode, standard deviation, etc.
+# MAGIC * Distribution of numerical and categorical variables.
+# MAGIC * Correlation between variables.
+# MAGIC * Missing values and their distribution.
+# MAGIC * Interactive visualizations for data exploration.
+# MAGIC
+# MAGIC
+# MAGIC Let's explore how to use Pandas Profiling for AutoEDA.
+
+# COMMAND ----------
+
+#Import library
+from ydata_profiling import ProfileReport
+
+#Load the dataset we used in the first part of the notebook
+df_auto = pd.read_csv('../../../Data/Automobile_data.csv')
+
+#Generate the standart profiling report
+profile = ProfileReport(df_auto, title="Profiling Report")
+
+# COMMAND ----------
+
+profile
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC The **'Overview'** tab provides overall dataset statistics. 
+# MAGIC
+# MAGIC The **'Alerts'** tab provides alerts related to the data quality checks, such as duplicate rows detection, constant and highly correlated variables identification, and low variance variables detection.
+# MAGIC
+# MAGIC *For our dataset, what are most of the alerts about?*
+# MAGIC
+# MAGIC The **'Reproduction'** tab indicates the analysis start and end times, along with the analysis duration, including the software version utilized.
+# MAGIC
+# MAGIC In the section **'Variables'** you can choose the feature to get information on it. 
+# MAGIC
+# MAGIC *Using this widget, identify how many distinct values 'engine-type' contains.*
+# MAGIC
+# MAGIC In the next section **'Interactions'** you can choose two variables to see their scatterplot.
+# MAGIC
+# MAGIC **'Correlation'** section provides a heatmap for all features and a correlation table. The darkest blue color means 100% positive correlation. 
+# MAGIC
+# MAGIC *What features are highly correlated?*
+# MAGIC
+# MAGIC Profiling report contain information on **missing values**. The generated visualization shows that we have no missing values. However, before we found out that missing values in our dataset are represented as question mark symbols. That's the point where we should be careful when using AutoEDA.
+# MAGIC
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC Try out Pandas Profiling with one of the use case datasets (`bank_df` or `happiness_df`)!
+
+# COMMAND ----------
+
+# Write your code here:
+# ...
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC As was demonstrated, Pandas Profiling simplifies the exploratory data analysis process by providing comprehensive insights and visualizations automatically. It is a valuable tool for understanding the characteristics and structure of a dataset, enabling data scientists and analysts to make informed decisions during the data analysis workflow.

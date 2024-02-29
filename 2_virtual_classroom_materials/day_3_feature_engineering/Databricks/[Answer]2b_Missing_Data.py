@@ -53,7 +53,7 @@ data.head()
 # MAGIC %md
 # MAGIC # 1. First look at the missing values
 # MAGIC
-# MAGIC We can use Pandas chained `isnull().sum()` function to detect missing values.
+# MAGIC We can use Pandas chained [`isnull()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.isnull.html)[`.sum()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.sum.html) function to detect missing values.
 
 # COMMAND ----------
 
@@ -63,7 +63,10 @@ data.isnull().sum()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC We can see that three columns contain missing values: 'Age', 'Cabin' and 'Embarked'. If we want to compute the proportion of missing values, we can use `.mean()` function and plot the proportion using a barplot.
+# MAGIC We can see that three columns contain missing values: 'Age', 'Cabin' and 'Embarked'. 
+# MAGIC If we want to compute the proportion of missing values, we can use
+# MAGIC [`.mean()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.mean.html)
+# MAGIC function and plot the proportion using a barplot.
 
 # COMMAND ----------
 
@@ -79,7 +82,7 @@ percentage.plot(kind='bar');
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC If we want to visualize the location of missing values, we can use seaborn's `heatmap` that tells us where the missing values occur. We set parameter `cbar = False` as the color bar does not need to be drawn.
+# MAGIC If we want to visualize the location of missing values, we can use seaborn's [`heatmap`](https://seaborn.pydata.org/generated/seaborn.heatmap.html) that tells us where the missing values occur. We set parameter `cbar = False` as the color bar does not need to be drawn.
 # MAGIC
 # MAGIC Such a visualization has a benefit which people usually do not realize: Imagine that you just produce sums or in other words amounts of missing values in the dataset. Remember that descriptive statistics might reveal less than what visualisation does. This is also true for missing values. You might be able to spot, for example, **that missing values in two columns have a similar or the same pattern**. 
 
@@ -160,26 +163,57 @@ print(not_survived['Age'].isna().mean()*100)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC In the previous notebook we've filled in missing values using Pandas `fillna()` method. We can specify a scalar value method such as backward fill ('bfill'), or forward fill ('ffill'), or statistic such as mean, median, or mode of the particular column within this method. If we want to replace missing data with 'bfill' method or 'ffill' method and the previous or the next value is not present, the missing values remain present after the imputation. Also, be careful when filling in missing values with the mean if your data has outliers since the mean is affected by them.
+# MAGIC In the [previous notebook]($./2a_ScikitLearn_Imputing_Data) we've filled in missing values using Pandas
+# MAGIC [`fillna()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.fillna.html) 
+# MAGIC method.
+# MAGIC We can specify a scalar value method such as backward fill
+# MAGIC ([`bfill`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.bfill.html)),
+# MAGIC or forward fill
+# MAGIC ([`ffill`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.ffill.html)),
+# MAGIC or statistic such as mean, median, or mode of the particular column within this method.
+# MAGIC If we want to replace missing data with
+# MAGIC [`bfill`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.bfill.html)
+# MAGIC method or
+# MAGIC [`ffill`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.ffill.html)
+# MAGIC method and there is no previous or future value present, the missing values remain present after the imputation.
+# MAGIC Also, be careful when filling in missing values with the mean if your data has outliers since the mean is affected by them.
 # MAGIC
-# MAGIC This approach of filling missing values should be sufficient if you will use the dataset for simple analysis. However, remember what we discussed: As soon as we want to build a robust pipeline, for example for Machine Learning, we need to be able to save the state. This means that the Pandas functionality may not be the best one. We would need to be manually saving the state of *"mean which should be imputed"* somewhere. 
+# MAGIC This approach of filling missing values should be sufficient if you will use the dataset for simple analysis. 
+# MAGIC However, remember what we discussed: As soon as we want to build a robust pipeline, for example for Machine Learning, we need to be able to save the state. 
+# MAGIC This means that the Pandas functionality may not be the best one. 
+# MAGIC We would need to be manually saving the state of *"mean which should be imputed"* somewhere. 
 # MAGIC
-# MAGIC Luckily, scikit-learn offers a handy alternative in forms of **missing indicator** and **simple imputer**. Both of these are saving the state so that we can easily make those part of our robust pipeline. Let's now take a look at these two.
+# MAGIC Luckily, scikit-learn offers a handy alternative in forms of
+# MAGIC [**missing indicator**](https://scikit-learn.org/stable/modules/generated/sklearn.impute.MissingIndicator.html)
+# MAGIC and
+# MAGIC [**simple imputer**](https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html). 
+# MAGIC Both of these are saving the state so that we can easily make those part of our robust pipeline. 
+# MAGIC Let's now take a look at these two.
 # MAGIC
 # MAGIC
 # MAGIC ------
 # MAGIC
 # MAGIC **Simple Imputer and Missing Indicator**
 # MAGIC
-# MAGIC `scikit learn` offers transformers for univariate and multivariate imputation of missing values. You can read more in the [documentation](https://scikit-learn.org/stable/modules/impute.html). Now we demonstrate the usability of the `SimpleImputer()` class from the impute module. You can specify several parameters, such as the placeholder (`np.nan`) for missing values, the imputation strategy, or the value used to replace missing values. Find more [here](https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html).
+# MAGIC [`scikit learn`](https://scikit-learn.org/stable/index.html) offers transformers for univariate and multivariate imputation of missing values.
+# MAGIC You can read more in the [documentation](https://scikit-learn.org/stable/modules/impute.html).
+# MAGIC Now we demonstrate the usability of the
+# MAGIC [`SimpleImputer()`](https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html)
+# MAGIC class from the impute module.
+# MAGIC You can specify several parameters, such as the placeholder ([`np.nan`](https://numpy.org/doc/stable/reference/constants.html#numpy.nan)) for missing values, the imputation strategy, or the value used to replace missing values.
+# MAGIC Find more [here](https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html).
 # MAGIC
 # MAGIC
 # MAGIC
-# MAGIC **Before we impute the missing values**, it is useful to mark missing values to preserve the information about which values had been missing. We can use `MissingIndicator`, which transforms the dataset into binary variables indicating the presence of missing values (these binary variables will be added to the original training set). See the [documentation](https://scikit-learn.org/stable/modules/generated/sklearn.impute.MissingIndicator.html#sklearn.impute.MissingIndicator) for `MissingIndicator`.
+# MAGIC **Before we impute the missing values**, it is useful to mark missing values to preserve the information about which values had been missing.
+# MAGIC We can use [`MissingIndicator`](https://scikit-learn.org/stable/modules/generated/sklearn.impute.MissingIndicator.html), which transforms the dataset into binary variables indicating the presence of missing values (these binary variables will be added to the original training set).
+# MAGIC See the [documentation](https://scikit-learn.org/stable/modules/generated/sklearn.impute.MissingIndicator.html#sklearn.impute.MissingIndicator) for [`MissingIndicator`](https://scikit-learn.org/stable/modules/generated/sklearn.impute.MissingIndicator.html).
 # MAGIC
-# MAGIC In essence, the idea behind `MissingIndicator` is that we **preserve extra information** for our model which is if the value was missing. We are hoping that the model might pick up a pattern herein which we missed.
+# MAGIC In essence, the idea behind [`MissingIndicator`](https://scikit-learn.org/stable/modules/generated/sklearn.impute.MissingIndicator.html) is that we **preserve extra information** for our model which is if the value was missing.
+# MAGIC We are hoping that the model might pick up a pattern herein which we missed.
 # MAGIC
-# MAGIC Let's split our data into training and testing set, mark missing values, and fill in those using `SimpleImputer`.
+# MAGIC Let's split our data into training and testing set, mark missing values, and fill in those using
+# MAGIC [`SimpleImputer()`](https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html).
 
 # COMMAND ----------
 
@@ -201,7 +235,10 @@ X_train.isnull().sum()
 
 # MAGIC %md
 # MAGIC ### 2.1.2 Missing Indicator
-# MAGIC We'll use `MissingIndicator` to mark missing values by setting the parameter `features = 'missing-only'` (by default). If we want to create binary variables for all features, we set the parameter to `features = 'all'`.
+# MAGIC We'll use
+# MAGIC [`MissingIndicator`](https://scikit-learn.org/stable/modules/generated/sklearn.impute.MissingIndicator.html)
+# MAGIC to mark missing values by setting the parameter `features = 'missing-only'` (by default).
+# MAGIC If we want to create binary variables for all features, we set the parameter to `features = 'all'`.
 
 # COMMAND ----------
 
@@ -246,7 +283,10 @@ X_train_missing
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Now we concatenate the `X_train_missing` boolean variables to the original `X_train`. To distinguish which boolean variable belongs to the original feature in `X_train`, we create new names (otherwise, boolean variables names will be labeled as 0,1 and 2). `X_train_missing` array needs to be converted using `pd.DataFrame`, since only Series and DataFrame objects are valid within the `concat()` method.
+# MAGIC Now we concatenate the `X_train_missing` boolean variables to the original `X_train`.
+# MAGIC To distinguish which boolean variable belongs to the original feature in `X_train`, we create new names (otherwise, boolean variables names will be labeled as 0,1 and 2).
+# MAGIC `X_train_missing` array needs to be converted using [`pd.DataFrame`](https://pandas.pydata.org/pandas-docs/stable/reference/frame.html), since only Series and DataFrame objects are valid within the
+# MAGIC [`concat()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.concat.html) method.
 
 # COMMAND ----------
 
@@ -288,7 +328,9 @@ X_test
 
 # MAGIC %md
 # MAGIC ### 2.1.3 Simple Imputer
-# MAGIC Now we'll impute the missing values of the column 'Age' using `SimpleImputer`. We specify the placeholder for missing values (`np.nan`) and `strategy = 'mean'` (this strategy is by default, so it is okay if you don't explicitly specify it within the class).
+# MAGIC Now we'll impute the missing values of the column 'Age' using
+# MAGIC [`SimpleImputer`](https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html).
+# MAGIC We specify the placeholder for missing values ([`np.nan`](https://numpy.org/doc/stable/reference/constants.html#numpy.nan)) and `strategy = 'mean'` (this strategy is by default, so it is okay if you don't explicitly specify it within the class).
 
 # COMMAND ----------
 
@@ -389,7 +431,11 @@ X_test['Embarked'].isnull().sum()
 # MAGIC %md
 # MAGIC ### TASK
 # MAGIC
-# MAGIC In this task you will be using the Avocado dataset. You will impute numeric missing values in the column 'Small Bags' with the median value using `SimpleImputer`. The second task is to impute missing values in the column 'Region' with the most frequent string value of this column also using `SimpleImputer`.
+# MAGIC In this task you will be using the Avocado dataset.
+# MAGIC You will impute numeric missing values in the column 'Small Bags' with the median value using
+# MAGIC [`SimpleImputer`](https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html).
+# MAGIC The second task is to impute missing values in the column 'Region' with the most frequent string value of this column also using
+# MAGIC [`SimpleImputer`](https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html).
 
 # COMMAND ----------
 
@@ -464,7 +510,15 @@ avocado.isnull().sum()
 # MAGIC %md
 # MAGIC # 3. Read only - Column Transformer
 # MAGIC
-# MAGIC Commonly, preparing data for machine learning models often involves several transformations such as imputing missing values, scaling numerical values, or encoding categorical features applied for particular columns. `scikit learn` offers the [`ColumnTransformer`](https://scikit-learn.org/stable/modules/generated/sklearn.compose.ColumnTransformer.html) class that is used to apply different transformers to columns. This column transformer can be chained with Pipelines along with machine learning model. You can read more about `ColumnTransformer` [here](https://scikit-learn.org/stable/modules/generated/sklearn.compose.ColumnTransformer.html).
+# MAGIC Commonly, preparing data for machine learning models often involves several transformations such as imputing missing values, scaling numerical values, or encoding categorical features applied for particular columns. 
+# MAGIC [`scikit learn`](https://scikit-learn.org/stable/index.html)
+# MAGIC offers the
+# MAGIC [`ColumnTransformer`](https://scikit-learn.org/stable/modules/generated/sklearn.compose.ColumnTransformer.html)
+# MAGIC class that is used to apply different transformers to columns.
+# MAGIC This column transformer can be chained with Pipelines along with machine learning model.
+# MAGIC You can read more about
+# MAGIC [`ColumnTransformer`](https://scikit-learn.org/stable/modules/generated/sklearn.compose.ColumnTransformer.html)
+# MAGIC [here](https://scikit-learn.org/stable/modules/generated/sklearn.compose.ColumnTransformer.html).
 
 # COMMAND ----------
 

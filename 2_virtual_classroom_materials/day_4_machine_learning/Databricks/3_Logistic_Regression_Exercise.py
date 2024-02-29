@@ -12,6 +12,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn import metrics # to calculate accuracy measure and confusion matrix
+import seaborn as sns
 import matplotlib.pyplot as plt 
 import random
 plt.rcParams["figure.figsize"] = (15,6)
@@ -47,11 +48,10 @@ data_pos = data.loc[data.target==1,:].sample(frac=0.07, random_state=42) # selec
 data_imb = pd.concat([data_neg, data_pos]) # concatenate 7% of positive cases and all negative ones to have imbalanced data
 X_imb = data_imb.drop(columns=['target'])
 y_imb = data_imb.target
+
+sns.countplot(x=y_imb)
 plt.title('frequency of the target variable')
 plt.xlabel('target value')
-plt.ylabel('count')
-plt.hist(y_imb);
-
 
 # COMMAND ----------
 
@@ -69,7 +69,9 @@ X_train , X_test , y_train , y_test = ... # random_state=42
 # MAGIC %md
 # MAGIC ### Exercise
 # MAGIC
-# MAGIC Fit the default `LogisticRegression()` to `X_train` and `y_train`.
+# MAGIC Fit the default
+# MAGIC [`LogisticRegression()`](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html)
+# MAGIC to `X_train` and `y_train`.
 
 # COMMAND ----------
 
@@ -88,7 +90,8 @@ X_train , X_test , y_train , y_test = ... # random_state=42
 # MAGIC ### Exercise
 # MAGIC We will go with the last option. 
 # MAGIC
-# MAGIC - Scale the data with a `StandardScaler()`.
+# MAGIC - Scale the data with a
+# MAGIC [`StandardScaler()`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html).
 # MAGIC - Fit and transform `X_train` and save it to `X_train_scaled`.
 # MAGIC - Transform `X_test` and save it to `X_test_scaled`.
 
@@ -107,7 +110,9 @@ X_test_scaled = ...
 # MAGIC
 # MAGIC - Fit the logistic regression to the scaled data.
 # MAGIC - Predict on `X_train_scaled` and save the values to `y_hat`.
-# MAGIC - What are the values that are returned from the `predict()` method?
+# MAGIC - What are the values that are returned from the
+# MAGIC [`predict()`](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html#sklearn.linear_model.LogisticRegression.predict)
+# MAGIC method?
 
 # COMMAND ----------
 
@@ -119,7 +124,9 @@ X_test_scaled = ...
 # MAGIC %md
 # MAGIC ### Exercise
 # MAGIC
-# MAGIC Print different metrics from `sklearn.metrics` for the predictions on the train set:
+# MAGIC Print different metrics from
+# MAGIC [`sklearn.metrics`](https://scikit-learn.org/stable/modules/classes.html#sklearn-metrics-metrics)
+# MAGIC for the predictions on the train set:
 # MAGIC  - accuracy
 # MAGIC  - confusion matrix
 # MAGIC  - classification report
@@ -135,16 +142,33 @@ print(f'classification report\n {metrics....(..., ...)}')
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC __WARNING__: You should never optimize for the results of the test set. The test set should be always set aside and you should evaluate only once you have decided on the final model. You will learn later in the course how to treat such situations in the lecture about hyperparameter tuning.
+# MAGIC __WARNING__: You should never optimize for the results of the test set.
+# MAGIC The test set should be always set aside and you should evaluate only once you have decided on the final model.
+# MAGIC You will learn later in the course how to treat such situations in the lecture about hyperparameter tuning.
 # MAGIC
-# MAGIC You can see from the confusion matrix that there are only 19 cases of the positive class in the train set while 2 of them were classified incorrectly and 17 correctly. We would rather want to predict correctly all those cases where `target = 1`. It is not a big deal if we tell the patient that she/he has a cancer while actually there is no cancer. The bigger problem is if we predict that the patient does not have a cancer while she/he actually has it. We can achieve this by changing the value of the threshold which by default is 50%. We should therefore lower the threshold for the probability.
+# MAGIC You can see from the confusion matrix that there are only 19 cases of the positive class in the train set while 2 of them were classified incorrectly and 17 correctly.
+# MAGIC We would rather want to predict correctly all those cases where `target = 1`.
+# MAGIC It is not a big deal if we tell the patient that she/he has a cancer while actually there is no cancer.
+# MAGIC The bigger problem is if we predict that the patient does not have a cancer while she/he actually has it.
+# MAGIC We can achieve this by changing the value of the threshold which by default is 50%. We should therefore lower the threshold for the probability.
 # MAGIC
-# MAGIC After calling `.predict()` on your model it returned the predicted classes. Instead of predicting classes directly you can return probabilites for each instance using the `predict_proba()` method of the logistic regression model. One row is one observation. The first column is the probability that the instance belongs to the first class and the second column tells you about the probability of the instance belonging to the second class. Sum of the first and second column for each instance is equal to 1. You can find out which class is the first and which class is the second using the `classes_` attribute of the model. 
+# MAGIC After calling
+# MAGIC [`.predict()`](https://scikit-learn.org/stable/modules/classes.html#sklearn-metrics-metrics)
+# MAGIC on your model it returned the predicted classes.
+# MAGIC Instead of predicting classes directly you can return probabilites for each instance using the
+# MAGIC [`predict_proba()`](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html#sklearn.linear_model.LogisticRegression.predict_proba)
+# MAGIC method of the logistic regression model.
+# MAGIC One row is one observation.
+# MAGIC The first column is the probability that the instance belongs to the first class and the second column tells you about the probability of the instance belonging to the second class.
+# MAGIC Sum of the first and second column for each instance is equal to 1.
+# MAGIC You can find out which class is the first and which class is the second using the `classes_` attribute of the model. 
 # MAGIC
 # MAGIC ### Exercise
 # MAGIC
 # MAGIC - Return the classes with the `classes_` attribute.
-# MAGIC - Return the probabilites of `X_train_scaled` with the `predict_proba()` method.
+# MAGIC - Return the probabilites of `X_train_scaled` with the
+# MAGIC [`predict_proba()`](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html#sklearn.linear_model.LogisticRegression.predict_proba)
+# MAGIC method.
 # MAGIC - Save the probabilities of the positive class in the variable `probs_train`.
 
 # COMMAND ----------
@@ -158,9 +182,13 @@ print(f'classification report\n {metrics....(..., ...)}')
 # MAGIC ### Exercise 
 # MAGIC
 # MAGIC Set the value of the threshold to 20% and use the probabilities saved in the variable `probs_train`: If the value of the probability is greater than the threshold then the prediction should be equal to 1. 
-# MAGIC Hint: boolean values can be converted to 0/1 with `boolean_values.astype(int)`.
-# MAGIC
-# MAGIC Return a confusion matrix using `.confusion_matrix()` as well as a classification report using `.classification_report()` for the train set.
+# MAGIC Hint: numpy arrays of boolean values can be converted to 0/1 with
+# MAGIC [`np.ndarray.astype(int)`](https://numpy.org/doc/1.21/reference/generated/numpy.ndarray.astype.html).
+# MAGIC Return a confusion matrix using
+# MAGIC [`.confusion_matrix()`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html)
+# MAGIC as well as a classification report using
+# MAGIC [`.classification_report()`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.classification_report.html)
+# MAGIC for the train set.
 
 # COMMAND ----------
 
@@ -176,7 +204,11 @@ print(f'classification report\n {metrics....(..., ...)}')
 # MAGIC
 # MAGIC - Save the probabilities of the positive class from the model on the `X_test_scaled` dataset in the variable `probs_test`.
 # MAGIC - Convert the probabilities into predictions with a threshold 20% as above.
-# MAGIC - Return a confusion matrix using `.confusion_matrix()` as well as a classification report using `.classification_report()` for the test set.
+# MAGIC - Return a confusion matrix using
+# MAGIC [`.confusion_matrix()`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html)
+# MAGIC as well as a classification report using
+# MAGIC [`.classification_report()`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.classification_report.html)
+# MAGIC for the test set.
 
 # COMMAND ----------
 
@@ -289,7 +321,9 @@ print(data.DESCR)
 # MAGIC %md
 # MAGIC You can see that in the classification report there is 1 row per class with all the statistics.
 # MAGIC
-# MAGIC If you return probabilites with the `predict_proba()` method you will see that it has 1 column per class. It is a generalization of the binary case. The sum of all the probabilities per row is equal to 1.
+# MAGIC If you return probabilites with the
+# MAGIC [`predict_proba()`](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html#sklearn.linear_model.LogisticRegression.predict_proba)
+# MAGIC method you will see that it has 1 column per class. It is a generalization of the binary case. The sum of all the probabilities per row is equal to 1.
 
 # COMMAND ----------
 

@@ -18,19 +18,18 @@ from sklearn import datasets
 
 # MAGIC %md
 # MAGIC # Linear regression with 1 feature
-
-# COMMAND ----------
-
-# MAGIC %md
 # MAGIC ## Generate a dataset for Linear Regression
-# MAGIC For this lesson we will create an artificial dataset using the `sklearn.datasets` module of sklearn. 
-
-# COMMAND ----------
-
-# MAGIC %md
-# MAGIC - With the `make_regression()` function of `datasets` we can generate a synthetical dataset for a regression problem.
+# MAGIC For this lesson we will create an artificial dataset using the
+# MAGIC [`sklearn.datasets`](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.datasets)
+# MAGIC module of sklearn. 
+# MAGIC
+# MAGIC - With the
+# MAGIC [`make_regression()`](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_regression.html) 
+# MAGIC function of
+# MAGIC [`datasets`](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.datasets)
+# MAGIC we can generate a synthetical dataset for a regression problem.
 # MAGIC - Here we generate 100 observations with 1 explanatory variable and a standard deviation for the gaussian noise of 40.
-# MAGIC - If you want to read the documentation you can always **run the function name with a questionmark before the name** like in the cell below. This will open the documentation directly in jupyter notebok. You can also read the documentation on the 'internet, e.g. https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_regression.html
+# MAGIC - If you want to read the documentation you can always **run the function name with a questionmark before the name** like in the cell below. This will open the documentation directly in jupyter notebok. You can also read the documentation on the internet, e.g. https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_regression.html
 
 # COMMAND ----------
 
@@ -86,9 +85,11 @@ def plot_regression(x, y, bias, coeff):
     print(f'RMSE2 : {round(mean_squared_error(y,y_hat,squared=False),1)}')
 
     # chart
-    plt.title('Observations with a line')
-    plt.scatter(x,y) # scatter
-    plt.plot(x, y_hat, 'r--') # line
+    fig, ax = plt.subplots()
+
+    ax.set_title('Observations with regression line')
+    ax.scatter(x,y) # scatter
+    ax.axline((0, bias), slope=coeff, ls='--', c='r') # line
 
 # COMMAND ----------
 
@@ -164,8 +165,15 @@ plot_regression(x, y, bias, coeff)
 # MAGIC Here we explore the linear regression from scikit learn for the first time. Help yourself with [examples from the documentation](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html) if needed: 
 # MAGIC
 # MAGIC ### Exercise
-# MAGIC - Use `LinearRegression()` from `sklearn.linear_model` to fit the linear regression model on x, y. Look at the examples section in the documentation if you need help.
-# MAGIC - Return the coefficients for slope and intercept of the regression line. You can find them in the attributes section of the documentation. Store the values in the variables `lr_coef` and `lr_intercept`.
+# MAGIC - Use
+# MAGIC [`LinearRegression()`](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html)
+# MAGIC from
+# MAGIC [`sklearn.linear_model`](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.linear_model)
+# MAGIC to fit the linear regression model on x, y.
+# MAGIC Look at the examples section in the documentation if you need help.
+# MAGIC - Return the coefficients for slope and intercept of the regression line.
+# MAGIC You can find them in the attributes section of the documentation.
+# MAGIC Store the values in the variables `lr_coef` and `lr_intercept`.
 # MAGIC Are these values the same as the ones from the normal equation?
 
 # COMMAND ----------
@@ -184,7 +192,7 @@ print(f'Slope: {lr_coef}\nBias: {lr_intercept}')
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC - Next, predict the value of the new observation. If needed use the documentation for some examples.
+# MAGIC - Next, predict the value of the new observation. If needed use the [documentation](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html) for some examples.
 
 # COMMAND ----------
 
@@ -195,7 +203,7 @@ lr.predict(x_new)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC - Lastly, return the score of the model on x and y. You can read more about the score in the documentation. The best value is 1. Usually it is between 0 and 1 but it can be also negative. The score is the R-squared metric that can be used for the evaluation of the model.
+# MAGIC - Lastly, return the score of the model on x and y. You can read more about the score in the [documentation](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html#sklearn.linear_model.LinearRegression.score). The best value is 1. Usually it is between 0 and 1 but it can be also negative. The score is the [R-squared metric](https://en.wikipedia.org/wiki/Coefficient_of_determination) that can be used for the evaluation of the model.
 
 # COMMAND ----------
 
@@ -238,15 +246,17 @@ lr_outlier_coef, lr_outlier_intercept = lr_outlier.coef_, lr_outlier.intercept_
 
 # COMMAND ----------
 
-plt.scatter(x2,y2)
-axes = plt.gca()
-x_vals2 = np.array(axes.get_xlim())
-y_vals = lr_intercept + lr_coef * x_vals2
-y_vals2 = lr_outlier_intercept.reshape([1,]) + lr_outlier_coef.reshape([1,]) * x_vals2
-plt.plot(x_vals2, y_vals, 'r--', label='original regression line')
-plt.plot(x_vals2, y_vals2, 'b--', label='regression line with outliers')
-plt.legend()
-plt.show()
+lr_intercept
+
+# COMMAND ----------
+
+fig, ax = plt.subplots()
+
+ax.scatter(x2, y2)
+ax.axline((0, lr_intercept), slope=lr_coef, ls='--', c="r", label='original regression line')
+ax.axline((0, lr_outlier_intercept[0]), slope=lr_outlier_coef, ls='--', c='b', label='regression line with outliers')
+
+ax.legend();
 
 # COMMAND ----------
 
@@ -273,7 +283,7 @@ x = pd.DataFrame(raw_df.iloc[:,1:-1])
 # MAGIC ## Train Test Split
 # MAGIC
 # MAGIC ### Exercise 
-# MAGIC Use the function `train_test_split()` to split the training data into training and testing datasets.
+# MAGIC Use the function [`train_test_split()`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html) to split the training data into training and testing datasets.
 
 # COMMAND ----------
 
@@ -335,11 +345,19 @@ y_hat = model.predict(X_test)
 
 # COMMAND ----------
 
-plt.scatter(y_hat, y_test)
-plt.plot([0,50],[0,50],c='b')
-plt.xlabel("predictions")
-plt.ylabel("true test values")
-plt.show();
+fig, ax = plt.subplots()
+
+ax.scatter(y_hat, y_test)
+ax.axline((0,0), slope = 1, c="b", lw=0.5)
+ax.set_xlabel("predictions")
+ax.set_ylabel("true test values")
+
+# Create square plot
+lims = ax.axis("square")
+min_lim = min(lims[::2])
+max_lim = max(lims[1::2])
+ax.set_xlim(min_lim, max_lim)
+ax.set_ylim(min_lim, max_lim);
 
 # COMMAND ----------
 
@@ -348,10 +366,35 @@ plt.show();
 # MAGIC
 # MAGIC Let's have a look at some metrics. Compute and save the following metrics on the test set:
 # MAGIC
-# MAGIC - MSE -  `mean_squared_error` from `sklearn.metrics` (see ?mean_squared_error)
-# MAGIC - RMSE - `mean_squared_error`  from `sklearn.metrics` with the parameter `squared` set to `False`
-# MAGIC - MAE (Mean absolute error) - `mean_absolute_error`  from `sklearn.metrics` (see ?mean_absolute_error)
-# MAGIC - R2 (score) - this is an attribute of `LinearRegression()`
+# MAGIC - [MSE](https://en.wikipedia.org/wiki/Mean_squared_error)
+# MAGIC (Mean squared error):
+# MAGIC [`mean_squared_error`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.mean_squared_error.html)
+# MAGIC from 
+# MAGIC [`sklearn.metrics`](https://scikit-learn.org/stable/modules/classes.html#sklearn-metrics-metrics)
+# MAGIC (see ?mean_squared_error)
+# MAGIC - [RMSE](https://en.wikipedia.org/wiki/Root-mean-square_deviation)
+# MAGIC (Root mean squared error):
+# MAGIC     - for
+# MAGIC     [`scikit-learn`](https://scikit-learn.org/stable/index.html)
+# MAGIC     version 1.4 and newer:
+# MAGIC     [`root_mean_squared_error`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.root_mean_squared_error.html)
+# MAGIC     from
+# MAGIC     [`sklearn.metrics`](https://scikit-learn.org/stable/modules/classes.html#sklearn-metrics-metrics)
+# MAGIC     - for older versions of
+# MAGIC     [`scikit-learn`](https://scikit-learn.org/stable/index.html):
+# MAGIC     [`mean_squared_error`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.mean_squared_error.html)
+# MAGIC     from
+# MAGIC     [`sklearn.metrics`](https://scikit-learn.org/stable/modules/classes.html#sklearn-metrics-metrics)
+# MAGIC     with the parameter `squared` set to `False`
+# MAGIC - [MAE](https://en.wikipedia.org/wiki/Mean_absolute_error)
+# MAGIC (Mean absolute error):
+# MAGIC [`mean_absolute_error`]()
+# MAGIC from
+# MAGIC [`sklearn.metrics`](https://scikit-learn.org/stable/modules/classes.html#sklearn-metrics-metrics)
+# MAGIC (see ?mean_absolute_error)
+# MAGIC - [R2](https://en.wikipedia.org/wiki/Coefficient_of_determination)
+# MAGIC (score): this is a method of
+# MAGIC [`LinearRegression()`]()
 
 # COMMAND ----------
 
@@ -369,6 +412,12 @@ print(f"R2: {np.round(r2, 1)}")
 
 # COMMAND ----------
 
+# Check Scikit Learn version number
+import sklearn
+print(f"The currently used version of Scikit-Learn is {sklearn.__version__}.")
+
+# COMMAND ----------
+
 # MAGIC %md
 # MAGIC ## Scaling
 # MAGIC
@@ -376,8 +425,12 @@ print(f"R2: {np.round(r2, 1)}")
 # MAGIC If features are not scaled appropriately, the intercept tells you what the expected value for the target variable would be if all the variables were equal to 0. This might be unrealistic for many features such as weight, size of the house, distance to the sea, etc. 
 # MAGIC When features are scaled correctly, the intercept can be interpreted as the expected value of a target variable when all the features are equal to their averages.
 # MAGIC
-# MAGIC For the next exercise you will scale your features using `StandardScaler()`.
-# MAGIC - Instantiate `StandardScaler()` from `sklearn.preprocessing`.
+# MAGIC For the next exercise you will scale your features using 
+# MAGIC [`StandardScaler()`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html).
+# MAGIC - Instantiate
+# MAGIC [`StandardScaler()`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html)
+# MAGIC from
+# MAGIC [`sklearn.preprocessing`](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.preprocessing).
 # MAGIC - Fit the scaler to `X_train` and transform it. Save the transformed values into `X_train_scaled`.
 # MAGIC - Transform the `X_test` data with the fitted scaler and save the transformed values into `X_test_scaled`.
 
@@ -431,9 +484,19 @@ display(df_coefs)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC After applying `StandardScaler()` it is easier to compare coefficients with each other as the features all have the same scale. In our example the positive effect of the 'RM' variable on the output is a little bit smaller than the negative effect of the 'LSTAT' variable. In that vein, we can order the coefficients by their absolute magnitudes to understand the influence of the variables on the result. 
+# MAGIC After applying
+# MAGIC [`StandardScaler()`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html)
+# MAGIC it is easier to compare coefficients with each other as the features all have the same scale.
+# MAGIC In our example the positive effect of the 'RM' variable on the output is a little bit smaller than the negative effect of the 'LSTAT' variable.
+# MAGIC In that vein, we can order the coefficients by their absolute magnitudes to understand the influence of the variables on the result. 
 # MAGIC
 # MAGIC We could then try to fit the model with the variables that have the highest coefficient values in absolute terms.
+# MAGIC
+# MAGIC **Note**: One advantage of not scaling the features in a linear regression model is the
+# MAGIC [interpretability of the model](https://en.wikipedia.org/wiki/Linear_regression#Interpretation).
+# MAGIC For instance, consider a linear regression model fitted without feature scaling.
+# MAGIC In this case, each coefficient directly represents the change in the dependent variable for a one-unit increase in the corresponding feature, assuming all other features remain constant.
+# MAGIC This straightforward interpretation can simplify the explanation of the model’s behavior.
 
 # COMMAND ----------
 
@@ -479,7 +542,13 @@ residuals = y_hat - y_test
 # MAGIC %md
 # MAGIC One of the assumptions of a linear regression is that the **residuals are normally distributed**. 
 # MAGIC
-# MAGIC From the histogram below it seems that the residuals are almost normally distributed. If this is actually the case can be tested with e.g. the Kolmogorov-Smironov test or the Shapiro-Wilk test. It is also possible to draw a quantile-quantile plot. We could investigate outliers to check if they impact the residuals. 
+# MAGIC From the histogram below it seems that the residuals are almost normally distributed. 
+# MAGIC If this is actually the case can be tested with e.g. the
+# MAGIC [Kolmogorov-Smironov test](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test)
+# MAGIC or the
+# MAGIC [Shapiro-Wilk test](https://en.wikipedia.org/wiki/Shapiro%E2%80%93Wilk_test).
+# MAGIC It is also possible to draw a quantile-quantile plot.
+# MAGIC We could investigate outliers to check if they impact the residuals. 
 
 # COMMAND ----------
 
@@ -556,7 +625,9 @@ sns.boxplot(data=X_train);
 # MAGIC
 # MAGIC Correlated features might cause the model to be quite unstable. 
 # MAGIC
-# MAGIC - Calculate the correlations between all the variables with the `corr()` method called on `X_train`. Save the output into variable `corr`.
+# MAGIC - Calculate the correlations between all the variables with the
+# MAGIC [`corr()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.corr.html)
+# MAGIC method called on `X_train`. Save the output into variable `corr`.
 
 # COMMAND ----------
 
@@ -595,7 +666,7 @@ sns.heatmap(corr_abs, mask = mask, annot=True, cmap='Reds');
 # MAGIC
 # MAGIC Since we work with a linear model, there should be a linear relationship between X and y. Let's do some simple checks. 
 # MAGIC
-# MAGIC - Compute the correlation between `X_train` and `y_train`. Hint: you can concatenate `X_train` and `y_train` first on `axis=1` and calculate the correlation on the concatenated data frame.
+# MAGIC - Compute the correlation between `X_train` and `y_train`. Hint: you can [concatenate](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.concat.html) `X_train` and `y_train` first on `axis=1` and calculate the correlation on the concatenated data frame.
 
 # COMMAND ----------
 
@@ -659,7 +730,11 @@ print(f"RMSE: {np.round(rmse,1)}")
 # MAGIC %md
 # MAGIC ## 2nd degree polynomial features
 # MAGIC
-# MAGIC We have seen in the scatter plots that there likely is a non-linear relationship between 'LSTAT' and the target variable. It makes sense to test the model with the 2 variables as above but also adding polynomial features of the 2nd degree and an interaction term between the two variables. Run the cell below to see the performance of such a model.
+# MAGIC We have seen in the scatter plots that there likely is a non-linear relationship between 'LSTAT' and the target variable.
+# MAGIC It makes sense to test the model with the 2 variables as above but also
+# MAGIC [adding polynomial features](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PolynomialFeatures.html)
+# MAGIC of the 2nd degree and an interaction term between the two variables.
+# MAGIC Run the cell below to see the performance of such a model.
 
 # COMMAND ----------
 

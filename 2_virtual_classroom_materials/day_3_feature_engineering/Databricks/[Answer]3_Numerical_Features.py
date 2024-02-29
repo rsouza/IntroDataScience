@@ -64,18 +64,35 @@ for col in['AveragePrice', 'Total Volume', 'Small Hass Avocado','Large Hass Avoc
 # MAGIC
 # MAGIC # 2. Feature Scaling
 # MAGIC
-# MAGIC Models such as logistic regression, linear regression – or other models that involve a matrix – are very sensitive to different scales of input variables. If we use such data for model fitting, the result might end up creating a bias. Therefore feature scaling techniques are used before model fitting.
+# MAGIC Models such as logistic regression, linear regression – or other models that involve a matrix – are very sensitive to different scales of input variables.
+# MAGIC If we use such data for model fitting, the result might end up creating a bias.
+# MAGIC Therefore feature scaling techniques are used before model fitting.
 # MAGIC
-# MAGIC As you can guess, feature scaling techniques change the scale of the variables. There are several ways how you can scale your features. In this notebook we'll demonstrate the **MinMaxScaling** technique that scales variables to their minimum and maximum values. scikit learn offers the `MinMaxScaler` class for this purpose. You can find the documentation [here](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html).
+# MAGIC As you can guess, feature scaling techniques change the scale of the variables.
+# MAGIC There are several ways how you can scale your features.
+# MAGIC In this notebook we'll demonstrate the
+# MAGIC [**MinMaxScaling**](https://en.wikipedia.org/wiki/Feature_scaling#Rescaling_(min-max_normalization))
+# MAGIC technique that scales variables to their minimum and maximum values.
+# MAGIC scikit learn offers the
+# MAGIC [`MinMaxScaler`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html)
+# MAGIC class for this purpose.
+# MAGIC You can find the documentation
+# MAGIC [here](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html).
 # MAGIC
 # MAGIC The formula for min-max scaling is: 
 # MAGIC
-# MAGIC **X_std = (X - X.min(axis = 0)) / (X.max(axis = 0) - X.min(axis = 0))**
+# MAGIC $$
+# MAGIC x_{\text{std}} = \frac{x-\min(x)}{\max(x)-\min(x)}
+# MAGIC $$
 # MAGIC
-# MAGIC **X_scaled = X_std * (max - min) + min**
+# MAGIC To return to the original scale this formula is used:
+# MAGIC
+# MAGIC $$
+# MAGIC x = x_{\text{std}} * (\max(x) - \min(x)) + \min(x)
+# MAGIC $$
 # MAGIC
 # MAGIC - our Scaler subtracts the minimum value from all observations in our dataset and divide it by the range of values
-# MAGIC - it will transform each feature individually between 0 and 1 
+# MAGIC - it will transform each feature individually between 0 and 1
 
 # COMMAND ----------
 
@@ -139,14 +156,22 @@ print('Maximum value: ', X_test_scaled.max(axis=0))
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Note that the range of the features in the test set is not exactly 0 to 1. This is because `MinMaxScaler` has only been trained on the training data `X_train`, not on `X_test`, to prevent data leakage!
+# MAGIC Note that the range of the features in the test set is not exactly 0 to 1.
+# MAGIC This is because
+# MAGIC [`MinMaxScaler`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html)
+# MAGIC has only been trained on the training data `X_train`, not on `X_test`, to prevent data leakage!
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ### TASK
 # MAGIC
-# MAGIC Imagine you've normalized the data using `MinMaxScaler` and delivered your work to the Senior Data scientist. He/she proposed you to scale the data using different scaling technique. The technique should transform the data such that its distribution will have a mean value of 0 and a standard deviation of 1. Find the right method [here](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.preprocessing).
+# MAGIC Imagine you've normalized the data using
+# MAGIC [`MinMaxScaler`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html)
+# MAGIC and delivered your work to the Senior Data scientist.
+# MAGIC He/she proposed you to scale the data using different scaling technique.
+# MAGIC The technique should transform the data such that its distribution will have a mean value of 0 and a standard deviation of 1.
+# MAGIC Find the right method [here](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.preprocessing).
 
 # COMMAND ----------
 

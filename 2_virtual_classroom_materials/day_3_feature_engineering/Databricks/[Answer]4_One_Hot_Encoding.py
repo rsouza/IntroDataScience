@@ -115,7 +115,12 @@ for column in X_train.columns:
 # MAGIC
 # MAGIC # 1. One-Hot Encoding with Pandas
 # MAGIC
-# MAGIC We can use Pandas method `pd.get_dummies()` to encode the categorical features. In the real world this encoding method shouldn't be used in ML pipelines (computationally and memory ineffective). However, in the case of some simple data analysis you should be able to use it. We'll look at how it works and what its advantages and limitations are.
+# MAGIC We can use Pandas method
+# MAGIC [`pd.get_dummies()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.get_dummies.html)
+# MAGIC to encode the categorical features.
+# MAGIC In the real world this encoding method shouldn't be used in ML pipelines (computationally and memory ineffective).
+# MAGIC However, in the case of some simple data analysis you should be able to use it.
+# MAGIC We'll look at how it works and what its advantages and limitations are.
 
 # COMMAND ----------
 
@@ -130,9 +135,13 @@ type(dummies)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The main advantages are that `get_dummies()` returns a DataFrame and preserves feature names for dummy variables. Also, we can use this method even if our data contains missing values. 
+# MAGIC The main advantages are that
+# MAGIC [`get_dummies()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.get_dummies.html)
+# MAGIC returns a DataFrame and preserves feature names for dummy variables.
+# MAGIC Also, we can use this method even if our data contains missing values. 
 # MAGIC
-# MAGIC In this example it has created one column for the female category and one column for the male category according to its presence. We can compare the created dummy variables to the original 'Sex' variable using concatenation to see what happened.
+# MAGIC In this example it has created one column for the female category and one column for the male category according to its presence.
+# MAGIC We can compare the created dummy variables to the original 'Sex' variable using concatenation to see what happened.
 
 # COMMAND ----------
 
@@ -196,11 +205,24 @@ dummy_data_2
 # MAGIC %md
 # MAGIC # 2. One-Hot Encoding with Scikit-learn
 # MAGIC
-# MAGIC The `sklearn.preprocessing` module offers the `OneHotEncoder()` class which encodes categorical features by creating binary columns for each unique category of variables using a one-hot encoding scheme. The output is not a DataFrame, but a NumPy array. You can find the documentation of `OneHotEncoder` [here](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html).
+# MAGIC The
+# MAGIC [`sklearn.preprocessing`](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.preprocessing)
+# MAGIC module offers the
+# MAGIC [`OneHotEncoder()`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html)
+# MAGIC class which encodes categorical features by creating binary columns for each unique category of variables using a one-hot encoding scheme.
+# MAGIC The output is not a DataFrame, but a NumPy array. You can find the documentation of
+# MAGIC [`OneHotEncoder`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html)
+# MAGIC [here](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html).
 # MAGIC
 # MAGIC ----
 # MAGIC Firstly we need to create the encoder object where we can specify a set of parameters.
-# MAGIC Then we'll fit `OneHotEncoder` to the set `X_train`. There we first have to fill in missing values as `OneHotEncoder` doesn't except those. Using the `.categories_` attribute we'll find all of the determined categories. 
+# MAGIC Then we'll fit
+# MAGIC [`OneHotEncoder`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html)
+# MAGIC to the set `X_train`.
+# MAGIC There we first have to fill in missing values as
+# MAGIC [`OneHotEncoder`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html)
+# MAGIC doesn't except those.
+# MAGIC Using the `.categories_` attribute we'll find all of the determined categories. 
 
 # COMMAND ----------
 
@@ -279,9 +301,17 @@ testing_set.head()
 # MAGIC %md
 # MAGIC # 3. Encoding target variable
 # MAGIC
-# MAGIC For encoding the target variable stored as a string datatype, we can use `LabelEncoder` class from the scikit learn module. `LabelEncoder` normalizes labels to have values between 0 and n_classes-1. You can find the documentation [here](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html#sklearn.preprocessing.LabelEncoder).
+# MAGIC For encoding the target variable stored as a string datatype, we can use
+# MAGIC [`LabelEncoder`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html)
+# MAGIC class from the scikit learn module.
+# MAGIC [`LabelEncoder`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html)
+# MAGIC normalizes labels to have values between 0 and n_classes-1.
+# MAGIC You can find the documentation [here](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html#sklearn.preprocessing.LabelEncoder).
 # MAGIC
-# MAGIC Let's look at the simple example of using this class on dog breeds. Firstly we create a `LabelEncoder` object and then we fit our data.
+# MAGIC Let's look at the simple example of using this class on dog breeds.
+# MAGIC Firstly we create a
+# MAGIC [`LabelEncoder`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html)
+# MAGIC object and then we fit our data.
 
 # COMMAND ----------
 
