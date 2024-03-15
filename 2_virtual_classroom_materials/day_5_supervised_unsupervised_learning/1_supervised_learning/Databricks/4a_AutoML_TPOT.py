@@ -13,7 +13,21 @@
 
 # COMMAND ----------
 
+# MAGIC %md
+# MAGIC In this notebook, we will explore how to use [**TPOT**](https://epistasislab.github.io/tpot/) to automatically optimize machine learning pipelines.
+# MAGIC
+# MAGIC TPOT, which stands for **Tree-based Pipeline Optimization Tool**, is an open-source AutoML library in Python. It utilizes **genetic programming** to automate the process of feature engineering, model selection, and hyperparameter tuning. TPOT generates and evaluates a population of pipelines, evolving them over generations to identify the most effective combination of data preprocessing steps and machine learning models.
+# MAGIC
+# MAGIC Before we preceed, let's install TPOT library.
+
+# COMMAND ----------
+
 !pip install -q tpot
+
+# COMMAND ----------
+
+# You only need to run this cell after installing the optuna package on Databricks
+dbutils.library.restartPython()
 
 # COMMAND ----------
 
@@ -49,7 +63,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 # MAGIC %md
 # MAGIC The TPOTRegressor performs an intelligent search over machine learning pipelines that can contain supervised regression models, preprocessors, feature selection techniques, and any other estimator or transformer that follows the scikit-learn API. The TPOTRegressor will also search over the hyperparameters of all objects in the pipeline.
 # MAGIC
-# MAGIC TPOT Regressor provides various parameters to control the optimization process, including:
+# MAGIC [TPOT Regressor provides various parameters](https://epistasislab.github.io/tpot/api/#regression) to control the optimization process, including:
 # MAGIC
 # MAGIC * generations: The number of generations (iterations) for the genetic
 # MAGIC optimization process.
@@ -104,6 +118,30 @@ y = titanic_df[['Survived']]
 # Task: split the dataset into train and test sets
 
 ...
+
+# COMMAND ----------
+
+# We need to deal with the missing data and transform categorical attributes
+
+categorical_transformer = Pipeline(
+    steps=[
+        ("imputer", SimpleImputer(strategy="constant", fill_value="missing")),
+        ("encoder", OneHotEncoder(handle_unknown="ignore")),
+    ]
+)
+
+numerical_transformer = Pipeline(steps=[("imputer", SimpleImputer())])
+
+preprocessor = ColumnTransformer(
+    transformers=[
+        ("cat", categorical_transformer, ["Sex", "Embarked"]),
+        ("num", numerical_transformer, ["Age"])
+    ],
+    remainder="passthrough",
+)
+
+X_train = preprocessor.fit_transform(X_train)
+X_test = preprocessor.transform(X_test)
 
 # COMMAND ----------
 

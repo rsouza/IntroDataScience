@@ -79,7 +79,8 @@ train.head()
 
 # MAGIC %md
 # MAGIC ## Feature Engineering
-# MAGIC With our current knowledge, we can try to individually implement various transformers from Scikit Learn. Let's not forget to create a holdout set!
+# MAGIC With our current knowledge, we can try to individually implement [various transformers from Scikit Learn](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.preprocessing).
+# MAGIC Let's not forget to create a holdout set!
 
 # COMMAND ----------
 
@@ -93,7 +94,7 @@ X_train, X_test, y_train, y_test = train_test_split(train[['Pclass', 'Age', 'Sex
 # MAGIC %md
 # MAGIC ### Numerical Features
 # MAGIC The only numerical features we have are 'Pclass' and 'Age'.  
-# MAGIC Let's scale these two features using `MinMaxScaler()`.
+# MAGIC Let's scale these two features using [`MinMaxScaler()`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html).
 
 # COMMAND ----------
 
@@ -110,7 +111,7 @@ print(X_test_transformed_numerical.shape)
 # MAGIC %md
 # MAGIC ### Categorical Features
 # MAGIC The categorical features we have are 'Sex' and 'Embarked'.   
-# MAGIC We can simply one-hot encode these using `OneHotEncoder()`.
+# MAGIC We can simply one-hot encode these using [`OneHotEncoder()`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html).
 
 # COMMAND ----------
 
@@ -152,8 +153,7 @@ print(X_test_transformed.shape)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Great! We have our first prediction! It is time to evaluate how good our model is using the [*sklearn.metrics* module.](   
-# MAGIC https://scikit-learn.org/stable/modules/classes.html#sklearn-metrics-metrics)
+# MAGIC Great! We have our first prediction! It is time to evaluate how good our model is using the [*sklearn.metrics* module](https://scikit-learn.org/stable/modules/classes.html#sklearn-metrics-metrics).
 
 # COMMAND ----------
 

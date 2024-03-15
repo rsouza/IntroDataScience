@@ -24,11 +24,11 @@ plt.rcParams["figure.figsize"] = (15,6)
 # MAGIC %md
 # MAGIC The three most popular methods for combining the predictions from different models are:
 # MAGIC
-# MAGIC + **Bagging/Pasting**    
+# MAGIC + [**Bagging/Pasting**](https://en.wikipedia.org/wiki/Bootstrap_aggregating)    
 # MAGIC     Building multiple models (typically of the same type) from different subsamples of the training dataset.  
-# MAGIC + **Boosting**    
+# MAGIC + [**Boosting**](https://en.wikipedia.org/wiki/Boosting_(machine_learning%29)   
 # MAGIC     Building multiple models (typically of the same type) each of which learns to fix the prediction errors of a prior model in the chain.  
-# MAGIC + **Stacking/Voting**    
+# MAGIC + [**Stacking/Voting**](https://en.wikipedia.org/wiki/Ensemble_learning#Stacking)    
 # MAGIC     Building multiple models (typically of differing types) and creating a meta-learner with the features of the models, or simple statistics (like calculating the mean) to combine predictions.  
 
 # COMMAND ----------
@@ -68,8 +68,8 @@ kfold = KFold(n_splits=10, random_state=seed, shuffle=True)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC #### Decision Tree
-# MAGIC First, let's try with a simple Decision Tree Classifier.
+# MAGIC ## Decision Tree
+# MAGIC First, let's try with a simple [Decision Tree Classifier](https://scikit-learn.org/stable/modules/tree.html).
 
 # COMMAND ----------
 
@@ -82,8 +82,8 @@ print(results1.mean())
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC #### Bagged Decision Trees  
-# MAGIC Now, let's use the Scikit-Learn bagging classifier to manually create a Random Forest:
+# MAGIC ## Bagged Decision Trees  
+# MAGIC Now, let's use the [Scikit-Learn bagging classifier](https://scikit-learn.org/stable/modules/ensemble.html#bagging-meta-estimator) to manually create a Random Forest:
 
 # COMMAND ----------
 
@@ -98,9 +98,9 @@ print(results2.mean())
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ### Random Forest
+# MAGIC ## Random Forest
 # MAGIC
-# MAGIC Random forest is an extension of bagged decision trees.
+# MAGIC [Random forest](https://scikit-learn.org/stable/modules/ensemble.html#random-forests-and-other-randomized-tree-ensembles) is an extension of bagged decision trees.
 # MAGIC Samples of the training dataset are taken with replacement, but the trees are constructed in a way that reduces the correlation between individual classifiers. Specifically, rather than greedily choosing the best split point in the construction of the tree, only a random subset of features are considered for each split.
 
 # COMMAND ----------
@@ -115,10 +115,15 @@ print(results3.mean())
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ### Extra Trees
+# MAGIC ## Extra Trees
 # MAGIC
-# MAGIC [Extra Trees](https://quantdare.com/what-is-the-difference-between-extra-trees-and-random-forest/) are another modification of bagging where random forests are constructed from the whole training dataset.
-# MAGIC You can construct an Extra Trees model for classification using the `ExtraTreesClassifier` of `sklearn.ensemble` class.
+# MAGIC [Extra Trees](https://quantdare.com/what-is-the-difference-between-extra-trees-and-random-forest/)
+# MAGIC are another modification of bagging where random forests are constructed from the whole training dataset.
+# MAGIC You can construct an Extra Trees model for classification using the
+# MAGIC [`ExtraTreesClassifier`](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesClassifier.html)
+# MAGIC of
+# MAGIC [`sklearn.ensemble`](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.ensemble)
+# MAGIC class.
 
 # COMMAND ----------
 
@@ -132,7 +137,7 @@ print(results4.mean())
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ### Boosting Algorithms  
+# MAGIC ## Boosting Algorithms  
 # MAGIC
 # MAGIC
 # MAGIC Boosting ensemble algorithms create a sequence of models that attempt to correct the mistakes of the models before them in the sequence. 
@@ -144,9 +149,9 @@ print(results4.mean())
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC #### AdaBoost
+# MAGIC ### AdaBoost
 # MAGIC
-# MAGIC AdaBoost was perhaps the first successful boosting ensemble algorithm. It generally works by weighting instances in the dataset by how easy or difficult they are to classify, allowing the algorithm to pay or or less attention to them in the construction of subsequent models.  
+# MAGIC [AdaBoost](https://scikit-learn.org/stable/modules/ensemble.html#adaboost) was perhaps the first successful boosting ensemble algorithm. It generally works by weighting instances in the dataset by how easy or difficult they are to classify, allowing the algorithm to pay or or less attention to them in the construction of subsequent models.  
 # MAGIC You can construct an AdaBoost model for classification using the AdaBoostClassifier class.  
 
 # COMMAND ----------
@@ -160,9 +165,9 @@ print(results5.mean())
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC #### Stochastic Gradient Boosting  
+# MAGIC ### Stochastic Gradient Boosting  
 # MAGIC
-# MAGIC Stochastic Gradient Boosting (also called Gradient Boosting Machines) is one of the most sophisticated ensemble techniques. It is also a technique that is currently proving to be perhaps of the the best techniques available for improving performance via ensembles.  
+# MAGIC [Stochastic Gradient Boosting](https://scikit-learn.org/stable/modules/ensemble.html#gradient-boosting) (also called Gradient Boosting Machines) is one of the most sophisticated ensemble techniques. It is also a technique that is currently proving to be perhaps of the the best techniques available for improving performance via ensembles.  
 # MAGIC You can construct a Gradient Boosting model for classification using the GradientBoostingClassifier class.  
 
 # COMMAND ----------
@@ -176,13 +181,14 @@ print(results6.mean())
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ### Voting Ensemble
+# MAGIC ## Voting Ensemble
 # MAGIC
-# MAGIC Voting is one of the simplest ways of combining the predictions from multiple machine learning algorithms.
-# MAGIC It works by first creating two or more stan-dalone models from your training dataset. A Voting Classifier can then be used to wrap your models and average the predictions of the sub-models when asked to make predictions for new data.
+# MAGIC [Voting](https://scikit-learn.org/stable/modules/ensemble.html#voting-classifier) is one of the simplest ways of combining the predictions from multiple machine learning algorithms.
+# MAGIC It works by first creating two or more standalone models from your training dataset. A Voting Classifier can then be used to wrap your models and average the predictions of the sub-models when asked to make predictions for new data.
 # MAGIC
 # MAGIC The predictions of the sub-models can be weighted, but specifying the weights for classifiers manually or even heuristically is difficult. 
-# MAGIC You can create a voting ensemble model for classification using the `VotingClassifier` class.
+# MAGIC You can create a voting ensemble model for classification using the
+# MAGIC [`VotingClassifier`](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.VotingClassifier.html) class.
 # MAGIC The code below provides an example of combining the predictions of logistic regression, classification and regression trees and support vector machines for a classification problem.
 
 # COMMAND ----------
@@ -205,10 +211,11 @@ print(results7.mean())
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC #### Stacking Classifier
+# MAGIC ## Stacking Classifier
 # MAGIC
-# MAGIC More advanced methods, similar to voting, can learn how to best weight the predictions from submodels (stacked generalization).   
-# MAGIC We can use the `StackingClassifier` from Scikit-Learn.
+# MAGIC More advanced methods, similar to voting, can learn how to best weight the predictions from submodels ([stacked generalization](https://scikit-learn.org/stable/modules/ensemble.html#stacked-generalization)).   
+# MAGIC We can use the
+# MAGIC [`StackingClassifier`](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.StackingClassifier.html) from Scikit-Learn.
 
 # COMMAND ----------
 
@@ -238,7 +245,7 @@ print(results8.mean())
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC # Task
+# MAGIC ## Task
 # MAGIC
 # MAGIC + Change the parameters of the estimators above.
 # MAGIC + Try to optmize and discuss the results.

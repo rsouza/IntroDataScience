@@ -48,7 +48,12 @@ X_train, X_test, y_train, y_test = train_test_split(train[['Pclass', 'Age', 'Sex
 
 # MAGIC %md
 # MAGIC ### Feature Engineering wrapped into ColumnTransformer
-# MAGIC The two feature transformations can be easily wrapped up into a single `ColumnTransformer()` object. This will ensure that our Feature Engineering is a bit **more robust and nicely encapsulated**. Section 6.1.4 [here](https://scikit-learn.org/stable/modules/compose.html#columntransformer-for-heterogeneous-data) showcases the exact application that we intend to create.
+# MAGIC The two feature transformations can be easily wrapped up into a single
+# MAGIC [`ColumnTransformer()`](https://scikit-learn.org/stable/modules/generated/sklearn.compose.ColumnTransformer.html)
+# MAGIC object.
+# MAGIC This will ensure that our Feature Engineering is a bit **more robust and nicely encapsulated**.
+# MAGIC Section 6.1.4 [here](https://scikit-learn.org/stable/modules/compose.html#columntransformer-for-heterogeneous-data)
+# MAGIC showcases the exact application that we intend to create.
 
 # COMMAND ----------
 
@@ -66,7 +71,10 @@ X_train, X_test, y_train, y_test = train_test_split(train[['Pclass', 'Age', 'Sex
 # MAGIC entire_pipeline = feature_engineering -> model  
 # MAGIC ``` 
 # MAGIC
-# MAGIC Both components are already available. From the step above we can directly reuse the object `feature_engineering`. As model, we just call a new `DummyClassifier`, just as we did before.
+# MAGIC Both components are already available. From the step above we can directly reuse the object `feature_engineering`.
+# MAGIC As model, we just call a new
+# MAGIC [`DummyClassifier`](https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html),
+# MAGIC just as we did before.
 
 # COMMAND ----------
 
@@ -98,4 +106,4 @@ print(metrics.accuracy_score(y_test, y_pred_HOLDOUT_DUMMY))
 
 # MAGIC %md
 # MAGIC **OPTIONAL TASK**   
-# MAGIC The notebook 'using_pipelines' was made to exemplify some examples of more complex pipelines. Feel free to scroll through it and learn what the process of preparing a complex composite looks like. You can then come back here and try to implement various components. For example, if I would not drop rows with missing values at the beginning of this notebook, constructing a composite would get a bit trickier. 
+# MAGIC The notebook <a href="$./2b_Example_Pipelines">``2b_Example_Pipelines``</a> was made to exemplify some examples of more complex pipelines. Feel free to scroll through it and learn what the process of preparing a complex composite looks like. You can then come back here and try to implement various components. For example, if I would not drop rows with missing values at the beginning of this notebook, constructing a composite would get a bit trickier. 

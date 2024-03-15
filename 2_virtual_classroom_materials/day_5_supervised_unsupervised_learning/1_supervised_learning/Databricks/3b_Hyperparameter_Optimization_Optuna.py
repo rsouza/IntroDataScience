@@ -5,20 +5,30 @@
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC In this notebook we will be using Optuna for **hyperparameter optimization** in machine learning. Hyperparameter optimization is a critical step in improving the performance of machine learning models. Optuna provides an efficient and automated way to search for the best hyperparameters.
+# MAGIC In this notebook we will be using [Optuna](https://optuna.readthedocs.io/en/stable/index.html) for **hyperparameter optimization** in machine learning. 
+# MAGIC Hyperparameter optimization is a critical step in improving the performance of machine learning models.
+# MAGIC [Optuna](https://optuna.readthedocs.io/en/stable/index.html)
+# MAGIC provides an efficient and automated way to search for the best hyperparameters.
 # MAGIC
-# MAGIC Before we dive into the specifics of Optuna, let's take a moment to understand what **hyperparameters** are. Hyperparameters are the parameters of a machine learning model that are **not learned** from the data during training. They are **set prior** to training and can have a significant influence on a model's performance and generalization ability. Examples of hyperparameters include the learning rate of an optimizer, the number of hidden layers in a neural network, and the regularization strength in a regression model.
+# MAGIC Before we dive into the specifics of [Optuna](https://optuna.readthedocs.io/en/stable/index.html), 
+# MAGIC let's take a moment to understand what **hyperparameters** are. 
+# MAGIC Hyperparameters are the parameters of a machine learning model that are **not learned** from the data during training. They are **set prior** to training and can have a significant influence on a model's performance and generalization ability.
+# MAGIC Examples of hyperparameters include the learning rate of an optimizer, the number of hidden layers in a neural network, and the regularization strength in a regression model.
 # MAGIC
 # MAGIC Selecting appropriate hyperparameters is a crucial aspect of developing effective machine learning models. Poorly chosen hyperparameters can lead to bad performance, including overfitting or underfitting.
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Let's explore Optuna in greater detail to better understand its features and functionalities.
+# MAGIC Let's explore [Optuna](https://optuna.readthedocs.io/en/stable/index.html) in greater detail to better understand its features and functionalities.
 
 # COMMAND ----------
 
 pip install -q optuna
+
+# COMMAND ----------
+
+dbutils.library.restartPython()
 
 # COMMAND ----------
 
@@ -28,7 +38,7 @@ import optuna
 
 # COMMAND ----------
 
-data = pd.read_csv('../../Data/Boston.csv')
+data = pd.read_csv('../../../../Data/Boston.csv')
 
 X = data.iloc[:, 1:14]
 y = data.iloc[:, -1]
@@ -37,13 +47,40 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, rando
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC #### Define the objective function
+# MAGIC ## Create a baseline
+# MAGIC
+# MAGIC For this regression task we will optimize the hyperparameters of a [GradientBoostingRegressor](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html).
+# MAGIC The performance of the models will be compared by the [**\\(r^2\\)-score**](https://en.wikipedia.org/wiki/Coefficient_of_determination).
+# MAGIC
+# MAGIC Let's start out by fitting a
+# MAGIC [GradientBoostingRegressor](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html)
+# MAGIC with default parameters.
+
+# COMMAND ----------
+
+from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.metrics import r2_score
+
+baseline_regressor = GradientBoostingRegressor(random_state=0)
+
+baseline_regressor.fit(X_train, y_train)
+baseline_r2 = baseline_regressor.score(X_test, y_test)
+
+print(f"The baseline r2-score is {baseline_r2:.3f}")
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC As we found out before, according to LazyRegressor, the best performing model without hyperparameter tuning is GradientBoostingRegressor with **0.79 r2-score** (see notebook 'AutoML tools: LazyPredict & PyCaret'). Let's optimize this model with Optuna.
-# MAGIC
+# MAGIC We find that on the test set the \\(r^2\\)-score for a
+# MAGIC [GradientBoostingRegressor](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html)
+# MAGIC without any hyperparameter tuning is about 0.79.
+# MAGIC In the following sections we will improve this score by optimizing the model with
+# MAGIC [Optuna](https://optuna.readthedocs.io/en/stable/index.html).
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC ## Define the objective function
 # MAGIC We start with **defining objective function**. The objective function is a crucial component of hyperparameter optimization. It defines the metric you want to optimize (e.g., accuracy, loss). This function takes hyperparameters as input, builds and trains a model, and evaluates its performance on a validation set.
 # MAGIC
 # MAGIC Let's take a look at GradientBoostingRegressor documentation: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html.
@@ -90,7 +127,7 @@ def objective_1(trial):
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC #### Create and run the study
+# MAGIC ## Create and run the study
 
 # COMMAND ----------
 
@@ -174,7 +211,7 @@ print("\n")
 def objective_3(trial):
 
   # Define hyperparameters to optimize
-  min_samples_leaf = trial.suggest_int('min_samples_leaf', 1, 70, 10)
+  min_samples_leaf = trial.suggest_int('min_samples_leaf', 1, 71, step=10)
   min_samples_split = trial.suggest_float('min_samples_split', 0.1, 1)
 
   model = GradientBoostingRegressor(
@@ -333,22 +370,26 @@ print('Final model score:', final_score)
 
 # MAGIC %md
 # MAGIC ## Your turn!
+# MAGIC Now it's your turn to put what you've learned about the Optuna library into practice! You will try to optimize the model hyperparameters for a classification problem.
+# MAGIC
+# MAGIC In the code chunk below we load the data for this task.
+# MAGIC The goal is to predict if a patient is obese.
+# MAGIC There are 4 classes  in the target variable.
 
 # COMMAND ----------
 
-# MAGIC %md
-# MAGIC Now it's your turn to put what you've learned about the Optuna library into practice! You will try to optimize the model hyperparameters for a classification problem. Select one of the best untuned models based on the results of LazyPredict, create an objective function and run the study. Good luck!
+from sklearn.preprocessing import OneHotEncoder
 
-# COMMAND ----------
+# Import obesity_data.csv dataset
+obesity_df = pd.read_csv("../../../../Data/obesity_data.csv")
 
-# Task: Import titanic.csv dataset
+X = obesity_df.iloc[:,:16]
+y = obesity_df[['NObeyesdad']]
 
-titanic_df = ...
+# Encode the categorical variables
+obesity_preprocessing = OneHotEncoder(drop="if_binary")
 
-# COMMAND ----------
-
-X = titanic_df[['Sex', 'Embarked', 'Pclass', 'Age', 'Survived']]
-y = titanic_df[['Survived']]
+X = obesity_preprocessing.fit_transform(X)
 
 # COMMAND ----------
 

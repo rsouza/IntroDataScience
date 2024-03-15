@@ -15,17 +15,18 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 
 
-
 train = pd.read_csv("../../../../Data/data_titanic/train.csv")
-train.Pclass = train.Pclass.astype(float) # to avoid DataConversionWarning
+train.Pclass = train.Pclass.astype(float)  # to avoid DataConversionWarning
 
 # COMMAND ----------
 
 train = train.dropna(axis=0)
-X_train, X_test, y_train, y_test = train_test_split(train[['Pclass', 'Age', 'Sex', 'Embarked']],
-                                                    train['Survived'], 
-                                                    test_size=0.2, 
-                                                    random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(
+    train[["Pclass", "Age", "Sex", "Embarked"]],
+    train["Survived"],
+    test_size=0.2,
+    random_state=42,
+)
 
 # COMMAND ----------
 
@@ -35,15 +36,18 @@ X_train, X_test, y_train, y_test = train_test_split(train[['Pclass', 'Age', 'Sex
 # MAGIC ```
 # MAGIC entire_pipeline = Pipeline([('feature_engineering', feature_engineering), ('dummy', DummyClassifier(strategy="most_frequent"))])
 # MAGIC ```
-# MAGIC Hold your constructed pipeline firmly! The only thing that we need to do now is to replace `DummyClassifier` with a proper learning model.   
+# MAGIC Hold your constructed pipeline firmly! The only thing that we need to do now is to replace [`DummyClassifier`](https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html) with a proper learning model.   
 # MAGIC We can start with a decision tree.
 
 # COMMAND ----------
 
-feature_engineering = ColumnTransformer([('numerical_scaler', preprocessing.MinMaxScaler(),['Pclass', 'Age']),
-                                         ('ohe', preprocessing.OneHotEncoder(sparse=False), ['Sex', 'Embarked'])
-                                        ],
-                                        remainder='passthrough')
+feature_engineering = ColumnTransformer(
+    [
+        ("numerical_scaler", preprocessing.MinMaxScaler(), ["Pclass", "Age"]),
+        ("ohe", preprocessing.OneHotEncoder(sparse=False), ["Sex", "Embarked"]),
+    ],
+    remainder="passthrough",
+)
 
 # COMMAND ----------
 
@@ -146,16 +150,40 @@ tuning.fit(X_train, y_train)
 # COMMAND ----------
 
 # Let's get the best parameters
-tuning.best_params_
+best_par = tuning.best_params_
+print(best_par)
 
 # COMMAND ----------
 
-# TASK 4A: Use the best setting of the two hyperparameters and fit a optimized decision tree. 
+# MAGIC %md
+# MAGIC If you want to have a more detailed look at the result from the grid search you can use the `cv_results_` attribute.
+# MAGIC The dict is easily transformed to a pandas DataFrame.
+
+# COMMAND ----------
+
+# Let's check out the full Grid Search results
+# We sort the dataframe according to the rank and have a look at the top 10 models
+gs_result = pd.DataFrame(tuning.cv_results_)
+gs_result.sort_values("rank_test_score").head(10)
+
+# COMMAND ----------
+
+# TASK 4A: Use the best setting of the two hyperparameters and fit a optimized decision tree.
 # Hint: Reuse the pipeline and when declaring it, specify the params.
 # Store it as dt_pipeline_tuned.
 
-dt_pipeline_tuned = Pipeline([('feature_engineering', feature_engineering), 
-                              ('decision_tree', DecisionTreeClassifier(max_depth=6, min_samples_split=5))])
+dt_pipeline_tuned = Pipeline(
+    [
+        ("feature_engineering", feature_engineering),
+        (
+            "decision_tree",
+            DecisionTreeClassifier(
+                max_depth=best_par["decision_tree__max_depth"],
+                min_samples_split=best_par["decision_tree__min_samples_split"],
+            ),
+        ),
+    ]
+)
 
 # Train
 dt_pipeline_tuned.fit(X_train, y_train)
@@ -175,6 +203,20 @@ print(metrics.accuracy_score(y_test, dt_pipeline_tuned.predict(X_test)))
 
 # MAGIC %md
 # MAGIC Does the optimized decision tree perform better then the one with default parameters?
+# MAGIC
+# MAGIC The best model can also be retrieved directly from the result of the grid search, if the parameter `refit=True` is used.
+# MAGIC By default the value of this parameter is `True` so instead of manually retraining we could eiter use the attribute `best_estimator_` to retrieve the model or make predictions by using the 
+# MAGIC [`predict()`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html#sklearn.model_selection.GridSearchCV.predict)
+# MAGIC straight away.
+
+# COMMAND ----------
+
+# retrieve the best model from the Grid Search object
+dt_tuning = tuning.best_estimator_
+print(metrics.accuracy_score(y_test, dt_tuning.predict(X_test)))
+
+# directly predict using the Grid Search object
+print(metrics.accuracy_score(y_test, tuning.predict(X_test)))
 
 # COMMAND ----------
 
