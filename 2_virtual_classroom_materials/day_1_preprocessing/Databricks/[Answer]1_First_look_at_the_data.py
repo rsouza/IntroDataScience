@@ -127,4 +127,4 @@ sns.boxplot(data['Test Veh Displacement (L)'], orient = 'v', linewidth = 2, colo
 
 # MAGIC %md
 # MAGIC \\(^{1}\\) Data Source: https://www.epa.gov/compliance-and-fuel-economy-data/data-cars-used-testing-fuel-economy  
-# MAGIC Material adapted for RBI internal purposes with full permissions from original authors. Source: https://github.com/zatkopatrik/authentic-data-science
+# MAGIC Material adapted for RBI internal purposes with full permissions from original authors.

@@ -2,7 +2,7 @@
 # MAGIC %md
 # MAGIC # Classification Task Instruction
 # MAGIC In this task, you will get a sense of using Python to solve a classification problem.
-# MAGIC The [dataset](https://archive.ics.uci.edu/dataset/572/taiwanese+bankruptcy+prediction) that we will be working with is from the Taiwanese Strock Exchange about the bankruptcy of various companies.   
+# MAGIC The [dataset](https://archive.ics.uci.edu/dataset/572/taiwanese+bankruptcy+prediction) that we will be working with is from the Taiwanese Stock Exchange about the bankruptcy of various companies.   
 # MAGIC ````
 # MAGIC  Goal: to predict, if a company is bankrupt (denoted in **variable y**) or not.
 # MAGIC ````

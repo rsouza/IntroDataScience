@@ -12,24 +12,24 @@ import math
 
 # MAGIC %md
 # MAGIC # 1. `.map()` method
-# MAGIC 
+# MAGIC
 # MAGIC - `.map()` method is a great tool to have when it comes to processing & transforming iterables of numeric values
 # MAGIC - it is a convenient way to perform _element-wise_ transformations and other data cleaning-related operations
 # MAGIC - this method on Series takes a function object and a sequence of iterables (list, tuple, dictionary, set, or Series) as arguments
 # MAGIC - any built-in functions that take an argument and returns a value can be used with `.map()`
 # MAGIC - it returns an iterator (don't worry about this concept for now)
 # MAGIC - the resulting values (an iterator) can be passed to the `list()` function or `set()` function to create a list or a set
-# MAGIC 
+# MAGIC
 # MAGIC Example code:
-# MAGIC 
+# MAGIC
 # MAGIC `map(function, iterable)`
-# MAGIC 
+# MAGIC
 # MAGIC To extract the result we can use for example: <break> 
-# MAGIC 
+# MAGIC
 # MAGIC `list(map(function, iterable))`
-# MAGIC 
+# MAGIC
 # MAGIC or 
-# MAGIC 
+# MAGIC
 # MAGIC `set(map(function, iterable))`
 
 # COMMAND ----------
@@ -84,24 +84,24 @@ print(result_map)
 
 # MAGIC %md
 # MAGIC Which one do you think is neater and shorter?
-# MAGIC 
+# MAGIC
 # MAGIC ```python
 # MAGIC result_loop = []
-# MAGIC 
+# MAGIC
 # MAGIC for word in our_list:
 # MAGIC   result_loops.append(len(word))
-# MAGIC 
+# MAGIC
 # MAGIC print(result_loop)
 # MAGIC ```
 # MAGIC vs. 
-# MAGIC 
+# MAGIC
 # MAGIC ```python
 # MAGIC result_map = list(map(len, our_list))
 # MAGIC print(result_map)
 # MAGIC ```
-# MAGIC 
+# MAGIC
 # MAGIC In the programming world, it is cleaner and much more concise and sophisticated to use ``map()`` instead of for-loops. On top of that, with `map()` you can guarantee that the original sequence won't be acccidentally mutated or changed, since `map()` always returns a sequence of the results and leads to fewer errors in code. 
-# MAGIC 
+# MAGIC
 # MAGIC Feel free to check out [this](https://stackoverflow.com/questions/1975250/when-should-i-use-a-map-instead-of-a-for-loop#:~:text=4%20Answers&text=map%20is%20useful%20when%20you,loop%20and%20constructing%20a%20list.) on stackoverflow, where the advantages of using map over for-loops are discussed.
 
 # COMMAND ----------
@@ -136,7 +136,7 @@ print(result_2)
 
 # MAGIC %md
 # MAGIC # 2. .filter() method
-# MAGIC 
+# MAGIC
 # MAGIC - similar to `.map()`, but instead of any function, `.filter()` takes a Boolean-valued function (a function that returns True or False based on the input data) instead of any built-in functions and a sequence of iterables (list, tuple, dictionary, set, or Series) as arugments
 # MAGIC - returns the items of the intput data which the Boolean-valued function returns `True`
 # MAGIC - the Boolean-valued function can be used-defined function
@@ -171,11 +171,11 @@ print(list_positive)
 
 # MAGIC %md
 # MAGIC # 3. `.apply()` method
-# MAGIC 
+# MAGIC
 # MAGIC - this method applies a function along an axis of the DataFrame \\(^{1}\\) 
 # MAGIC - it also works elementwise but is suited to more complex functions and operations
 # MAGIC - it accepts user-defined functions which apply a transformation/aggregation on a DataFrame (or Series) as well
-# MAGIC 
+# MAGIC
 # MAGIC You can find a nice comparison of `.map()` and `.apply()` methods and when to use them in [this article on stackoverflow](https://stackoverflow.com/questions/19798153/difference-between-map-applymap-and-apply-methods-in-pandas).
 
 # COMMAND ----------
@@ -217,7 +217,7 @@ print(students_1)
 
 # MAGIC %md
 # MAGIC ### Example 4.0
-# MAGIC 
+# MAGIC
 # MAGIC As we already know, regular functions are created using the `def` keyword. These type of functions can have any number of arguments and expressions.
 
 # COMMAND ----------
@@ -239,12 +239,12 @@ print(result_1)
 # MAGIC - the `def` keyword is not necessary with a lambda function
 # MAGIC - lambda functions can have any number of parameters, but the function body can only **contain one expression** (that means multiple statements are not allowed in the body of a lambda function) = it is used for *_one-line expressions_*
 # MAGIC - it returns a function object which can be assigned to variable
-# MAGIC 
+# MAGIC
 # MAGIC General syntax: `lambda x: x`
-# MAGIC 
-# MAGIC 
-# MAGIC 
-# MAGIC 
+# MAGIC
+# MAGIC
+# MAGIC
+# MAGIC
 # MAGIC ### Example 4.1
 
 # COMMAND ----------
@@ -256,13 +256,13 @@ print(our_lambda(5))
 
 # MAGIC %md
 # MAGIC This simple lambda function takes an input `x` (in our case number 5), multiplies it by `2` and adds `5`. <br>
-# MAGIC 
+# MAGIC
 # MAGIC Lambda functions are commonly used along `.apply()` method and can be really useful. <br>
-# MAGIC 
+# MAGIC
 # MAGIC ### Example 4.2
-# MAGIC 
+# MAGIC
 # MAGIC Imagine that the scores of students above have not been correctly recorded and we need to multiply them by 10. 
-# MAGIC 
+# MAGIC
 # MAGIC Use a lambda function along with `apply()` and assign it to the specific column of the dataset ('score'). 
 
 # COMMAND ----------
@@ -314,7 +314,7 @@ print(students_1)
 
 # MAGIC %md
 # MAGIC Did you know we can combine the `.map()` and `.filter()` methods? Since `.filter()` returns a selected iterable based on certain criteria, the output of `.filter()` can be our input for the `.map()` method.
-# MAGIC 
+# MAGIC
 # MAGIC In order to avoid a negative number as an argument for `math.sqrt()` which will result in a `ValueError`, we want to filter out the negative numbers before we apply the `math.sqrt()` method.
 
 # COMMAND ----------
@@ -357,9 +357,9 @@ print(list_round)
 
 # MAGIC %md
 # MAGIC # References
-# MAGIC 
+# MAGIC
 # MAGIC \\(^{1}\\) pandas. pandas.DataFrame.apply. [ONLINE] Available at: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html#pandas-dataframe-apply. [Accessed 14 September 2020].
-# MAGIC 
+# MAGIC
 # MAGIC Stackoverflow. Difference between map, applymap and apply methods in Pandas. [ONLINE] Available at: https://stackoverflow.com/questions/19798153/difference-between-map-applymap-and-apply-methods-in-pandas. [Accessed 14 September 2020].
-# MAGIC 
-# MAGIC Material adapted for RBI internal purposes with full permissions from original authors. Source: https://github.com/zatkopatrik/authentic-data-science
+# MAGIC
+# MAGIC Material adapted for RBI internal purposes with full permissions from original authors.

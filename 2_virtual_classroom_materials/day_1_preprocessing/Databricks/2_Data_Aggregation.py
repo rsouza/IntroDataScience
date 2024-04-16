@@ -290,4 +290,4 @@ def percentile_95(column):
 # MAGIC
 # MAGIC License: Database: Open Database, Contents: © Original Authors
 # MAGIC
-# MAGIC Material adapted for RBI internal purposes with full permissions from original authors. Source: https://github.com/zatkopatrik/authentic-data-science
+# MAGIC Material adapted for RBI internal purposes with full permissions from original authors.

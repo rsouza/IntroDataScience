@@ -376,4 +376,4 @@ print(df_2)
 # MAGIC
 # MAGIC # References
 # MAGIC
-# MAGIC Material adapted for RBI internal purposes with full permissions from original authors. Source: https://github.com/zatkopatrik/authentic-data-science
+# MAGIC Material adapted for RBI internal purposes with full permissions from original authors.

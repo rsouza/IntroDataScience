@@ -661,4 +661,4 @@ pattern_dec.findall(text)
 # MAGIC
 # MAGIC pandas. pandas.Series.str.contains. [ONLINE] Available at: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.contains.html. [Accessed 14 September 2020].
 # MAGIC
-# MAGIC Material adapted for RBI internal purposes with full permissions from original authors. Source: https://github.com/zatkopatrik/authentic-data-science
+# MAGIC Material adapted for RBI internal purposes with full permissions from original authors.
