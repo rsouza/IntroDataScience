@@ -1,23 +1,16 @@
 # Databricks notebook source
 # MAGIC %md
 # MAGIC ## One-class SVM 
-# MAGIC 
+# MAGIC
 # MAGIC One-class SVM (one-class support vector machines) is an unsupervised algorithm that learns a decision function for novelty detection: classifying new data as similar or different to the training set. It basically means that this algorithm is trained only on the 'normal' data. It learns the boundaries of these normal points and is therefore able to classify any points that lie outside the boundary as outliers.
-# MAGIC 
-# MAGIC You can take a look at the parameters of the model down below. For more information regarding the model, please check out the [OneClassSVM documentation](
-# MAGIC https://scikit-learn.org/stable/modules/generated/sklearn.svm.OneClassSVM.html#sklearn.svm.OneClassSVM
-# MAGIC ).
-
-# COMMAND ----------
-
-# MAGIC %md
-# MAGIC class sklearn.svm.OneClassSVM(*, kernel='rbf', degree=3, gamma='scale', coef0=0.0, tol=0.001, nu=0.5, shrinking=True, cache_size=200, verbose=False, max_iter=-1
-
-# COMMAND ----------
-
-# MAGIC %md
+# MAGIC
+# MAGIC You can take a look at the parameters of the model down below. For more information regarding the model, please check out the
+# MAGIC [OneClassSVM documentation](https://scikit-learn.org/stable/modules/generated/sklearn.svm.OneClassSVM.html#sklearn.svm.OneClassSVM).
+# MAGIC
+# MAGIC ```class sklearn.svm.OneClassSVM(*, kernel='rbf', degree=3, gamma='scale', coef0=0.0, tol=0.001, nu=0.5, shrinking=True, cache_size=200, verbose=False, max_iter=-1)```
+# MAGIC
 # MAGIC #### Explanation of important parameters:
-# MAGIC 
+# MAGIC
 # MAGIC - `kernel`: specifies the kernel type to be used in the algorithm.
 # MAGIC - `nu`: the proportion of outliers you expect to observe .
 # MAGIC - `gamma`: determines the smoothing of the contour lines.
@@ -26,8 +19,13 @@
 
 # MAGIC %md
 # MAGIC ### One-class SVM Exercises
-# MAGIC 
-# MAGIC First we will import `OneClassSVM` from `sklearn.svm`, `make_blobs`, `numpy`, and `matplotlib.pyplot`.
+# MAGIC
+# MAGIC First we will import
+# MAGIC [`OneClassSVM`](https://scikit-learn.org/stable/modules/generated/sklearn.svm.OneClassSVM.html)
+# MAGIC from
+# MAGIC [`sklearn.svm`](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.svm),
+# MAGIC [`make_blobs`](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_blobs.html#sklearn.datasets.make_blobs),
+# MAGIC `numpy`, and `matplotlib.pyplot`.
 
 # COMMAND ----------
 
@@ -39,7 +37,9 @@ import matplotlib.pyplot as plt
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC We have created a random sample data set below by using the `make_blobs()` function.
+# MAGIC We have created a random sample data set below by using the
+# MAGIC [`make_blobs()`](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_blobs.html#sklearn.datasets.make_blobs)
+# MAGIC function.
 
 # COMMAND ----------
 
@@ -62,7 +62,11 @@ plt.show()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC **TO DO:** Fit the model with the data set `x` that we created at the beginning and get the prediction data by using the `fit()` and `predict()` methods.
+# MAGIC **TO DO:** Fit the model with the data set `x` that we created at the beginning and get the prediction data by using the
+# MAGIC [`fit()`](https://scikit-learn.org/stable/modules/generated/sklearn.svm.OneClassSVM.html#sklearn.svm.OneClassSVM.fit)
+# MAGIC and
+# MAGIC [`predict()`](https://scikit-learn.org/stable/modules/generated/sklearn.svm.OneClassSVM.html#sklearn.svm.OneClassSVM.predict)
+# MAGIC methods.
 
 # COMMAND ----------
 
@@ -93,38 +97,35 @@ plt.show()
 
 # MAGIC %md
 # MAGIC ## Local Outlier Factor
-# MAGIC 
-# MAGIC The Local Outlier Factor (LOF) algorithm is an unsupervised anomaly detection method which computes the local density deviation of a given data point with respect to its neighbors. It considers as outliers the samples that have a substantially lower density than their neighbors. Note that when LOF is used for outlier detection it has no `predict`, `decision_function` and `score_samples` methods. 
-# MAGIC 
+# MAGIC
+# MAGIC [The Local Outlier Factor (LOF) algorithm](https://en.wikipedia.org/wiki/Local_outlier_factor)
+# MAGIC is an unsupervised anomaly detection method which computes the local density deviation of a given data point with respect to its neighbors. It considers as outliers the samples that have a substantially lower density than their neighbors. Note that when LOF is used for outlier detection it has no `predict`, `decision_function` and `score_samples` methods. 
+# MAGIC
 # MAGIC LOF is a score that describes how likely a certain data point is to be an outlier/anomaly.
-# MAGIC 
+# MAGIC
 # MAGIC - When LOF is around 1 it is most likely that the data point is normal.
 # MAGIC - When LOF scores higher than 1 it is most likely that the data point is an outlier.
-# MAGIC 
+# MAGIC
 # MAGIC In general, the LOF of a point tells us the density of this point compared to the density of its neighbors. If the density of a point is much smaller than the densities of its neighbors (LOF ≫1), the point is far from dense areas and, hence, an outlier.
-# MAGIC 
+# MAGIC
 # MAGIC #### Explanation of important parameters
 # MAGIC - `n_neighbors`: the number of neighbors considered
 # MAGIC     - It should be greater than the minimum number of samples a cluster has to contain, so that other samples can be local outliers relative to this cluster.
 # MAGIC     - It should be smaller than the maximum number of close-by samples that can potentially be local outliers. 
 # MAGIC     - In practice, such information is generally not available, and taking `n_neighbors=20` appears to work well in general.
 # MAGIC - `contamination`: the amount of contamination of the data set, i.e. the proportion of outliers in the data set. When fitting, this is used to define the threshold on the scores of the samples.
-# MAGIC 
+# MAGIC
 # MAGIC #### Explanation of attributes
 # MAGIC - `negative_outlier_factor_`: the opposite of LOF for the training samples. The higher, the more normal. Inliers tend to have a LOF score close to 1 (`negative_outlier_factor_` close to -1), while outliers tend to have a larger LOF score. The local outlier factor (LOF) of a sample captures its supposed 'degree of abnormality'. It is the average of the ratio of the local reachability density of a sample and those of its k-nearest neighbors.
 # MAGIC - `n_neighbors_`: the actual number of neighbors used for k-neighbors queries.
 # MAGIC - `offset_`: the offset used to obtain binary labels from the raw scores. Observations having a `negative_outlier_factor` smaller than `offset_` are detected as **abnormal**. 
-# MAGIC 
+# MAGIC
 # MAGIC See more information here: [LocalOutlierFactor Documentation](https://scikit-learn.org/stable/auto_examples/neighbors/plot_lof_outlier_detection.html#:~:text=The%20Local%20Outlier%20Factor%20)
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ### Local outlier factor exercises
-
-# COMMAND ----------
-
-# MAGIC %md
 # MAGIC Firstly, we will important all necessary packages.
 
 # COMMAND ----------
@@ -135,7 +136,9 @@ from sklearn.datasets import make_blobs
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC We have created a random sample dataset below again by using the `make_blobs()` function.
+# MAGIC We have created a random sample dataset below again by using the
+# MAGIC [`make_blobs()`](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_blobs.html#sklearn.datasets.make_blobs)
+# MAGIC function.
 
 # COMMAND ----------
 
@@ -155,7 +158,9 @@ plt.show()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC **TO DO:** Construct a `LocalOutlierFactor` model with `n_neighbors` set to 20 and `contamination` set to 0.03.
+# MAGIC **TO DO:** Construct a
+# MAGIC [`LocalOutlierFactor`](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.LocalOutlierFactor.html)
+# MAGIC model with `n_neighbors` set to 20 and `contamination` set to 0.03.
 
 # COMMAND ----------
 
@@ -164,7 +169,9 @@ plt.show()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC **TO DO:** Fit the dataset which we generated in the beginning to the model and make prediction using the `fit_predict()` method.
+# MAGIC **TO DO:** Fit the dataset which we generated in the beginning to the model and make prediction using the
+# MAGIC [`fit_predict()`](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.LocalOutlierFactor.html#sklearn.neighbors.LocalOutlierFactor.fit_predict)
+# MAGIC method.
 
 # COMMAND ----------
 
@@ -193,7 +200,9 @@ print(threshold)
 
 # MAGIC %md
 # MAGIC There are two ways that we can learn about outliers.
-# MAGIC 1. Using the `fit_predict()` method and extracting negative outputs as the outliers.
+# MAGIC 1. Using the
+# MAGIC [`fit_predict()`](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.LocalOutlierFactor.html#sklearn.neighbors.LocalOutlierFactor.fit_predict)
+# MAGIC method and extracting negative outputs as the outliers.
 # MAGIC 2. Obtaining the threshold value and extract the anomalies by comparing the values of the elements with the threshold value.
 
 # COMMAND ----------

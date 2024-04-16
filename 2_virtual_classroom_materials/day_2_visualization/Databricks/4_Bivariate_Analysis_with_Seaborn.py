@@ -451,7 +451,7 @@ sns.regplot(data = penguins,
 # COMMAND ----------
 
 # Computing correlation coefficients
-corr = penguins.corr()
+corr = penguins.corr(numeric_only=True)
 
 # COMMAND ----------
 

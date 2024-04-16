@@ -62,8 +62,7 @@ class Corpus(object):
                 tokens = [t.text.lower() for t in self.nlp(abstract)]
                 yield tokens
                             
-                    
-documents = Corpus(os.path.join(os.getcwd(), "../../../Data/arxiv/arxiv.csv"))
+documents = Corpus("../../../Data/arxiv/arxiv.csv")
 
 # COMMAND ----------
 
@@ -174,7 +173,7 @@ target_word = "bert"
 selected_words = [w[0] for w in model.wv.most_similar(positive=[target_word], topn=200)] + [target_word]
 embeddings = [model.wv[w] for w in selected_words] + model.wv["bert"]
 
-mapped_embeddings = TSNE(n_components=2, metric='cosine', init='pca', square_distances=True).fit_transform(embeddings)
+mapped_embeddings = TSNE(n_components=2, metric='cosine', init='pca', learning_rate="auto").fit_transform(embeddings)
 
 # COMMAND ----------
 

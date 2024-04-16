@@ -2,7 +2,7 @@
 # MAGIC %md
 # MAGIC # Clustering Task Instruction
 # MAGIC
-# MAGIC In this task, we will work on some clustering problems. The dataset we will be working on is a 52-week of sales transaction report. The **ultimate goal** of this task is to find similar time series in the sales transaction data.
+# MAGIC In this task, we will work on some clustering problems. The [dataset](https://www.kaggle.com/datasets/crawford/weekly-sales-transactions) we will be working on is a 52-week of sales transaction report. The **ultimate goal** of this task is to find similar time series in the sales transaction data.
 
 # COMMAND ----------
 
@@ -72,12 +72,6 @@
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC **Dataset citation:**
-# MAGIC @inproceedings{tan2014time,
-# MAGIC title={Time series clustering: A superior alternative for market basket analysis},
-# MAGIC author={Tan, Swee Chuan and San Lau, Jess Pei},
-# MAGIC booktitle={Proceedings of the First International Conference on Advanced Data and Information Engineering (DaEng-2013)},
-# MAGIC pages={241--248},
-# MAGIC year={2014},
-# MAGIC organization={Springer, Singapore}
-# MAGIC }
+# MAGIC **Dataset citation:**  
+# MAGIC [[Tan et al., 2014] Tan, S.C., Lau, J.P.S. (2014). Time Series Clustering: A Superior Alternative for Market Basket Analysis. In: Herawan, T., Deris, M., Abawajy, J. (eds) Proceedings of the First International Conference on Advanced Data and Information Engineering (DaEng-2013). Lecture Notes in Electrical Engineering, vol 285. Springer, Singapore.](https://link.springer.com/chapter/10.1007/978-981-4585-18-7_28)
+

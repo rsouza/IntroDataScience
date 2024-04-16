@@ -301,7 +301,7 @@ for col in numeric_cols:
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ##### 4.1.1 - Analizing distributions on numerical variables - Spotting outliers
+# MAGIC ##### 4.1.1 - Analyzing distributions on numerical variables - Spotting outliers
 # MAGIC
 # MAGIC ![Outliers](https://sphweb.bumc.bu.edu/otlt/MPH-Modules/PH717-QuantCore/PH717-Module6-RandomError/Normal%20Distribution%20deviations.png)
 
@@ -333,7 +333,7 @@ sns.boxplot(x="peak-rpm", data=df, ax=ax)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ##### 4.1.2 - Analizing distributions on categorical variables
+# MAGIC ##### 4.1.2 - Analyzing distributions on categorical variables
 
 # COMMAND ----------
 
@@ -387,7 +387,7 @@ sns.pairplot(df.select_dtypes(include='number'))
 # COMMAND ----------
 
 plt.figure(figsize=(12,12))
-sns.heatmap(df.corr(), cbar=True, annot=True, cmap='vlag', vmin = -1, vmax = 1)
+sns.heatmap(df.corr(numeric_only=True), cbar=True, annot=True, cmap='vlag', vmin = -1, vmax = 1)
 
 # COMMAND ----------
 
@@ -627,13 +627,15 @@ plt.show()
 
 # COMMAND ----------
 
-bank_df = pd.read_csv("../../../3_artificial_use_case/1_Classification_RECOMMENDED/Bank_Dataset/bank-additional-full.csv", sep=";")
-bank_df.head()
+# bank_df = ...
+# bank_df.head()
+# Your code here...
 
 # COMMAND ----------
 
-happiness_df = pd.read_csv("../../../3_artificial_use_case/2_Regression_RECOMMENDED/Datasets/2015.csv")
-happiness_df.head()
+# happiness_df = ...
+# happiness_df.head()
+# Your code here...
 
 # COMMAND ----------
 

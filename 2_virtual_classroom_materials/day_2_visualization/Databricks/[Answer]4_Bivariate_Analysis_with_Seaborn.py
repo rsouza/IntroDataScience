@@ -480,7 +480,7 @@ sns.regplot(data = penguins,
 # COMMAND ----------
 
 # Computing correlation coefficients
-corr = penguins.corr()
+corr = penguins.corr(numeric_only=True).corr()
 
 # COMMAND ----------
 
@@ -579,7 +579,7 @@ data
 #        >>> Set color palette: 'RdGy'
 
 plt.figure(figsize = (13,9))
-data_corr = data.corr()
+data_corr = data.corr(numeric_only=True)
 sns.heatmap(data_corr,
             cmap = 'RdGy',
             annot = True);

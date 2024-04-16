@@ -152,7 +152,7 @@ import shap
 
 # COMMAND ----------
 
-explainer = shap.LinearExplainer(LR, X_train, feature_perturbation="interventional")
+explainer = shap.LinearExplainer(LR, X_train)
 shap_values = explainer.shap_values(X_test)
 
 shap.summary_plot(shap_values, X_test, plot_size=[12,8])
@@ -199,9 +199,11 @@ display(shap_display)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC That’s a plot of a passenger who didn’t survive. 
-# MAGIC + The plot shows that his “Sex” (being male) and his “class” (being in the third class) were decreasing his survival rate. 
-# MAGIC + The plot also shows that the number of siblings (“SibSp) being 0 increased his chance slightly. Maybe people who were alone in the ship without family were able to run faster without distraction.
+# MAGIC That’s a plot of a passenger who didn’t survive.  
+# MAGIC This person is male and travelling in 3rd class which decreases his survival chances.
+# MAGIC The low fare he paid for his ticket and the fact that he was travelling with a sibling is also an indicator for a low rate of survival.  
+# MAGIC On there are two attributes which increase the chances of survival.
+# MAGIC First he embarked from the first stop and more importantly he was quite young.
 # MAGIC
 # MAGIC Let’s take a look at someone who survived:
 

@@ -39,6 +39,7 @@ import lime.lime_tabular
 
 import pandas as pd
 import numpy as np
+import seaborn as sns
 import lightgbm as lgb
 
 from sklearn.preprocessing import LabelEncoder
@@ -52,28 +53,76 @@ mlflow.autolog(disable=True)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## 2 - Data Preprocessing
+# MAGIC ## 2 - Data Preprocessing and fitting a LightGBM model
+# MAGIC
+# MAGIC We are going to use the Titanic data set. At this point you should be fairly familiar with it. Most of the preprocessing should not contain any new material and you can focus on the sections using LIME. 
 
 # COMMAND ----------
 
 # reading the titanic data
-df_titanic = pd.read_csv("../../../Data/titanic_data.csv")
+df_titanic = pd.read_csv("../../../Data/data_titanic/train.csv")
 
-
-# data preparation
-df_titanic.fillna(0,inplace=True)
 df_titanic.head()
 
 # COMMAND ----------
 
-le = LabelEncoder()
+cols = df_titanic.columns 
+colours = ['darkblue', 'red'] 
+sns.heatmap(df_titanic[cols].isnull(), cmap=sns.color_palette(colours))
 
-feat = ['PassengerId', 'Pclass_le', 'Sex_le','SibSp_le', 'Parch','Fare']
+# COMMAND ----------
 
-# label encoding textual data
-df_titanic['Pclass_le'] = le.fit_transform(df_titanic['Pclass'])
-df_titanic['SibSp_le'] = le.fit_transform(df_titanic['SibSp'])
-df_titanic['Sex_le'] = le.fit_transform(df_titanic['Sex'])
+pct_list = []
+for col in df_titanic.columns:
+    pct_missing = np.mean(df_titanic[col].isnull())
+    if round(pct_missing*100) >0:
+        pct_list.append([col, round(pct_missing*100)])
+    print('{} - {}%'.format(col, round(pct_missing*100)))
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC The feature “Cabin” is missing 77% of the data. So we are going to remove that feature. 
+# MAGIC
+# MAGIC Age, however, is missing 20% of the data. Age should be an important variable in this application since it must have affected the probability of survival (e.g. older people or children might have been given the priority). Usually, we would just fill the missing values with the mean of the other’s people’s age. However, in this specific dataset, people were from different classes so it’s not a good idea to treat all of them as one group. The dataset has a feature “Name” the name has the title of the people (e.g. “Mr”, “Miss”…etc). That title should be a great indication of the age. Also, we should keep in mind that at that time of the incidence (in 1912) the socioeconomic status affected the people’s title regardless on age (e.g. younger people who are rich could get titles that usual poor people at the same age wouldn’t). So we are going to group people by their title and Pclass and then we will assign the mean of the age of each group to the missing age in each group.
+
+# COMMAND ----------
+
+# extracting the title from the name:
+Title = []
+for name in  df_titanic.Name:
+    Title.append(name.split(",")[1].split(".")[0])
+    
+df_titanic["Title"] = Title
+
+# COMMAND ----------
+
+#grouping people with pclass and title
+df_titanic.groupby(["Pclass", 'Title'])['Age'].agg(['mean']).round(0)
+
+# adding the mean of the age of each group to the missing values
+df_titanic["Age"] = df_titanic.groupby(["Title", "Pclass"])["Age"].transform(lambda x: x.fillna(x.mean()))
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC Now, we can also delete the unneeded features like the name (after extracting the title from it), the ticket ID, the passenger ID.
+
+# COMMAND ----------
+
+df_titanic.drop(columns = ["Name", "PassengerId", "Ticket", "Cabin", "Title"], inplace=True)
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC As a final step, we will encode the categorical features into numerical:
+
+# COMMAND ----------
+
+df_titanic.Sex = pd.Categorical(df_titanic.Sex)
+df_titanic.Embarked = pd.Categorical(df_titanic.Embarked)
+df_titanic["Sex"] = df_titanic.Sex.cat.codes
+df_titanic["Embarked"] = df_titanic.Embarked.cat.codes
 
 # COMMAND ----------
 
@@ -82,27 +131,35 @@ df_titanic['Sex_le'] = le.fit_transform(df_titanic['Sex'])
 
 # COMMAND ----------
 
-X_train, X_test, y_train, y_test = train_test_split(df_titanic[feat],df_titanic[['Survived']],test_size=0.3)
+df_titanic.head()
+
+# COMMAND ----------
+
+feat = ["Pclass", "Sex", "SibSp", "Parch", "Fare", "Embarked"]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    df_titanic[feat], df_titanic[["Survived"]], test_size=0.3
+)
 
 # COMMAND ----------
 
 # specify your configurations as a dict
 lgb_params = {
-    'task': 'train',
-    'boosting_type': 'goss',
-    'objective': 'binary',
-    'metric':'binary_logloss',
-    'metric': {'l2', 'auc'},
-    'num_leaves': 50,
-    'learning_rate': 0.1,
-    'feature_fraction': 0.8,
-    'bagging_fraction': 0.8,
-    'verbose': 0,
-    'num_iteration':100,
-    'num_threads':7,
-    'max_depth':12,
-    'min_data_in_leaf':100,
-    'alpha':0.5}
+    "task": "train",
+    "data_sample_strategy": "goss",
+    "objective": "binary",
+    "metric": "binary_logloss",
+    "metric": {"l2", "auc"},
+    "num_leaves": 5,
+    "learning_rate": 0.1,
+    "feature_fraction": 0.8,
+    "bagging_fraction": 0.8,
+    "verbose": 0,
+    "num_iteration": 100,
+    "num_threads": 7,
+    "max_depth": 12,
+    "alpha": 0.5,
+}
 
 
 # def lgb_model(X_train,y_train,X_test,y_test,lgb_params):
@@ -112,15 +169,15 @@ lgb_eval = lgb.Dataset(X_test, y_test)
 
 
 # training the lightgbm model
-model = lgb.train(lgb_params,
-                  lgb_train,
-                  num_boost_round=20,
-                  valid_sets=lgb_eval,
-                      callbacks=[
-                        lgb.early_stopping(stopping_rounds=5),
-                    ]
-                 )
-
+model = lgb.train(
+    lgb_params,
+    lgb_train,
+    num_boost_round=20,
+    valid_sets=lgb_eval,
+    callbacks=[
+        lgb.early_stopping(stopping_rounds=5),
+    ],
+)
 
 # COMMAND ----------
 
@@ -194,5 +251,5 @@ sp_obj = submodular_pick.SubmodularPick(explainer,
                                         num_features=3,
                                         num_exps_desired=5)
 
-#[exp.as_pyplot_figure(label=1) for exp in sp_obj.sp_explanations]
-[exp.show_in_notebook() for exp in sp_obj.sp_explanations]
+for exp in sp_obj.sp_explanations:
+    exp.show_in_notebook()

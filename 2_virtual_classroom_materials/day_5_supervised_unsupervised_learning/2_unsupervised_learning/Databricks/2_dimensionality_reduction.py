@@ -1,4 +1,12 @@
 # Databricks notebook source
+pip install "threadpoolctl>=3.1.0"
+
+# COMMAND ----------
+
+dbutils.library.restartPython()
+
+# COMMAND ----------
+
 # MAGIC %md
 # MAGIC # Dimensionality reduction
 
@@ -16,12 +24,10 @@ from sklearn import datasets
 # MAGIC %md
 # MAGIC ## PCA
 # MAGIC
-# MAGIC Principal component analysis is an unsupervised learning method that tries to detect the directions in which the vector formed by the data varies most.
-
-# COMMAND ----------
-
-# MAGIC %md
-# MAGIC First we import the data of grayscale digits.
+# MAGIC [Principal component analysis](https://en.wikipedia.org/wiki/Principal_component_analysis)
+# MAGIC is an unsupervised learning method that tries to detect the directions in which the vector formed by the data varies most.
+# MAGIC
+# MAGIC First we import the [data of grayscale digits](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_digits.html).
 
 # COMMAND ----------
 
@@ -61,8 +67,13 @@ for ax, image, label in zip(axes, digits.images, digits.target):
 # MAGIC Our data has 64 dimensions, but we are going to reduce it to only 2. We will see that, even with just 2 dimensions, the digits are already separating into clusters.
 # MAGIC
 # MAGIC __TO DO__: 
-# MAGIC - Import `PCA` from the `scikit-learns.decomposition` module.
-# MAGIC - `fit_transform` a `PCA()`-model with `n_components = 2` on `x_digits` and assign the result to the variable `x_reduced`.
+# MAGIC - Import
+# MAGIC [`PCA`](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html)
+# MAGIC from the `scikit-learns.decomposition` module.
+# MAGIC - [`fit_transform`](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html#sklearn.decomposition.PCA.fit_transform)
+# MAGIC a
+# MAGIC [`PCA()`](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html)-model 
+# MAGIC with `n_components = 2` on `x_digits` and assign the result to the variable `x_reduced`.
 
 # COMMAND ----------
 
@@ -88,7 +99,9 @@ plt.title('MNIST. PCA projection');
 # MAGIC In practice, we would choose the number of principal components such that we can explain e.g. 90% of the initial data dispersion (via the `explained_variance_ratio_`). 
 # MAGIC
 # MAGIC __TO DO__: 
-# MAGIC - Return the explained variance ratio with `PCA()`'s attribute `explained_variance_ratio_`.  
+# MAGIC - Return the explained variance ratio with
+# MAGIC [`PCA()`](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html)'s
+# MAGIC attribute `explained_variance_ratio_`.  
 # MAGIC Each value returns the percentage of variance explained by each of the selected components. 
 # MAGIC - How much variance did we explain with the first two components?
 # MAGIC
@@ -130,7 +143,7 @@ plt.show()
 # MAGIC %md
 # MAGIC __Scaling__
 # MAGIC
-# MAGIC In the MNIST dataset all features have the same scale out of the box. Thus the PCA algorithm is not impacted by different scales. 
+# MAGIC In the [MNIST](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_digits.html) dataset all features have the same scale out of the box. Thus the [`PCA`](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html) algorithm is not impacted by different scales. 
 # MAGIC
 # MAGIC While many algorithms (such as SVM, K-nearest neighbors, and logistic regression) require features to be normalized, Principle Component Analysis (PCA) especially is a prime example of when normalization is important. In PCA we are interested in the components that maximize the variance. If one component (e.g. human height) varies less than another (e.g. weight) because of their respective scales (meters vs. kilos), PCA might determine that the direction of maximal variance more closely corresponds to the 'weight' axis if those features are not scaled. As a change in height of one meter can be considered to be much more important than a change in weight of one kilogram, this is clearly incorrect.
 # MAGIC
@@ -150,7 +163,7 @@ df_wine = pd.DataFrame(x_wine, columns = cols_wine)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC __TO DO__: Use the `describe()` method on `df_wine` to see standard deviations, quartiles and other descriptive statistics of the columns.
+# MAGIC __TO DO__: Use the [`describe()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.describe.html) method on `df_wine` to see standard deviations, quartiles and other descriptive statistics of the columns.
 
 # COMMAND ----------
 
@@ -159,13 +172,13 @@ df_wine = pd.DataFrame(x_wine, columns = cols_wine)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Note that the scales of the features are different. E.g. 'proline' is in the magnitude of hundreds, magnesium in tens and others are even smaller.
+# MAGIC Note that the scales of the features are different. E.g. `proline` is in the magnitude of hundreds, magnesium in tens and others are even smaller.
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC __TO DO__: 
-# MAGIC - `fit_tranform` the PCA with 2 components on `x_wine`.
+# MAGIC - [`fit_tranform`](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html#sklearn.decomposition.PCA.fit_transform) the PCA with 2 components on `x_wine`.
 # MAGIC - Return the reduced data set with 2 features and assign it to the variable `x_reduced`.
 # MAGIC - Print the components of the PCA using the `components_` attribute.
 
@@ -177,8 +190,12 @@ df_wine = pd.DataFrame(x_wine, columns = cols_wine)
 
 # MAGIC %md
 # MAGIC __TO DO__: 
-# MAGIC - Use `StandardScaler()` to scale (`fit_transform`) the `x_wine` and store it in the `x_wine_scaled` variable.
-# MAGIC - `fit_transform` the PCA with 2 components on the scaled data.
+# MAGIC - Use
+# MAGIC [`StandardScaler()`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html)
+# MAGIC to scale
+# MAGIC ([`fit_transform`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html#sklearn.preprocessing.StandardScaler.fit_transform))
+# MAGIC the `x_wine` and store it in the `x_wine_scaled` variable.
+# MAGIC - [`fit_transform`](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html#sklearn.decomposition.PCA.fit_transform) the PCA with 2 components on the scaled data.
 # MAGIC - Return the reduced data set with 2 features and assign it to the variable `x_reduced_scaled`.
 # MAGIC - Print the components of the PCA using the `components_` attribute.
 
@@ -220,11 +237,9 @@ from sklearn.metrics import accuracy_score
 
 # MAGIC %md
 # MAGIC # Optional part
-
-# COMMAND ----------
-
-# MAGIC %md
-# MAGIC __TO DO__: Use the `train_test_split()` function to split the `x_wine`, `y_wine` data into `x_train`, `x_test`, `y_train`, `y_test`.
+# MAGIC __TO DO__: Use the
+# MAGIC [`train_test_split()`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html)
+# MAGIC function to split the `x_wine`, `y_wine` data into `x_train`, `x_test`, `y_train`, `y_test`.
 
 # COMMAND ----------
 
@@ -233,7 +248,13 @@ from sklearn.metrics import accuracy_score
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Here we will make use of [`make_pipeline`](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html) which constructs a pipeline from the given estimators. First we will apply a PCA with 2 components to reduce the dimensionality of the training data `x_train` and then apply `RandomForestClassifier()` with default parameters. We initialize a PCA and a RF in the pipeline and fit it to the training data.
+# MAGIC Here we will make use of
+# MAGIC [`make_pipeline`](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html)
+# MAGIC which constructs a pipeline from the given estimators.
+# MAGIC First we will apply a PCA with 2 components to reduce the dimensionality of the training data `x_train` and then apply
+# MAGIC [`RandomForestClassifier()`](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html)
+# MAGIC with default parameters.
+# MAGIC We initialize a PCA and a RF in the pipeline and fit it to the training data.
 
 # COMMAND ----------
 
@@ -254,11 +275,20 @@ accuracy_score(y_test, pred_test_unscaled)
 
 # MAGIC %md
 # MAGIC __TO DO__:  Repeat the same steps as in the previous two cells.
-# MAGIC - Create a new pipeline but now include the additional estimator `StandardScaler()` at the beginning of the pipeline.   
+# MAGIC - Create a new pipeline but now include the additional estimator
+# MAGIC [`StandardScaler()`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html)
+# MAGIC at the beginning of the pipeline.   
 # MAGIC Assign the pipeline to the variable `clf_scaled`.   
-# MAGIC In the example above you had 2 estimators (`PCA(2)` and `RandomForestClassifier()`). Now you will have 3 estimators. 
+# MAGIC In the example above you had 2 estimators (
+# MAGIC [`PCA(2)`](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html)
+# MAGIC and
+# MAGIC [`RandomForestClassifier()`](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html)
+# MAGIC ).
+# MAGIC Now you will have 3 estimators. 
 # MAGIC - Fit the pipeline to the training data `x_train` and `y_train`.
-# MAGIC - Use the `predict()` method of `clf_scaled` on the test data `x_test` and store the predictions to a variable `pred_test_scaled`.
+# MAGIC - Use the
+# MAGIC [`predict()`](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline.predict)
+# MAGIC method of `clf_scaled` on the test data `x_test` and store the predictions to a variable `pred_test_scaled`.
 # MAGIC - Print the accuracy of the `pred_test_scaled` as compared to `y_test`.
 
 # COMMAND ----------
@@ -275,7 +305,8 @@ accuracy_score(y_test, pred_test_unscaled)
 # MAGIC %md
 # MAGIC ## t-SNE
 # MAGIC
-# MAGIC t-SNE (t-distributed stochastic neighbor embedding) is another dimensionality reduction method that works well for visualizing high-dimensional data.   
+# MAGIC [t-SNE](https://scikit-learn.org/stable/modules/manifold.html#t-sne)
+# MAGIC (t-distributed stochastic neighbor embedding) is another dimensionality reduction method that works well for visualizing high-dimensional data.   
 # MAGIC With t-SNE you can get **different results with different initializations**.   
 # MAGIC If the number of features is high then t-SNE can get quite slow. 
 # MAGIC
@@ -290,7 +321,12 @@ from datetime import datetime as dt
 
 # MAGIC %md
 # MAGIC __TO DO__: 
-# MAGIC Use t-SNE with `n_components = 2` and then apply `fit_transform` to the random 2000 examples from the MNIST data set which are stored in `x_digits`. Store the result in the variable `x_embedded`.
+# MAGIC Use
+# MAGIC [`TSNE()`](https://scikit-learn.org/stable/modules/generated/sklearn.manifold.TSNE.html)
+# MAGIC with `n_components = 2, init="random", learning_rate="auto"` and then apply `fit_transform` to the random 2000 examples from the MNIST data set which are stored in `x_digits`.
+# MAGIC Store the result in the variable `x_embedded`.
+# MAGIC
+# MAGIC *Hint*: Since we set the parameter for initialisation to `"random"` you can observe different results by rerunning the task and visualization. By default PCA would be used to get the initial state.
 
 # COMMAND ----------
 
@@ -329,20 +365,32 @@ import numpy as np
 import pandas as pd
 import random
 import tensorflow as tf
+from pathlib import Path
+import zipfile
 
-current_dir = os.getcwd()
-current_dir = os.path.join(current_dir, "../../../../Data")
-current_dir
+mnist_path = Path(os.getcwd()).parents[3] / "Data" / "mnist.zip"
+print(mnist_path)
 
 # COMMAND ----------
 
-(x_digits, y_digits), (_, _) = tf.keras.datasets.mnist.load_data(path=current_dir+'/mnist.npz')
+with zipfile.ZipFile(mnist_path, "r") as zfile:
+    mnist = np.load(zfile.open('mnist.npz'))
+    x_digits = mnist.get("x_train")
+    x_test = mnist.get("x_test")
+    y_digits = mnist.get("y_train")
+    y_test = mnist.get("y_test")
 
-# if you have problems with RAM memory run the 3 lines below that will select just a subset of the data
+# COMMAND ----------
 
-idxs_ = random.sample(range(x_digits.shape[0]), 10000)
-x_digits = x_digits[idxs_]
-y_digits = y_digits[idxs_]
+# MAGIC %md
+# MAGIC If you have problems with RAM memory uncomment and run the three lines of code below.
+# MAGIC They will select only a subset of the data.
+
+# COMMAND ----------
+
+#idxs_ = random.sample(range(x_digits.shape[0]), 10000)
+#x_digits = x_digits[idxs_]
+#y_digits = y_digits[idxs_]
 
 # COMMAND ----------
 
@@ -368,9 +416,9 @@ for i in range(10):
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC There are 60.000 numbers represented by 28 x 28 matrices with each entry encoding the color intensity for a pixel. We need to flatten every matrix into a vector of 28 x 28 = 784 numbers. We will use the numpy `.reshape()` method which gives a new shape to an array without changing its data.
-# MAGIC
-# MAGIC https://numpy.org/doc/stable/reference/generated/numpy.reshape.html
+# MAGIC There are 60.000 numbers represented by 28 x 28 matrices with each entry encoding the color intensity for a pixel. We need to flatten every matrix into a vector of 28 x 28 = 784 numbers. We will use the numpy
+# MAGIC [`.reshape()`](https://numpy.org/doc/stable/reference/generated/numpy.reshape.html)
+# MAGIC method which gives a new shape to an array without changing its data.
 
 # COMMAND ----------
 
@@ -418,7 +466,9 @@ autoencoder.compile(loss="mse", optimizer='Adam') # compile the model
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC __TO DO__: Fit the compiled autoencoder model as you are used from Scikit-learn. As`x` use `X_train` and as `y` use `X_train` again and specify number of epochs with the parameter `epochs=5`.
+# MAGIC __TO DO__:
+# MAGIC [Fit the compiled autoencoder model](https://www.tensorflow.org/api_docs/python/tf/keras/Sequential#fit)
+# MAGIC as you are used from Scikit-learn. As`x` use `X_train` and as `y` use `X_train` again and specify number of epochs with the parameter `epochs=5`.
 
 # COMMAND ----------
 
@@ -427,7 +477,9 @@ autoencoder.compile(loss="mse", optimizer='Adam') # compile the model
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC __TO DO__: Use the `predict()` method of the encoder on `X_train` and assign the result to `x_reduced`.
+# MAGIC __TO DO__: Use the
+# MAGIC [`predict()`](https://www.tensorflow.org/api_docs/python/tf/keras/Sequential#predict)
+# MAGIC method of the encoder on `X_train` and assign the result to `x_reduced`.
 
 # COMMAND ----------
 
