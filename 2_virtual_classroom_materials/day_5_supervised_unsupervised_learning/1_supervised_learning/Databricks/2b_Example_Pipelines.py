@@ -38,30 +38,53 @@ import numpy as np
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The pipeline below will be a bit overwelming at first. Because of this we recommend the following steps to ease comprehension:
+# MAGIC The pipeline below will be a bit overwelming at first. 
+# MAGIC Because of this we recommend the following steps to ease comprehension:
 # MAGIC
 # MAGIC ## Step 1: Take a quick glance
 # MAGIC Please take a quick look at the pipeline below and come back here.
 # MAGIC
 # MAGIC ## Step 2: Slow walkthrough
 # MAGIC Get a **high level view** of the pipeline:
-# MAGIC - Look at the top. There is a `FeatureUnion` object, which is a wrapper for the entire feature engineering process.
-# MAGIC - Look at the bottom. There is a `RandomForestClassifier` object, which is our predictive model.
+# MAGIC - Look at the top. 
+# MAGIC There is a 
+# MAGIC [`FeatureUnion`](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html) 
+# MAGIC object, which is a wrapper for the entire feature engineering process.
+# MAGIC - Look at the bottom. 
+# MAGIC There is a 
+# MAGIC [`RandomForestClassifier`](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html) 
+# MAGIC object, which is our predictive model.
 # MAGIC
-# MAGIC Now we can go deeper into the `FeatureUnion` object we have instantiated, which is where the **feature engineering** is happening.
-# MAGIC - `FeatureUntion` splits into three parts, depending on which features we are attempting to process:
+# MAGIC Now we can go deeper into the 
+# MAGIC [`FeatureUnion`](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html) 
+# MAGIC object we have instantiated, which is where the **feature engineering** is happening.
+# MAGIC - [`FeatureUnion`](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html) 
+# MAGIC splits into three parts, depending on which features we are attempting to process:
 # MAGIC     - On top we have numerical features.
 # MAGIC     - In the middle we have categorical features.
 # MAGIC     - At the bottom we have textual features.
-# MAGIC - Now zoom out again and realize that this is wrapped under `FeatureUnion`, which means that **these features will be transformed in a parallel way and appended next to each other**.
+# MAGIC - Now zoom out again and realize that this is wrapped under 
+# MAGIC [`FeatureUnion`](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html), 
+# MAGIC which means that **these features will be transformed in a parallel way and appended next to each other**.
 # MAGIC
 # MAGIC ## Step 3: Zooming in
 # MAGIC Only now let's **zoom into one part of our feature engineering**, for example into `numerical_features`, on the top:
-# MAGIC - Inside of it, we right away use `ColumnTransformer` as we want to specify for which columns certain transformation will be applied to based on name or by type.
-# MAGIC - Now we can already apply the transformers. But remember that `ColumnTransformer` by default drops all untransformed columns, which would mean that if we want to apply some transformations sequentially we would not be able to.
+# MAGIC - Inside of it, we right away use 
+# MAGIC [`ColumnTransformer`](https://scikit-learn.org/stable/modules/generated/sklearn.compose.ColumnTransformer.html) 
+# MAGIC as we want to specify for which columns certain transformation will be applied to based on name or by type.
+# MAGIC - Now we can already apply the transformers. 
+# MAGIC But remember that 
+# MAGIC [`ColumnTransformer`](https://scikit-learn.org/stable/modules/generated/sklearn.compose.ColumnTransformer.html)
+# MAGIC by default drops all untransformed columns, which would mean that if we want to apply some transformations sequentially we would not be able to.
 # MAGIC
 # MAGIC ## Step 4: Indentation
-# MAGIC Finally, **get used to the indentation** (the whitespacing). Your code editor helps with this. Get used to this by clicking just behind the last visible character on the line where you are. For example go behing the last bracket on the line of `SimpleImputer`. Now if you hit Enter, it will land where a code should continue on the next line it you still want to stay within the element, which is a `Pipeline` object.
+# MAGIC Finally, **get used to the indentation** (the whitespacing). 
+# MAGIC Your code editor helps with this. 
+# MAGIC Get used to this by clicking just behind the last visible character on the line where you are. 
+# MAGIC For example go behing the last bracket on the line of
+# MAGIC [`SimpleImputer`](https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html). 
+# MAGIC Now if you hit Enter, it will land where a code should continue on the next line it you still want to stay within the element, which is a
+# MAGIC [`Pipeline`](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html) object.
 
 # COMMAND ----------
 
@@ -129,7 +152,9 @@ predictions = model_pipeline.predict(predict_data)
 # MAGIC The answer is: **from the outside inwards**. 
 # MAGIC
 # MAGIC Let's walk through an example. Of course you can write things differently.    
-# MAGIC At first, lay out a simple structure which separates your feature engineering (inside of `FeatureUnion`) and your predictive model:
+# MAGIC At first, lay out a simple structure which separates your feature engineering (inside of 
+# MAGIC [`FeatureUnion`](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html)
+# MAGIC ) and your predictive model:
 
 # COMMAND ----------
 
@@ -157,7 +182,9 @@ model_pipeline = Pipeline(steps=[
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Now you want to insert a `ColumnTransformer` as the transformations will be applied only to specific columns.
+# MAGIC Now you want to insert a
+# MAGIC [`ColumnTransformer`](https://scikit-learn.org/stable/modules/generated/sklearn.compose.ColumnTransformer.html)
+# MAGIC as the transformations will be applied only to specific columns.
 
 # COMMAND ----------
 
@@ -173,7 +200,8 @@ model_pipeline = Pipeline(steps=[
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC You can put a `Pipeline` inside of the feature engineering, for example, in case you have transformers which need to be applied sequentially (such as numeric scaling and feature selection).  
+# MAGIC You can put a [`Pipeline`](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html)
+# MAGIC inside of the feature engineering, for example, in case you have transformers which need to be applied sequentially (such as numeric scaling and feature selection).  
 # MAGIC
 # MAGIC At this point you can start inserting your individual transformations from before into the pipeline.
 
@@ -217,7 +245,9 @@ train.head()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC We will use ``ColumnTransformer`` where we select the columns by their names.   
+# MAGIC We will use 
+# MAGIC [`ColumnTransformer`](https://scikit-learn.org/stable/modules/generated/sklearn.compose.ColumnTransformer.html)
+# MAGIC where we select the columns by their names.   
 # MAGIC We will then train our classifier with the following features:
 # MAGIC
 # MAGIC **Numeric Features**
@@ -277,11 +307,12 @@ clf
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC **We can also select columns by data types when using `ColumnTransformer`.**   
+# MAGIC **We can also select columns by data types when using
+# MAGIC [`ColumnTransformer`](https://scikit-learn.org/stable/modules/generated/sklearn.compose.ColumnTransformer.html).**   
 # MAGIC When dealing with a cleaned dataset, the preprocessing can be automatic by
 # MAGIC using the data types of the column to decide whether to treat a column as a numerical or categorical feature.
 # MAGIC
-# MAGIC The function `sklearn.compose.make_column_selector` gives this possibility.
+# MAGIC The function [`sklearn.compose.make_column_selector`](https://scikit-learn.org/stable/modules/generated/sklearn.compose.make_column_selector.html) gives this possibility.
 # MAGIC
 # MAGIC In practice, you will have to handle the column data type yourself.
 # MAGIC If you want some columns to be considered as `category`, you will have to convert them into categorical columns. If you are using pandas, you can refer to their documentation regarding [Categorical data](https://pandas.pydata.org/pandas-docs/stable/user_guide/categorical.html).</p>
@@ -348,9 +379,12 @@ selector(dtype_include="category")(X_train)
 # MAGIC %md
 # MAGIC **Using the prediction pipeline in a grid search**   
 # MAGIC
-# MAGIC A grid search can also be performed on the different preprocessing steps which make up the ``ColumnTransformer`` object. So you can optimize the classifier's hyperparameters as part of the pipeline.  
+# MAGIC A grid search can also be performed on the different preprocessing steps which make up the
+# MAGIC [`ColumnTransformer`](https://scikit-learn.org/stable/modules/generated/sklearn.compose.ColumnTransformer.html)
+# MAGIC object.
+# MAGIC So you can optimize the classifier's hyperparameters as part of the pipeline.  
 # MAGIC We will search for both the imputer strategy of the numeric preprocessing and the regularization parameter of the logistic regression using
-# MAGIC `sklearn.model_selection.GridSearchCV`.
+# MAGIC [`sklearn.model_selection.GridSearchCV`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html).
 
 # COMMAND ----------
 
@@ -364,7 +398,9 @@ grid_search
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Calling `fit` triggers the cross-validated search for the best hyper-parameters combination:
+# MAGIC Calling
+# MAGIC [`fit`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html#sklearn.model_selection.GridSearchCV.fit)
+# MAGIC triggers the cross-validated search for the best hyper-parameters combination:
 
 # COMMAND ----------
 

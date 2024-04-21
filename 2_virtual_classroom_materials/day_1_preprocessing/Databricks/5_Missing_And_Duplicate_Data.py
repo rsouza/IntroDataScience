@@ -28,7 +28,7 @@ import matplotlib.pyplot as plt
 # COMMAND ----------
 
 # Run this code
-our_series = pd.Series([25, 2.5, 150, np.nan, 1.5, 'Python', 147])
+our_series = pd.Series([25, 2.5, 150, np.nan, 1.5, "Python", 147])
 print(our_series)
 
 # COMMAND ----------
@@ -39,7 +39,7 @@ print(our_series)
 # COMMAND ----------
 
 # Load the Titanic dataset
-data = pd.read_csv('../../../Data/titanic.csv')
+data = pd.read_csv("../../../Data/titanic.csv")
 data.head(10)
 
 # COMMAND ----------
@@ -104,11 +104,11 @@ data.isnull().sum()
 # COMMAND ----------
 
 # Run this code
-plt.style.use('default')
+plt.style.use("default")
 missing_values = data.isnull().sum() / len(data) * 100
-plt.xticks(np.arange(len(missing_values)), missing_values.index,rotation='vertical')
-plt.ylabel('Percentage of missing values')
-ax = plt.bar(np.arange(len(missing_values)), missing_values, color = 'skyblue');
+plt.xticks(np.arange(len(missing_values)), missing_values.index, rotation="vertical")
+plt.ylabel("Percentage of missing values")
+ax = plt.bar(np.arange(len(missing_values)), missing_values, color="skyblue");
 
 # COMMAND ----------
 
@@ -147,11 +147,11 @@ print(missing_embarked)
 
 # COMMAND ----------
 
-# Drop missing values in the column 'Embarked' 
+# Drop missing values in the column 'Embarked'
 # Specify this column using subset
 # Set inplace = True
 
-data.dropna(subset = ['Embarked'], inplace = True)
+data.dropna(subset=["Embarked"], inplace=True)
 
 # COMMAND ----------
 
@@ -168,7 +168,7 @@ data_copy = data.copy()
 # Drop those rows that contain any missing values
 # Set inplace = True
 
-data_copy.dropna(how = 'any', inplace = True)
+data_copy.dropna(how="any", inplace=True)
 
 # COMMAND ----------
 
@@ -183,13 +183,14 @@ data_copy.isna().sum()
 # COMMAND ----------
 
 # Run this code
-dict = {'product': ['apple', np.nan,'cucumber','bread','milk', 'butter', 'sugar'],
-        'product_code': [154,153,225,np.nan,56,15, np.nan],
-        'price': [0.89, 1.50, 0.65, 1.20, 0.85, np.nan, 1.20],
-        'expiration_date': [np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan]
-        }
+dict = {
+    "product": ["apple", np.nan, "cucumber", "bread", "milk", "butter", "sugar"],
+    "product_code": [154, 153, 225, np.nan, 56, 15, np.nan],
+    "price": [0.89, 1.50, 0.65, 1.20, 0.85, np.nan, 1.20],
+    "expiration_date": [np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan],
+}
 
-df = pd.DataFrame (dict, columns = ['product','product_code','price','expiration_date'])
+df = pd.DataFrame(dict, columns=["product", "product_code", "price", "expiration_date"])
 print(df)
 
 # COMMAND ----------
@@ -197,7 +198,7 @@ print(df)
 # Drop the last column that contain only missing values
 # Set inplace = True
 
-df.dropna(how = 'all', axis = 1, inplace = True)
+df.dropna(how="all", axis=1, inplace=True)
 
 # COMMAND ----------
 
@@ -214,7 +215,7 @@ print(df_copy)
 
 # COMMAND ----------
 
-# TASK 2 >>>> Drop rows from df_copy that contain any missing values 
+# TASK 2 >>>> Drop rows from df_copy that contain any missing values
 #             Set inplace = True
 
 # COMMAND ----------
@@ -227,44 +228,37 @@ print(df_copy)
 # MAGIC - this method fill in missing data (can be used on a particular column as well)
 # MAGIC
 # MAGIC Arguments:
-# MAGIC
-# MAGIC - we can specify **value** (any number or summary statistics such as mean or median) 
-# MAGIC
-# MAGIC - we can use **interpolation method**: 
-# MAGIC
-# MAGIC `ffill` : uses previous valid values to fill gap
-# MAGIC
-# MAGIC `bfill` : uses next valid value to fill gap
-# MAGIC
-# MAGIC `limit` : for ffill and bfill - maximum number of consecutive periods to fill
-# MAGIC
-# MAGIC `axis` : axis to fill on, default axis = 0 
-# MAGIC
-# MAGIC `inplace = True`
+# MAGIC - `value`: we can specify **value** (any number or summary statistics such as mean or median)
+# MAGIC   - if we want to fill only certain columns or use different values for different values, use a dictionary with the respective column/row index as key
+# MAGIC - `limit`: for ffill and bfill - maximum number of consecutive periods to fill
+# MAGIC - `axis`: axis to fill on, default axis = 0 
+# MAGIC - `inplace`: boolean and if `True` the original data frame is modified. Otherwise a copy is returned
 
 # COMMAND ----------
 
 # Fill in missing values in the 'price' column with the value 0
 # Set inplace = True
 
-df.price.fillna(0, inplace = True)
+df.fillna({"price": 0}, inplace=True)
 print(df)
 
 # COMMAND ----------
 
 # Run this code
-dictionary = {'column_a': [15, 16, 82, 25],
-              'column_b': [np.nan, np.nan, 54, 8],
-              'column_c': [np.nan, 15, 15, 25],
-              'column_d': [85, 90, np.nan, np.nan]
-        }
+dictionary = {
+    "column_a": [15, 16, 82, 25],
+    "column_b": [np.nan, np.nan, 54, 8],
+    "column_c": [np.nan, 15, 15, 25],
+    "column_d": [85, 90, np.nan, np.nan],
+}
 
-dataframe_1 = pd.DataFrame (dictionary, columns = ['column_a','column_b','column_c','column_d'])
+dataframe_1 = pd.DataFrame(dictionary)
 print(dataframe_1)
 
 # COMMAND ----------
 
-# TASK 3 >>>> Fill in missing the values in column 'column_c' of dataframe_1 with the value 10 
+# TASK 3 >>>> Fill in the missing values in column 'column_c' of dataframe_1 with the value 10
+#             Fill in the missing values in column 'column_d' of dataframe_1 with the value 0
 #             Set inplace = True
 
 # COMMAND ----------
@@ -272,36 +266,45 @@ print(dataframe_1)
 # MAGIC %md
 # MAGIC # 6. More Complex Methods
 # MAGIC
-# MAGIC We will go through the theory of these more complex methods later as they relate to Machine Learning. 
+# MAGIC We will go through the theory of these more complex methods later as they relate to Machine Learning.
 
 # COMMAND ----------
 
 # Run this code
-dict = {'column_1': [15, 16, 82, 25],
-        'column_2': [np.nan, np.nan, 54, 8],
-        'column_3': [np.nan, 15, 15, 25],
-        'column_4': [85, 90, np.nan, np.nan]
-        }
+dict = {
+    "column_1": [15, 16, 82, 25],
+    "column_2": [np.nan, np.nan, 54, 8],
+    "column_3": [np.nan, 15, 15, 25],
+    "column_4": [85, 90, np.nan, np.nan],
+}
 
-our_df = pd.DataFrame (dict, columns = ['column_1','column_2','column_3','column_4'])
-print(our_df)
-
-# COMMAND ----------
-
-# Fill in missing values using 'method = bfill' which stands for 'backward fill'
-# Set inplace = True
-
-our_df.fillna(axis = 0, method = 'bfill', inplace = True)
+our_df = pd.DataFrame(dict)
 print(our_df)
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The second option is `method = 'ffill'` which stand for forward fill.
+# MAGIC [`bfill()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.bfill.html) and [`ffill()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.ffill.html) methods
+# MAGIC - Fill NA/NaN values by using the next/last valid observation to fill the gap.
+# MAGIC
+# MAGIC Arguments:
+# MAGIC - `axis`: Axis along which to fill missing values.
+# MAGIC - `inplace`: If True, fill in-place.
+# MAGIC - `limit`: If method is specified, this is the maximum number of consecutive NaN values to forward/backward fill. 
+# MAGIC In other words, if there is a gap with more than this number of consecutive NaNs, it will only be partially filled. 
+# MAGIC If method is not specified, this is the maximum number of entries along the entire axis where NaNs will be filled.
+# MAGIC - `limit_area`: If limit is specified, consecutive NaNs will be filled with this restriction.
+# MAGIC   - None: No fill restriction.
+# MAGIC   - `inside`: Only fill NaNs surrounded by valid values (interpolate).
+# MAGIC   - `outside`: Only fill NaNs outside valid values (extrapolate).
 
 # COMMAND ----------
 
-data_copy["Age"].dtype
+# Fill in missing values using the bfill method which stands for 'backward fill'
+# Set inplace = True
+
+our_df.bfill(axis=0, inplace=True)
+print(our_df)
 
 # COMMAND ----------
 
@@ -314,7 +317,7 @@ data_copy
 # Set inplace = True
 
 average_age = int(data_copy.Age.mean())
-data_copy.Age.fillna(average_age, inplace = True)
+data_copy.fillna({"Age": average_age}, inplace=True)
 
 # COMMAND ----------
 
@@ -340,16 +343,17 @@ data_copy.Age.isnull().sum()
 # COMMAND ----------
 
 # Run this code
-actors = [('Michone', 30, 'USA'),
-            ('Bob', 28, 'New York'),
-            ('Rick', 30, 'New York'),
-            ('Carol', 40, 'Paris'),
-            ('Daryl', 35, 'London'),
-            ('Daryl', 35, 'London'),
-            ('Michone', 45, 'London'),
-            ('Morgan', 38, 'Sweden')
-            ]
-df_2 = pd.DataFrame(actors, columns=['first_name', 'age', 'city'])
+actors = [
+    ("Michone", 30, "USA"),
+    ("Bob", 28, "New York"),
+    ("Rick", 30, "New York"),
+    ("Carol", 40, "Paris"),
+    ("Daryl", 35, "London"),
+    ("Daryl", 35, "London"),
+    ("Michone", 45, "London"),
+    ("Morgan", 38, "Sweden"),
+]
+df_2 = pd.DataFrame(actors, columns=["first_name", "age", "city"])
 
 # COMMAND ----------
 

@@ -7,11 +7,11 @@
 # MAGIC %md
 # MAGIC Evaluating the performance of classification models is a critical aspect of building effective predictive models. In this notebook we are going to explore various metrics for binary classification tasks:
 # MAGIC
-# MAGIC * **Accuracy**
+# MAGIC * [**Accuracy**](https://en.wikipedia.org/wiki/Accuracy_and_precision#In_classification)
 # MAGIC
-# MAGIC * **F1 score**
+# MAGIC * [**F1 score**](https://en.wikipedia.org/wiki/F-score)
 # MAGIC
-# MAGIC * **ROC AUC**
+# MAGIC * [**ROC AUC**](https://en.wikipedia.org/wiki/Receiver_operating_characteristic)
 # MAGIC
 # MAGIC * **PR AUC**
 # MAGIC
@@ -25,8 +25,7 @@
 # MAGIC
 # MAGIC Accuracy measures the proportion of correctly predicted instances among the total instances in a dataset. In other words, accuracy tells you how well the model's predictions match the actual outcomes.
 # MAGIC
-# MAGIC **Accuracy = (Number of Correct Predictions)/(Total Number of Predictions)**
-# MAGIC
+# MAGIC $$\text{Accuracy} = \frac{\text{Number of Correct Predictions}}{\text{Total Number of Predictions}}$$
 # MAGIC
 # MAGIC When does it make sense to use it?
 # MAGIC * You should not use accuracy on imbalanced datasets. In situations where the classes are imbalanced, meaning one class has significantly more instances than the others, accuracy can be misleading. A model might achieve high accuracy by simply predicting the majority class all the time.
@@ -40,16 +39,17 @@
 # MAGIC The F1 score is the **harmonic mean of precision and recall**. 
 # MAGIC
 # MAGIC Precision is the ratio of true positive predictions to the total predicted positives.
+# MAGIC In the formulas below we use TP for the amount of true positives, TN for true negatives, FP for false positives and FN for false negatives.
 # MAGIC
-# MAGIC **Precision = tp/(tp+fp)**
+# MAGIC $$\text{Precision} = \frac{\text{TP}}{\text{TP}+\text{FP}}$$
 # MAGIC
 # MAGIC Recall is the ratio of true positive predictions to the total actual positives.
 # MAGIC
-# MAGIC **Recall = tp/(tp+fn)**
+# MAGIC $$\text{Recall} = \frac{\text{TP}}{\text{TP} + \text{FN}}$$
 # MAGIC
 # MAGIC The formula for calculatng the F1 score is:
 # MAGIC
-# MAGIC **F1 = 2 x (Precision x Recall)/(Precision + Recall)**
+# MAGIC $$\text{F1} = 2 \times\frac{\text{Precision}\times\text{Recall}}{\text{Precision}+\text{Recall}}$$
 # MAGIC
 # MAGIC When does it make sense to use it?
 # MAGIC * When the positive class is more important for you.
@@ -71,7 +71,7 @@
 # MAGIC
 # MAGIC * false positive rate (FPR)
 # MAGIC
-# MAGIC **FPR = FP/(FP + TN)**
+# MAGIC $$\text{FPR} = \frac{\text{FP}}{\text{FP}+\text{TN}}$$
 # MAGIC
 # MAGIC as the classification threshold changes.
 # MAGIC
@@ -88,7 +88,7 @@
 # MAGIC %md
 # MAGIC ## PR AUC Score
 # MAGIC
-# MAGIC Precision-recall curve combines precision (PPV) and Recall (TPR) in a single visualization. The higher on y-axis your curve is the better your model performance. The higher the recall, the lower the precision. The PR AUC score measures the area under this curve. It quantifies the balance between precision and recall across various thresholds and provides a single value that ranges between 0 and 1. 
+# MAGIC Precision-recall curve combines Positive Predictive Value (PPV) and Recall (TPR) in a single visualization. The higher on y-axis your curve is the better your model performance. The higher the recall, the lower the precision. The PR AUC score measures the area under this curve. It quantifies the balance between precision and recall across various thresholds and provides a single value that ranges between 0 and 1. 
 # MAGIC
 # MAGIC When does it make sense to use it?
 # MAGIC * The PR AUC score is especially relevant for imbalanced datasets, where the positive class (minority class) is significantly outnumbered by the negative class. 
@@ -283,7 +283,7 @@ sorted(results, key=lambda x: x.get("PR AUC"))
 # MAGIC %md
 # MAGIC Now we should decide between F1 Score and PR AUC.
 # MAGIC
-# MAGIC One significant distinction between the F1 score and ROC AUC is that the F1 score operates on predicted classes, while ROC AUC relies on predicted scores. Consequently, when using the F1 score, you must select a threshold for class assignment, a decision that can substantially impact model performance.
+# MAGIC One significant distinction between the F1 score and PR AUC is that the F1 score operates on predicted classes, while PR AUC relies on predicted scores. Consequently, when using the F1 score, you must select a threshold for class assignment, a decision that can substantially impact model performance.
 # MAGIC
 # MAGIC If your objective is to rank predictions, without the need for well-calibrated probabilities, and your dataset maintains a reasonable balance between classes, then ROC AUC is a good choice.
 # MAGIC

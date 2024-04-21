@@ -19,7 +19,7 @@ print(string)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC `split()` method 
+# MAGIC [`split()`](https://docs.python.org/3/library/stdtypes.html#str.split) method 
 # MAGIC
 # MAGIC - This method splits a string into a list where each word is a list item.
 # MAGIC - We need to specify the `separator` to use when splitting the string.
@@ -50,7 +50,7 @@ print(x)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC `strip()` method
+# MAGIC [`strip()`](https://docs.python.org/3/library/stdtypes.html#str.strip) method
 # MAGIC
 # MAGIC - It removes whitespaces at the beginning and at the end of the string.
 
@@ -64,7 +64,7 @@ print(our_result)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC `join()` method
+# MAGIC [`join()`](https://docs.python.org/3/library/stdtypes.html#str.join) method
 # MAGIC
 # MAGIC - This method takes all items in an iterable and joins them into one string.
 
@@ -83,7 +83,7 @@ my_tuple = ('We','are', 'joining', 'again.')
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC In the case of a dictionary, `join()` tries to join keys of the dictionary, not values.
+# MAGIC In the case of a dictionary, [`join()`](https://docs.python.org/3/library/stdtypes.html#str.join) tries to join keys of the dictionary, not values.
 
 # COMMAND ----------
 
@@ -95,7 +95,7 @@ my_dictionary = {'Key_1':'1',
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC `index()` method
+# MAGIC [`index()`](https://docs.python.org/3/library/stdtypes.html#str.index) method
 # MAGIC
 # MAGIC - It returns the position of the first character in a substring if the substring is found in the string.
 # MAGIC - It raises a `ValueError` if nothing is found.
@@ -113,7 +113,7 @@ string_3.index('m')
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC `replace()` method
+# MAGIC [`replace()`](https://docs.python.org/3/library/stdtypes.html#str.replace) method
 # MAGIC
 # MAGIC - This method replaces occurences of a substring with another string.
 # MAGIC - It is commonly used to remove characters by passing an empty string.
@@ -145,11 +145,11 @@ string_5 = 'Banana, avocado, pineapple, artichoke'
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC `upper()` method
+# MAGIC [`upper()`](https://docs.python.org/3/library/stdtypes.html#str.upper) method
 # MAGIC
 # MAGIC - This method converts all lowercase characters in a string into uppercase characters and returns it.
 # MAGIC
-# MAGIC `lower()` method
+# MAGIC [`lower()`](https://docs.python.org/3/library/stdtypes.html#str.lower) method
 # MAGIC - This method converts all upercase characters in a string into lowercase characters and returns it.
 
 # COMMAND ----------
@@ -167,8 +167,8 @@ print(string_to_lower.lower())
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ``find()`` method
-# MAGIC - This method is similar to `index()`.
+# MAGIC [`find()`](https://docs.python.org/3/library/stdtypes.html#str.lower) method
+# MAGIC - This method is similar to [`index()`](https://docs.python.org/3/library/stdtypes.html#str.index).
 # MAGIC - If the substring is found, this method returns the index of first occurrence of the substring.
 # MAGIC - If the substring is not found, -1 is returned.
 # MAGIC - This function is **case sensitive**.
@@ -203,7 +203,7 @@ else:
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC If you go to the [Documentation of `find()`](https://python-reference.readthedocs.io/en/latest/docs/str/find.html), you will see that ``find()`` can accept three parameters. One is compulsory, and the others are optional. 
+# MAGIC If you go to the [Documentation of `find()`](https://python-reference.readthedocs.io/en/latest/docs/str/find.html), you will see that [`find()`](https://docs.python.org/3/library/stdtypes.html#str.lower) can accept three parameters. One is compulsory, and the others are optional. 
 # MAGIC
 # MAGIC The general syntax looks like this:
 # MAGIC ````
@@ -283,14 +283,14 @@ data_2015.head()
 # MAGIC Imagine we have 2 possible categories of avocado (A and B) in the same row for the same day separated with '/'. 
 # MAGIC It would be an issue for us if we'd like to explore and visualize data based on the avocado's category. 
 # MAGIC
-# MAGIC We can use `str.split()` method to resolve this issue in few steps.
+# MAGIC We can use [`str.split()`](https://docs.python.org/3/library/stdtypes.html#str.split) method to resolve this issue in few steps.
 
 # COMMAND ----------
 
 # Run this code - don't bother what it does for now
 
 data_avo = {'day':'Monday', 'category':'A/B', 'type':'organic'}
-monday_data = pd.DataFrame(data_avo, range(10))           
+monday_data = pd.DataFrame(data_avo, range(10))
 
 # COMMAND ----------
 
@@ -305,7 +305,7 @@ monday_data
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC At first, we use `split` the method to create a list of two objects from the original element in the column.
+# MAGIC At first, we use [`split()`](https://docs.python.org/3/library/stdtypes.html#str.split) the method to create a list of two objects from the original element in the column.
 
 # COMMAND ----------
 
@@ -319,8 +319,8 @@ monday_data
 # MAGIC %md
 # MAGIC As the next steps:
 # MAGIC
-# MAGIC - next we use `apply()` function on `monday_data` that return Series: use lambda function `lambda x:` to create new Series - we also need to specify `axis = 1` which returns a new column for avocado's type
-# MAGIC - after the `apply()` part add `stack()` - to stack avocado's category 
+# MAGIC - next we use [`apply()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html) function on `monday_data` that return Series: use lambda function `lambda x:` to create new Series - we also need to specify `axis = 1` which returns a new column for avocado's type
+# MAGIC - after the [`apply()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html) part add [`stack()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.stack.html) - to stack avocado's category
 
 # COMMAND ----------
 
@@ -331,7 +331,7 @@ series_2 = monday_data.apply(lambda x: pd.Series(x['category']), axis = 1).stack
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC As you can see below, **categories are now separated into new rows**: 10 observation for Monday. However there is also new level (another index) for A and B that we don't need anymore. 
+# MAGIC As you can see below, **categories are now separated into new rows**: 10 observation for Monday. However there is also new level (another index) for A and B that we don't need anymore.
 
 # COMMAND ----------
 
@@ -341,7 +341,7 @@ series_2
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC We can remove this index using `reset_index()`: 
+# MAGIC We can remove this index using [`reset_index()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.reset_index.html): 
 # MAGIC - use `drop = True`
 # MAGIC - set `level = 1`
 
@@ -379,6 +379,26 @@ new_data
 # COMMAND ----------
 
 # MAGIC %md
+# MAGIC If the procedure above seem extensive to you, you are right.
+# MAGIC The [``.explode()``](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.explode.html) 
+# MAGIC method transforms each element of a list to a row.
+
+# COMMAND ----------
+
+# run this code
+data_avo = {"day": "Monday", "category": "A/B", "type": "organic"}
+monday_data = pd.DataFrame(data_avo, range(10))
+
+monday_data
+
+# COMMAND ----------
+
+monday_data["category"] = monday_data["category"].str.split("/")
+monday_data.explode("category")
+
+# COMMAND ----------
+
+# MAGIC %md
 # MAGIC # 4. Project: Cleaning Text Column
 
 # COMMAND ----------
@@ -400,10 +420,9 @@ movie_data.head()
 
 # COMMAND ----------
 
-# Split the 'genres' column with separator '/'
+# TASK 2.1 >>>> Split the 'genres' column with seperator '|'
+#               Assign the result to the 'genres' column
 
-movie_data.genres = movie_data.genres.str.split('|')
-movie_data.head()
 
 # COMMAND ----------
 
@@ -419,20 +438,43 @@ print(series_genres)
 
 # COMMAND ----------
 
-# Give the Series (new column) the name 'genre'
-series_genres.name = 'genre'
+# Give the Series (new column) the name 'genres'
+series_genres.name = 'genres'
 
 # COMMAND ----------
 
-# TASK 2 >>>> Drop the old column 'genres' from movie_data on axis = 1
-#             Join to the new Series 'series_genres'. 
-#             Assign it to our_movie_data.
+# MAGIC %md
+# MAGIC Now let's practice both ways of expanding the list items to seperate rows.
+
+# COMMAND ----------
+
+# create copies to practice both ways
+movie_join = movie_data.copy()
+movie_explode = movie_data.copy()
+
+# COMMAND ----------
+
+# TASK 2.2 >>>> Drop the old column 'genres' from movie_join on axis = 1
+#               Join to the new Series 'series_genres'. 
+#               Assign it to movie_join.
+
+
 
 # COMMAND ----------
 
 # Run this code
+movie_join.head()
 
-print(our_movie_data)
+# COMMAND ----------
+
+# TASK 2.3 >>>> Use the explode method on movie_explode for the 'genres' column.
+#               Assign it to movie_explode.
+
+
+# COMMAND ----------
+
+# Run this code
+movie_explode.head()
 
 # COMMAND ----------
 
@@ -443,7 +485,7 @@ print(our_movie_data)
 # MAGIC - a single expression, commonly called a **regex**, is a string formed according to the regular expression language
 # MAGIC - using built-in module `re` we can apply regular expressions to strings
 # MAGIC
-# MAGIC Run the following cell showing example of regular expression for validating an email \\(^{1}\\). 
+# MAGIC Run the following cell showing example of regular expression for validating an email \\(^{1}\\).
 
 # COMMAND ----------
 
@@ -462,17 +504,10 @@ import re
 # MAGIC
 # MAGIC There is a set of methods that allows us to search a string for a match such as:
 # MAGIC
-# MAGIC `findall`
-# MAGIC - returns a list that contain all matches
-# MAGIC
-# MAGIC `match`
-# MAGIC - if zero or more characters at the beginning of string match this regular expression, return a corresponding match object
-# MAGIC
-# MAGIC `search`
-# MAGIC - scan through string looking for the first location where regular expression produces a match and return a corresponding match object
-# MAGIC
-# MAGIC `split`
-# MAGIC - breaks string into pieces at each occurence of pattern
+# MAGIC - [`findall`](https://docs.python.org/3/library/re.html#re.findall): returns a list that contain all matches
+# MAGIC - [`match`](https://docs.python.org/3/library/re.html#re.match): if zero or more characters at the beginning of string match this regular expression, return a corresponding match object
+# MAGIC - [`search`](https://docs.python.org/3/library/re.html#re.search): scan through string looking for the first location where regular expression produces a match and return a corresponding match object
+# MAGIC - [`split`](https://docs.python.org/3/library/re.html#re.split): breaks string into pieces at each occurence of pattern
 
 # COMMAND ----------
 
@@ -482,11 +517,11 @@ sentence = 'This  sentence contains     whitespace'
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC To split this string we need to call `re.split()`. 
+# MAGIC To split this string we need to call [`re.split()`](https://docs.python.org/3/library/re.html#re.split). 
 # MAGIC
 # MAGIC Within this method we specify regex `'\s+'` describing one or more whitespace character and string to split (in our case 'sentence').
 # MAGIC
-# MAGIC Firstly, the regex is compiled and then the `split` function is called on the passed string.
+# MAGIC Firstly, the regex is compiled and then the [`split`](https://docs.python.org/3/library/re.html#re.split) function is called on the passed string.
 
 # COMMAND ----------
 
@@ -496,8 +531,8 @@ re.split('\s+', sentence)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC With `re.compile()` we can combine a regular expression pattern into pattern objects which can be used for pattern matching
-# MAGIC - this approach is recommended if you intend to apply the same expression to many strings 
+# MAGIC With [`re.compile()`](https://docs.python.org/3/library/re.html#re.compile) we can combine a regular expression pattern into pattern objects which can be used for pattern matching
+# MAGIC - this approach is recommended if you intend to apply the same expression to many strings
 
 # COMMAND ----------
 
@@ -562,7 +597,7 @@ pattern.search(text)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC As you can see `search` returns only the start and end position of the pattern.
+# MAGIC As you can see [`search`](https://docs.python.org/3/library/re.html#re.search) returns only the start and end position of the pattern.
 
 # COMMAND ----------
 
@@ -630,7 +665,7 @@ pattern_dec.findall(text)
 # MAGIC %md
 # MAGIC **Hint**
 # MAGIC
-# MAGIC If we want to find some pattern (decimal numbers for example) within the string of a Series, we can also use the pandas function `str.contains`. For more information check the [pandas documentation](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.contains.html).
+# MAGIC If we want to find some pattern (decimal numbers for example) within the string of a Series, we can also use the pandas function [`str.contains`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.contains.html). For more information check the [pandas documentation](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.contains.html).
 
 # COMMAND ----------
 
