@@ -535,7 +535,7 @@ X_training = pd.DataFrame(X_training)
 X_training.columns = features_we_keep
 
 # Convert X_testing to Pandas DataFrame
-X_testing = pd.DataFrame(X_training)
+X_testing = pd.DataFrame(X_testing)
 # Using the '.columns' attribute assign column names
 X_testing.columns = features_we_keep
 
