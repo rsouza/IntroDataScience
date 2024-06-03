@@ -224,4 +224,4 @@ print('Standard Deviation: ', X_training_scaled.std(axis=0))
 # MAGIC
 # MAGIC Data license: Database: Open Database
 # MAGIC
-# MAGIC Material adapted for RBI internal purposes with full permissions from original authors. [Source](https://github.com/zatkopatrik/authentic-data-science)
+# MAGIC Material adapted for RBI internal purposes with full permissions from original authors.

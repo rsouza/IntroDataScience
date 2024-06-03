@@ -91,7 +91,7 @@ from sklearn.ensemble import BaggingClassifier
 
 num_trees = 100
 cart2 = DecisionTreeClassifier()
-model2 = BaggingClassifier(base_estimator=cart2, n_estimators=num_trees, random_state=seed)
+model2 = BaggingClassifier(estimator=cart2, n_estimators=num_trees, random_state=seed)
 results2 = cross_val_score(model2, X, Y, cv=kfold)
 print(results2.mean())
 

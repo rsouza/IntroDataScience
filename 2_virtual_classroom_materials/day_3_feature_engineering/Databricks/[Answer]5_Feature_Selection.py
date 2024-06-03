@@ -598,4 +598,4 @@ X_training.shape, X_testing.shape
 # MAGIC
 # MAGIC \\(^{2}\\) Wine quality dataset: https://archive.ics.uci.edu/ml/datasets/wine+quality
 # MAGIC
-# MAGIC Material adapted for RBI internal purposes with full permissions from original authors. [Source](https://github.com/zatkopatrik/authentic-data-science)
+# MAGIC Material adapted for RBI internal purposes with full permissions from original authors.

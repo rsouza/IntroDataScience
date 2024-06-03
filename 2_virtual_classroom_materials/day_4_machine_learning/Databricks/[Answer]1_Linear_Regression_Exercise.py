@@ -6,7 +6,7 @@ import seaborn as sns
 plt.rcParams["figure.figsize"] = (15,4) # the charts will have a size of width = 15, height = 4
 
 
-from sklearn.metrics import mean_squared_error, mean_absolute_error
+from sklearn.metrics import mean_squared_error, mean_absolute_error, root_mean_squared_error
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import StandardScaler, PolynomialFeatures
 from sklearn.model_selection import train_test_split
@@ -82,7 +82,7 @@ def plot_regression(x, y, bias, coeff):
     y_hat = bias + x * coeff # predictions of x can be calculated easily 
                              # by multiplying the features with coefficients
     print(f'MSE2 : {round(mean_squared_error(y,y_hat),1)}') 
-    print(f'RMSE2 : {round(mean_squared_error(y,y_hat,squared=False),1)}')
+    print(f'RMSE2 : {round(root_mean_squared_error(y,y_hat),1)}')
 
     # chart
     fig, ax = plt.subplots()
@@ -322,7 +322,7 @@ df_coefs = pd.DataFrame(model_coef, index = ["Coefficient"], columns=X_train.col
 display(df_coefs)
 print(f'''For example, if you have an observation where LSTAT is equal to 50 and another one that has a value 
 of LSTAT 51 and all other variables are the same, or if the variable LSTAT is changed for the investigated observation 
-with other variables unchanged the effect on the target would be {np.round(df_coefs['LSTAT'][0],5)}''')
+with other variables unchanged the effect on the target would be {np.round(df_coefs['LSTAT']['Coefficient'],5)}''')
 
 # COMMAND ----------
 
@@ -401,7 +401,7 @@ ax.set_ylim(min_lim, max_lim);
 # Task 11: Compute and save the metrics on the test set
 
 mse = mean_squared_error(y_test, y_hat)
-rmse = mean_squared_error(y_test, y_hat, squared=False)
+rmse = root_mean_squared_error(y_test, y_hat)
 mae = mean_absolute_error(y_test, y_hat)
 r2 = model.score(X_test, y_test) # the same as r2_score(y_test, y_hat)
 
@@ -512,7 +512,7 @@ display(df_coefs)
 
 y_hat = model.predict(X_test_scaled)
 print(f"MSE: {np.round(mean_squared_error(y_test, y_hat),1)}")
-print(f"RMSE: {np.round(mean_squared_error(y_test, y_hat, squared=False),1)}")
+print(f"RMSE: {np.round(root_mean_squared_error(y_test, y_hat),1)}")
 print(f"MAE: {np.round(mean_absolute_error(y_test, y_hat),1)}")
 print(f"R2: {np.round(model.score(X_test_scaled, y_test),1)}") # the same as r2_score(y_test, y_hat)
 
@@ -717,7 +717,7 @@ sns.pairplot(data_train, y_vars = 'target', x_vars=corr_target.index[10:14], hei
 model = LinearRegression()
 model.fit(X_train[['LSTAT', 'RM']], y_train)
 y_hat = model.predict(X_test[['LSTAT', 'RM']])
-rmse = mean_squared_error(y_test, y_hat, squared=False)
+rmse = root_mean_squared_error(y_test, y_hat)
 print(f"RMSE: {np.round(rmse,1)}")
 
 # COMMAND ----------
@@ -746,7 +746,7 @@ model_poly = LinearRegression(fit_intercept=False)
 model_poly.fit(x_train_poly, y_train)
     
 y_hat = model_poly.predict(x_test_poly)
-print(f"RMSE: {mean_squared_error(y_test, y_hat, squared=False)}")
+print(f"RMSE: {root_mean_squared_error(y_test, y_hat)}")
 # depending on the version of sklearn, this will cause an error
 # in that case, replace "get_feature_names_out" with "get_feature_names"
 pd.DataFrame(model_poly.coef_, index = ["Coefficient"], columns = poly.get_feature_names_out())
@@ -773,4 +773,4 @@ pd.DataFrame(model_poly.coef_, index = ["Coefficient"], columns = poly.get_featu
 
 # MAGIC %md
 # MAGIC ------------------------------------------------------------------------------------------------------------
-# MAGIC Material adapted for RBI internal purposes with full permissions from original authors. [Source](https://github.com/zatkopatrik/authentic-data-science)
+# MAGIC Material adapted for RBI internal purposes with full permissions from original authors.

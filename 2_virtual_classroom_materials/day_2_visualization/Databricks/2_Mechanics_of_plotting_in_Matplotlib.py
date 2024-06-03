@@ -582,4 +582,4 @@ for column in float_columns:
 # MAGIC ## Citation request: 
 # MAGIC Yeh, I. C., & Hsu, T. K. (2018). Building real estate valuation models with comparative approach through case-based reasoning. Applied Soft Computing, 65, 260-271.  
 # MAGIC
-# MAGIC Material adapted for RBI internal purposes with full permissions from original authors. [Source](https://github.com/zatkopatrik/authentic-data-science)
+# MAGIC Material adapted for RBI internal purposes with full permissions from original authors.

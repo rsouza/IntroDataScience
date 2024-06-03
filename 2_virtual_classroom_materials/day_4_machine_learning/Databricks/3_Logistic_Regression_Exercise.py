@@ -354,4 +354,4 @@ np.sum(probs,axis=1)
 
 # MAGIC %md
 # MAGIC ------------------------------------------------------------------------------------------------------------
-# MAGIC Material adapted for RBI internal purposes with full permissions from original authors. [Source](https://github.com/zatkopatrik/authentic-data-science)
+# MAGIC Material adapted for RBI internal purposes with full permissions from original authors.

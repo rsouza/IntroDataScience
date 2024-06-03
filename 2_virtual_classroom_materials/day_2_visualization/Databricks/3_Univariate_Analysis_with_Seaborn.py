@@ -22,7 +22,7 @@
 # MAGIC %md
 # MAGIC # 1. Importing Seaborn library and loading the data
 # MAGIC
-# MAGIC Firstly, we import the Seaborn library and give it conventional alias `sns`. The abbreviation is derived from Samuel Norman "Sam" Seaborn, a fictional character portrayed by Rob Lowe in the television serial drama _The West Wing_.
+# MAGIC Firstly, we import the Seaborn library and give it conventional alias `sns`. The abbreviation is derived from Samuel Norman "Sam" Seaborn, a fictional character portrayed by Rob Lowe in the television serial drama _The West Wing_. 
 
 # COMMAND ----------
 
@@ -68,7 +68,7 @@ import matplotlib.pyplot as plt
 # COMMAND ----------
 
 # Setting style
-sns.set_style("whitegrid")
+sns.set_style('whitegrid')
 
 # COMMAND ----------
 
@@ -97,7 +97,7 @@ sns.set_style("whitegrid")
 # penguins = sns.load_dataset("penguins")
 
 # Load the example dataset from .csv file
-penguins = pd.read_csv("../../../Data/penguins.csv")
+penguins = pd.read_csv('../../../Data/penguins.csv')
 
 # COMMAND ----------
 
@@ -117,7 +117,7 @@ penguins.isnull().sum()
 # COMMAND ----------
 
 # Dropping missing values
-penguins.dropna(inplace=True)
+penguins.dropna(inplace = True)
 
 # COMMAND ----------
 
@@ -171,10 +171,13 @@ penguins.duplicated().sum()
 # COMMAND ----------
 
 # Create a histogram of 'bill_length_mm'
-ax = sns.displot(data=penguins, x="bill_length_mm", height=6.5, aspect=1.3)
+ax = sns.displot(data = penguins, 
+                 x = 'bill_length_mm',
+                 height = 6.5,
+                 aspect = 1.3);
 
 # Setting a title
-ax.set(title="The distribution of bill length");
+ax.set(title = 'The distribution of bill length');
 
 # COMMAND ----------
 
@@ -195,20 +198,25 @@ ax.set(title="The distribution of bill length");
 # COMMAND ----------
 
 # A displot of 'bill_length_mm' with specified axis limits from value 53 to 60
-sns.displot(data=penguins, x="bill_length_mm")
+sns.displot(data = penguins, 
+            x = 'bill_length_mm')
 
 # Setting the right and left limit
-plt.xlim(53, 60);
+plt.xlim(53,60);
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Changing the size of the bins can be acomplished with the `binwidth` parameter. If we set `binwidth = 2`, each bin will coumpound observations in the range of 2 millimeters:
+# MAGIC Changing the size of the bins can be acomplished with the `binwidth` parameter. If we set `binwidth = 2`, each bin will coumpound observations in the range of 2 millimeters: 
 
 # COMMAND ----------
 
 # Histogram with specified binwidth
-sns.displot(data=penguins, x="bill_length_mm", binwidth=2, height=6.5, aspect=1.3);
+sns.displot(data = penguins, 
+            x = 'bill_length_mm', 
+            binwidth = 2,
+            height = 6.5,
+            aspect = 1.3);
 # Change the size of the bins yourself and observe the output
 
 # COMMAND ----------
@@ -223,7 +231,11 @@ sns.displot(data=penguins, x="bill_length_mm", binwidth=2, height=6.5, aspect=1.
 # COMMAND ----------
 
 # Histogram with specified number of bins
-sns.displot(data=penguins, x="bill_length_mm", bins=30, height=6.5, aspect=1.3);
+sns.displot(data = penguins, 
+            x = 'bill_length_mm', 
+            bins = 30,
+            height = 6.5,
+            aspect = 1.3);
 # Again, replace the number of bins and observe the output
 
 # COMMAND ----------
@@ -240,7 +252,7 @@ sns.displot(data=penguins, x="bill_length_mm", bins=30, height=6.5, aspect=1.3);
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC >What can you say about the distribution of body mass? Does the default bins correctly captured pattern in data? What is the most common weight of penguins?
+# MAGIC >What can you say about the distribution of body mass? Does the default bins correctly captured pattern in data? What is the most common weight of penguins? 
 
 # COMMAND ----------
 
@@ -253,7 +265,12 @@ sns.displot(data=penguins, x="bill_length_mm", bins=30, height=6.5, aspect=1.3);
 
 # The distribution using kernel density estimation
 
-sns.displot(data=penguins, x="bill_depth_mm", bins=20, kde=True, height=6.5, aspect=1.3);
+sns.displot(data = penguins, 
+            x = 'bill_depth_mm', 
+            bins = 20,
+            kde = True,
+            height = 6.5,
+            aspect = 1.3);
 
 # COMMAND ----------
 
@@ -273,8 +290,9 @@ sns.displot(data=penguins, x="bill_depth_mm", bins=20, kde=True, height=6.5, asp
 
 # Boxplot of 'body_mass_g' variable
 
-plt.figure(figsize=(13, 9))
-sns.boxplot(data=penguins, x="body_mass_g");
+plt.figure(figsize=(13,9))
+sns.boxplot(data = penguins, 
+            x = 'body_mass_g');
 
 # COMMAND ----------
 
@@ -291,53 +309,48 @@ sns.boxplot(data=penguins, x="body_mass_g");
 
 # Small customizations of boxplot
 
-plt.figure(figsize=(13, 9))
-sns.boxplot(
-    data=penguins,
-    y="body_mass_g",
-    color="cadetblue",
-    width=0.2,
-    linewidth=3,
-    medianprops={"color": "white"},
-);
+plt.figure(figsize=(13,9))
+sns.boxplot(data = penguins, 
+            y = 'body_mass_g',
+            color = 'cadetblue',
+            width = 0.2,
+            linewidth = 3,
+            medianprops={'color':'white'});
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC In our example we customize the color, the width of the boxplot and the width of the lines. Changing the color of the line presenting the median value can be useful in order to emphasize it.
+# MAGIC In our example we customize the color, the width of the boxplot and the width of the lines. Changing the color of the line presenting the median value can be useful in order to emphasize it. 
 
 # COMMAND ----------
 
 # Some advanced customizations
-plt.figure(figsize=(13, 9))
+plt.figure(figsize=(13,9))
 
-box_cust = dict(
-    color="#834177",  # customizing properties of the box
-    alpha=0.5,
-    linestyle="dashed",
-    linewidth=6,
-)
+box_cust = dict(color = '#834177',                # customizing properties of the box 
+                alpha = 0.5, 
+                linestyle = 'dashed', 
+                linewidth = 6)
 
-whisker_cust = dict(
-    color="#000184",  # customizing properties of whiskers
-    alpha=0.9,  # the transparency
-    linestyle="dotted",  # the style of the line
-    linewidth=3,  # the width of the line
-    dash_capstyle="projecting",
-)  # setting the cap style for dashed line
+whisker_cust = dict(color = '#000184',            # customizing properties of whiskers
+                    alpha = 0.9,                  # the transparency
+                    linestyle = 'dotted',         # the style of the line
+                    linewidth = 3,                # the width of the line
+                    dash_capstyle = 'projecting') # setting the cap style for dashed line
 
-median_cust = dict(color="#ff7f0e", alpha=0.9, linestyle="dashdot", linewidth=5)
+median_cust = dict(color = '#ff7f0e',
+                  alpha = 0.9,
+                  linestyle = 'dashdot',
+                  linewidth = 5)
 
-ax = sns.boxplot(
-    data=penguins,
-    y="flipper_length_mm",
-    width=0.2,
-    linewidth=3,
-    boxprops=box_cust,
-    whiskerprops=whisker_cust,
-    medianprops=median_cust,
-    notch=True,
-);  # noteched boxplot (notch represent the confidence interval around median)
+ax = sns.boxplot(data = penguins, 
+                y = 'flipper_length_mm',
+                width = 0.2,
+                linewidth = 3,
+                boxprops = box_cust,
+                whiskerprops = whisker_cust,
+                medianprops = median_cust,
+                notch = True);                    # noteched boxplot (notch represent the confidence interval around median) 
 
 # COMMAND ----------
 
@@ -346,7 +359,7 @@ ax = sns.boxplot(
 #        >>> Set color as hexadecimal code: '#98D8D8',
 #        >>> Set width of a box to 0.3
 #        >>> Set width of a line to 1
-#        >>> Change a color of median line to be yellow and line width: 3
+#        >>> Change a color of median line to be yellow and line width: 3 
 #            (you can specify medianprops properties within boxplot() function or outside this function)
 
 # COMMAND ----------
@@ -368,15 +381,17 @@ ax = sns.boxplot(
 
 # Distribution of data displayed with boxplot and swarmplot
 
-plt.figure(figsize=(13, 9))
-sns.boxplot(data=penguins, y="body_mass_g", color="skyblue", width=0.2, linewidth=1)
-sns.swarmplot(
-    data=penguins,
-    y="body_mass_g",
-    color="white",
-    edgecolor="violet",  # the color of line around data point
-    linewidth=1,
-);  # The width of line that frame data point
+plt.figure(figsize=(13,9))
+sns.boxplot(data = penguins,
+            y = 'body_mass_g',
+            color = 'skyblue',
+            width = 0.2,
+            linewidth = 1)
+sns.swarmplot(data = penguins, 
+              y = 'body_mass_g',
+              color = 'white',
+              edgecolor = 'violet',    # the color of line around data point
+              linewidth = 1);          # The width of line that frame data point
 
 # COMMAND ----------
 
@@ -387,7 +402,7 @@ sns.swarmplot(
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC > Could you exactly say where the majority of data points lie based on the drawn data points? Sometimes, judging the distribution's shape from swarmplot can be tricky. To be sure, it's better to create a swarmplot in conjunction with a boxplot.
+# MAGIC > Could you exactly say where the majority of data points lie based on the drawn data points? Sometimes, judging the distribution's shape from swarmplot can be tricky. To be sure, it's better to create a swarmplot in conjunction with a boxplot. 
 
 # COMMAND ----------
 
@@ -415,13 +430,17 @@ sns.swarmplot(
 
 # Stripplot of the 'body_mass_g' feature
 
-plt.figure(figsize=(13, 9))
-sns.stripplot(data=penguins, x="body_mass_g", color="green", jitter=0.2, size=6);
+plt.figure(figsize=(13,9))
+sns.stripplot(data = penguins, 
+              x = 'body_mass_g', 
+              color = 'green', 
+              jitter = 0.2, 
+              size = 6);
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Since we do not have so many observations, we can better estimate the distribution of the data because the data poins do not overlap. Here, we can take into consideration the density of the data points which can gives us a good approximation of the shape. There are more data points in the range of 3200-3800 grams compared to the rest of data points. After that, the data points become more sparse. Based on that, we would say that the distribution seems to be right-skewed. In most cases, it would not be appropriate to assume the distribution only from the stripplot because it can be misleading. Therefore, always visualize the data using several plotting approaches.
+# MAGIC Since we do not have so many observations, we can better estimate the distribution of the data because the data poins do not overlap. Here, we can take into consideration the density of the data points which can gives us a good approximation of the shape. There are more data points in the range of 3200-3800 grams compared to the rest of data points. After that, the data points become more sparse. Based on that, we would say that the distribution seems to be right-skewed. In most cases, it would not be appropriate to assume the distribution only from the stripplot because it can be misleading. Therefore, always visualize the data using several plotting approaches. 
 
 # COMMAND ----------
 
@@ -444,7 +463,11 @@ sns.stripplot(data=penguins, x="body_mass_g", color="green", jitter=0.2, size=6)
 
 # The count of penguins based on the island
 
-sns.catplot(data=penguins, x="island", kind="count", height=6.5, aspect=1.3);
+sns.catplot(data = penguins,
+           x = 'island',
+           kind = 'count',
+           height = 6.5,
+           aspect = 1.3);
 
 # COMMAND ----------
 
@@ -462,16 +485,14 @@ sns.catplot(data=penguins, x="island", kind="count", height=6.5, aspect=1.3);
 
 # Create a countplot of the 'island' feature
 
-plt.figure(figsize=(13, 9))
-ax = sns.countplot(
-    data=penguins,
-    x="island",
-    order=penguins.island.value_counts().index,  # Order categories by their value counts
-    palette="Paired",
-)
-ax.set(
-    title="Count of penguins based on the island", xlabel="The island", ylabel="Count"
-);
+plt.figure(figsize = (13,9))
+ax = sns.countplot(data = penguins, 
+                   x = 'island',
+                   order = penguins.island.value_counts().index, # Order categories by their value counts
+                   palette = 'Paired')
+ax.set(title = 'Count of penguins based on the island', 
+       xlabel = 'The island',
+       ylabel = 'Count');
 
 # COMMAND ----------
 
@@ -542,33 +563,19 @@ ax.set(
 
 # COMMAND ----------
 
-# Load the data
-data = pd.read_csv("../../../Data/bank_data.csv", sep=";")
+# Load the data 
+data = pd.read_csv('../../../Data/bank_data.csv',sep = ';')
 data.head()
 
 # COMMAND ----------
 
 # Let's rename some of variables
-data.rename(
-    columns={
-        "marital": "marital_status",
-        "default": "default_credit",
-        "housing": "house_loan",
-        "contact": "contact_type",
-        "duration": "contact_duration",
-        "campaign": "number_of_contacts",
-        "pdays": "days_passed",
-        "previous": "number_previous_contact",
-        "poutcome": "previous_campaign_outcome",
-        "emp.var.rate": "emp_variation_rate",
-        "cons.price.idx": "cpi",
-        "cons.conf.idx": "cci",
-        "euribor3m": "euribor_rate",
-        "nr.employed": "no_employees",
-        "y": "target",
-    },
-    inplace=True,
-)
+data.rename(columns = {'marital':'marital_status','default':'default_credit','housing':'house_loan',
+                      'contact':'contact_type','duration':'contact_duration','campaign':'number_of_contacts',
+                      'pdays':'days_passed','previous':'number_previous_contact','poutcome':'previous_campaign_outcome',
+                      'emp.var.rate':'emp_variation_rate','cons.price.idx':'cpi','cons.conf.idx':
+                      'cci','euribor3m':'euribor_rate','nr.employed':'no_employees','y':'target'},
+           inplace = True)
 
 # COMMAND ----------
 
@@ -589,13 +596,13 @@ duplicated_rows
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC There are 12 duplicated rows in the dataset that need to be removed.
+# MAGIC There are 12 duplicated rows in the dataset that need to be removed. 
 
 # COMMAND ----------
 
 # Remove duplicated rows
 
-data.drop_duplicates(inplace=True)
+data.drop_duplicates(inplace = True)
 
 # COMMAND ----------
 
@@ -612,25 +619,15 @@ data.dtypes
 
 # Select all variables that need to be converted
 
-to_category = [
-    "job",
-    "marital_status",
-    "education",
-    "default_credit",
-    "house_loan",
-    "loan",
-    "contact_type",
-    "month",
-    "day_of_week",
-    "previous_campaign_outcome",
-]
+to_category = ['job','marital_status','education','default_credit','house_loan', 
+               'loan','contact_type','month','day_of_week', 'previous_campaign_outcome']
 
 # COMMAND ----------
 
 # Convert them to the category data type
 
 for col in to_category:
-    data[col] = data[col].astype("category")
+    data[col] = data[col].astype('category')
 
 # COMMAND ----------
 
@@ -641,13 +638,7 @@ for col in to_category:
 
 # Create a dictionary with original values and corresponding new values for days
 
-mapping_days = {
-    "mon": "Monday",
-    "tue": "Tuesday",
-    "wed": "Wednesday",
-    "thu": "Thursday",
-    "fri": "Friday",
-}
+mapping_days = {'mon':'Monday','tue':'Tuesday','wed':'Wednesday','thu':'Thursday','fri':'Friday'}
 
 # COMMAND ----------
 
@@ -659,18 +650,8 @@ data.day_of_week = data.day_of_week.map(mapping_days)
 
 # Create a dictionary with the original values and the corresponding new values for the months
 
-mapping_months = {
-    "mar": "March",
-    "apr": "April",
-    "may": "May",
-    "jun": "Jun",
-    "jul": "Jul",
-    "aug": "August",
-    "sep": "September",
-    "oct": "October",
-    "nov": "November",
-    "dec": "December",
-}
+mapping_months = {'mar':'March', 'apr':'April','may':'May','jun':'Jun','jul':'Jul','aug':'August',
+                  'sep':'September','oct':'October','nov':'November','dec':'December'}
 
 # COMMAND ----------
 
@@ -682,7 +663,7 @@ data.month = data.month.map(mapping_months)
 # MAGIC %md
 # MAGIC ## 5.2 Numerical variables
 # MAGIC
-# MAGIC Let's start with the numerical features and explore the distribution of the data points.
+# MAGIC Let's start with the numerical features and explore the distribution of the data points. 
 
 # COMMAND ----------
 
@@ -717,22 +698,22 @@ data.contact_duration = data.contact_duration.apply(lambda x: x / 60)
 
 # MAGIC %md
 # MAGIC There are some records where no call was performed, so the corresponding values are of value 0. 
-# MAGIC Let's take a look at the rows with no recorded duration. We will drop them since they do not provide us with any useful information.
+# MAGIC Let's take a look at the rows with no recorded duration. We will drop them since they do not provide us with any useful information. 
 
 # COMMAND ----------
 
 # Print only those rows where 'contact_duration' is 0
-data[data["contact_duration"] == 0]
+data[data['contact_duration'] == 0]
 
 # COMMAND ----------
 
 # Get the index of rows that should be dropped
-index_rows_to_drop = data[data["contact_duration"] == 0].index
+index_rows_to_drop = data[data['contact_duration'] == 0].index
 
 # COMMAND ----------
 
 # Drop these rows from the dataframe
-data.drop(index_rows_to_drop, inplace=True)
+data.drop(index_rows_to_drop, inplace = True)
 
 # COMMAND ----------
 
@@ -744,7 +725,7 @@ data.drop(index_rows_to_drop, inplace=True)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC We already saw that the distribution of data points can be visualized using a stripplot. When we plotted some feature of the penguins dataset, we could nicely observe each data point in the figure and there was minimal overlap of values. Now we create a stripplot of the 'contact_duration' feature from the Bank marketing dataset to see how a stripplot looks like when you have thousands of records available.
+# MAGIC We already saw that the distribution of data points can be visualized using a stripplot. When we plotted some feature of the penguins dataset, we could nicely observe each data point in the figure and there was minimal overlap of values. Now we create a stripplot of the 'contact_duration' feature from the Bank marketing dataset to see how a stripplot looks like when you have thousands of records available. 
 
 # COMMAND ----------
 
@@ -762,39 +743,33 @@ data.drop(index_rows_to_drop, inplace=True)
 #         >>> Set a the figure size to (13,9)
 #         >>> Order the counts by the most common job
 #         >>> Set the rotation of x-axis tick labels to 45 degrees using Matplotlib's xticks()
-#         >>> Map the 'job' feature to hue and hide the legend
 #         >>> Set the color palette to 'Set3'
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Now we'll look at how many calls have been performed during the respective months. 
-# MAGIC We are missing January and February in the dataset for some reason, but don't worry about it. 
-# MAGIC To correctly visualize the months of the year we need to specify their order.
+# MAGIC Now we'll look at how many calls have been performed during the respective months. We are missing January in the dataset for some reason, but don't worry about it. To correctly visualize the months of the year we need to specify their order.
 
 # COMMAND ----------
 
 # Unique categories
-month_order = [
-    "March",
-    "April",
-    "May",
-    "Jun",
-    "Jul",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-]
+month_order = ['February','March','April','May','Jun','Jul','August','September','October','November','December']
+
+# COMMAND ----------
+
+# Creating CategoricalDtype
+order_cat = pd.api.types.CategoricalDtype(categories = month_order, ordered = True)
+
+# COMMAND ----------
+
+# Change data type of month variable as order_cat data type
+data.month = data.month.astype(order_cat)
 
 # COMMAND ----------
 
 # TASK 12 >>> Create a countplot of 'month' variable to see how many calls have been performed through the months
 #         >>> Set the figure size to (13,9)
-#         >>> Map the 'month' feature to hue and hide the legend
 #         >>> Set the color palette to 'Pastel1'
-#         >>> Set the order to 'month_order'
 #         >>> Set the rotation of x-axis tick labels to 45 degrees using Matplotlib's xticks()
 
 # COMMAND ----------
@@ -804,4 +779,4 @@ month_order = [
 # MAGIC
 # MAGIC [Moro et al., 2014] S. Moro, P. Cortez and P. Rita. A Data-Driven Approach to Predict the Success of Bank Telemarketing. Decision Support Systems, Elsevier, 62:22-31, June 2014
 # MAGIC
-# MAGIC Material adapted for RBI internal purposes with full permissions from original authors. [Source](https://github.com/zatkopatrik/authentic-data-science)
+# MAGIC Material adapted for RBI internal purposes with full permissions from original authors.

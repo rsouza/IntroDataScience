@@ -386,4 +386,4 @@ print(f"There are {(lr_r_high.coef_ == 0).sum()} coefficients equal to 0 for thi
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Material adapted for RBI internal purposes with full permissions from original authors. [Source](https://github.com/zatkopatrik/authentic-data-science)
+# MAGIC Material adapted for RBI internal purposes with full permissions from original authors.

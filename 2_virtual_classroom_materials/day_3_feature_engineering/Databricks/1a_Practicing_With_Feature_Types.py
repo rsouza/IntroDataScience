@@ -154,4 +154,4 @@ sns.countplot(data = data, x = 'Survived', color = 'violet');
 # MAGIC
 # MAGIC Data license: CC0: Public Domain
 # MAGIC
-# MAGIC Material adapted for RBI internal purposes with full permissions from original authors. [Source](https://github.com/zatkopatrik/authentic-data-science) 
+# MAGIC Material adapted for RBI internal purposes with full permissions from original authors.
