@@ -1,4 +1,9 @@
 # Databricks notebook source
+!pip install --upgrade scikit-learn
+dbutils.library.restartPython()
+
+# COMMAND ----------
+
 # MAGIC %md
 # MAGIC # Supervised Learning Workflow
 # MAGIC Let's continue with our previous example and see how we can use composite estimators for our problem.

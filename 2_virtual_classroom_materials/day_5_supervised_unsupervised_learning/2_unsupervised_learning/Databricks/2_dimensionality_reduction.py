@@ -1,5 +1,5 @@
 # Databricks notebook source
-pip install "threadpoolctl>=3.1.0"
+!pip install "threadpoolctl>=3.1.0"
 
 # COMMAND ----------
 
@@ -44,8 +44,8 @@ x_digits, y_digits = digits.data, digits.target
 _, axes = plt.subplots(nrows=1, ncols=10, figsize=(16, 5))
 for ax, image, label in zip(axes, digits.images, digits.target):
     ax.set_axis_off()
-    ax.imshow(image, cmap=plt.cm.gray_r, interpolation='nearest')
-    ax.set_title('Training: %i' % label)
+    ax.imshow(image, cmap=plt.cm.gray_r, interpolation="nearest")
+    ax.set_title("Training: %i" % label)
 
 # COMMAND ----------
 
@@ -86,12 +86,18 @@ for ax, image, label in zip(axes, digits.images, digits.target):
 
 # COMMAND ----------
 
-plt.figure(figsize=(12,8))
-plt.scatter(x_reduced[:, 0], x_reduced[:, 1], c=y_digits, 
-            edgecolor='none', alpha=0.7, s=40,
-            cmap=plt.cm.get_cmap('nipy_spectral', 10))
+plt.figure(figsize=(12, 8))
+plt.scatter(
+    x_reduced[:, 0],
+    x_reduced[:, 1],
+    c=y_digits,
+    edgecolor="none",
+    alpha=0.7,
+    s=40,
+    cmap=plt.colormaps["nipy_spectral"],
+)
 plt.colorbar()
-plt.title('MNIST. PCA projection');
+plt.title("MNIST. PCA projection");
 
 # COMMAND ----------
 
@@ -125,17 +131,19 @@ plt.title('MNIST. PCA projection');
 
 pca = PCA().fit(x_digits)
 
-plt.figure(figsize=(10,7))
-plt.plot(np.cumsum(pca.explained_variance_ratio_), color='k', lw=2)
-plt.xlabel('Number of components')
-plt.ylabel('Total explained variance')
+plt.figure(figsize=(10, 7))
+plt.plot(np.cumsum(pca.explained_variance_ratio_), color="k", lw=2)
+plt.xlabel("Number of components")
+plt.ylabel("Total explained variance")
 plt.xlim(0, x_digits.shape[1])
 plt.yticks(np.arange(0, 1.1, 0.1))
 min_variance = 0.9
-min_components = np.min(np.where(np.cumsum(pca.explained_variance_ratio_) > min_variance))
+min_components = np.min(
+    np.where(np.cumsum(pca.explained_variance_ratio_) > min_variance)
+)
 print(min_components)
-plt.axvline(min_components, c='b')
-plt.axhline(min_variance, c='r')
+plt.axvline(min_components, c="b")
+plt.axhline(min_variance, c="r")
 plt.show()
 
 # COMMAND ----------
@@ -158,7 +166,7 @@ wine = load_wine()
 x_wine = wine.data
 y_wine = wine.target
 cols_wine = wine.feature_names
-df_wine = pd.DataFrame(x_wine, columns = cols_wine)
+df_wine = pd.DataFrame(x_wine, columns=cols_wine)
 
 # COMMAND ----------
 
@@ -210,15 +218,22 @@ df_wine = pd.DataFrame(x_wine, columns = cols_wine)
 
 # COMMAND ----------
 
-fig, (ax1, ax2) = plt.subplots(ncols=2, figsize = (15,6))
+fig, (ax1, ax2) = plt.subplots(ncols=2, figsize=(15, 6))
 
-ax1.scatter(x_reduced[:, 0], x_reduced[:, 1], c=y_wine, 
-            edgecolor='none', alpha=0.7, s=40)
-ax1.set_title('wine PCA projection (unscaled)');
+ax1.scatter(
+    x_reduced[:, 0], x_reduced[:, 1], c=y_wine, edgecolor="none", alpha=0.7, s=40
+)
+ax1.set_title("wine PCA projection (unscaled)")
 
-ax2.scatter(x_reduced_scaled[:, 0], x_reduced_scaled[:, 1], c=y_wine, 
-            edgecolor='none', alpha=0.7, s=40)
-ax2.set_title('wine PCA projection (scaled)');
+ax2.scatter(
+    x_reduced_scaled[:, 0],
+    x_reduced_scaled[:, 1],
+    c=y_wine,
+    edgecolor="none",
+    alpha=0.7,
+    s=40,
+)
+ax2.set_title("wine PCA projection (scaled)");
 
 # COMMAND ----------
 
@@ -258,7 +273,7 @@ from sklearn.metrics import accuracy_score
 
 # COMMAND ----------
 
-clf_unscaled = make_pipeline(PCA(2), RandomForestClassifier()) 
+clf_unscaled = make_pipeline(PCA(2), RandomForestClassifier())
 clf_unscaled.fit(x_train, y_train)
 
 # COMMAND ----------
@@ -337,13 +352,19 @@ t1 = dt.now()
 
 # COMMAND ----------
 
-plt.figure(figsize=(10,7))
-plt.scatter(x_embedded[:, 0], x_embedded[:, 1], c=y_digits, 
-            edgecolor='none', alpha=0.7, s=40,
-            cmap=plt.cm.get_cmap('nipy_spectral', 10))
+plt.figure(figsize=(10, 7))
+plt.scatter(
+    x_embedded[:, 0],
+    x_embedded[:, 1],
+    c=y_digits,
+    edgecolor="none",
+    alpha=0.7,
+    s=40,
+    cmap=plt.colormaps["nipy_spectral"],
+)
 plt.colorbar()
-plt.title('MNIST. TSNE projection');
-print(f'Timerun: {dt.now()-t1}')
+plt.title("MNIST. TSNE projection")
+print(f"Timerun: {dt.now()-t1}")
 
 # COMMAND ----------
 
@@ -374,7 +395,7 @@ print(mnist_path)
 # COMMAND ----------
 
 with zipfile.ZipFile(mnist_path, "r") as zfile:
-    mnist = np.load(zfile.open('mnist.npz'))
+    mnist = np.load(zfile.open("mnist.npz"))
     x_digits = mnist.get("x_train")
     x_test = mnist.get("x_test")
     y_digits = mnist.get("y_train")
@@ -388,9 +409,9 @@ with zipfile.ZipFile(mnist_path, "r") as zfile:
 
 # COMMAND ----------
 
-#idxs_ = random.sample(range(x_digits.shape[0]), 10000)
-#x_digits = x_digits[idxs_]
-#y_digits = y_digits[idxs_]
+# idxs_ = random.sample(range(x_digits.shape[0]), 10000)
+# x_digits = x_digits[idxs_]
+# y_digits = y_digits[idxs_]
 
 # COMMAND ----------
 
@@ -402,7 +423,7 @@ with zipfile.ZipFile(mnist_path, "r") as zfile:
 plt.figure(figsize=(16, 6))
 for i in range(10):
     plt.subplot(2, 5, i + 1)
-    plt.imshow(x_digits[i,:].reshape([28,28]), cmap='gray');
+    plt.imshow(x_digits[i, :].reshape([28, 28]), cmap="gray");
 
 # COMMAND ----------
 
@@ -422,7 +443,9 @@ for i in range(10):
 
 # COMMAND ----------
 
-x_digits_flat = x_digits.reshape(x_digits.shape[0], x_digits.shape[1]*x_digits.shape[2]) # reshaping matrices into vectors
+x_digits_flat = x_digits.reshape(
+    x_digits.shape[0], x_digits.shape[1] * x_digits.shape[2]
+)  # reshaping matrices into vectors
 x_digits_flat.shape
 
 # COMMAND ----------
@@ -435,33 +458,43 @@ x_digits_flat.shape
 # COMMAND ----------
 
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense,Flatten,Reshape
+from tensorflow.keras.layers import Dense, Flatten, Reshape
 from tensorflow.keras.optimizers import SGD, Adam
 import seaborn as sns
 
-X_train = x_digits/255.0 # digits matrices are scaled to values between 0 and 1
- 
+X_train = x_digits / 255.0  # digits matrices are scaled to values between 0 and 1
+
 ### Encoder
 encoder = Sequential()
-encoder.add(Flatten(input_shape=[28,28]))   # flatten the input matrices into vectors of 28x28
-encoder.add(Dense(400,activation="relu"))   # add a dense layer with 400 neurons and relu activation
-encoder.add(Dense(200,activation="relu"))
-encoder.add(Dense(100,activation="relu"))
-encoder.add(Dense(50,activation="relu"))
-encoder.add(Dense(2,activation="relu"))     # add a dense layer with 2 neurons and relu activation
- 
+encoder.add(
+    Flatten(input_shape=[28, 28])
+)  # flatten the input matrices into vectors of 28x28
+encoder.add(
+    Dense(400, activation="relu")
+)  # add a dense layer with 400 neurons and relu activation
+encoder.add(Dense(200, activation="relu"))
+encoder.add(Dense(100, activation="relu"))
+encoder.add(Dense(50, activation="relu"))
+encoder.add(
+    Dense(2, activation="relu")
+)  # add a dense layer with 2 neurons and relu activation
+
 ### Decoder
 decoder = Sequential()
-decoder.add(Dense(50,input_shape=[2],activation='sigmoid'))  # decoder will start with an input of dimension 2 from an encoder
-decoder.add(Dense(100,activation='sigmoid'))
-decoder.add(Dense(200,activation='sigmoid'))
-decoder.add(Dense(400,activation='sigmoid'))
+decoder.add(
+    Dense(50, input_shape=[2], activation="sigmoid")
+)  # decoder will start with an input of dimension 2 from an encoder
+decoder.add(Dense(100, activation="sigmoid"))
+decoder.add(Dense(200, activation="sigmoid"))
+decoder.add(Dense(400, activation="sigmoid"))
 decoder.add(Dense(28 * 28, activation="sigmoid"))
-decoder.add(Reshape([28, 28]))           # reshape the output from a flat vector to matrix of 28x28 
- 
+decoder.add(
+    Reshape([28, 28])
+)  # reshape the output from a flat vector to matrix of 28x28
+
 ### Autoencoder
-autoencoder = Sequential([encoder,decoder]) # stack encoder and decoder sequentially
-autoencoder.compile(loss="mse", optimizer='Adam') # compile the model
+autoencoder = Sequential([encoder, decoder])  # stack encoder and decoder sequentially
+autoencoder.compile(loss="mse", optimizer="Adam")  # compile the model
 
 # COMMAND ----------
 
@@ -487,11 +520,17 @@ autoencoder.compile(loss="mse", optimizer='Adam') # compile the model
 
 # COMMAND ----------
 
-plt.scatter(x_reduced[:, 0], x_reduced[:, 1], c=y_digits, 
-            edgecolor='none', alpha=0.7, s=40,
-            cmap=plt.cm.get_cmap('nipy_spectral', 10))
+plt.scatter(
+    x_reduced[:, 0],
+    x_reduced[:, 1],
+    c=y_digits,
+    edgecolor="none",
+    alpha=0.7,
+    s=40,
+    cmap=plt.colormaps["nipy_spectral"],
+)
 plt.colorbar()
-plt.title('Encoder PCA projection');
+plt.title("Encoder PCA projection");
 
 # COMMAND ----------
 
@@ -500,7 +539,7 @@ plt.title('Encoder PCA projection');
 
 # COMMAND ----------
 
-autoencoder.fit(X_train,X_train,epochs=50)
+autoencoder.fit(X_train, X_train, epochs=50)
 
 # COMMAND ----------
 
@@ -508,12 +547,18 @@ x_reduced = encoder.predict(X_train)
 
 # COMMAND ----------
 
-plt.figure(figsize=(12,12))
-plt.scatter(x_reduced[:, 0], x_reduced[:, 1], c=y_digits, 
-            edgecolor='none', alpha=0.7, s=40,
-            cmap=plt.cm.get_cmap('nipy_spectral', 10))
+plt.figure(figsize=(12, 12))
+plt.scatter(
+    x_reduced[:, 0],
+    x_reduced[:, 1],
+    c=y_digits,
+    edgecolor="none",
+    alpha=0.7,
+    s=40,
+    cmap=plt.colormaps["nipy_spectral"],
+)
 plt.colorbar()
-plt.title('Encoder PCA projection');
+plt.title("Encoder PCA projection");
 
 # COMMAND ----------
 

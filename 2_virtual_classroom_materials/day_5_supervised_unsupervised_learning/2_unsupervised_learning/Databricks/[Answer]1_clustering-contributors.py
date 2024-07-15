@@ -235,6 +235,87 @@ KMeans().fit(customers).labels_
 # COMMAND ----------
 
 # MAGIC %md
+# MAGIC ## Hierarchical Clustering
+# MAGIC
+# MAGIC Hierarchical clustering is another unsupervised clustering algorithm which involves creating clusters that have predominant ordering from top to bottom.​
+# MAGIC
+# MAGIC Types of hierarchical clustering:
+# MAGIC
+# MAGIC * **Agglomerative (Bottom-Up) Clustering**: In agglomerative clustering, initially, each data point is treated as a separate cluster. The clusters are merged based on a linkage criterion, which determines the distance between sets of observations. Common linkage criteria include:
+# MAGIC
+# MAGIC   - Single Linkage: Minimum distance between clusters.
+# MAGIC   - Complete Linkage: Maximum distance between clusters.
+# MAGIC   - Average Linkage: Average distance between clusters.
+# MAGIC   - Ward’s Method: Minimizes the variance within each cluster.
+# MAGIC
+# MAGIC * **Divisive (Top-Down) Clustering:** Starts with all data points in one cluster and splits the least similar clusters iteratively until each point is its own cluster.
+# MAGIC
+# MAGIC Sklearn has AgglomerativeClustering class, that we will use now. The main parameters of AgglomerativeClustering are:
+# MAGIC
+# MAGIC * n_clusters: The number of clusters to find.
+# MAGIC * metric: Metric used to compute the linkage (e.g., 'euclidean', 'manhattan').
+# MAGIC * linkage: The linkage criterion to use ('ward', 'complete', 'average', 'single').
+# MAGIC
+# MAGIC We will use the same dataset we generated before.
+
+# COMMAND ----------
+
+plt.scatter(X[:,0],X[:,1]);
+
+# COMMAND ----------
+
+from sklearn.cluster import AgglomerativeClustering
+
+clustering = AgglomerativeClustering(n_clusters=3, linkage='ward')
+clustering.fit(X)
+labels = clustering.labels_
+
+# COMMAND ----------
+
+plt.scatter(X[:,0],X[:,1], c=labels)
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC We can see that all data points were labeled correctly. Now let's take a look at the dendrogram.
+
+# COMMAND ----------
+
+from scipy.cluster.hierarchy import dendrogram, linkage
+
+Z = linkage(X, method='ward')
+
+plt.figure(figsize=(10, 7))
+dendrogram(Z)
+plt.title('Hierarchical Clustering Dendrogram')
+plt.xlabel('Sample index')
+plt.ylabel('Distance')
+plt.show()
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC The y-axis represents the distance or dissimilarity between clusters. The height of the horizontal lines (links) represents the distance at which clusters are merged. Lower links represent smaller distances and thus more similar clusters merging first. Higher links represent larger distances, indicating less similar clusters being merged.
+# MAGIC
+# MAGIC How do we define a cut-off line? We cut the dendrogram tree with a horizontal line at a height where the line can traverse the maximum distance up and down without intersecting the merging point.​
+# MAGIC
+# MAGIC **TO DO:** Think where the cut-off line can be in this case and plot the dendrogram with it. 
+# MAGIC
+# MAGIC In this case, the cut-off line will intersect three vertical branches, indicating three clusters:
+
+# COMMAND ----------
+
+plt.figure(figsize=(10, 7))
+dendrogram(Z)
+plt.axhline(y=30, color='r', linestyle='--')
+plt.title('Hierarchical Clustering Dendrogram')
+plt.xlabel('Sample index')
+plt.ylabel('Distance')
+plt.show()
+
+# COMMAND ----------
+
+# MAGIC %md
 # MAGIC ## DBSCAN  
 # MAGIC #### This part is voluntary. Do it if you have managed to finish the first part before the time limit.  
 # MAGIC

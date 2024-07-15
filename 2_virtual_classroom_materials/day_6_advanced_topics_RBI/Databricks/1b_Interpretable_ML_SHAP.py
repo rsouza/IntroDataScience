@@ -16,7 +16,8 @@
 
 # COMMAND ----------
 
-!pip install -U -q shap
+!pip install -qU shap numba
+dbutils.library.restartPython()
 
 # COMMAND ----------
 

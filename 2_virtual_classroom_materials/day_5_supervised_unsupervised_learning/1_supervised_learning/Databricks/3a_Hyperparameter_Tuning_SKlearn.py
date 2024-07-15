@@ -1,4 +1,9 @@
 # Databricks notebook source
+!pip install --upgrade scikit-learn
+dbutils.library.restartPython()
+
+# COMMAND ----------
+
 # MAGIC %md
 # MAGIC # Supervised Learning Workflow
 
@@ -44,7 +49,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 feature_engineering = ColumnTransformer(
     [
         ("numerical_scaler", preprocessing.MinMaxScaler(), ["Pclass", "Age"]),
-        ("ohe", preprocessing.OneHotEncoder(sparse=False), ["Sex", "Embarked"]),
+        ("ohe", preprocessing.OneHotEncoder(sparse_output=False), ["Sex", "Embarked"]),
     ],
     remainder="passthrough",
 )

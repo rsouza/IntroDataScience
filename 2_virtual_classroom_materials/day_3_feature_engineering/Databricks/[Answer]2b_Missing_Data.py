@@ -350,7 +350,7 @@ imputer.statistics_
 # COMMAND ----------
 
 # Transform column 'Age' in X_train
-X_train['Age'] = imputer.transform(X_train[['Age']])
+X_train[['Age']] = imputer.transform(X_train[['Age']])
 
 # COMMAND ----------
 
@@ -360,7 +360,7 @@ X_train['Age'].isnull().sum()
 # COMMAND ----------
 
 # TASK 3 >>>>> Repeat the imputing also for column 'Age' in X_test data
-X_test['Age'] = imputer.transform(X_test[['Age']])
+X_test[['Age']] = imputer.transform(X_test[['Age']])
 
 # # Get the total number of missing values in column Age to see whether these values have been replaced
 X_train['Age'].isnull().sum()
@@ -403,7 +403,7 @@ imputer_cat.fit(X_train[['Embarked']])
 # COMMAND ----------
 
 # Transform column 'Embarked' in X_train
-X_train['Embarked'] = imputer_cat.transform(X_train[['Embarked']])
+X_train[['Embarked']] = imputer_cat.transform(X_train[['Embarked']])
 
 # COMMAND ----------
 
@@ -414,7 +414,7 @@ X_train['Embarked'].isnull().sum()
 
 # TASK 4 >>>>> Repeat the imputing also for the column 'Embarked' in X_test data
 
-X_test['Embarked'] = imputer_cat.transform(X_test[['Embarked']])
+X_test[['Embarked']] = imputer_cat.transform(X_test[['Embarked']])
 
 # Get the total number of missing values in column Embarked to see whether these values have been replaced
 X_test['Embarked'].isnull().sum()
@@ -471,9 +471,9 @@ imputer_median.statistics_
 # COMMAND ----------
 
 # TASK >>>> Transform the column 'Small Bags' using imputer_median
-# Assign the transformation to avocado['Small Bags']
+# Assign the transformation to avocado[['Small Bags']]
 
-avocado['Small Bags'] = imputer_median.transform(avocado[['Small Bags']])
+avocado[['Small Bags']] = imputer_median.transform(avocado[['Small Bags']])
 
 # COMMAND ----------
 
@@ -496,9 +496,9 @@ imputer_freq.statistics_
 # COMMAND ----------
 
 # TASK >>>> Transform column 'region' using imputer_freq
-# Assign the transformation to avocado['region']
+# Assign the transformation to avocado[['region']]
 
-avocado['region'] = imputer_freq.transform(avocado[['region']])
+avocado[['region']] = imputer_freq.transform(avocado[['region']])
 
 # COMMAND ----------
 

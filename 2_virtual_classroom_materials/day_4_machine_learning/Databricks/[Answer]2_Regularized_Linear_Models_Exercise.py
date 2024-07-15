@@ -9,7 +9,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import  PolynomialFeatures, StandardScaler
 from sklearn.linear_model import LinearRegression, Ridge, Lasso, ElasticNet
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import root_mean_squared_error
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -131,8 +131,8 @@ lr.fit(X_train_poly, y_train)
 y_hat_train = lr.predict(X_train_poly)
 y_hat_test = lr.predict(X_test_poly)
 
-print(f"RMSE train: {mean_squared_error(y_train, y_hat_train, squared=False)}")
-print(f"RMSE test: {mean_squared_error(y_test, y_hat_test, squared=False)}")
+print(f"RMSE train: {root_mean_squared_error(y_train, y_hat_train)}")
+print(f"RMSE test: {root_mean_squared_error(y_test, y_hat_test)}")
 
 # COMMAND ----------
 
@@ -219,8 +219,8 @@ lr_l.fit(X_train_scaled, y_train)
 y_hat_train = lr_l.predict(X_train_scaled)
 y_hat_test = lr_l.predict(X_test_scaled)
 
-print(f"RMSE train: {mean_squared_error(y_train, y_hat_train, squared=False)}")
-print(f"RMSE test: {mean_squared_error(y_test, y_hat_test, squared=False)}")
+print(f"RMSE train: {root_mean_squared_error(y_train, y_hat_train)}")
+print(f"RMSE test: {root_mean_squared_error(y_test, y_hat_test)}")
 
 # COMMAND ----------
 
@@ -285,7 +285,7 @@ X_test_lasso.shape[1]
 
 # Task 7
 
-rmses = pd.DataFrame(columns=["alpha", "train", "test"])
+rmses = []
 alphas = [10**i for i in range(-3, 3)]
 
 for alpha in alphas:    
@@ -293,9 +293,11 @@ for alpha in alphas:
     lr_r.fit(X_train_scaled, y_train)
     y_hat_train = lr_r.predict(X_train_scaled)
     y_hat_test = lr_r.predict(X_test_scaled)
-    rmse_train = mean_squared_error(y_train, y_hat_train, squared=False)
-    rmse_test = mean_squared_error(y_test, y_hat_test, squared=False)
-    rmses = pd.concat([rmses, pd.DataFrame([{"alpha": alpha, "train": rmse_train, "test": rmse_test}])], axis=0, ignore_index=True)
+    rmse_train = root_mean_squared_error(y_train, y_hat_train)
+    rmse_test = root_mean_squared_error(y_test, y_hat_test)
+    rmses.append(pd.DataFrame([{"alpha": alpha, "train": rmse_train, "test": rmse_test}]))
+
+rmses = pd.concat(rmses)
 
 fig, ax = plt.subplots(figsize=(12, 4))
 ax.plot("alpha", "train", data=rmses, label="RMSE for train set", c="b", ls="--")
@@ -307,6 +309,10 @@ ax.set_xlabel(r"$\alpha$")
 ax.set_ylabel("RMSE")
 
 plt.show();
+
+# COMMAND ----------
+
+rmses
 
 # COMMAND ----------
 
@@ -387,8 +393,8 @@ plot_coef(lr_en.coef_, poly_names)
 y_hat_train = lr_en.predict(X_train_scaled)
 y_hat_test = lr_en.predict(X_test_scaled)
 
-rmse_train = mean_squared_error(y_train, y_hat_train, squared=False)
-rmse_test = mean_squared_error(y_test, y_hat_test, squared=False)
+rmse_train = root_mean_squared_error(y_train, y_hat_train)
+rmse_test = root_mean_squared_error(y_test, y_hat_test)
 
 print(f"RMSE train: {rmse_train}")
 print(f"RMSE test: {rmse_test}")

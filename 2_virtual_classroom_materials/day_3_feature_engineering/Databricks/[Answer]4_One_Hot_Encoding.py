@@ -1,4 +1,9 @@
 # Databricks notebook source
+!pip install --upgrade scikit-learn
+dbutils.library.restartPython()
+
+# COMMAND ----------
+
 # MAGIC %md
 # MAGIC # 0. Loading libraries and Classes
 
@@ -237,15 +242,15 @@ X_test = X_test.fillna('Missing')
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Now we get to scikit. If you are confused over the word "sparse", don't worry. It is just a cool concept of how we can store a matrix in a more memory efficient way.
+# MAGIC Now we get to scikit. If you are confused over the parameter "sparse_output", don't worry. It is just a cool concept of how we can store a matrix in a more memory efficient way.
 
 # COMMAND ----------
 
 # Create the encoder
 # Set parameter categories = 'auto' to determine the categories automatically from the training set
-# Set parameter sparse = False to return a dense array 
+# Set parameter sparse_output = False to return a dense array 
 # Set parameter handle_unknown = 'error' to raise an error if an unknown categorical feature is present during the transform
-encoder = OneHotEncoder(categories='auto', sparse=False, handle_unknown='error')
+encoder = OneHotEncoder(categories='auto', sparse_output=False, handle_unknown='error')
 
 #  Fit the encoder 
 encoder.fit(X_train)
@@ -271,14 +276,14 @@ pd.DataFrame(training_set).head()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC As we can see, after transforming the data the names of the features are not returned, which is inconvenient for feature exploration. There is a method for retrieving these names called `.get_feature_names()` which we can apply to the columns. Let's repeat the entire process of transforming.
+# MAGIC As we can see, after transforming the data the names of the features are not returned, which is inconvenient for feature exploration. There is a method for retrieving these names called `.get_feature_names_out()` which we can apply to the columns. Let's repeat the entire process of transforming.
 
 # COMMAND ----------
 
 # Transform X_train using one-hot encoding and return feature names
 training_set = encoder.transform(X_train)
 training_set = pd.DataFrame(training_set)
-training_set.columns = encoder.get_feature_names()
+training_set.columns = encoder.get_feature_names_out()
 training_set.head()
 
 # COMMAND ----------
@@ -288,7 +293,7 @@ training_set.head()
 
 testing_set = encoder.transform(X_test)
 testing_set = pd.DataFrame(training_set)
-testing_set.columns = encoder.get_feature_names()
+testing_set.columns = encoder.get_feature_names_out()
 testing_set.head()
 
 # COMMAND ----------
@@ -401,7 +406,7 @@ X_train.shape, X_test.shape
 # Store it in the variable encoder
 
 encoder = OneHotEncoder(categories = 'auto',
-                        sparse = False,
+                        sparse_output = False,
                         handle_unknown = 'error')
 
 # COMMAND ----------
@@ -424,7 +429,7 @@ encoder.categories_
 
 X_train = encoder.transform(X_train)
 X_train = pd.DataFrame(X_train)
-X_train.columns = encoder.get_feature_names()
+X_train.columns = encoder.get_feature_names_out()
 X_train
 
 # COMMAND ----------
@@ -435,7 +440,7 @@ X_train
 
 X_test = encoder.transform(X_test)
 X_test = pd.DataFrame(X_test)
-X_test.columns = encoder.get_feature_names()
+X_test.columns = encoder.get_feature_names_out()
 X_test
 
 # COMMAND ----------

@@ -1,4 +1,9 @@
 # Databricks notebook source
+!pip install --upgrade scikit-learn
+dbutils.library.restartPython()
+
+# COMMAND ----------
+
 # MAGIC %md
 # MAGIC # Supervised Learning Workflow
 # MAGIC Let's continue with our previous example and see how we can use composite estimators for our problem.
@@ -64,7 +69,7 @@ X_train, X_test, y_train, y_test = train_test_split(train[['Pclass', 'Age', 'Sex
 # Hint: Use the argument remainder='passthrough'
 
 feature_engineering = ColumnTransformer([('numerical_scaler', preprocessing.MinMaxScaler(),['Pclass', 'Age']),
-                                         ('ohe', preprocessing.OneHotEncoder(sparse=False), ['Sex', 'Embarked'])
+                                         ('ohe', preprocessing.OneHotEncoder(sparse_output=False), ['Sex', 'Embarked'])
                                         ],
                                         remainder='passthrough')
 

@@ -1,4 +1,9 @@
 # Databricks notebook source
+!pip install --upgrade scikit-learn
+dbutils.library.restartPython()
+
+# COMMAND ----------
+
 # MAGIC %md
 # MAGIC # Supervised Learning Workflow
 
@@ -115,7 +120,7 @@ print(X_test_transformed_numerical.shape)
 
 # COMMAND ----------
 
-encoder = preprocessing.OneHotEncoder(sparse=False)
+encoder = preprocessing.OneHotEncoder(sparse_output=False)
 encoder.fit(X_train[['Sex', 'Embarked']])
 X_train_transformed_categorical = encoder.transform(X_train[['Sex', 'Embarked']])
 X_test_transformed_categorical = encoder.transform(X_test[['Sex', 'Embarked']])

@@ -47,8 +47,8 @@ from sklearn.multioutput import ClassifierChain
 
 # COMMAND ----------
 
-with ZipFile(os.path.join("../../../Data", "topics", 'train.csv.zip'), 'r') as myzip:
-    with myzip.open('train.csv') as myfile:
+with ZipFile(os.path.join("../../../Data", "topics", "train.csv.zip"), "r") as myzip:
+    with myzip.open("train.csv") as myfile:
         train_df = pd.read_csv(myfile)
 
 # COMMAND ----------
@@ -67,7 +67,14 @@ train_df.head()
 
 # COMMAND ----------
 
-categories = ["Computer Science", "Physics", "Mathematics", "Statistics", "Quantitative Biology", "Quantitative Finance"]
+categories = [
+    "Computer Science",
+    "Physics",
+    "Mathematics",
+    "Statistics",
+    "Quantitative Biology",
+    "Quantitative Finance",
+]
 
 # COMMAND ----------
 
@@ -136,7 +143,7 @@ train_df["text"] = train_df["TITLE"] + " " + train_df["ABSTRACT"]
 
 # COMMAND ----------
 
-train_df.drop(["TITLE","ABSTRACT"],axis=1,inplace=True)
+train_df.drop(["TITLE", "ABSTRACT"], axis=1, inplace=True)
 
 # COMMAND ----------
 
@@ -145,17 +152,17 @@ train_df.head()
 # COMMAND ----------
 
 def clean_text(input_text):
-    x = re.sub('[^\w]|_', ' ', input_text)  # only keep numbers and letters and spaces
+    x = re.sub("[^\w]|_", " ", input_text)  # only keep numbers and letters and spaces
     x = x.lower()
-    x = re.sub(r'[^\x00-\x7f]',r'', x)  # remove non ascii texts
-    x = [y for y in x.split(' ') if y] # remove empty words
-    x = ['[number]' if y.isdigit() else y for y in x]
-    cleaned_text =  ' '.join(x)
+    x = re.sub(r"[^\x00-\x7f]", r"", x)  # remove non ascii texts
+    x = [y for y in x.split(" ") if y]  # remove empty words
+    x = ["[number]" if y.isdigit() else y for y in x]
+    cleaned_text = " ".join(x)
     return cleaned_text
 
 # COMMAND ----------
 
-train_df['cleaned_text'] = train_df['text'].apply(clean_text)
+train_df["cleaned_text"] = train_df["text"].apply(clean_text)
 
 # COMMAND ----------
 
@@ -180,7 +187,9 @@ train_df.cleaned_text[0]
 
 # COMMAND ----------
 
-X_train, X_test, y_train, y_test = train_test_split(train_df.loc[:,"cleaned_text"], train_df.loc[:,categories], test_size=0.2)
+X_train, X_test, y_train, y_test = train_test_split(
+    train_df.loc[:, "cleaned_text"], train_df.loc[:, categories], test_size=0.2
+)
 X_train.shape, X_test.shape, y_train.shape, y_test.shape
 
 # COMMAND ----------
@@ -190,16 +199,18 @@ X_train.shape, X_test.shape, y_train.shape, y_test.shape
 
 # COMMAND ----------
 
-tfidf = TfidfVectorizer(min_df=3, 
-                        max_features=10000, 
-                        strip_accents="unicode", 
-                        analyzer="word",
-                        token_pattern=r"\w{1,}",
-                        ngram_range=(1,2),
-                        use_idf=1,
-                        smooth_idf=1,
-                        sublinear_tf=1,
-                        stop_words="english")
+tfidf = TfidfVectorizer(
+    min_df=3,
+    max_features=10000,
+    strip_accents="unicode",
+    analyzer="word",
+    token_pattern=r"\w{1,}",
+    ngram_range=(1, 2),
+    use_idf=True,
+    smooth_idf=True,
+    sublinear_tf=True,
+    stop_words="english",
+)
 
 # COMMAND ----------
 
@@ -241,8 +252,8 @@ X_test_tfidf.shape
 number_labels = y_train.sum(axis=1)
 no_label_count = number_labels[number_labels < 1].count()
 
-print("Number of articles in the training data = ",y_train.shape[0])
-print("Total number of  training articles without label = ",no_label_count)
+print("Number of articles in the training data = ", y_train.shape[0])
+print("Total number of  training articles without label = ", no_label_count)
 print("Total labels in training data = ", y_train.sum().sum())
 
 # COMMAND ----------
@@ -267,7 +278,7 @@ print(category_count)
 
 # COMMAND ----------
 
-plt.figure(figsize=(15,5))
+plt.figure(figsize=(15, 5))
 plt.bar(category_count.index, category_count)
 plt.show()
 
@@ -322,7 +333,7 @@ def plot_confusion_matrices(y_true, y_pred, nrows=2, figsize=5):
         axs[i // ncols, i % ncols].set_title(title)
         axs[i // ncols, i % ncols].set_xlabel("Predicted")
         axs[i // ncols, i % ncols].set_ylabel("Actual")
-    
+
     plt.show()
 
 # COMMAND ----------
@@ -370,7 +381,7 @@ plt.ioff();
 classifiers = {
     "nb_mo": MultiOutputClassifier(MultinomialNB()),
     "svm_mo": MultiOutputClassifier(LinearSVC()),
-    "lr_mo": MultiOutputClassifier(LogisticRegression())
+    "lr_mo": MultiOutputClassifier(LogisticRegression()),
 }
 
 print("Training MultiOutput Naive Bayes classifier...")
@@ -419,19 +430,38 @@ plt.ion();
 
 # COMMAND ----------
 
-train_predictions = {type: classifiers[type].predict(X_train_tfidf) for type in classifiers}
-test_predictions = {type: classifiers[type].predict(X_test_tfidf) for type in classifiers}
+train_predictions = {
+    type: classifiers[type].predict(X_train_tfidf) for type in classifiers
+}
+test_predictions = {
+    type: classifiers[type].predict(X_test_tfidf) for type in classifiers
+}
 
 metrics = pd.DataFrame(
     {
         "Multilabel": ["MultiOutput"] * 3 + ["ClassifierChain"] * 3,
         "Classifier": ["Naive Bayes", "SVM", "Logistic Regression"] * 2,
-        "Train Accuracy": [accuracy_score(y_train, train_predictions[type]) for type in train_predictions],
-        "Train (Macro) F1 score": [f1_score(y_train, train_predictions[type], average="macro") for type in train_predictions],
-        "Train Hamming Loss": [hamming_loss(y_train, train_predictions[type]) for type in train_predictions],
-        "Test Accuracy": [accuracy_score(y_test, test_predictions[type]) for type in test_predictions],
-        "Test (Macro) F1 score": [f1_score(y_test, test_predictions[type], average="macro") for type in test_predictions],
-        "Test Hamming Loss": [hamming_loss(y_test, test_predictions[type]) for type in test_predictions]
+        "Train Accuracy": [
+            accuracy_score(y_train, train_predictions[type])
+            for type in train_predictions
+        ],
+        "Train (Macro) F1 score": [
+            f1_score(y_train, train_predictions[type], average="macro")
+            for type in train_predictions
+        ],
+        "Train Hamming Loss": [
+            hamming_loss(y_train, train_predictions[type]) for type in train_predictions
+        ],
+        "Test Accuracy": [
+            accuracy_score(y_test, test_predictions[type]) for type in test_predictions
+        ],
+        "Test (Macro) F1 score": [
+            f1_score(y_test, test_predictions[type], average="macro")
+            for type in test_predictions
+        ],
+        "Test Hamming Loss": [
+            hamming_loss(y_test, test_predictions[type]) for type in test_predictions
+        ],
     }
 )
 

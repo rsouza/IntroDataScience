@@ -9,7 +9,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import  PolynomialFeatures, StandardScaler
 from sklearn.linear_model import LinearRegression, Ridge, Lasso, ElasticNet
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import root_mean_squared_error
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -130,8 +130,8 @@ lr = ...
 y_hat_train = ...
 y_hat_test = ...
 
-print(f"RMSE train: {mean_squared_error(..., ..., squared=False)}")
-print(f"RMSE test: {mean_squared_error(..., ..., squared=False)}")
+print(f"RMSE train: {root_mean_squared_error(..., ...)}")
+print(f"RMSE test: {root_mean_squared_error(..., ...)}")
 
 # COMMAND ----------
 
@@ -218,8 +218,8 @@ lr_l = ...
 y_hat_train = ...
 y_hat_test = ...
 
-print(f"RMSE train: {mean_squared_error(..., ..., squared=False)}")
-print(f"RMSE test: {mean_squared_error..., ..., squared=False)}")
+print(f"RMSE train: {root_mean_squared_error(..., ...)}")
+print(f"RMSE test: {root_mean_squared_error..., ...)}")
 
 # COMMAND ----------
 
@@ -284,7 +284,7 @@ X_test_lasso = ...
 
 # Task 7
 
-rmses = pd.DataFrame(columns=["alpha", "train", "test"])
+rmses = []
 alphas = [10**i for i in range(-3, 3)]
 
 for alpha in alphas:    
@@ -294,9 +294,11 @@ for alpha in alphas:
     y_hat_train = ...
     y_hat_test = ...
 
-    rmse_train = mean_squared_error(..., ..., squared=False)
-    rmse_test = mean_squared_error(..., ..., squared=False)
-    rmses = pd.concat([rmses, pd.DataFrame([{"alpha": alpha, "train": rmse_train, "test": rmse_test}])], axis=0, ignore_index=True)
+    rmse_train = root_mean_squared_error(..., ...)
+    rmse_test = root_mean_squared_error(..., ...)
+    rmses.append(pd.DataFrame([{"alpha": alpha, "train": rmse_train, "test": rmse_test}]))
+
+rmses = pd.concat(rmses)
 
 fig, ax = plt.subplots(figsize=(12, 4))
 ax.plot("alpha", "train", data=rmses, label="RMSE for train set", c="b", ls="--")

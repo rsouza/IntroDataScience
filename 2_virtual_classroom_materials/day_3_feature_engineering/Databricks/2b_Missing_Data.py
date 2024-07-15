@@ -342,7 +342,7 @@ imputer.statistics_
 # COMMAND ----------
 
 # Transform column 'Age' in X_train
-X_train['Age'] = imputer.transform(X_train[['Age']])
+X_train[['Age']] = imputer.transform(X_train[['Age']])
 
 # COMMAND ----------
 
@@ -393,7 +393,7 @@ imputer_cat.fit(X_train[['Embarked']])
 # COMMAND ----------
 
 # Transform column 'Embarked' in X_train
-X_train['Embarked'] = imputer_cat.transform(X_train[['Embarked']])
+X_train[['Embarked']] = imputer_cat.transform(X_train[['Embarked']])
 
 # COMMAND ----------
 
@@ -452,7 +452,7 @@ imputer_median.statistics_
 # COMMAND ----------
 
 # TASK >>>> Transform the column 'Small Bags' using imputer_median
-# Assign the transformation to avocado['Small Bags']
+# Assign the transformation to avocado[['Small Bags']]
 
 # COMMAND ----------
 
@@ -471,7 +471,7 @@ imputer_freq.statistics_
 # COMMAND ----------
 
 # TASK >>>> Transform column 'region' using imputer_freq
-# Assign the transformation to avocado['region']
+# Assign the transformation to avocado[['region']]
 
 # COMMAND ----------
 
