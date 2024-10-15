@@ -41,7 +41,7 @@ plt.rcParams['figure.figsize'] = [10,6]
 # COMMAND ----------
 
 # Load the data
-data = pd.read_csv('../../../Data/room_occupancy.txt')
+data = pd.read_csv('../../../Data/room_occupancy.csv')
 
 # COMMAND ----------
 
